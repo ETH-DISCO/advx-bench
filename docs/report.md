@@ -27,7 +27,7 @@ zero shot models are most relevant because we don't want to train on the specifi
         - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3
         - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-1
 
-        best models:  lit (22b, vit-3, vit-e, tuning), coca, basic (lion), eva-clip-18b
+        best models: m2-encoder (2024), lit-22b (2023), coca (2022), lion
 
 - segmentation: pixel groups (sometimes with labels)
 
@@ -40,7 +40,7 @@ zero shot models are most relevant because we don't want to train on the specifi
         - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the
         - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training
         
-        best models: sam (grounded, grounded hq), unitext, san, gem (metaclip, clip)
+        best models: 
 
 - object detection: bounding boxes with labels
     
@@ -54,9 +54,7 @@ zero shot models are most relevant because we don't want to train on the specifi
         - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw
         - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco
 
-        best models: seeds, zsd-scr, zsd-rrfs, contrastzsd, suzod, grounding dino 1.5 pro, owlv2, glip-l (mq)
-        
-
+        best models: 
 
 
 
