@@ -1,10 +1,42 @@
-> create a benchmarking pipeline. don't use the captcha clone. you're on the defense / captcha-generation side, so you own the models anyway.
+we want to make robust vision based turing tests using advx.
 
-# 1. find strong detection + segmentation models
+to keep things simple, we will focus on image recognition and segmentation tasks.
 
-models:
+# 1. find the strongest models
 
-- https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5
+leaderboards:
+
+- https://paperswithcode.com/area/computer-vision ⭐️ ← most up to date, most comprehensive
+- https://segmentmeifyoucan.com/leaderboard
+- https://huggingface.co/spaces/hf-vision/object_detection_leaderboard 
+- https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
+
+tasks:
+
+- segmentation
+
+    - https://paperswithcode.com/area/computer-vision/semantic-segmentation
+    - https://paperswithcode.com/area/computer-vision/2d-semantic-segmentation
+
+- classification
+    
+    - https://paperswithcode.com/area/computer-vision/classification-1
+    - https://paperswithcode.com/area/computer-vision/image-classification
+    - https://paperswithcode.com/task/zero-shot-transfer-image-classification ⭐️
+        - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5
+    - https://paperswithcode.com/task/object-recognition
+
+- object detection
+    
+    - https://paperswithcode.com/area/computer-vision/object-detection
+    - https://paperswithcode.com/area/computer-vision/2d-object-detection
+
+
+
+
+
+
+
 
 possible models:
 
@@ -26,10 +58,15 @@ datasets:
 - https://www.kaggle.com/datasets/cry2003/google-recaptcha-v2-images
 - https://datasetninja.com/google-recaptcha-image
 
-# 2. check how well advx works on these models
+
+
+# 2. evaluate them against a variety of advx and captchas
 
 generating advx:
 
+- https://paperswithcode.com/task/adversarial-attack
+- https://paperswithcode.com/task/real-world-adversarial-attack
+- https://paperswithcode.com/task/adversarial-attack-detection
 - see: http://videos.rennes.inria.fr/seminaire-SoSySec/Maura-Pintor-03-02-2023/20230203-Maura-Pintor-sosysec-slides.pdf
 - see: `torchattack`
 
@@ -40,5 +77,5 @@ datasets:
 - try selecting a subset of images ("only select 2 horses of 4")
 - try to integrate things that are invisible to humans but visible to models (ie. low transparency, undersaturated values)
 - try out new hcaptcha dataset with ascii characters and funny colors (reach out to turlan)
-    - check out the adversarial images Turlan has collected from hCaptcha: https://gitlab.ethz.ch/disco-students/fs24/image-captchas
+    - https://gitlab.ethz.ch/disco-students/fs24/image-captchas
     - https://gitlab.ethz.ch/disco-students/fs24/image-captchas/-/blob/main/assets/datasets/hcaptcha_dataset_turlan/processed/0a28e4fc9452e9b90e2e08e564de91754b85db04dba33f7216378aac883f5d3f.png?ref_type=heads
