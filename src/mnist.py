@@ -1,7 +1,5 @@
 from __future__ import print_function
-
 import argparse
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -80,7 +78,6 @@ def main():
 
     torch.manual_seed(args.seed)
 
-    # check architecture
     device_arg = "cpu"
     if torch.cuda.is_available():
         device_arg = "cuda"
