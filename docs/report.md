@@ -1,7 +1,5 @@
 we want to make robust vision based turing tests using advx.
 
-to keep things simple, we will focus on image recognition and segmentation tasks.
-
 # 1. find the strongest models
 
 leaderboards:
@@ -13,20 +11,19 @@ leaderboards:
 
 tasks:
 
-- segmentation
-
-    - https://paperswithcode.com/area/computer-vision/semantic-segmentation
-    - https://paperswithcode.com/area/computer-vision/2d-semantic-segmentation
-
-- classification
+- classification: image class labels
     
     - https://paperswithcode.com/area/computer-vision/classification-1
     - https://paperswithcode.com/area/computer-vision/image-classification
     - https://paperswithcode.com/task/zero-shot-transfer-image-classification ⭐️
         - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5
-    - https://paperswithcode.com/task/object-recognition
 
-- object detection
+- segmentation: pixel groups (sometimes with labels)
+
+    - https://paperswithcode.com/area/computer-vision/semantic-segmentation
+    - https://paperswithcode.com/area/computer-vision/2d-semantic-segmentation
+
+- object detection: bounding boxes with labels
     
     - https://paperswithcode.com/area/computer-vision/object-detection
     - https://paperswithcode.com/area/computer-vision/2d-object-detection
