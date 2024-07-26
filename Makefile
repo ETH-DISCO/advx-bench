@@ -28,36 +28,12 @@ reqs:
 up:
 	git pull
 	git add .
-	git commit -m "up"
+	@if [ -z "$(msg)" ]; then \
+		git commit -m "up"; \
+	else \
+		git commit -m "$(msg)"; \
+	fi
 	git push
-
-# --------------------------------------------------------------- docker
-
-.PHONY: docker-install # run docker container
-docker-install:
-	@echo "to exec into docker container, run: 'docker exec -it main /bin/bash'"
-	docker-compose up --detach
-
-.PHONY: docker-clean # wipe everything in docker
-docker-clean:
-	docker-compose down
-
-	# wipe docker
-	-docker stop $$(docker ps -a -q)
-	-docker rm $$(docker ps -a -q)
-	-docker rmi $$(docker images -q)
-	yes | docker container prune
-	yes | docker image prune
-	yes | docker volume prune
-	yes | docker network prune
-	yes | docker system prune
-	
-	# check if successful
-	docker ps --all
-	docker images
-	docker system df
-	docker volume ls
-	docker network ls
 
 # --------------------------------------------------------------- conda
 
