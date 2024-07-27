@@ -76,7 +76,7 @@ very recent, uses just the right metrics and datasets.
 
 see: https://arxiv.org/pdf/2403.10499
 
-# excluded benchmarks
+# excluded
 
 *goldblum et al. (2023):*
 
