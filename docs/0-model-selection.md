@@ -4,20 +4,13 @@ we're looking for the strongest zero shot models as of july 2024.
 
 they must be open source, easy to use and fine-tune.
 
+# wang et al. (2024) benchmarks
 
+> see: https://arxiv.org/pdf/2403.10499
+>
+> has the same goal as us, but only focuses on CLIP's zero-shot classification perf across various adversarial robustness metrics
 
-# wang et al. (2024) benchmarks 🔥
-
-very recent, uses just the right metrics and datasets.
-
-see: https://arxiv.org/pdf/2403.10499
-
-...
-
-
-
-
-
+CLIP versions: ResNet50, ResNet101, ViT-B/32, ViT-B/16, ResNet50x4, ResNet50x16, AutoCLIP
 
 # pwc benchmarks
 
@@ -79,7 +72,7 @@ zero shot object detection:
 
 > see: https://arxiv.org/pdf/2310.19909 (see chapter: "4.1 Task-Specific Backbones")
 > 
-> very thoughtful benchmarking based on the most significant metrics, but only focuses on backbones (feature extraction)
+> very thoughtful benchmarking based on the most significant metrics, but only focused on backbones (feature extraction)
 
 - classification:
     1. Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
