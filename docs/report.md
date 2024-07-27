@@ -2,111 +2,134 @@ we want to improve vision-based turing-tests using advx.
 
 # 1. find the strongest models
 
-we're looking for the strongest zero shot models as of july 2024. the models should be zero shot because we want to evaluate them against unseen captchas.
+we're looking for the strongest zero shot models as of july 2024.
 
-they should also be open source, easy to use and fine-tune.
+they must be open source, easy to use and fine-tune.
 
-*metrics:*
+## papers with code benchmarks
 
-- https://huggingface.co/blog/object-detection-leaderboard
-- https://openreview.net/pdf?id=hdYqGkSr9Sl
+> see: https://paperswithcode.com/area/computer-vision
+>
+> most comprehensive
 
-## 1.1 papers with code
+classification:
 
-*papers-with-code benchmarks:*
+- https://paperswithcode.com/area/computer-vision/image-classification (overview)
+- https://paperswithcode.com/task/image-classification
+- https://paperswithcode.com/task/self-supervised-image-classification
+- https://paperswithcode.com/task/unsupervised-image-classification
+- https://paperswithcode.com/task/efficient-vits
 
-see: https://paperswithcode.com/area/computer-vision
+segmentation:
 
-- classification: image class labels
+- https://paperswithcode.com/area/computer-vision/semantic-segmentation (overview)
+- https://paperswithcode.com/area/computer-vision/2d-semantic-segmentation (overview)
+- https://paperswithcode.com/task/image-segmentation
+- https://paperswithcode.com/task/semantic-segmentation
+- https://paperswithcode.com/task/universal-segmentation (no data)
+
+object detection:
+
+- https://paperswithcode.com/area/computer-vision/object-detection
+- https://paperswithcode.com/area/computer-vision/2d-object-detection
+
+zero shot classification:
+
+- https://paperswithcode.com/task/zero-shot-transfer-image-classification
+    - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-6 → LiT-22b (2023), LiT ViT-e (2022), CoCa (2022), EVA-CLIP-18B (2024)
+    - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-4 → CoCa (2022), LiT ViT-e (2022), LiT-22B (2023), EVA-CLIP-18B (2024)
+    - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5 → CoCa (2022), LiT-22B (2023), LiT ViT-e (2022), EVA-CLIP-18B (2024)
+    - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3 → LiT-22B (2023), CoCa (2022), LiT ViT-e (2022), LiT-tuning (2021)
+    - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-1 → M2-Encoder (2024), CoCa (2022), LiT-22B (2023), LiT ViT-e (2022)
+
+    best models: EVA-CLIP-18B (2024), LiT-22B (2023), CoCa (2022)
+
+    most popular dataset: ImageNet
+
+zero shot segmentation:
+
+- https://paperswithcode.com/task/zero-shot-segmentation
+    - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → Grounded HQ-SAM (2023), Grounded-SAM (2023)
+    - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023)
     
-    - https://paperswithcode.com/area/computer-vision/image-classification (overview)
-    - https://paperswithcode.com/task/image-classification
-    - https://paperswithcode.com/task/self-supervised-image-classification
-    - https://paperswithcode.com/task/unsupervised-image-classification
-    - https://paperswithcode.com/task/efficient-vits
-    - https://paperswithcode.com/task/zero-shot-transfer-image-classification ⭐️
-        - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-6 → LiT-22b (2023), LiT ViT-e (2022), CoCa (2022), EVA-CLIP-18B (2024)
-        - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-4 → CoCa (2022), LiT ViT-e (2022), LiT-22B (2023), EVA-CLIP-18B (2024)
-        - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5 → CoCa (2022), LiT-22B (2023), LiT ViT-e (2022), EVA-CLIP-18B (2024)
-        - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3 → LiT-22B (2023), CoCa (2022), LiT ViT-e (2022), LiT-tuning (2021)
-        - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-1 → M2-Encoder (2024), CoCa (2022), LiT-22B (2023), LiT ViT-e (2022)
+    best models: Grounded HQ-SAM (2023), Grounded-SAM (2023), GEM MetaCLIP (2023)
 
-        best models: EVA-CLIP-18B (2024), LiT-22B (2023), CoCa (2022)
+    most popular dataset: segmentation-in-the-wild
 
-        best dataset: ImageNet
+zero shot object detection:
 
-- segmentation: pixel groups (sometimes with labels)
+- https://paperswithcode.com/task/zero-shot-object-detection
+    - https://paperswithcode.com/sota/zero-shot-object-detection-on-ms-coco → SeeDS (2023), ZSD-SCR (2022), ZSD-RRFS (2022)
+    - https://paperswithcode.com/sota/zero-shot-object-detection-on-pascal-voc-07 → SeeDS (2023), ZSD-RRFS (2022)
+    - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0 → Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023)
+    - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0-val → Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023)
+    - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
+    - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
 
-    - https://paperswithcode.com/area/computer-vision/semantic-segmentation (overview)
-    - https://paperswithcode.com/area/computer-vision/2d-semantic-segmentation (overview)
-    - https://paperswithcode.com/task/image-segmentation
-    - https://paperswithcode.com/task/semantic-segmentation
-    - https://paperswithcode.com/task/universal-segmentation (no data)
-    - https://paperswithcode.com/task/zero-shot-segmentation ⭐️
-        - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → Grounded HQ-SAM (2023), Grounded-SAM (2023)
-        - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023)
-        
-        best models: Grounded HQ-SAM (2023), Grounded-SAM (2023), GEM MetaCLIP (2023)
+    best models: Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023), SeeDS (2023)
 
-        best dataset: segmentation-in-the-wild
+    most popular dataset: MS-COCO 
 
-- object detection: bounding boxes with labels
-    
-    - https://paperswithcode.com/area/computer-vision/object-detection
-    - https://paperswithcode.com/area/computer-vision/2d-object-detection
-    - https://paperswithcode.com/task/zero-shot-object-detection ⭐️
-        - https://paperswithcode.com/sota/zero-shot-object-detection-on-ms-coco → SeeDS (2023), ZSD-SCR (2022), ZSD-RRFS (2022)
-        - https://paperswithcode.com/sota/zero-shot-object-detection-on-pascal-voc-07 → SeeDS (2023), ZSD-RRFS (2022)
-        - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0 → Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023)
-        - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0-val → Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023)
-        - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
-        - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
+## huggingface trends
 
-        best models: Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023), SeeDS (2023)
-
-        best dataset: MS-COCO 
-
-## 1.2 huggingface trends
-
-*huggingface most popular:*
-
-see: https://huggingface.co/models
+> see: https://huggingface.co/models
+> 
+> popularity doesn't always mean quality
 
 - zero shot classification: openai/clip-vit-large-patch14, google/siglip-so400m-patch14-384
 - segmentation: cidas/clipseg-rd64-refined
 - zero shot dectection: google/owlv2-base-patch16-ensemble, idea-research/grounding-dino-tiny
 
-## 1.3 github trends
+## github trends
 
-see: https://roboflow.com/models / https://ossinsight.io/collections/artificial-intelligence
+> see: https://roboflow.com/models / https://ossinsight.io/collections/artificial-intelligence
+> 
+> popularity doesn't always mean quality
 
 - classification: yolov9, openai clip, google vit, google siglip, meta clip, resnet32
 - segmentation: nvidia segformer
 - detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
 
-## benchmark paper (nov 2023)
+## goldblum et al. (2023)
 
-see: https://arxiv.org/pdf/2310.19909
+> see: https://arxiv.org/pdf/2310.19909 (see chapter: "4.1 Task-Specific Backbones")
+> 
+> great benchmarking, but not zero-shot
+
+- classification:
+    1. Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
+    2. CLIP ViT-Base trained on IN-21k
+    3. Supervised ConvNeXt-Base trained on IN-21k
+- segmentation and detection (same results):
+    1. Supervised ConvNeXt-Base trained on IN-21K
+    2. Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
+    3. Supervised ConvNeXt-Base trained on IN-1k
+
+## xu et al. (2023)
+
+> see: https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf
+> 
+> rejected from ICLR: https://openreview.net/forum?id=hdYqGkSr9S&referrer=%5Bthe%20profile%20of%20Zhenlin%20Xu%5D(%2Fprofile%3Fid%3D~Zhenlin_Xu1)
+> 
+> great benchmarking, but not zero-shot
+
+- classification:
+- segmentation:
+- detection:
+
+## wang et al. (2024) 🔥
+
+very recent, uses just the right metrics and datasets.
+
+see: https://arxiv.org/pdf/2403.10499
 
 
-## aws research paepr (2023)
-
-see: https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://openreview.net/forum?id=hdYqGkSr9S&referrer=%5Bthe%20profile%20of%20Zhenlin%20Xu%5D(%2Fprofile%3Fid%3D~Zhenlin_Xu1) / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf 
 
 
 
-yolov10, sam, resnet, detr
+## excluded benchmarks
 
-
-
-
-
-
-
-https://arxiv.org/pdf/2310.19909
-
-
-*excluded leaderboards (outdated or poor quality):*
+*excluded benchmarks (outdated or poor quality):*
 
 - https://huggingface.co/spaces/hf-vision/object_detection_leaderboard (very limited)
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
@@ -123,11 +146,14 @@ https://arxiv.org/pdf/2310.19909
 
 
 
-# 2. evaluate them against a variety of advx and captchas
+# 2. evaluate them against a variety of advx
 
-https://arxiv.org/pdf/2403.10499
+https://arxiv.org/pdf/2403.10499 🔥 does exactly what we're doing
+
 
 see: https://github.com/wang-research-lab/roz/blob/main/download_cifar.py / https://github.com/wang-research-lab/roz/blob/main/scripts/common_adversarial_attack/run_common_adversarial_attack.py
+
+https://timm.fast.ai/
 
 generating advx:
 
