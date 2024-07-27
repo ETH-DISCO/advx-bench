@@ -8,7 +8,7 @@ they must be open source, easy to use and fine-tune.
 
 > see: https://paperswithcode.com/area/computer-vision
 >
-> most comprehensive
+> most comprehensive collection of models
 
 classification:
 
@@ -74,7 +74,7 @@ zero shot object detection:
 
 > see: https://arxiv.org/pdf/2310.19909 (see chapter: "4.1 Task-Specific Backbones")
 > 
-> great benchmarking, but not zero-shot
+> very thoughtful benchmarking based on the most significant metrics, but not zero-shot
 
 - classification:
     1. Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
