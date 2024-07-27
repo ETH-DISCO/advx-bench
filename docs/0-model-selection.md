@@ -12,7 +12,7 @@ these are some of the best computer vision model benchmarks we found.
 >
 > has the same goal as us - but only focuses on CLIP models for classification on ImageNet
 > 
-> key observations: Vision Transformer (ViT) architectures demonstrate better robustness against adversarial attacks compared to the CLIP models, so we should focus on them
+> note: Vision Transformer (ViT) architectures demonstrate better robustness against adversarial attacks compared to the CLIP models, so we should focus on them
 
 ranking by performance (based on table 2)
 
