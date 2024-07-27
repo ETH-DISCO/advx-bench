@@ -1,7 +1,5 @@
 evaluate models against a variety of advx
 
-https://arxiv.org/pdf/2403.10499 🔥 does exactly what we're doing
-
 see: https://github.com/wang-research-lab/roz/blob/main/download_cifar.py / https://github.com/wang-research-lab/roz/blob/main/scripts/common_adversarial_attack/run_common_adversarial_attack.py
 
 https://timm.fast.ai/
