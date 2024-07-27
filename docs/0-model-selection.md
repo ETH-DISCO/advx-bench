@@ -4,7 +4,7 @@ we're looking for the strongest zero shot models as of july 2024.
 
 they must be open source, easy to use and fine-tune.
 
-## papers with code benchmarks
+# papers with code benchmarks
 
 > see: https://paperswithcode.com/area/computer-vision
 >
@@ -70,7 +70,7 @@ zero shot object detection:
 
     most popular dataset: MS-COCO 
 
-## goldblum et al. (2023)
+# goldblum et al. (2023)
 
 > see: https://arxiv.org/pdf/2310.19909 (see chapter: "4.1 Task-Specific Backbones")
 > 
@@ -85,7 +85,7 @@ zero shot object detection:
     2. Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
     3. Supervised ConvNeXt-Base trained on IN-1k
 
-## xu et al. (2023)
+# xu et al. (2023)
 
 > see: https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf
 > 
@@ -97,13 +97,13 @@ zero shot object detection:
 - segmentation:
 - detection:
 
-## wang et al. (2024) 🔥
+# wang et al. (2024) 🔥
 
 very recent, uses just the right metrics and datasets.
 
 see: https://arxiv.org/pdf/2403.10499
 
-## excluded benchmarks
+# excluded benchmarks
 
 *huggingface trends:*
 
@@ -124,4 +124,3 @@ see: https://arxiv.org/pdf/2403.10499
 - https://huggingface.co/spaces/hf-vision/object_detection_leaderboard (very limited)
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
-
