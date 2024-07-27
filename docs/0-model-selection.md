@@ -4,7 +4,7 @@ we're looking for the strongest zero shot models as of july 2024.
 
 they must be open source, easy to use and fine-tune.
 
-# papers with code benchmarks
+# pwc benchmarks
 
 > see: https://paperswithcode.com/area/computer-vision
 >
