@@ -4,6 +4,8 @@ we're looking for the strongest zero shot models as of july 2024.
 
 they must be open source, easy to use and fine-tune.
 
+these are some of the best computer vision model benchmarks we found.
+
 # RoZ benchmark (CVPR 2024)
 
 > see: https://arxiv.org/pdf/2403.10499
