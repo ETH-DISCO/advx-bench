@@ -2,12 +2,14 @@ we want to improve vision-based turing-tests using advx.
 
 # 1. find the strongest models
 
-we're looking for the strongest zero shot models as of july 2024. the models should be zero shot because we want to evaluate them against unseen captchas. they should also be open source, easy to use and fine-tune.
+we're looking for the strongest zero shot models as of july 2024. the models should be zero shot because we want to evaluate them against unseen captchas.
+
+they should also be open source, easy to use and fine-tune.
 
 *metrics:*
 
 - https://huggingface.co/blog/object-detection-leaderboard
-- https://openreview.net/pdf?id=hdYqGkSr9S
+- https://openreview.net/pdf?id=hdYqGkSr9Sl
 
 ## 1.1 papers with code
 
@@ -64,22 +66,34 @@ see: https://paperswithcode.com/area/computer-vision
 
         best dataset: MS-COCO 
 
-## 1.2 huggingface
+## 1.2 huggingface trends
 
 *huggingface most popular:*
 
 see: https://huggingface.co/models
 
 - zero shot classification: openai/clip-vit-large-patch14, google/siglip-so400m-patch14-384
-- segmentation:
-- zero shot dectection: google/owlv2-base-patch16-ensemble, idea-research/grounding-dino-tiny, 
+- segmentation: cidas/clipseg-rd64-refined
+- zero shot dectection: google/owlv2-base-patch16-ensemble, idea-research/grounding-dino-tiny
+
+## 1.3 github trends
+
+see: https://roboflow.com/models / https://ossinsight.io/collections/artificial-intelligence
+
+- classification: yolov9, openai clip, google vit, google siglip, meta clip, resnet32
+- segmentation: nvidia segformer
+- detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
+
+## benchmark paper (nov 2023)
+
+see: https://arxiv.org/pdf/2310.19909
 
 
+## aws research paepr (2023)
 
-*XYZ benchmarks:*
+see: https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://openreview.net/forum?id=hdYqGkSr9S&referrer=%5Bthe%20profile%20of%20Zhenlin%20Xu%5D(%2Fprofile%3Fid%3D~Zhenlin_Xu1) / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf 
 
 
-- https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf ⭐️
 
 yolov10, sam, resnet, detr
 
@@ -97,7 +111,6 @@ https://arxiv.org/pdf/2310.19909
 - https://huggingface.co/spaces/hf-vision/object_detection_leaderboard (very limited)
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
-- https://openreview.net/forum?id=hdYqGkSr9S&referrer=%5Bthe%20profile%20of%20Zhenlin%20Xu%5D(%2Fprofile%3Fid%3D~Zhenlin_Xu1) (about metrics, not benchmarks)
 
 
 
