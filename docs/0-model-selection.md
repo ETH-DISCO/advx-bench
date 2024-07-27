@@ -4,13 +4,29 @@ we're looking for the strongest zero shot models as of july 2024.
 
 they must be open source, easy to use and fine-tune.
 
-# wang et al. (2024) benchmarks
+# RoZ benchmark (CVPR 2024)
 
 > see: https://arxiv.org/pdf/2403.10499
 >
-> has the same goal as us, but only focuses on CLIP's zero-shot classification perf across various adversarial robustness metrics
+> has the same goal as us - but only focuses on CLIP models for classification on ImageNet
+> 
+> key observations: Vision Transformer (ViT) architectures demonstrate better robustness against adversarial attacks compared to the CLIP models, so we should focus on them
 
-CLIP versions: ResNet50, ResNet101, ViT-B/32, ViT-B/16, ResNet50x4, ResNet50x16, AutoCLIP
+ranking by performance (based on table 2)
+
+1. **ViT-B/16** (Standard ImageNet model) - 84.20% accuracy
+2. **ResNet50x16** (CLIP model) - 70.67% accuracy
+3. ViT-B/32 (Standard ImageNet model)
+4. ResNet50x4 (CLIP model)
+5. ResNet101 (Standard ImageNet model)
+
+ranking by adversarial robustness (based on table 1, figure 8)
+
+1. **ViT-B/16** (Standard ImageNet model)
+2. ViT-B/32 (Standard ImageNet model)
+3. ResNet101 (Standard ImageNet model)
+4. ResNet50 (Standard ImageNet model)
+5. ResNet50x16 (CLIP model)
 
 # pwc benchmarks
 
@@ -105,7 +121,7 @@ zero shot object detection:
 
 *others:*
 
-- https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf) (great paper, zero shot but for vision-language models, not vision-only)
+- https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf) (great paper, but not a benchmark but critique of existing metrics)
 - https://huggingface.co/spaces/hf-vision/image_classification_leaderboard (only object detection, very limited)
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
