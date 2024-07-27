@@ -4,19 +4,14 @@ we want to improve vision-based turing-tests using advx.
 
 we're looking for the strongest zero shot models as of 2024. the models should be zero shot because we want to evaluate them against unseen captchas. they should be open source, easy to use and ideally also able to be fine-tuned.
 
-*leaderboards:*
-
-- https://paperswithcode.com/area/computer-vision ⭐️
-- https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf ⭐️
-- https://segmentmeifyoucan.com/leaderboard
-- https://huggingface.co/spaces/hf-vision/object_detection_leaderboard 
-- https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
-
 *metrics:*
 
 - https://huggingface.co/blog/object-detection-leaderboard
+- https://openreview.net/pdf?id=hdYqGkSr9S
 
-*benchmarks by papers-with-codes:*
+*papers-with-codes benchmarks:*
+
+see: https://paperswithcode.com/area/computer-vision
 
 - classification: image class labels
     
@@ -67,11 +62,26 @@ we're looking for the strongest zero shot models as of 2024. the models should b
 
         best dataset: MS-COCO 
 
-*other benchmarks:*
+*XYZ benchmarks:*
+
+
+- https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf ⭐️
 
 yolov10, sam, resnet, detr
 
+
+*excluded leaderboards (outdated or poor quality):*
+
+- https://huggingface.co/spaces/hf-vision/object_detection_leaderboard (very limited)
+- https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
+- https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
+- https://openreview.net/forum?id=hdYqGkSr9S&referrer=%5Bthe%20profile%20of%20Zhenlin%20Xu%5D(%2Fprofile%3Fid%3D~Zhenlin_Xu1) (from 2023)
+
 # 2. evaluate them against a variety of advx and captchas
+
+https://arxiv.org/pdf/2403.10499
+
+see: https://github.com/wang-research-lab/roz/blob/main/download_cifar.py / https://github.com/wang-research-lab/roz/blob/main/scripts/common_adversarial_attack/run_common_adversarial_attack.py
 
 generating advx:
 
