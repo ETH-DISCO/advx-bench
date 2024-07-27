@@ -24,7 +24,7 @@ ranking by performance (based on table 2)
 
 ranking by adversarial robustness (based on table 1, figure 8)
 
-1. **ViT-B/16** (Standard ImageNet model)
+1. **ViT-B/16** (Standard ImageNet model) 🔥
 2. ViT-B/32 (Standard ImageNet model)
 3. ResNet101 (Standard ImageNet model)
 4. ResNet50 (Standard ImageNet model)
