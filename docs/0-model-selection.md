@@ -4,6 +4,31 @@ we're looking for the strongest zero shot models as of july 2024.
 
 they must be open source, easy to use and fine-tune.
 
+
+
+# wang et al. (2024) 🔥
+
+very recent, uses just the right metrics and datasets.
+
+see: https://arxiv.org/pdf/2403.10499
+
+...
+
+# xu et al. (2023)
+
+> see: https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf
+> 
+> rejected from ICLR: https://openreview.net/forum?id=hdYqGkSr9S&referrer=%5Bthe%20profile%20of%20Zhenlin%20Xu%5D(%2Fprofile%3Fid%3D~Zhenlin_Xu1)
+> 
+> great benchmarking, but not zero-shot
+
+- classification:
+- segmentation:
+- detection:
+
+
+
+
 # pwc benchmarks
 
 > see: https://paperswithcode.com/area/computer-vision
@@ -57,24 +82,6 @@ zero shot object detection:
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0-val → Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
-
-# xu et al. (2023)
-
-> see: https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf
-> 
-> rejected from ICLR: https://openreview.net/forum?id=hdYqGkSr9S&referrer=%5Bthe%20profile%20of%20Zhenlin%20Xu%5D(%2Fprofile%3Fid%3D~Zhenlin_Xu1)
-> 
-> great benchmarking, but not zero-shot
-
-- classification:
-- segmentation:
-- detection:
-
-# wang et al. (2024) 🔥
-
-very recent, uses just the right metrics and datasets.
-
-see: https://arxiv.org/pdf/2403.10499
 
 # excluded
 
