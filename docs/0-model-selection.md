@@ -16,7 +16,7 @@ these are some of the best computer vision model benchmarks we found.
 
 ranking by performance (based on table 2)
 
-1. **ViT-B/16** (Standard ImageNet model) - 84.20% accuracy
+1. **ViT-B/16** (Standard ImageNet model) - 84.20% accuracy 🔥
 2. **ResNet50x16** (CLIP model) - 70.67% accuracy
 3. ViT-B/32 (Standard ImageNet model)
 4. ResNet50x4 (CLIP model)
