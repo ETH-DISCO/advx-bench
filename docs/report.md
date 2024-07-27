@@ -1,19 +1,22 @@
-> we want to improve vision-based turing-tests using advx.
+we want to improve vision-based turing-tests using advx.
 
-# 1. find the strongest models (as of July 2024)
+# 1. find the strongest models
 
-> find the best models (maybe also fine tune them)
+we're looking for the strongest zero shot models as of 2024. the models should be zero shot because we want to evaluate them against unseen captchas. they should be open source, easy to use and ideally also able to be fine-tuned.
 
 *leaderboards:*
 
-- https://paperswithcode.com/area/computer-vision ⭐️ ← most up to date, most comprehensive
+- https://paperswithcode.com/area/computer-vision ⭐️
+- https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf ⭐️
 - https://segmentmeifyoucan.com/leaderboard
 - https://huggingface.co/spaces/hf-vision/object_detection_leaderboard 
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 
-*tasks:*
+*metrics:*
 
-zero shot models are most relevant because we don't want to train on the specific captchas we're going to use.
+- https://huggingface.co/blog/object-detection-leaderboard
+
+*benchmarks by papers-with-codes:*
 
 - classification: image class labels
     
@@ -64,20 +67,9 @@ zero shot models are most relevant because we don't want to train on the specifi
 
         best dataset: MS-COCO 
 
+*other benchmarks:*
 
-
-
-
-
-
-possible models:
-
-- yolov9
-- resnet
-- imagenet
-- COCA model
-
-
+yolov10, sam, resnet, detr
 
 # 2. evaluate them against a variety of advx and captchas
 
@@ -88,7 +80,6 @@ generating advx:
 - https://paperswithcode.com/task/adversarial-attack-detection
 - see: http://videos.rennes.inria.fr/seminaire-SoSySec/Maura-Pintor-03-02-2023/20230203-Maura-Pintor-sosysec-slides.pdf
 - see: `torchattack`
-
 
 *datasets:*
 
