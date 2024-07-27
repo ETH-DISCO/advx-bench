@@ -33,6 +33,8 @@ object detection:
 - https://paperswithcode.com/area/computer-vision/object-detection
 - https://paperswithcode.com/area/computer-vision/2d-object-detection
 
+---
+
 zero shot classification:
 
 - https://paperswithcode.com/task/zero-shot-transfer-image-classification
@@ -70,26 +72,6 @@ zero shot object detection:
 
     most popular dataset: MS-COCO 
 
-## huggingface trends
-
-> see: https://huggingface.co/models
-> 
-> popularity doesn't always mean quality
-
-- zero shot classification: openai/clip-vit-large-patch14, google/siglip-so400m-patch14-384
-- segmentation: cidas/clipseg-rd64-refined
-- zero shot dectection: google/owlv2-base-patch16-ensemble, idea-research/grounding-dino-tiny
-
-## github trends
-
-> see: https://roboflow.com/models / https://ossinsight.io/collections/artificial-intelligence
-> 
-> popularity doesn't always mean quality
-
-- classification: yolov9, openai clip, google vit, google siglip, meta clip, resnet32
-- segmentation: nvidia segformer
-- detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
-
 ## goldblum et al. (2023)
 
 > see: https://arxiv.org/pdf/2310.19909 (see chapter: "4.1 Task-Specific Backbones")
@@ -123,13 +105,23 @@ very recent, uses just the right metrics and datasets.
 
 see: https://arxiv.org/pdf/2403.10499
 
-
-
-
-
 ## excluded benchmarks
 
-*excluded benchmarks (outdated or poor quality):*
+*huggingface trends:*
+
+- see: https://huggingface.co/models (popularity isn't a good metric)
+- zero shot classification: openai/clip-vit-large-patch14, google/siglip-so400m-patch14-384
+- segmentation: cidas/clipseg-rd64-refined
+- zero shot dectection: google/owlv2-base-patch16-ensemble, idea-research/grounding-dino-tiny
+
+*github trends:*
+
+- see: https://roboflow.com/models / https://ossinsight.io/collections/artificial-intelligence (popularity isn't a good metric)
+- classification: yolov9, openai clip, google vit, google siglip, meta clip, resnet32
+- segmentation: nvidia segformer
+- detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
+
+*other sources:*
 
 - https://huggingface.co/spaces/hf-vision/object_detection_leaderboard (very limited)
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
