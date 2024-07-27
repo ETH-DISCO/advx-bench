@@ -59,6 +59,8 @@ object detection:
 
 ---
 
+> LiT-22B isn't
+
 zero shot classification:
 
 - https://paperswithcode.com/task/zero-shot-transfer-image-classification
