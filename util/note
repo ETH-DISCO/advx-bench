@@ -1,5 +1,0 @@
-note to myself:
-
-implement reflection for the model classes by dynamically adding them to a list
-
-give all models the same interface for evaluation
