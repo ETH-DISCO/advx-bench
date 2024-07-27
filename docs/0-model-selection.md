@@ -14,17 +14,7 @@ see: https://arxiv.org/pdf/2403.10499
 
 ...
 
-# xu et al. (2023) benchmarks
 
-> see: https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf
-> 
-> rejected from ICLR: https://openreview.net/forum?id=hdYqGkSr9S&referrer=%5Bthe%20profile%20of%20Zhenlin%20Xu%5D(%2Fprofile%3Fid%3D~Zhenlin_Xu1)
-> 
-> great benchmarking, but not zero-shot
-
-- classification:
-- segmentation:
-- detection:
 
 
 
@@ -122,6 +112,7 @@ zero shot object detection:
 
 *others:*
 
+- https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf) (great paper, zero shot but for vision-language models, not vision-only)
 - https://huggingface.co/spaces/hf-vision/image_classification_leaderboard (only object detection, very limited)
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
