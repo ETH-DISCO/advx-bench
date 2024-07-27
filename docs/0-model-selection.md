@@ -113,17 +113,8 @@ see: https://arxiv.org/pdf/2403.10499
 - segmentation: nvidia segformer
 - detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
 
-*huggingface leaderboard:*
+*others:*
 
-> see: https://huggingface.co/spaces/hf-vision/image_classification_leaderboard
->
-> very limited, only shows obkect detection
-
-- deta-swin-large
-- deta-resnet-50-24
-- deta-resnet-50
-
-*other outdated benchmarks:*
-
+- https://huggingface.co/spaces/hf-vision/image_classification_leaderboard (only object detection, very limited)
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
