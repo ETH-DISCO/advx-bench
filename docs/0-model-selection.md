@@ -119,7 +119,17 @@ zero shot object detection:
 - segmentation: nvidia segformer
 - detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
 
-## 1.6. other benchmarks worth mentioning
+## 1.6 pytorch image models
+
+> see: https://github.com/huggingface/pytorch-image-models
+> 
+> analytics: https://www.kaggle.com/code/jhoward/which-image-models-are-best
+>
+> perfect
+
+
+
+## 1.7. other benchmarks worth mentioning
 
 these benchmarks are outdated or not comprehensive enough:
 
@@ -132,26 +142,50 @@ these benchmarks are outdated or not comprehensive enough:
 
 some of the most recent breakthroughs in zero shot image recognition (this umbrella term includes cls, seg, det) are:
 
-- openai clip @ 2021 (frequently updated):
-    - https://arxiv.org/abs/2103.00020v1
-    - https://openai.com/index/clip/
-    - https://github.com/openai/CLIP
+openai clip @ 2021 (frequently updated):
+
+- https://arxiv.org/abs/2103.00020v1
+- https://openai.com/index/clip/
+- https://github.com/openai/CLIP
+- https://github.com/openai/CLIP/blob/main/model-card.md
+- https://deepgram.com/ai-glossary/zero-shot-classification-models
+- https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
+- https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
+- most influential and widely-used models for zero-shot image classification
+- same performance as ResNet50 on ImageNet zero-shot classification
+- uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
+- implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
+- variations:
     - https://github.com/mlfoundations/open_clip → also handles CoCa
-    - https://github.com/openai/CLIP/blob/main/model-card.md
-    - https://deepgram.com/ai-glossary/zero-shot-classification-models
-    - most influential and widely-used models for zero-shot image classification
-    - same performance as ResNet50 on ImageNet zero-shot classification
-    - uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
-    - implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
-- google lit @ 2021:
-    - https://arxiv.org/abs/2111.07991
-    - https://github.com/google-research/vision_transformer?tab=readme-ov-file
-    - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
-    - based on clip, but beats it in zero-shot classification
+    - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
 
-- grounded sam @ 2024
-    - https://arxiv.org/abs/2401.14159
-    - https://github.com/IDEA-Research/Grounded-Segment-Anything
+google lit @ 2021:
 
-- yolo
-    - yolo world: https://github.com/AILab-CVC/YOLO-World
+- https://arxiv.org/abs/2111.07991
+- https://github.com/google-research/vision_transformer
+- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
+- based on clip, but beats it in zero-shot classification
+
+grounded sam @ 2024:
+
+- https://arxiv.org/abs/2401.14159
+- https://github.com/IDEA-Research/Grounded-Segment-Anything
+
+
+
+yolo:
+
+- yolo world: https://github.com/AILab-CVC/YOLO-World
+
+
+
+coca:
+
+- https://arxiv.org/abs/2205.01917
+
+
+eva-clip-18b
+
+- https://arxiv.org/pdf/2402.04252
+- https://huggingface.co/papers/2402.04252
+
