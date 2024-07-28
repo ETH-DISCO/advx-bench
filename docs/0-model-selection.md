@@ -6,11 +6,7 @@ they must be open source, easy to use and fine-tune.
 
 these are some of the best computer vision model benchmarks we found.
 
-some of the most recent breakthroughs in zero shot learning are:
-
-- CLIP:
-
-# 1. Model Selection
+# 1. model selection
 
 ## 1.1. RoZ benchmark (CVPR 2024)
 
@@ -92,24 +88,22 @@ zero shot object detection:
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
 
-## 1.3. excluded benchmarks
-
-*goldblum et al. (2023):*
+## 1.3. goldblum et al. (2023):
 
 > see: https://arxiv.org/pdf/2310.19909 (see chapter: "4.1 Task-Specific Backbones")
 > 
 > very thoughtful benchmarking based on the most significant metrics, but only focused on backbones (feature extraction)
 
 - classification:
-    1. Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
-    2. CLIP ViT-Base trained on IN-21k
-    3. Supervised ConvNeXt-Base trained on IN-21k
+    - Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
+    - CLIP ViT-Base trained on IN-21k
+    - Supervised ConvNeXt-Base trained on IN-21k
 - segmentation and detection (same results):
-    1. Supervised ConvNeXt-Base trained on IN-21K
-    2. Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
-    3. Supervised ConvNeXt-Base trained on IN-1k
+    - Supervised ConvNeXt-Base trained on IN-21K
+    - Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
+    - Supervised ConvNeXt-Base trained on IN-1k
 
-*huggingface trends:*
+## 1.4. huggingface trends
 
 > see: https://huggingface.co/models
 > 
@@ -119,7 +113,7 @@ zero shot object detection:
 - segmentation: cidas/clipseg-rd64-refined
 - zero shot dectection: google/owlv2-base-patch16-ensemble, idea-research/grounding-dino-tiny
 
-*github trends:*
+## 1.5 github trends
 
 > see: https://roboflow.com/models / https://ossinsight.io/collections/artificial-intelligence
 > 
@@ -129,9 +123,17 @@ zero shot object detection:
 - segmentation: nvidia segformer
 - detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
 
-*others:*
+## 1.6. other benchmarks worth mentioning
+
+these benchmarks are outdated or not comprehensive enough:
 
 - https://www.amazon.science/publications/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity / https://assets.amazon.science/cb/e3/e85cc0ca4eb2a81cb223e973ae6e/benchmarking-zero-shot-recognition-with-vision-language-models-challenges-on-granularity-and-specificity.pdf) (great paper, but not a benchmark but critique of existing metrics)
 - https://huggingface.co/spaces/hf-vision/image_classification_leaderboard (only object detection, very limited)
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
+
+## 1.7. conclusion
+
+some of the most recent breakthroughs in zero shot image recognition (this umbrella term includes cls, seg, det) are:
+
+- CLIP:
