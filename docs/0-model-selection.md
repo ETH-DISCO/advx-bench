@@ -4,7 +4,7 @@ we're looking for the strongest zero shot models as of july 2024.
 
 they must be open source, easy to use and fine-tune.
 
-these are some of the best computer vision model benchmarks we found.
+these are our findings.
 
 # 1. model selection
 
@@ -60,8 +60,6 @@ object detection:
 - https://paperswithcode.com/area/computer-vision/2d-object-detection
 
 ---
-
-> LiT-22B isn't
 
 zero shot classification:
 
@@ -137,3 +135,6 @@ these benchmarks are outdated or not comprehensive enough:
 some of the most recent breakthroughs in zero shot image recognition (this umbrella term includes cls, seg, det) are:
 
 - CLIP:
+    - https://github.com/openai/CLIP
+    - matches ResNet50 on ImageNet zero-shot classification
+

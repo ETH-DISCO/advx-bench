@@ -44,26 +44,30 @@ CONDA_DEACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda d
 CONDA_ACTIVATE_BASE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate base
 CONDA_ACTIVATE_CON = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate con
 
-.PHONY: conda-snapshot # generate conda yaml file
-conda-snapshot:
+.PHONY: conda-install # install conda environment from scratch and export it
+conda-install:
 	# conda config --env --set subdir osx-64
 	# conda config --env --set subdir osx-arm64
 	conda config --set auto_activate_base false
 	conda info
 
 	$(CONDA_ACTIVATE_BASE)
-	conda create --yes --name con python=3.11 anaconda
+	conda create --yes --name con python=3.11
 
 	$(CONDA_ACTIVATE_CON)
-	pip install -r requirements.txt
+	pip install --upgrade pip
+	pip install --upgrade setuptools
+	pip install --upgrade wheel
+
+	pip install clip flax jax numpy tensorflow clu dataclasses scipy torchvision pillow torch torchvision timm tqdm opencv-python transformers eagerpy tensorboard matplotlib torchsummary pandas
+	# pip install cudatoolkit cudnn
 
 	conda env export --name con > conda-environment.yml
-
 	$(CONDA_DEACTIVATE)
 	conda remove --yes --name con --all
 
-.PHONY: conda-install # install conda environment from yaml file
-conda-install:
+.PHONY: conda-install-snapshot # install conda environment from yaml file
+conda-install-snapshot:
 	$(CONDA_ACTIVATE_BASE)
 	conda env create --file conda-environment.yml
 
