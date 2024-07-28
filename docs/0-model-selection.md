@@ -125,9 +125,19 @@ zero shot object detection:
 > 
 > analytics: https://www.kaggle.com/code/jhoward/which-image-models-are-best
 >
-> perfect
+> not comprehensive, but a good overview
 
+top1 accuracy by family:
 
+- beit (88.60% top1, by beit_large_patch16_512.in22k_ft_in22k_in1k)
+- convnext (87.47% top1, by convnext_large.fb_in22k_ft_in1k_384)
+- swin (87.13% top1, by swin_large_patch4_window12_384.ms_in22k_ft_in1k)
+- efficientnetv2 (84.81% top1, by efficientnetv2_rw_m.agc_in1k)
+- resnetd (83.96% top1, by resnet200d.ra2_in1k)
+- resnet (83.45% top1, by resnet152.a1h_in1k)
+- regnetx (82.81% top1, by regnetx_320.tv2_in1k)
+- levit (82.60% top1, by levit_384.fb_dist_in1k)
+- vgg (74.22% top1, by vgg19_bn.tv_in1k)
 
 ## 1.7. other benchmarks worth mentioning
 
