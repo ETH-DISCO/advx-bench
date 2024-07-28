@@ -6,7 +6,13 @@ they must be open source, easy to use and fine-tune.
 
 these are some of the best computer vision model benchmarks we found.
 
-# RoZ benchmark (CVPR 2024)
+some of the most recent breakthroughs in zero shot learning are:
+
+- CLIP:
+
+# Literature Review
+
+## RoZ benchmark (CVPR 2024)
 
 > see: https://arxiv.org/pdf/2403.10499
 >
@@ -30,7 +36,7 @@ ranking by adversarial robustness (based on table 1, figure 8)
 4. ResNet50 (Standard ImageNet model)
 5. ResNet50x16 (CLIP model)
 
-# pwc benchmarks
+## pwc benchmarks
 
 > see: https://paperswithcode.com/area/computer-vision
 >
@@ -86,7 +92,7 @@ zero shot object detection:
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
 
-# excluded benchmarks
+## excluded benchmarks
 
 *goldblum et al. (2023):*
 
