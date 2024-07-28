@@ -12,7 +12,7 @@ these are our findings.
 
 > see: https://arxiv.org/pdf/2403.10499
 >
-> has the same goal as us - only focuses on CLIP models for cls tasks on ImageNet
+> has the same goal as us - but only focuses on **CLIP models** for cls tasks on ImageNet
 
 ranking by performance (based on table 2)
 
@@ -125,7 +125,7 @@ zero shot object detection:
 > 
 > analytics: https://www.kaggle.com/code/jhoward/which-image-models-are-best
 >
-> not comprehensive, not based on zero-shot, but a very good overview
+> not comprehensive, not zero-shot, but a very good quantitative benchmark
 
 top1 accuracy by family:
 
@@ -152,7 +152,7 @@ these benchmarks are outdated or not comprehensive enough:
 
 some of the most recent breakthroughs in zero shot image recognition (this umbrella term includes cls, seg, det) are:
 
-openai clip @ 2021 (frequently updated):
+openai clip @ 2021:
 
 - https://arxiv.org/abs/2103.00020v1
 - https://openai.com/index/clip/
@@ -176,16 +176,14 @@ google lit @ 2021:
 - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
 - based on clip, but beats it in zero-shot classification
 
-grounded sam @ 2024:
 
-- https://arxiv.org/abs/2401.14159
-- https://github.com/IDEA-Research/Grounded-Segment-Anything
 
 
 
 yolo:
 
 - yolo world: https://github.com/AILab-CVC/YOLO-World
+
 
 
 
@@ -199,3 +197,51 @@ eva-clip-18b
 - https://arxiv.org/pdf/2402.04252
 - https://huggingface.co/papers/2402.04252
 
+
+
+
+google efficientnet @ 2020:
+
+- https://arxiv.org/pdf/1905.11946
+- https://github.com/lukemelas/EfficientNet-PyTorch/blob/2eb7a7d264344ddf15d0a06ee99b0dca524c6a07/efficientnet_pytorch/model.py#L143
+
+
+
+
+## 2.2. best models for segmentation
+
+gem metaclip @ 2024:
+
+- https://arxiv.org/pdf/2309.16671
+- https://github.com/facebookresearch/MetaCLIP
+- beats clip and openclip substatially in zero-shot segmentation
+
+grounded hq-sam @ 2023:
+
+- https://arxiv.org/abs/2306.01567
+- https://github.com/SysCV/sam-hq
+
+grounded sam @ 2024:
+
+- https://arxiv.org/abs/2401.14159
+- https://github.com/IDEA-Research/Grounded-Segment-Anything
+
+sam @ 2023:
+
+- https://github.com/facebookresearch/segment-anything
+- https://arxiv.org/pdf/2304.02643
+
+
+## 2.3. best models for object detection
+
+grounding dino @ 2024:
+
+- https://arxiv.org/abs/2303.05499
+- https://github.com/IDEA-Research/GroundingDINO
+- https://github.com/IDEA-Research/Grounding-DINO-1.5-API (improved)
+- DINO is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
+
+owlv2 @ 2023:
+
+- https://arxiv.org/abs/2305.01917
+- https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
