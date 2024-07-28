@@ -22,19 +22,19 @@ some of the most recent breakthroughs in zero shot learning are:
 
 ranking by performance (based on table 2)
 
-1. **ViT-B/16** (Standard ImageNet model) - 84.20% accuracy 🔥
-2. **ResNet50x16** (CLIP model) - 70.67% accuracy
-3. ViT-B/32 (Standard ImageNet model)
-4. ResNet50x4 (CLIP model)
-5. ResNet101 (Standard ImageNet model)
+- **ViT-B/16** (Standard ImageNet model) - 84.20% accuracy 🔥
+- **ResNet50x16** (CLIP model) - 70.67% accuracy
+- ViT-B/32 (Standard ImageNet model)
+- ResNet50x4 (CLIP model)
+- ResNet101 (Standard ImageNet model)
 
 ranking by adversarial robustness (based on table 1, figure 8)
 
-1. **ViT-B/16** (Standard ImageNet model) 🔥
-2. ViT-B/32 (Standard ImageNet model)
-3. ResNet101 (Standard ImageNet model)
-4. ResNet50 (Standard ImageNet model)
-5. ResNet50x16 (CLIP model)
+- **ViT-B/16** (Standard ImageNet model) 🔥
+- ViT-B/32 (Standard ImageNet model)
+- ResNet101 (Standard ImageNet model)
+- ResNet50 (Standard ImageNet model)
+- ResNet50x16 (CLIP model)
 
 ## 1.2. pwc benchmarks
 
