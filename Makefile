@@ -63,8 +63,6 @@ conda-install:
 	# pip install cudatoolkit cudnn
 
 	conda env export --name con > conda-environment.yml
-	$(CONDA_DEACTIVATE)
-	conda remove --yes --name con --all
 
 .PHONY: conda-install-snapshot # install conda environment from yaml file
 conda-install-snapshot:
@@ -78,6 +76,7 @@ conda-install-snapshot:
 conda-clean:
 	conda remove --yes --name con --all
 	conda env list
+	$(CONDA_DEACTIVATE)
 
 # --------------------------------------------------------------- help
 

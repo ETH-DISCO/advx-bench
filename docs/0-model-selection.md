@@ -8,13 +8,11 @@ these are our findings.
 
 # 1. model selection
 
-## 1.1. RoZ benchmark (CVPR 2024)
+## 1.1. RoZ benchmark (CVPR 2024) 🔥
 
 > see: https://arxiv.org/pdf/2403.10499
 >
-> has the same goal as us - but only focuses on CLIP models for classification on ImageNet
-> 
-> note: Vision Transformer (ViT) architectures demonstrate better robustness against adversarial attacks compared to the CLIP models, so we should focus on them
+> has the same goal as us - only focuses on CLIP models for cls tasks on ImageNet
 
 ranking by performance (based on table 2)
 
@@ -130,11 +128,30 @@ these benchmarks are outdated or not comprehensive enough:
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
 
-## 1.7. conclusion
+# 2. conclusion
 
 some of the most recent breakthroughs in zero shot image recognition (this umbrella term includes cls, seg, det) are:
 
-- CLIP:
+- openai clip @ 2021 (frequently updated):
+    - https://arxiv.org/abs/2103.00020v1
+    - https://openai.com/index/clip/
     - https://github.com/openai/CLIP
-    - matches ResNet50 on ImageNet zero-shot classification
+    - https://github.com/mlfoundations/open_clip → also handles CoCa
+    - https://github.com/openai/CLIP/blob/main/model-card.md
+    - https://deepgram.com/ai-glossary/zero-shot-classification-models
+    - most influential and widely-used models for zero-shot image classification
+    - same performance as ResNet50 on ImageNet zero-shot classification
+    - uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
+    - implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
+- google lit @ 2021:
+    - https://arxiv.org/abs/2111.07991
+    - https://github.com/google-research/vision_transformer?tab=readme-ov-file
+    - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
+    - based on clip, but beats it in zero-shot classification
 
+- grounded sam @ 2024
+    - https://arxiv.org/abs/2401.14159
+    - https://github.com/IDEA-Research/Grounded-Segment-Anything
+
+- yolo
+    - yolo world: https://github.com/AILab-CVC/YOLO-World
