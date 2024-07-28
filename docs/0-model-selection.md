@@ -119,7 +119,7 @@ zero shot object detection:
 - segmentation: nvidia segformer
 - detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
 
-## 1.6 pytorch image models
+## 1.6 pytorch image models benchmarks
 
 > see: https://github.com/huggingface/pytorch-image-models
 > 
@@ -218,7 +218,6 @@ sam @ 2023:
 
 - https://github.com/facebookresearch/segment-anything
 - https://arxiv.org/pdf/2304.02643
-
 
 ## 2.3. best models for object detection
 
