@@ -10,9 +10,9 @@ some of the most recent breakthroughs in zero shot learning are:
 
 - CLIP:
 
-# Literature Review
+# 1. Model Selection
 
-## RoZ benchmark (CVPR 2024)
+## 1.1. RoZ benchmark (CVPR 2024)
 
 > see: https://arxiv.org/pdf/2403.10499
 >
@@ -36,7 +36,7 @@ ranking by adversarial robustness (based on table 1, figure 8)
 4. ResNet50 (Standard ImageNet model)
 5. ResNet50x16 (CLIP model)
 
-## pwc benchmarks
+## 1.2. pwc benchmarks
 
 > see: https://paperswithcode.com/area/computer-vision
 >
@@ -92,7 +92,7 @@ zero shot object detection:
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
 
-## excluded benchmarks
+## 1.3. excluded benchmarks
 
 *goldblum et al. (2023):*
 
