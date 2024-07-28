@@ -202,7 +202,7 @@ gem metaclip @ 2024:
 
 - https://arxiv.org/pdf/2309.16671
 - https://github.com/facebookresearch/MetaCLIP
-- beats clip and openclip substatially in zero-shot segmentation
+- beats clip and openclip by a wide margin in zero-shot segmentation
 
 grounded hq-sam @ 2023:
 
