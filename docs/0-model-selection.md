@@ -152,6 +152,27 @@ these benchmarks are outdated or not comprehensive enough:
 
 some of the most recent breakthroughs in zero shot image recognition (this umbrella term includes cls, seg, det) are:
 
+## 2.1. best models for classification
+
+google lit @ 2021:
+
+- https://arxiv.org/abs/2111.07991
+- https://github.com/google-research/vision_transformer
+- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
+- based on clip, but beats it in zero-shot classification
+
+coca @ 2022:
+
+- https://arxiv.org/abs/2205.01917
+- https://github.com/lucidrains/CoCa-pytorch
+
+eva-clip-18b @ 2023:
+
+- https://arxiv.org/pdf/2402.04252
+- https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
+- https://huggingface.co/papers/2402.04252
+- clip with 18 billion parameters
+
 openai clip @ 2021:
 
 - https://arxiv.org/abs/2103.00020v1
@@ -169,44 +190,11 @@ openai clip @ 2021:
     - https://github.com/mlfoundations/open_clip → also handles CoCa
     - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
 
-google lit @ 2021:
-
-- https://arxiv.org/abs/2111.07991
-- https://github.com/google-research/vision_transformer
-- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
-- based on clip, but beats it in zero-shot classification
-
-
-
-
-
-yolo:
-
-- yolo world: https://github.com/AILab-CVC/YOLO-World
-
-
-
-
-coca:
-
-- https://arxiv.org/abs/2205.01917
-
-
-eva-clip-18b
-
-- https://arxiv.org/pdf/2402.04252
-- https://huggingface.co/papers/2402.04252
-
-
-
-
 google efficientnet @ 2020:
 
 - https://arxiv.org/pdf/1905.11946
+- https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
 - https://github.com/lukemelas/EfficientNet-PyTorch/blob/2eb7a7d264344ddf15d0a06ee99b0dca524c6a07/efficientnet_pytorch/model.py#L143
-
-
-
 
 ## 2.2. best models for segmentation
 
@@ -245,3 +233,8 @@ owlv2 @ 2023:
 
 - https://arxiv.org/abs/2305.01917
 - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
+
+mq @ 2023:
+
+- https://arxiv.org/pdf/2305.18980v2
+- https://github.com/yifanxu74/mq-det
