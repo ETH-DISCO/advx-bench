@@ -125,7 +125,7 @@ zero shot object detection:
 > 
 > analytics: https://www.kaggle.com/code/jhoward/which-image-models-are-best
 >
-> not comprehensive, but a good overview
+> not comprehensive, not based on zero-shot, but a very good overview
 
 top1 accuracy by family:
 
