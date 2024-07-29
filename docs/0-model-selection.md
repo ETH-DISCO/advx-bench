@@ -84,7 +84,7 @@ zero shot object detection:
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
 
-## 1.3. goldblum et al. (2023):
+## 1.3. goldblum et al. (2023)
 
 > see: https://arxiv.org/pdf/2310.19909 (see chapter: "4.1 Task-Specific Backbones")
 > 
