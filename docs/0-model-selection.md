@@ -171,6 +171,7 @@ coca @ 2022:
 
 - https://arxiv.org/abs/2205.01917
 - https://github.com/lucidrains/CoCa-pytorch
+- best to install via openclip 🔥
 
 eva-clip-18b @ 2023:
 
