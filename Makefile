@@ -59,8 +59,8 @@ conda-install:
 	pip install --upgrade setuptools
 	pip install --upgrade wheel
 
-	pip install clip flax jax numpy tensorflow clu dataclasses scipy torchvision pillow torch torchvision timm tqdm opencv-python transformers eagerpy tensorboard matplotlib torchsummary pandas
-	# pip install cudatoolkit cudnn
+	# ... add all dependencies here
+	pip install numpy
 
 	conda env export --name con > conda-environment.yml
 
