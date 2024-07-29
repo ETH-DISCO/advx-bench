@@ -234,6 +234,7 @@ owlv2 @ 2023:
 
 - https://arxiv.org/abs/2305.01917
 - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
+- ✅ very straightforward to use
 
 mq @ 2023:
 
