@@ -172,6 +172,7 @@ eva-clip-18b @ 2023:
 - https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
 - https://huggingface.co/papers/2402.04252
 - clip with 18 billion parameters
+- 35.3GB model size
 
 openai clip @ 2021:
 

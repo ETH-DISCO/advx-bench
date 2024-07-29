@@ -1,8 +1,9 @@
-evaluate models against a variety of advx
+evaluate models against an advx dataset
 
-see: https://github.com/wang-research-lab/roz/blob/main/download_cifar.py / https://github.com/wang-research-lab/roz/blob/main/scripts/common_adversarial_attack/run_common_adversarial_attack.py
+see:
 
-https://timm.fast.ai/
+- https://github.com/wang-research-lab/roz/blob/main/download_cifar.py
+- https://github.com/wang-research-lab/roz/blob/main/scripts/common_adversarial_attack/run_common_adversarial_attack.py
 
 generating advx:
 
