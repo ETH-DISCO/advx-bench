@@ -148,6 +148,8 @@ these benchmarks are outdated or not comprehensive enough:
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
 
+---
+
 # 2. conclusion
 
 some of the most recent breakthroughs in zero shot image recognition (this umbrella term includes cls, seg, det) are:
