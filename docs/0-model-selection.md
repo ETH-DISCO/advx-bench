@@ -165,7 +165,7 @@ google lit @ 2021:
 - https://github.com/google-research/vision_transformer
 - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
 - based on clip, but beats it in zero-shot classification
-- easy to install via huggingface 🔥
+- ❌ i have no idea how to install this
 
 coca @ 2022:
 
