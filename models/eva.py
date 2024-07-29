@@ -1,3 +1,7 @@
+"""
+this fried my laptop
+"""
+
 from PIL import Image
 from transformers import AutoModel, AutoConfig
 from transformers import CLIPImageProcessor, pipeline, CLIPTokenizer
@@ -14,7 +18,8 @@ processor = CLIPImageProcessor.from_pretrained("openai/clip-vit-large-patch14")
 model = AutoModel.from_pretrained(
     model_name_or_path, 
     torch_dtype=torch.float16,
-    trust_remote_code=True).to('mps').eval()
+    trust_remote_code=True
+).to('mps').eval()
 
 image = Image.open(image_path)
 captions = ["a diagram", "a dog", "a cat"]
