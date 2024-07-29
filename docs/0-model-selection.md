@@ -8,7 +8,10 @@ these are our findings.
 
 # 1. model selection
 
-see comprehensive collection of vision model family types here: https://huggingface.co/docs/transformers/en/model_doc/beit
+overview:
+
+- huggingface: https://huggingface.co/docs/transformers/en/model_doc/beit
+- timm: https://huggingface.co/docs/timm/en/models
 
 ## 1.1. RoZ benchmark (CVPR 2024) 🔥
 
@@ -197,7 +200,8 @@ google efficientnet @ 2020:
 
 - https://arxiv.org/pdf/1905.11946
 - https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
-- https://github.com/lukemelas/EfficientNet-PyTorch/blob/2eb7a7d264344ddf15d0a06ee99b0dca524c6a07/efficientnet_pytorch/model.py#L143
+- https://huggingface.co/google/efficientnet-b0
+- https://huggingface.co/docs/timm/en/models/efficientnet
 
 ## 2.2. best models for segmentation
 
