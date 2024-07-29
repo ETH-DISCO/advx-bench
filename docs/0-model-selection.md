@@ -172,7 +172,7 @@ eva-clip-18b @ 2023:
 - https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
 - https://huggingface.co/papers/2402.04252
 - clip with 18 billion parameters
-- ❌ 35.3GB model size, really difficult installation process
+- ❌ 35.3GB model size, based on apex and xformer for distributed training
 
 openai clip @ 2021:
 
@@ -217,8 +217,9 @@ grounded sam @ 2024:
 
 sam @ 2023:
 
-- https://github.com/facebookresearch/segment-anything
 - https://arxiv.org/pdf/2304.02643
+- https://github.com/facebookresearch/segment-anything
+- ✅ very straightforward
 
 ## 2.3. best models for object detection
 
@@ -234,9 +235,10 @@ owlv2 @ 2023:
 
 - https://arxiv.org/abs/2305.01917
 - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
-- ✅ very straightforward to use
+- ✅ very straightforward to use, small footprint
 
-mq @ 2023:
+mq-det @ 2023:
 
 - https://arxiv.org/pdf/2305.18980v2
 - https://github.com/yifanxu74/mq-det
+- ❌ installation process unclear
