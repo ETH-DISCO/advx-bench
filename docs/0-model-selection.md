@@ -8,6 +8,8 @@ these are our findings.
 
 # 1. model selection
 
+see comprehensive collection of vision model family types here: https://huggingface.co/docs/transformers/en/model_doc/beit
+
 ## 1.1. RoZ benchmark (CVPR 2024) 🔥
 
 > see: https://arxiv.org/pdf/2403.10499
