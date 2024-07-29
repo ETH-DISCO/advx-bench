@@ -214,6 +214,7 @@ grounded sam @ 2024:
 
 - https://arxiv.org/abs/2401.14159
 - https://github.com/IDEA-Research/Grounded-Segment-Anything
+- comes with docker container, can be managed with docker-compose
 
 sam @ 2023:
 
