@@ -209,6 +209,7 @@ grounded hq-sam @ 2023:
 
 - https://arxiv.org/abs/2306.01567
 - https://github.com/SysCV/sam-hq
+- ❌ model checkpoint must be downloaded from sketchy google drive link, only works with cuda
 
 grounded sam @ 2024:
 
