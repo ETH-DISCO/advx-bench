@@ -172,7 +172,7 @@ eva-clip-18b @ 2023:
 - https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
 - https://huggingface.co/papers/2402.04252
 - clip with 18 billion parameters
-- 35.3GB model size
+- ❌ 35.3GB model size, really difficult installation process
 
 openai clip @ 2021:
 
@@ -228,6 +228,7 @@ grounding dino @ 2024:
 - https://github.com/IDEA-Research/GroundingDINO
 - https://github.com/IDEA-Research/Grounding-DINO-1.5-API (improved)
 - DINO is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
+-  ❌ not open source - you have to pay for their api key from https://deepdataspace.com/request_api
 
 owlv2 @ 2023:
 
