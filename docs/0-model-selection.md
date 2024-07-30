@@ -273,9 +273,7 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. seg
 
-> these are object segmentation models, not semantic segmentation models which makes them less useful for our purposes
->
-> i therefore decided to leave them out from our evaluation pipeline
+> none of these models are capable of semantic queries (ie. "segment a cat"). they are only capable of zero-shot segmentation (ie. "segment anything") so they are not useful for our purposes. i couldn't find any alternatives and decided to leave segmentation out of our evaluation pipeline.
 
 sam vit @ 2023:
 
