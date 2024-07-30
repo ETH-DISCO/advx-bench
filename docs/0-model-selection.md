@@ -10,6 +10,7 @@ overview:
 
 - huggingface: https://huggingface.co/docs/transformers/en/model_doc/beit
 - timm: https://huggingface.co/docs/timm/en/models
+- course: https://huggingface.co/learn/computer-vision-course/en/unit4/multimodal-models/pre-intro
 
 ## 1.1. RoZ benchmark (CVPR 2024) 🔥
 
@@ -162,13 +163,13 @@ google lit @ 2021:
 - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
 - https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
 - based on clip, but beats it in zero-shot classification
-- usage: https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb 🔥
+- usage: https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb 🔥🔥🔥
 
 coca @ 2022:
 
 - https://arxiv.org/abs/2205.01917
 - https://github.com/lucidrains/CoCa-pytorch
-- best to install via openclip 🔥
+- best to install via openclip 🔥🔥🔥
 
 eva-clip-18b @ 2023:
 
@@ -176,11 +177,11 @@ eva-clip-18b @ 2023:
 - https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
 - https://huggingface.co/papers/2402.04252
 - https://huggingface.co/models?search=evaclip
-    - https://huggingface.co/BAAI/EVA-CLIP-8B (should be installable) 🔥
+    - https://huggingface.co/BAAI/EVA-CLIP-8B (should be installable) 🔥🔥🔥
     - https://huggingface.co/BAAI/EVA-CLIP-8B-448
     - https://huggingface.co/BAAI/EVA-CLIP-18B
 - clip with 18 billion parameters
-- 35.3GB model size, based on apex and xformer for distributed training
+- the largest model is 35.3GB large, trained using apex and xformer
 
 google efficientnet @ 2020:
 
@@ -188,7 +189,7 @@ google efficientnet @ 2020:
 - https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
 - https://huggingface.co/google/efficientnet-b0
 - https://huggingface.co/docs/timm/en/models/efficientnet
-- easy to install via huggingface 🔥
+- easy to install via huggingface 🔥🔥🔥
 
 openai clip @ 2021:
 
@@ -205,9 +206,9 @@ openai clip @ 2021:
 - implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
     - see implementation by RoZ benchmark paper
     - makes more sense than using vanilla resnet: https://huggingface.co/microsoft/resnet-50
-    - most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥
+    - most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥🔥🔥
 - variations:
-    - https://github.com/mlfoundations/open_clip → also handles CoCa 🔥
+    - https://github.com/mlfoundations/open_clip → also handles CoCa 🔥🔥🔥
     - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
 
 ## 2.2. seg
@@ -218,7 +219,7 @@ gem metaclip @ 2024:
 - https://github.com/facebookresearch/MetaCLIP
 - https://huggingface.co/models?search=metaclip
 - beats clip and openclip by a wide margin in zero-shot segmentation
-- easy to install via huggingface 🔥
+- easy to install via huggingface 🔥🔥🔥
 
 grounded hq-sam @ 2023:
 
@@ -231,7 +232,7 @@ grounded sam @ 2024:
 - https://arxiv.org/abs/2401.14159
 - https://github.com/IDEA-Research/Grounded-Segment-Anything
 - https://huggingface.co/spaces/linfanluntan/Grounded-SAM
-- ❌ comes with docker container, can be managed with docker-compose, but docker is a pain to use with nvidia gpus
+- ❌ comes with docker container that can be orchestrated using docker-compose, but docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend and is very time consuming to set up to work with cuda
 
 sam vit @ 2023:
 
@@ -239,30 +240,37 @@ sam vit @ 2023:
 - https://github.com/facebookresearch/segment-anything
 - https://huggingface.co/facebook/sam-vit-base
 - https://huggingface.co/facebook/sam-vit-huge
-- ✅ very straightforward
+- very straightforward to install via huggingface 🔥🔥🔥
 
 ## 2.3. det
+
+grounding dino 1.5 @ 2024:
+
+- https://arxiv.org/abs/2303.05499
+- https://github.com/IDEA-Research/Grounding-DINO-1.5-API
+- bleeding edge, still actively being developed
+- ❌ not open source, you have to pay for their api key from https://deepdataspace.com/request_api
 
 grounding dino @ 2024:
 
 - https://arxiv.org/abs/2303.05499
 - https://github.com/IDEA-Research/GroundingDINO
-- https://github.com/IDEA-Research/Grounding-DINO-1.5-API (improved)
-- DINO is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
-- not open source - you have to pay for their api key from https://deepdataspace.com/request_api
-- alternatives:
-    - https://huggingface.co/IDEA-Research/grounding-dino-base 🔥
-    - https://huggingface.co/IDEA-Research/grounding-dino-tiny
+- dino is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
+- bleeding edge, still actively being developed
+- https://huggingface.co/IDEA-Research/grounding-dino-base
+- https://huggingface.co/IDEA-Research/grounding-dino-tiny
+- very straightforward to install via huggingface 🔥🔥🔥
 
 owlv2 @ 2023:
 
 - https://arxiv.org/abs/2305.01917
 - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32
 - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
-- very straightforward to use, small footprint 🔥
+- very straightforward to use, small footprint 🔥🔥🔥
 
 mq-det @ 2023:
 
 - https://arxiv.org/pdf/2305.18980v2
 - https://github.com/yifanxu74/mq-det
-- ❌ installation process unclear
+- installation:
+    - process unclear, weights have to be downloaded manually
