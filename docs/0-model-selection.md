@@ -226,7 +226,41 @@ clip-dinoiser @ 2023:
 - ✅ installation:
     - https://github.com/wysoczanska/clip_dinoiser/
 
-## 2.2. seg
+## 2.2. det
+
+grounding dino @ 2024:
+
+- https://arxiv.org/abs/2303.05499
+- https://github.com/IDEA-Research/GroundingDINO
+- dino is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
+- bleeding edge, still actively being developed
+- ✅ installation:
+    - https://huggingface.co/IDEA-Research/grounding-dino-base
+    - https://huggingface.co/IDEA-Research/grounding-dino-tiny
+
+owlv2 / owlvit @ 2023:
+
+- https://arxiv.org/abs/2305.01917
+- ✅ installation:
+    - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
+    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate)
+
+mq-det @ 2023:
+
+- https://arxiv.org/pdf/2305.18980v2
+- https://github.com/yifanxu74/mq-det
+- ❌ installation:
+    - instructions unclear, environment not reproducible, weights have to be downloaded manually
+
+grounding dino 1.5 @ 2024:
+
+- https://arxiv.org/abs/2303.05499
+- https://github.com/IDEA-Research/Grounding-DINO-1.5-API
+- bleeding edge, still actively being developed
+- ❌ installation:
+    - only through paid api https://deepdataspace.com/request_api, not open source
+
+## 2.3. seg
 
 gem metaclip @ 2024:
 
@@ -263,37 +297,3 @@ grounded hq-sam @ 2023:
 - ❌ installation:
     - model checkpoint must be downloaded from sketchy google drive link
     - only the smallest version (sub 50MB can be pushed to git) can be pushed to git with significantly reduced performance
-
-## 2.3. det
-
-grounding dino @ 2024:
-
-- https://arxiv.org/abs/2303.05499
-- https://github.com/IDEA-Research/GroundingDINO
-- dino is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
-- bleeding edge, still actively being developed
-- ✅ installation:
-    - https://huggingface.co/IDEA-Research/grounding-dino-base
-    - https://huggingface.co/IDEA-Research/grounding-dino-tiny
-
-owlv2 / owlvit @ 2023:
-
-- https://arxiv.org/abs/2305.01917
-- ✅ installation:
-    - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
-    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate)
-
-mq-det @ 2023:
-
-- https://arxiv.org/pdf/2305.18980v2
-- https://github.com/yifanxu74/mq-det
-- ❌ installation:
-    - instructions unclear, environment not reproducible, weights have to be downloaded manually
-
-grounding dino 1.5 @ 2024:
-
-- https://arxiv.org/abs/2303.05499
-- https://github.com/IDEA-Research/Grounding-DINO-1.5-API
-- bleeding edge, still actively being developed
-- ❌ installation:
-    - only through paid api https://deepdataspace.com/request_api, not open source
