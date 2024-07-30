@@ -21,7 +21,7 @@ overview:
 
 ranking by performance (based on table 2)
 
-- **ViT-B/16** (Standard ImageNet model) - 84.20% accuracy 🔥
+- **ViT-B/16** (Standard ImageNet model) - 84.20% accuracy
 - **ResNet50x16** (CLIP model) - 70.67% accuracy
 - ViT-B/32 (Standard ImageNet model)
 - ResNet50x4 (CLIP model)
@@ -29,7 +29,7 @@ ranking by performance (based on table 2)
 
 ranking by adversarial robustness (based on table 1, figure 8)
 
-- **ViT-B/16** (Standard ImageNet model) 🔥
+- **ViT-B/16** (Standard ImageNet model)
 - ViT-B/32 (Standard ImageNet model)
 - ResNet101 (Standard ImageNet model)
 - ResNet50 (Standard ImageNet model)
@@ -159,13 +159,34 @@ some of the most recent breakthroughs in zero shot image recognition (this umbre
 
 ## 2.1. best models for classification
 
+openai clip @ 2021:
+
+- https://arxiv.org/abs/2103.00020v1
+- https://openai.com/index/clip/
+- https://github.com/openai/CLIP
+- https://github.com/openai/CLIP/blob/main/model-card.md
+- https://deepgram.com/ai-glossary/zero-shot-classification-models
+- https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
+- https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
+- most influential and widely-used models for zero-shot image classification
+- same performance as ResNet50 on ImageNet zero-shot classification
+- uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
+- implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
+    - makes more sense than using vanilla resnet: https://huggingface.co/microsoft/resnet-50
+- most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥
+- also see RoZ benchmark
+- variations:
+    - https://github.com/mlfoundations/open_clip → also handles CoCa 🔥
+    - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
+
 google lit @ 2021:
 
 - https://arxiv.org/abs/2111.07991
 - https://github.com/google-research/vision_transformer
 - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
+- https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
 - based on clip, but beats it in zero-shot classification
-- ❌ i have no idea how to install this
+- usage: https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb 🔥
 
 coca @ 2022:
 
@@ -184,25 +205,6 @@ eva-clip-18b @ 2023:
     - https://huggingface.co/BAAI/EVA-CLIP-18B
 - clip with 18 billion parameters
 - 35.3GB model size, based on apex and xformer for distributed training
-
-openai clip @ 2021:
-
-- https://arxiv.org/abs/2103.00020v1
-- https://openai.com/index/clip/
-- https://github.com/openai/CLIP
-- https://github.com/openai/CLIP/blob/main/model-card.md
-- https://deepgram.com/ai-glossary/zero-shot-classification-models
-- https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
-- https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
-- most influential and widely-used models for zero-shot image classification
-- same performance as ResNet50 on ImageNet zero-shot classification
-- uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
-- implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
-- makes more sense than using vanilla resnet: https://huggingface.co/microsoft/resnet-50
-- most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥
-- variations:
-    - https://github.com/mlfoundations/open_clip → also handles CoCa 🔥
-    - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
 
 google efficientnet @ 2020:
 
@@ -226,14 +228,14 @@ grounded hq-sam @ 2023:
 
 - https://arxiv.org/abs/2306.01567
 - https://github.com/SysCV/sam-hq
-- ❌ model checkpoint must be downloaded from sketchy google drive link, only works with cuda
+- ❌ model checkpoint must be downloaded from sketchy google drive link, only the smallest version (sub 50MB can be pushed to git), only works with cuda
 
 grounded sam @ 2024:
 
 - https://arxiv.org/abs/2401.14159
 - https://github.com/IDEA-Research/Grounded-Segment-Anything
 - https://huggingface.co/spaces/linfanluntan/Grounded-SAM
-- comes with docker container, can be managed with docker-compose 🔥
+- ❌ comes with docker container, can be managed with docker-compose, but docker is a pain to use with nvidia gpus
 
 sam vit @ 2023:
 
