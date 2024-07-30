@@ -277,6 +277,7 @@ detr @ 2022:
 - https://arxiv.org/abs/2203.03605
 - https://arxiv.org/abs/2203.03605
 - installation:
+    - extremely well documented, very easy to use
     - https://github.com/facebookresearch/detr
 
 grounding dino @ 2024:
