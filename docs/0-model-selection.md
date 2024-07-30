@@ -256,7 +256,7 @@ openai clip @ 2021:
     - https://huggingface.co/openai/clip-vit-large-patch14
     - also see implementation by RoZ benchmark paper
 
-open-clip + open-coca @ 2022 :
+open-clip + open-coca @ 2022:
 
 - https://arxiv.org/abs/2212.07143
 - coca: https://arxiv.org/abs/2205.01917, https://github.com/lucidrains/CoCa-pytorch
