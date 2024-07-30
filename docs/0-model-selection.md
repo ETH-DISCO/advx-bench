@@ -285,7 +285,8 @@ grounding dino @ 2024:
 detr @ 2022:
 
 - https://arxiv.org/abs/2203.03605
-- installation:
+- not useful for zero-shot semantic open vocabulary segmentation (although it does have some relevant features)
+- ✅ installation:
     - extremely well documented, very easy to use
     - https://github.com/facebookresearch/detr
 
