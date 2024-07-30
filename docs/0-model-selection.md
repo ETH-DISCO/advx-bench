@@ -272,14 +272,6 @@ owlv2 / owlvit @ 2023:
     - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
     - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate)
 
-detr @ 2022:
-
-- https://arxiv.org/abs/2203.03605
-- https://arxiv.org/abs/2203.03605
-- installation:
-    - extremely well documented, very easy to use
-    - https://github.com/facebookresearch/detr
-
 grounding dino @ 2024:
 
 - https://arxiv.org/abs/2303.05499
@@ -289,6 +281,13 @@ grounding dino @ 2024:
 - ✅ installation:
     - https://huggingface.co/IDEA-Research/grounding-dino-base (largest version)
     - https://huggingface.co/IDEA-Research/grounding-dino-tiny
+
+detr @ 2022:
+
+- https://arxiv.org/abs/2203.03605
+- installation:
+    - extremely well documented, very easy to use
+    - https://github.com/facebookresearch/detr
 
 mq-det @ 2023:
 
