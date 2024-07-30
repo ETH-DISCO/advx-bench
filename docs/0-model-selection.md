@@ -1,6 +1,13 @@
 we want to improve vision-based turing-tests using advx.
 
-we're looking for the strongest zero shot image recognition models (umbrella term) as of july 2024. they must be open source, easy to use and fine-tune.
+we're looking for the strongest zero shot image recognition models (umbrella term) as of july 2024.
+
+they must be:
+
+- open source
+- easy to use and fine-tune
+- have a good balance between efficiency and effectiveness
+- able to run on consumer hardware (ie. standard standing desk pc with gpu)
 
 these are our findings.
 
@@ -163,53 +170,61 @@ google lit @ 2021:
 - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
 - https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
 - based on clip, but beats it in zero-shot classification
-- usage: https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb 🔥🔥🔥
-
-coca @ 2022:
-
-- https://arxiv.org/abs/2205.01917
-- https://github.com/lucidrains/CoCa-pytorch
-- best to install via openclip 🔥🔥🔥
+- ✅ installation:
+    - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
 
 eva-clip-18b @ 2023:
 
 - https://arxiv.org/pdf/2402.04252
 - https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
-- https://huggingface.co/papers/2402.04252
-- https://huggingface.co/models?search=evaclip
-    - https://huggingface.co/BAAI/EVA-CLIP-8B (should be installable) 🔥🔥🔥
-    - https://huggingface.co/BAAI/EVA-CLIP-8B-448
-    - https://huggingface.co/BAAI/EVA-CLIP-18B
 - clip with 18 billion parameters
 - the largest model is 35.3GB large, trained using apex and xformer
+- ✅ installation:
+    - https://huggingface.co/papers/2402.04252
+    - https://huggingface.co/models?search=evaclip
+    - https://huggingface.co/BAAI/EVA-CLIP-8B (should be small enough to run on a consumer laptop)
+    - https://huggingface.co/BAAI/EVA-CLIP-18B
+    - https://huggingface.co/BAAI/EVA-CLIP-8B-448
 
 google efficientnet @ 2020:
 
 - https://arxiv.org/pdf/1905.11946
 - https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
-- https://huggingface.co/google/efficientnet-b0
-- https://huggingface.co/docs/timm/en/models/efficientnet
-- easy to install via huggingface 🔥🔥🔥
+- ✅ installation:
+    - https://huggingface.co/google/efficientnet-b0
+    - https://huggingface.co/docs/timm/en/models/efficientnet
 
 openai clip @ 2021:
 
 - https://arxiv.org/abs/2103.00020v1
 - https://openai.com/index/clip/
 - https://github.com/openai/CLIP
-- https://github.com/openai/CLIP/blob/main/model-card.md
-- https://deepgram.com/ai-glossary/zero-shot-classification-models
-- https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
-- https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
 - most influential and widely-used models for zero-shot image classification
 - same performance as ResNet50 on ImageNet zero-shot classification
 - uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
-- implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
-    - see implementation by RoZ benchmark paper
-    - makes more sense than using vanilla resnet: https://huggingface.co/microsoft/resnet-50
-    - most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥🔥🔥
-- variations:
-    - https://github.com/mlfoundations/open_clip → also handles CoCa 🔥🔥🔥
-    - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
+- models:
+    - https://github.com/openai/CLIP/blob/main/model-card.md
+    - `clip.available_models()`: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px']
+- ✅ installation:
+    - https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
+    - https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
+    - https://huggingface.co/openai/clip-vit-large-patch14
+    - also see implementation by RoZ benchmark paper
+
+open-clip + open-coca @ 2022 :
+
+- https://arxiv.org/abs/2212.07143
+- coca: https://arxiv.org/abs/2205.01917, https://github.com/lucidrains/CoCa-pytorch
+- ✅ installation:
+    - https://github.com/mlfoundations/open_clip?tab=readme-ov-file#usage
+
+clip-dinoiser @ 2023:
+
+- https://arxiv.org/abs/2312.12359
+- adds DINO for open vocabulary semantic segmentation
+- not part of the benchmark leaderboard, just a cool idea
+- ✅ installation:
+    - https://github.com/wysoczanska/clip_dinoiser/
 
 ## 2.2. seg
 
@@ -217,15 +232,18 @@ gem metaclip @ 2024:
 
 - https://arxiv.org/pdf/2309.16671
 - https://github.com/facebookresearch/MetaCLIP
-- https://huggingface.co/models?search=metaclip
 - beats clip and openclip by a wide margin in zero-shot segmentation
-- easy to install via huggingface 🔥🔥🔥
+- ✅ installation:
+    - https://huggingface.co/models?search=metaclip
+    - https://huggingface.co/facebook/metaclip-b16-fullcc2.5b
 
 grounded hq-sam @ 2023:
 
 - https://arxiv.org/abs/2306.01567
 - https://github.com/SysCV/sam-hq
-- ❌ model checkpoint must be downloaded from sketchy google drive link, only the smallest version (sub 50MB can be pushed to git), only works with cuda
+- ❌ installation:
+    - model checkpoint must be downloaded from sketchy google drive link
+    - only the smallest version (sub 50MB can be pushed to git) can be pushed to git with significantly reduced performance
 
 grounded sam @ 2024:
 
@@ -233,16 +251,14 @@ grounded sam @ 2024:
 - https://github.com/IDEA-Research/Grounded-Segment-Anything
 - https://huggingface.co/spaces/linfanluntan/Grounded-SAM
 - ❌ installation:
-    - comes with docker container that can be orchestrated using docker-compose
-    - given that this is the only model that must be run in a docker container, it's not worth the effort
-        - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend
-        - once i get access to a gpu, i'll teach myself how to get docker to work with nvidia gpus
+    - given that this is the only model that must be run in a docker container, it's not worth the effort to orchestrate multiple containers
+    - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
 
 sam vit @ 2023:
 
 - https://arxiv.org/pdf/2304.02643
 - https://github.com/facebookresearch/segment-anything
-- installation:
+- ✅ installation:
     - https://huggingface.co/facebook/sam-vit-base
     - https://huggingface.co/facebook/sam-vit-huge
     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
@@ -264,14 +280,14 @@ grounding dino @ 2024:
 - https://github.com/IDEA-Research/GroundingDINO
 - dino is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
 - bleeding edge, still actively being developed
-- installation:
+- ✅ installation:
     - https://huggingface.co/IDEA-Research/grounding-dino-base
     - https://huggingface.co/IDEA-Research/grounding-dino-tiny
 
 owlv2 @ 2023:
 
 - https://arxiv.org/abs/2305.01917
-- installation:
+- ✅ installation:
     - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
     - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32
 
