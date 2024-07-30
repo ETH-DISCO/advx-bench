@@ -47,6 +47,8 @@ ranking by adversarial robustness (based on table 1, figure 8)
 >
 > most comprehensive collection of models
 
+### 1.2.1. overview
+
 classification:
 
 - https://paperswithcode.com/area/computer-vision/image-classification (overview)
@@ -54,6 +56,11 @@ classification:
 - https://paperswithcode.com/task/self-supervised-image-classification
 - https://paperswithcode.com/task/unsupervised-image-classification
 - https://paperswithcode.com/task/efficient-vits
+
+detection:
+
+- https://paperswithcode.com/area/computer-vision/object-detection
+- https://paperswithcode.com/area/computer-vision/2d-object-detection
 
 segmentation:
 
@@ -63,13 +70,37 @@ segmentation:
 - https://paperswithcode.com/task/semantic-segmentation
 - https://paperswithcode.com/task/universal-segmentation (no data)
 - https://paperswithcode.com/task/zero-shot-semantic-segmentation
+- https://paperswithcode.com/task/zero-shot-segmentation (zero shot segmentation is actually useless)
+    - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → Grounded HQ-SAM (2023), Grounded-SAM (2023)
+    - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023) (← this doesn't make sense, it's a classification model)
 
-object detection:
+> sam vit @ 2023:
+> 
+> - https://arxiv.org/pdf/2304.02643
+> - https://github.com/facebookresearch/segment-anything
+> - installation:
+>     - https://huggingface.co/facebook/sam-vit-base
+>     - https://huggingface.co/facebook/sam-vit-huge (largest version)
+>     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
+>     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
+> 
+> grounded sam @ 2024:
+> 
+> - https://arxiv.org/abs/2401.14159
+> - https://github.com/IDEA-Research/Grounded-Segment-Anything
+> - https://huggingface.co/spaces/linfanluntan/Grounded-SAM
+> - installation:
+>     - docker container
+>     - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
+> 
+> grounded hq-sam @ 2023:
+> 
+> - https://arxiv.org/abs/2306.01567
+> - https://github.com/SysCV/sam-hq
+> - installation:
+>     - model checkpoint must be manually downloaded from google drive link
 
-- https://paperswithcode.com/area/computer-vision/object-detection
-- https://paperswithcode.com/area/computer-vision/2d-object-detection
-
----
+### 1.2.2. selected leaderboards
 
 zero shot classification:
 
@@ -79,13 +110,6 @@ zero shot classification:
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5 → CoCa (2022), LiT-22B (2023), LiT ViT-e (2022), EVA-CLIP-18B (2024)
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3 → LiT-22B (2023), CoCa (2022), LiT ViT-e (2022), LiT-tuning (2021)
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-1 → M2-Encoder (2024), CoCa (2022), LiT-22B (2023), LiT ViT-e (2022)
-
-zero shot segmentation (actually useless):
-
-- https://paperswithcode.com/task/zero-shot-segmentation
-    - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → Grounded HQ-SAM (2023), Grounded-SAM (2023)
-    - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023) (← this doesn't make sense, it's a classification model)
-
 
 zero shot semantic segmentation:
 
@@ -260,17 +284,16 @@ grounding dino @ 2024:
 - https://github.com/IDEA-Research/GroundingDINO
 - dino is an improvement over DETR by meta from 2022
 - bleeding edge, still actively being developed
-- ❌ installation:
-    - no documentation, none of the provided links work, breaks the transformers api from huggingface, couldn't find any workaround
-    - https://huggingface.co/IDEA-Research/grounding-dino-base
+- ✅ installation:
+    - https://huggingface.co/IDEA-Research/grounding-dino-base (largest version)
     - https://huggingface.co/IDEA-Research/grounding-dino-tiny
 
 mq-det @ 2023:
 
 - https://arxiv.org/pdf/2305.18980v2
 - https://github.com/yifanxu74/mq-det
-- ❌ installation:
-    - instructions unclear, environment not reproducible, weights have to be downloaded manually
+- installation:
+    - instructions unclear
 
 grounding dino 1.5 @ 2024:
 
@@ -282,75 +305,57 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
-clip-dinoiser @ 2023:
-
-- https://arxiv.org/abs/2312.12359
-- adds DINO for open vocabulary semantic segmentation
-- not sufficiently performant, not on benchmark leaderboards
-- installation:
-    - https://github.com/wysoczanska/clip_dinoiser/ (also has open vocabulary)
-
-zegformer @ 2022:
-
-- https://github.com/dingjiansw101/ZegFormer (also has open vocabulary)
-
-mask2former @ 2022:
-
-- https://github.com/facebookresearch/Mask2Former
-- https://github.com/facebookresearch/Mask2Former/blob/main/INSTALL.md
-
 otseg+ @ 2024:
 
 - https://arxiv.org/pdf/2403.14183
 - https://github.com/cubeyoung/OTSeg
-
-cliprc @ 2024:
-
-- https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
-- https://github.com/uyzhang/CLIP-RC
+- top perf
+- installation:
 
 catseg @ 2024:
 
 - https://arxiv.org/abs/2303.11797
 - https://github.com/KU-CVLAB/CAT-Seg
+- top perf
+- installation:
 
 maft @ 2023:
 
 - https://arxiv.org/abs/2310.00240
 - https://github.com/jiaosiyu1999/MAFT
+- top perf
+- installation:
+
+clip-dinoiser @ 2023:
+
+- https://arxiv.org/abs/2312.12359
+- adds DINO for open vocabulary semantic segmentation
+- not on benchmark leaderboards
+- installation:
+    - https://github.com/wysoczanska/clip_dinoiser/ (also has open vocabulary)
+
+zegformer @ 2022:
+
+- https://arxiv.org/abs/2112.07910
+- https://github.com/dingjiansw101/ZegFormer (also has open vocabulary)
+- installation:
+
+mask2former @ 2022:
+
+- https://arxiv.org/abs/2112.01527
+- https://github.com/facebookresearch/Mask2Former
+- https://github.com/facebookresearch/Mask2Former/blob/main/INSTALL.md
+- installation:
+
+cliprc @ 2024:
+
+- https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
+- https://github.com/uyzhang/CLIP-RC
+- installation:
 
 zegclip @ 2022:
 
 - https://arxiv.org/abs/2212.03588
 - https://github.com/ZiqinZhou66/ZegCLIP
-
-## 2.4. seg
-
-> ignore: these aren't semantic segmentation models, which is what we're looking for
-
-sam vit @ 2023:
-
-- https://arxiv.org/pdf/2304.02643
-- https://github.com/facebookresearch/segment-anything
-- ✅ installation:
-    - https://huggingface.co/facebook/sam-vit-base
-    - https://huggingface.co/facebook/sam-vit-huge (largest version)
-    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
-    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
-
-grounded sam @ 2024:
-
-- https://arxiv.org/abs/2401.14159
-- https://github.com/IDEA-Research/Grounded-Segment-Anything
-- https://huggingface.co/spaces/linfanluntan/Grounded-SAM
-- ❌ installation:
-    - given that this is the only model that must be run in a docker container, it's not worth the effort to orchestrate multiple containers
-    - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
-
-grounded hq-sam @ 2023:
-
-- https://arxiv.org/abs/2306.01567
-- https://github.com/SysCV/sam-hq
-- ❌ installation:
-    - model checkpoint must be downloaded from sketchy google drive link
-    - only the smallest version (sub 50MB can be pushed to git) can be pushed to git with significantly reduced performance
+- installation:
+    - docker container
