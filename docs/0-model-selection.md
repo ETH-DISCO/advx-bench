@@ -270,11 +270,12 @@ owlv2 / owlvit @ 2023:
 - https://arxiv.org/abs/2305.01917
 - ✅ installation:
     - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
-    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate) 🏆
+    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate)
 
 detr @ 2022:
 
-- dino is an improvement over detr: https://arxiv.org/abs/2005.12872 → https://arxiv.org/abs/2203.03605
+- https://arxiv.org/abs/2203.03605
+- https://arxiv.org/abs/2203.03605
 - installation:
     - https://github.com/facebookresearch/detr
 
@@ -282,7 +283,7 @@ grounding dino @ 2024:
 
 - https://arxiv.org/abs/2303.05499
 - https://github.com/IDEA-Research/GroundingDINO
-- dino is an improvement over DETR by meta from 2022
+- dino is an improvement over detr: https://arxiv.org/abs/2005.12872 → https://arxiv.org/abs/2203.03605
 - bleeding edge, still actively being developed
 - ✅ installation:
     - https://huggingface.co/IDEA-Research/grounding-dino-base (largest version)
@@ -292,8 +293,8 @@ mq-det @ 2023:
 
 - https://arxiv.org/pdf/2305.18980v2
 - https://github.com/yifanxu74/mq-det
-- installation:
-    - instructions unclear
+- ❌ installation:
+    - not documented how to use pre-trained models
 
 grounding dino 1.5 @ 2024:
 
