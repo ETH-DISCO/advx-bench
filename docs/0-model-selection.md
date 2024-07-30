@@ -239,24 +239,29 @@ clip-dinoiser @ 2023:
 
 ## 2.2. det
 
-> also consider detr (https://github.com/facebookresearch/detr) if these don't work as expected
-
-grounding dino @ 2024:
-
-- https://arxiv.org/abs/2303.05499
-- https://github.com/IDEA-Research/GroundingDINO
-- dino is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
-- bleeding edge, still actively being developed
-- ✅ installation:
-    - https://huggingface.co/IDEA-Research/grounding-dino-base
-    - https://huggingface.co/IDEA-Research/grounding-dino-tiny
-
 owlv2 / owlvit @ 2023:
 
 - https://arxiv.org/abs/2305.01917
 - ✅ installation:
     - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
-    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate)
+    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate) 🏆
+
+detr @ 2022:
+
+- dino is an improvement over detr: https://arxiv.org/abs/2005.12872 → https://arxiv.org/abs/2203.03605
+- ✅ installation:
+    - https://github.com/facebookresearch/detr
+
+grounding dino @ 2024:
+
+- https://arxiv.org/abs/2303.05499
+- https://github.com/IDEA-Research/GroundingDINO
+- dino is an improvement over DETR by meta from 2022
+- bleeding edge, still actively being developed
+- ❌ installation:
+    - no documentation, none of the provided links work, breaks the transformers api from huggingface, couldn't find any workaround
+    - https://huggingface.co/IDEA-Research/grounding-dino-base
+    - https://huggingface.co/IDEA-Research/grounding-dino-tiny
 
 mq-det @ 2023:
 
