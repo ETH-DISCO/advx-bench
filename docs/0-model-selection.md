@@ -278,13 +278,13 @@ grounding dino 1.5 @ 2024:
 - ❌ installation:
     - only through paid api https://deepdataspace.com/request_api, not open source
 
-## 2.3. seg
+## 2.3. semantic seg
 
-> none of these models are capable of semantic querying (ie. "segment a cat") which renders them useless for our purposes.
-> 
-> i couldn't find any alternatives.
->
-> i decided to exclude them from the benchmark.
+
+
+## 2.4. seg
+
+> these aren't semantic segmentation models, which renders them useless for our purposes
 
 sam vit @ 2023:
 

@@ -7,7 +7,7 @@ import torch
 from PIL import Image
 from transformers import AutoModel, CLIPImageProcessor, CLIPTokenizer
 
-image_path = "../data/kodak/kodim.01.png"
+image_path = "../../data/kodak/kodim.01.png"
 model_name_or_path = "BAAI/EVA-CLIP-8B"  # or /path/to/local/EVA-CLIP-8B
 image_size = 224
 
