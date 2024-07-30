@@ -232,7 +232,11 @@ grounded sam @ 2024:
 - https://arxiv.org/abs/2401.14159
 - https://github.com/IDEA-Research/Grounded-Segment-Anything
 - https://huggingface.co/spaces/linfanluntan/Grounded-SAM
-- ❌ comes with docker container that can be orchestrated using docker-compose, but docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend and is very time consuming to set up to work with cuda
+- ❌ installation:
+    - comes with docker container that can be orchestrated using docker-compose
+    - given that this is the only model that must be run in a docker container, it's not worth the effort
+        - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend
+        - once i get access to a gpu, i'll teach myself how to get docker to work with nvidia gpus
 
 sam vit @ 2023:
 
