@@ -229,14 +229,6 @@ open-clip + open-coca @ 2022 :
 - ✅ installation:
     - https://github.com/mlfoundations/open_clip?tab=readme-ov-file#usage
 
-clip-dinoiser @ 2023:
-
-- https://arxiv.org/abs/2312.12359
-- adds DINO for open vocabulary semantic segmentation
-- not part of the benchmark leaderboard, just a cool idea
-- ✅ installation:
-    - https://github.com/wysoczanska/clip_dinoiser/
-
 ## 2.2. det
 
 owlv2 / owlvit @ 2023:
@@ -280,11 +272,17 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
+clip-dinoiser @ 2023:
 
+- https://arxiv.org/abs/2312.12359
+- adds DINO for open vocabulary semantic segmentation
+- not part of the benchmark leaderboard, just a cool idea
+- ✅ installation:
+    - https://github.com/wysoczanska/clip_dinoiser/
 
 ## 2.4. seg
 
-> these aren't semantic segmentation models, which renders them useless for our purposes
+> none of these are semantic segmentation models, which renders them useless for our purposes
 
 sam vit @ 2023:
 
