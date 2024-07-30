@@ -23,19 +23,19 @@ overview:
 
 > see: https://arxiv.org/pdf/2403.10499
 >
-> has the same goal as us - but only focuses on **CLIP models** for cls tasks on ImageNet
+> has the same goal as us - but only focuses on CLIP models for cls tasks on ImageNet
 
 ranking by performance (based on table 2)
 
-- **ViT-B/16** (Standard ImageNet model) - 84.20% accuracy
-- **ResNet50x16** (CLIP model) - 70.67% accuracy
+- ViT-B/16 (Standard ImageNet model) - 84.20% accuracy
+- ResNet50x16 (CLIP model) - 70.67% accuracy
 - ViT-B/32 (Standard ImageNet model)
 - ResNet50x4 (CLIP model)
 - ResNet101 (Standard ImageNet model)
 
 ranking by adversarial robustness (based on table 1, figure 8)
 
-- **ViT-B/16** (Standard ImageNet model)
+- ViT-B/16 (Standard ImageNet model)
 - ViT-B/32 (Standard ImageNet model)
 - ResNet101 (Standard ImageNet model)
 - ResNet50 (Standard ImageNet model)
@@ -74,7 +74,7 @@ object detection:
 zero shot classification:
 
 - https://paperswithcode.com/task/zero-shot-transfer-image-classification
-    - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-6 → **LiT-22b (2023)**, LiT ViT-e (2022), **CoCa (2022)**, **EVA-CLIP-18B (2024)**
+    - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-6 → LiT-22b (2023), LiT ViT-e (2022), CoCa (2022), EVA-CLIP-18B (2024)
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-4 → CoCa (2022), LiT ViT-e (2022), LiT-22B (2023), EVA-CLIP-18B (2024)
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5 → CoCa (2022), LiT-22B (2023), LiT ViT-e (2022), EVA-CLIP-18B (2024)
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3 → LiT-22B (2023), CoCa (2022), LiT ViT-e (2022), LiT-tuning (2021)
@@ -83,19 +83,24 @@ zero shot classification:
 zero shot segmentation (actually useless):
 
 - https://paperswithcode.com/task/zero-shot-segmentation
-    - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → **Grounded HQ-SAM (2023)**, **Grounded-SAM (2023)**
+    - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → Grounded HQ-SAM (2023), Grounded-SAM (2023)
     - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023) (← this doesn't make sense, it's a classification model)
+
 
 zero shot semantic segmentation:
 
 - https://paperswithcode.com/task/zero-shot-semantic-segmentation
+    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-coco-stuff → OTSeg+ (2024), JSeg (2024), OTSeg (2024), ZegCLIP (2022)
+    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-pascal-voc → OTSeg+ (2024), OTSeg (2024), CLIP-RC (2024), ZegCLIP (2022)
+    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-mess → CAT-SEG-L (2024)
+    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-ade20k-847 → MAFT (2023)
 
 zero shot object detection:
 
 - https://paperswithcode.com/task/zero-shot-object-detection
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-ms-coco → SeeDS (2023), ZSD-SCR (2022), ZSD-RRFS (2022)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-pascal-voc-07 → SeeDS (2023), ZSD-RRFS (2022)
-    - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0 → **Grounding DINO 1.5 Pro (2024)**, **OWLv2 (2023)**, **MQ-GLIP-L (2023)**
+    - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0 → Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0-val → Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
@@ -175,7 +180,7 @@ google lit @ 2021:
 - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
 - https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
 - based on clip, but beats it in zero-shot classification
-- ✅ installation:
+- installation:
     - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
 
 eva-clip-18b @ 2023:
@@ -184,7 +189,7 @@ eva-clip-18b @ 2023:
 - https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
 - clip with 18 billion parameters
 - the largest model is 35.3GB large, trained using apex and xformer
-- ✅ installation:
+- installation:
     - https://huggingface.co/papers/2402.04252
     - https://huggingface.co/models?search=evaclip
     - https://huggingface.co/BAAI/EVA-CLIP-8B (should be small enough to run on a consumer laptop)
@@ -195,7 +200,7 @@ google efficientnet @ 2020:
 
 - https://arxiv.org/pdf/1905.11946
 - https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
-- ✅ installation:
+- installation:
     - https://huggingface.co/google/efficientnet-b0
     - https://huggingface.co/docs/timm/en/models/efficientnet
 
@@ -205,7 +210,7 @@ gem / metaclip @ 2024:
 - https://github.com/facebookresearch/MetaCLIP
 - beats clip and openclip by a wide margin in zero-shot classification
 - massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
-- ✅ installation:
+- installation:
     - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
     - https://huggingface.co/models?search=metaclip
     - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
@@ -221,7 +226,7 @@ openai clip @ 2021:
 - models:
     - https://github.com/openai/CLIP/blob/main/model-card.md
     - `clip.available_models()`: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px']
-- ✅ installation:
+- installation:
     - https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
     - https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
     - https://huggingface.co/openai/clip-vit-large-patch14
@@ -231,7 +236,7 @@ open-clip + open-coca @ 2022 :
 
 - https://arxiv.org/abs/2212.07143
 - coca: https://arxiv.org/abs/2205.01917, https://github.com/lucidrains/CoCa-pytorch
-- ✅ installation:
+- installation:
     - https://github.com/mlfoundations/open_clip?tab=readme-ov-file#usage
 
 ## 2.2. det
@@ -246,7 +251,7 @@ owlv2 / owlvit @ 2023:
 detr @ 2022:
 
 - dino is an improvement over detr: https://arxiv.org/abs/2005.12872 → https://arxiv.org/abs/2203.03605
-- ✅ installation:
+- installation:
     - https://github.com/facebookresearch/detr
 
 grounding dino @ 2024:
@@ -277,12 +282,37 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
+otseg+ @ 2024:
+
+- https://arxiv.org/pdf/2403.14183
+- https://github.com/cubeyoung/OTSeg
+
+cliprc @ 2024:
+
+- https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
+- https://github.com/uyzhang/CLIP-RC
+
+catseg @ 2024:
+
+- https://arxiv.org/abs/2303.11797
+- https://github.com/KU-CVLAB/CAT-Seg
+
+maft @ 2023:
+
+- https://arxiv.org/abs/2310.00240
+- https://github.com/jiaosiyu1999/MAFT
+
+zegclip @ 2022:
+
+- https://arxiv.org/abs/2212.03588
+- https://github.com/ZiqinZhou66/ZegCLIP
+
 clip-dinoiser @ 2023:
 
 - https://arxiv.org/abs/2312.12359
 - adds DINO for open vocabulary semantic segmentation
 - not part of the benchmark leaderboard, just a cool idea
-- ✅ installation:
+- installation:
     - https://github.com/wysoczanska/clip_dinoiser/
 
 ## 2.4. seg
