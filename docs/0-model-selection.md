@@ -62,6 +62,7 @@ segmentation:
 - https://paperswithcode.com/task/image-segmentation
 - https://paperswithcode.com/task/semantic-segmentation
 - https://paperswithcode.com/task/universal-segmentation (no data)
+- https://paperswithcode.com/task/zero-shot-semantic-segmentation
 
 object detection:
 
@@ -79,11 +80,42 @@ zero shot classification:
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3 → LiT-22B (2023), CoCa (2022), LiT ViT-e (2022), LiT-tuning (2021)
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-1 → M2-Encoder (2024), CoCa (2022), LiT-22B (2023), LiT ViT-e (2022)
 
-zero shot segmentation:
+zero shot segmentation (this is actually useless for our purposes):
 
 - https://paperswithcode.com/task/zero-shot-segmentation
     - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → **Grounded HQ-SAM (2023)**, **Grounded-SAM (2023)**
     - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023) (← this doesn't make sense, it's a classification model)
+
+> sam vit @ 2023:
+> 
+> - https://arxiv.org/pdf/2304.02643
+> - https://github.com/facebookresearch/segment-anything
+> - ✅ installation:
+>     - https://huggingface.co/facebook/sam-vit-base
+>     - https://huggingface.co/facebook/sam-vit-huge (largest version)
+>     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
+>     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
+> 
+> grounded sam @ 2024:
+> 
+> - https://arxiv.org/abs/2401.14159
+> - https://github.com/IDEA-Research/Grounded-Segment-Anything
+> - https://huggingface.co/spaces/linfanluntan/Grounded-SAM
+> - ❌ installation:
+>     - given that this is the only model that must be run in a docker container, it's not worth the effort to orchestrate multiple containers
+>     - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
+> 
+> grounded hq-sam @ 2023:
+> 
+> - https://arxiv.org/abs/2306.01567
+> - https://github.com/SysCV/sam-hq
+> - ❌ installation:
+>     - model checkpoint must be downloaded from sketchy google drive link
+>     - only the smallest version (sub 50MB can be pushed to git) can be pushed to git with significantly reduced performance
+
+zero shot semantic segmentation:
+
+- https://paperswithcode.com/task/zero-shot-semantic-segmentation
 
 zero shot object detection:
 
@@ -280,33 +312,17 @@ clip-dinoiser @ 2023:
 - ✅ installation:
     - https://github.com/wysoczanska/clip_dinoiser/
 
+zegformer @ 2021:
+
+https://github.com/dingjiansw101/ZegFormer
+https://arxiv.org/abs/2112.07910
+
+
+zsss @ 2022:
+
+https://arxiv.org/abs/2009.12232
+https://github.com/bcmi/CaGNetv2-Zero-Shot-Semantic-Segmentation?tab=readme-ov-file
+
 ## 2.4. seg
 
 > none of these are semantic segmentation models, which renders them useless for our purposes
-
-sam vit @ 2023:
-
-- https://arxiv.org/pdf/2304.02643
-- https://github.com/facebookresearch/segment-anything
-- ✅ installation:
-    - https://huggingface.co/facebook/sam-vit-base
-    - https://huggingface.co/facebook/sam-vit-huge (largest version)
-    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
-    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
-
-grounded sam @ 2024:
-
-- https://arxiv.org/abs/2401.14159
-- https://github.com/IDEA-Research/Grounded-Segment-Anything
-- https://huggingface.co/spaces/linfanluntan/Grounded-SAM
-- ❌ installation:
-    - given that this is the only model that must be run in a docker container, it's not worth the effort to orchestrate multiple containers
-    - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
-
-grounded hq-sam @ 2023:
-
-- https://arxiv.org/abs/2306.01567
-- https://github.com/SysCV/sam-hq
-- ❌ installation:
-    - model checkpoint must be downloaded from sketchy google drive link
-    - only the smallest version (sub 50MB can be pushed to git) can be pushed to git with significantly reduced performance
