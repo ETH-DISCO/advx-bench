@@ -282,6 +282,23 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
+clip-dinoiser @ 2023:
+
+- https://arxiv.org/abs/2312.12359
+- adds DINO for open vocabulary semantic segmentation
+- not sufficiently performant, not on benchmark leaderboards
+- installation:
+    - https://github.com/wysoczanska/clip_dinoiser/ (also has open vocabulary)
+
+zegformer @ 2022:
+
+- https://github.com/dingjiansw101/ZegFormer (also has open vocabulary)
+
+mask2former @ 2022:
+
+- https://github.com/facebookresearch/Mask2Former
+- https://github.com/facebookresearch/Mask2Former/blob/main/INSTALL.md
+
 otseg+ @ 2024:
 
 - https://arxiv.org/pdf/2403.14183
@@ -306,14 +323,6 @@ zegclip @ 2022:
 
 - https://arxiv.org/abs/2212.03588
 - https://github.com/ZiqinZhou66/ZegCLIP
-
-clip-dinoiser @ 2023:
-
-- https://arxiv.org/abs/2312.12359
-- adds DINO for open vocabulary semantic segmentation
-- not part of the benchmark leaderboard, just a cool idea
-- installation:
-    - https://github.com/wysoczanska/clip_dinoiser/
 
 ## 2.4. seg
 
