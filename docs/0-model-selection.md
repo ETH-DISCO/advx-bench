@@ -238,9 +238,11 @@ sam vit @ 2023:
 
 - https://arxiv.org/pdf/2304.02643
 - https://github.com/facebookresearch/segment-anything
-- https://huggingface.co/facebook/sam-vit-base
-- https://huggingface.co/facebook/sam-vit-huge
-- very straightforward to install via huggingface 🔥🔥🔥
+- installation:
+    - https://huggingface.co/facebook/sam-vit-base
+    - https://huggingface.co/facebook/sam-vit-huge
+    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
+    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
 
 ## 2.3. det
 
@@ -249,7 +251,8 @@ grounding dino 1.5 @ 2024:
 - https://arxiv.org/abs/2303.05499
 - https://github.com/IDEA-Research/Grounding-DINO-1.5-API
 - bleeding edge, still actively being developed
-- ❌ not open source, you have to pay for their api key from https://deepdataspace.com/request_api
+- ❌ installation:
+    - only through paid api https://deepdataspace.com/request_api, not open source
 
 grounding dino @ 2024:
 
@@ -257,20 +260,20 @@ grounding dino @ 2024:
 - https://github.com/IDEA-Research/GroundingDINO
 - dino is an improvement over DETR by meta from 2022: https://arxiv.org/abs/2203.03605, https://arxiv.org/abs/2005.12872
 - bleeding edge, still actively being developed
-- https://huggingface.co/IDEA-Research/grounding-dino-base
-- https://huggingface.co/IDEA-Research/grounding-dino-tiny
-- very straightforward to install via huggingface 🔥🔥🔥
+- installation:
+    - https://huggingface.co/IDEA-Research/grounding-dino-base
+    - https://huggingface.co/IDEA-Research/grounding-dino-tiny
 
 owlv2 @ 2023:
 
 - https://arxiv.org/abs/2305.01917
-- https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32
-- https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
-- very straightforward to use, small footprint 🔥🔥🔥
+- installation:
+    - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
+    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32
 
 mq-det @ 2023:
 
 - https://arxiv.org/pdf/2305.18980v2
 - https://github.com/yifanxu74/mq-det
-- installation:
-    - process unclear, weights have to be downloaded manually
+- ❌ installation:
+    - instructions unclear, environment not reproducible, weights have to be downloaded manually
