@@ -361,3 +361,9 @@ zegclip @ 2022:
 - https://github.com/ZiqinZhou66/ZegCLIP
 - installation:
     - docker container
+
+detr @ 2022:
+
+- same model as above
+- ✅ installation:
+    - see above
