@@ -273,7 +273,9 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. seg
 
-> none of these models are capable of semantic queries (ie. "segment a cat"). they are only capable of zero-shot segmentation (ie. "segment anything") so they are not useful for our purposes. i couldn't find any alternatives and decided to leave segmentation out of our evaluation pipeline.
+> none of these models are capable of semantic querying (ie. "segment a cat") which renders them useless for our purposes.
+>
+> i couldn't find any alternatives so i decided to leave segmentation models out of this project.
 
 sam vit @ 2023:
 
