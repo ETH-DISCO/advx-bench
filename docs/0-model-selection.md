@@ -1,8 +1,6 @@
 we want to improve vision-based turing-tests using advx.
 
-we're looking for the strongest zero shot models as of july 2024.
-
-they must be open source, easy to use and fine-tune.
+we're looking for the strongest zero shot image recognition models (umbrella term) as of july 2024. they must be open source, easy to use and fine-tune.
 
 these are our findings.
 
@@ -155,29 +153,7 @@ these benchmarks are outdated or not comprehensive enough:
 
 # 2. conclusion
 
-some of the most recent breakthroughs in zero shot image recognition (this umbrella term includes cls, seg, det) are:
-
-## 2.1. best models for classification
-
-openai clip @ 2021:
-
-- https://arxiv.org/abs/2103.00020v1
-- https://openai.com/index/clip/
-- https://github.com/openai/CLIP
-- https://github.com/openai/CLIP/blob/main/model-card.md
-- https://deepgram.com/ai-glossary/zero-shot-classification-models
-- https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
-- https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
-- most influential and widely-used models for zero-shot image classification
-- same performance as ResNet50 on ImageNet zero-shot classification
-- uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
-- implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
-    - see implementation by RoZ benchmark paper
-    - makes more sense than using vanilla resnet: https://huggingface.co/microsoft/resnet-50
-    - most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥
-- variations:
-    - https://github.com/mlfoundations/open_clip → also handles CoCa 🔥
-    - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
+## 2.1. cls
 
 google lit @ 2021:
 
@@ -214,7 +190,27 @@ google efficientnet @ 2020:
 - https://huggingface.co/docs/timm/en/models/efficientnet
 - easy to install via huggingface 🔥
 
-## 2.2. best models for segmentation
+openai clip @ 2021:
+
+- https://arxiv.org/abs/2103.00020v1
+- https://openai.com/index/clip/
+- https://github.com/openai/CLIP
+- https://github.com/openai/CLIP/blob/main/model-card.md
+- https://deepgram.com/ai-glossary/zero-shot-classification-models
+- https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
+- https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
+- most influential and widely-used models for zero-shot image classification
+- same performance as ResNet50 on ImageNet zero-shot classification
+- uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
+- implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
+    - see implementation by RoZ benchmark paper
+    - makes more sense than using vanilla resnet: https://huggingface.co/microsoft/resnet-50
+    - most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥
+- variations:
+    - https://github.com/mlfoundations/open_clip → also handles CoCa 🔥
+    - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
+
+## 2.2. seg
 
 gem metaclip @ 2024:
 
@@ -245,7 +241,7 @@ sam vit @ 2023:
 - https://huggingface.co/facebook/sam-vit-huge
 - ✅ very straightforward
 
-## 2.3. best models for object detection
+## 2.3. det
 
 grounding dino @ 2024:
 
