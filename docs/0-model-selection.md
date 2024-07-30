@@ -263,7 +263,7 @@ open-clip + open-coca @ 2022:
 - installation:
     - https://github.com/mlfoundations/open_clip?tab=readme-ov-file#usage
 
-## 2.2. det
+## 2.2. det (done)
 
 owlv2 / owlvit @ 2023:
 
