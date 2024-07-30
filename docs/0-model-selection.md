@@ -83,7 +83,7 @@ zero shot segmentation:
 
 - https://paperswithcode.com/task/zero-shot-segmentation
     - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → **Grounded HQ-SAM (2023)**, **Grounded-SAM (2023)**
-    - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → **GEM MetaCLIP (2023)**
+    - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023) (← this doesn't make sense, it's a classification model)
 
 zero shot object detection:
 
@@ -194,6 +194,17 @@ google efficientnet @ 2020:
     - https://huggingface.co/google/efficientnet-b0
     - https://huggingface.co/docs/timm/en/models/efficientnet
 
+gem / metaclip @ 2024:
+
+- https://arxiv.org/pdf/2309.16671
+- https://github.com/facebookresearch/MetaCLIP
+- beats clip and openclip by a wide margin in zero-shot classification
+- massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
+- ✅ installation:
+    - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
+    - https://huggingface.co/models?search=metaclip
+    - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
+
 openai clip @ 2021:
 
 - https://arxiv.org/abs/2103.00020v1
@@ -265,17 +276,6 @@ grounding dino 1.5 @ 2024:
 > these are object segmentation models, not semantic segmentation models which makes them less useful for our purposes
 >
 > i therefore decided to leave them out from our evaluation pipeline
-
-gem metaclip @ 2024:
-
-- https://arxiv.org/pdf/2309.16671
-- https://github.com/facebookresearch/MetaCLIP
-- beats clip and openclip by a wide margin in zero-shot classification
-- massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
-- ✅ installation:
-    - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
-    - https://huggingface.co/models?search=metaclip
-    - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
 
 sam vit @ 2023:
 
