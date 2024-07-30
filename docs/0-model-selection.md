@@ -262,14 +262,20 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. seg
 
+> these are object segmentation models, not semantic segmentation models which makes them less useful for our purposes
+>
+> i therefore decided to leave them out from our evaluation pipeline
+
 gem metaclip @ 2024:
 
 - https://arxiv.org/pdf/2309.16671
 - https://github.com/facebookresearch/MetaCLIP
-- beats clip and openclip by a wide margin in zero-shot segmentation
+- beats clip and openclip by a wide margin in zero-shot classification
+- massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
 - ✅ installation:
+    - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
     - https://huggingface.co/models?search=metaclip
-    - https://huggingface.co/facebook/metaclip-b16-fullcc2.5b
+    - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
 
 sam vit @ 2023:
 
@@ -277,7 +283,7 @@ sam vit @ 2023:
 - https://github.com/facebookresearch/segment-anything
 - ✅ installation:
     - https://huggingface.co/facebook/sam-vit-base
-    - https://huggingface.co/facebook/sam-vit-huge
+    - https://huggingface.co/facebook/sam-vit-huge (largest version)
     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
 
