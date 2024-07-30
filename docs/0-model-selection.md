@@ -239,6 +239,8 @@ clip-dinoiser @ 2023:
 
 ## 2.2. det
 
+> also consider detr (https://github.com/facebookresearch/detr) if these don't work as expected
+
 grounding dino @ 2024:
 
 - https://arxiv.org/abs/2303.05499
@@ -274,8 +276,10 @@ grounding dino 1.5 @ 2024:
 ## 2.3. seg
 
 > none of these models are capable of semantic querying (ie. "segment a cat") which renders them useless for our purposes.
+> 
+> i couldn't find any alternatives.
 >
-> i couldn't find any alternatives so i decided to leave segmentation models out of this project.
+> i decided to exclude them from the benchmark.
 
 sam vit @ 2023:
 
