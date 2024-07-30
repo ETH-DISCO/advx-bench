@@ -172,9 +172,9 @@ openai clip @ 2021:
 - same performance as ResNet50 on ImageNet zero-shot classification
 - uses a vision transformer (ViT) as the image encoder and a text encoder based on the transformer architecture
 - implementations: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px'] (run `clip.available_models()` to see all)
+    - see implementation by RoZ benchmark paper
     - makes more sense than using vanilla resnet: https://huggingface.co/microsoft/resnet-50
-- most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥
-- also see RoZ benchmark
+    - most straightforward installation: https://huggingface.co/openai/clip-vit-large-patch14 🔥
 - variations:
     - https://github.com/mlfoundations/open_clip → also handles CoCa 🔥
     - https://github.com/wysoczanska/clip_dinoiser/ → adds DINO for open vocabulary semantic segmentation
