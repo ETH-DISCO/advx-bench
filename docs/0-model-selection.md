@@ -11,7 +11,7 @@ they must be:
 
 these are our findings.
 
-# 1. model selection
+# 1. performance benchmarks
 
 overview:
 
@@ -159,7 +159,7 @@ these benchmarks are outdated or not comprehensive enough:
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
 
-# 2. conclusion
+# 2. ease of use
 
 ## 2.1. cls
 
@@ -237,23 +237,6 @@ gem metaclip @ 2024:
     - https://huggingface.co/models?search=metaclip
     - https://huggingface.co/facebook/metaclip-b16-fullcc2.5b
 
-grounded hq-sam @ 2023:
-
-- https://arxiv.org/abs/2306.01567
-- https://github.com/SysCV/sam-hq
-- ❌ installation:
-    - model checkpoint must be downloaded from sketchy google drive link
-    - only the smallest version (sub 50MB can be pushed to git) can be pushed to git with significantly reduced performance
-
-grounded sam @ 2024:
-
-- https://arxiv.org/abs/2401.14159
-- https://github.com/IDEA-Research/Grounded-Segment-Anything
-- https://huggingface.co/spaces/linfanluntan/Grounded-SAM
-- ❌ installation:
-    - given that this is the only model that must be run in a docker container, it's not worth the effort to orchestrate multiple containers
-    - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
-
 sam vit @ 2023:
 
 - https://arxiv.org/pdf/2304.02643
@@ -264,15 +247,24 @@ sam vit @ 2023:
     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
 
-## 2.3. det
+grounded sam @ 2024:
 
-grounding dino 1.5 @ 2024:
-
-- https://arxiv.org/abs/2303.05499
-- https://github.com/IDEA-Research/Grounding-DINO-1.5-API
-- bleeding edge, still actively being developed
+- https://arxiv.org/abs/2401.14159
+- https://github.com/IDEA-Research/Grounded-Segment-Anything
+- https://huggingface.co/spaces/linfanluntan/Grounded-SAM
 - ❌ installation:
-    - only through paid api https://deepdataspace.com/request_api, not open source
+    - given that this is the only model that must be run in a docker container, it's not worth the effort to orchestrate multiple containers
+    - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
+
+grounded hq-sam @ 2023:
+
+- https://arxiv.org/abs/2306.01567
+- https://github.com/SysCV/sam-hq
+- ❌ installation:
+    - model checkpoint must be downloaded from sketchy google drive link
+    - only the smallest version (sub 50MB can be pushed to git) can be pushed to git with significantly reduced performance
+
+## 2.3. det
 
 grounding dino @ 2024:
 
@@ -297,3 +289,11 @@ mq-det @ 2023:
 - https://github.com/yifanxu74/mq-det
 - ❌ installation:
     - instructions unclear, environment not reproducible, weights have to be downloaded manually
+
+grounding dino 1.5 @ 2024:
+
+- https://arxiv.org/abs/2303.05499
+- https://github.com/IDEA-Research/Grounding-DINO-1.5-API
+- bleeding edge, still actively being developed
+- ❌ installation:
+    - only through paid api https://deepdataspace.com/request_api, not open source
