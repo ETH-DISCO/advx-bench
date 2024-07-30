@@ -365,6 +365,4 @@ zegclip @ 2022:
 detr @ 2022:
 
 - same model as above
-- works well but not open vocabulary so not useful for our purposes
-- ✅ installation:
-    - see above
+- ❌ works well but not open vocabulary so not useful for our purposes
