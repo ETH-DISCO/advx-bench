@@ -207,16 +207,16 @@ google lit @ 2021:
 - installation:
     - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
 
-eva-clip-18b @ 2023:
+eva / eva-clip-18b @ 2023:
 
 - https://arxiv.org/pdf/2402.04252
 - https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
 - clip with 18 billion parameters
 - the largest model is 35.3GB large, trained using apex and xformer
-- installation:
+- ✅ installation:
     - https://huggingface.co/papers/2402.04252
     - https://huggingface.co/models?search=evaclip
-    - https://huggingface.co/BAAI/EVA-CLIP-8B (should be small enough to run on a consumer laptop)
+    - https://huggingface.co/BAAI/EVA-CLIP-8B (small enough to run on consumer laptop, but still ~35GB large, not recommended)
     - https://huggingface.co/BAAI/EVA-CLIP-18B
     - https://huggingface.co/BAAI/EVA-CLIP-8B-448
 
@@ -224,7 +224,7 @@ google efficientnet @ 2020:
 
 - https://arxiv.org/pdf/1905.11946
 - https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
-- installation:
+- ✅ installation:
     - https://huggingface.co/google/efficientnet-b0
     - https://huggingface.co/docs/timm/en/models/efficientnet
 
@@ -261,7 +261,6 @@ open-clip + open-coca @ 2022:
 - https://arxiv.org/abs/2212.07143
 - coca: https://arxiv.org/abs/2205.01917, https://github.com/lucidrains/CoCa-pytorch
 - installation:
-    - https://github.com/mlfoundations/open_clip?tab=readme-ov-file#usage
 
 ## 2.2. det (done)
 
