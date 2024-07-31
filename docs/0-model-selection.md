@@ -204,8 +204,9 @@ google lit @ 2021:
 - https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
 - https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
 - based on clip, but beats it in zero-shot classification
-- installation:
+- ❌ installation:
     - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
+    - somehow figured it out myself but it wasn't well documented and i'm not sure if what i did was correct
 
 openai clip @ 2021:
 
@@ -239,17 +240,6 @@ google efficientnet @ 2020:
     - https://huggingface.co/google/efficientnet-b0
     - https://huggingface.co/docs/timm/en/models/efficientnet
 
-gem / metaclip @ 2024:
-
-- https://arxiv.org/pdf/2309.16671
-- https://github.com/facebookresearch/MetaCLIP
-- beats clip and openclip by a wide margin in zero-shot classification
-- massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
-- ✅ installation:
-    - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
-    - https://huggingface.co/models?search=metaclip
-    - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
-
 eva / eva-clip-18b @ 2023:
 
 - https://arxiv.org/pdf/2402.04252
@@ -265,7 +255,18 @@ eva / eva-clip-18b @ 2023:
         - https://huggingface.co/BAAI/EVA-CLIP-8B-448
     - use open_clip's base model instead (just 2GB and reasonable inference times)
 
-## 2.2. det (done)
+gem / metaclip @ 2024:
+
+- https://arxiv.org/pdf/2309.16671
+- https://github.com/facebookresearch/MetaCLIP
+- beats clip and openclip by a wide margin in zero-shot classification
+- massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
+- ✅ installation:
+    - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
+    - https://huggingface.co/models?search=metaclip
+    - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
+
+## 2.2. det
 
 owlv2 / owlvit @ 2023:
 
