@@ -197,16 +197,6 @@ these benchmarks are outdated or not comprehensive enough:
 
 ## 2.1. cls
 
-google lit @ 2021:
-
-- https://arxiv.org/abs/2111.07991
-- https://github.com/google-research/vision_transformer
-- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
-- https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
-- based on clip, but beats it in zero-shot classification
-- installation:
-    - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
-
 openai clip @ 2021:
 
 - https://arxiv.org/abs/2103.00020v1
@@ -222,13 +212,24 @@ openai clip @ 2021:
     - https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
     - https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
     - https://huggingface.co/openai/clip-vit-large-patch14
-    - also see implementation by RoZ benchmark paper
+    - also roz: https://github.com/wang-research-lab/roz
+
+google lit @ 2021:
+
+- https://arxiv.org/abs/2111.07991
+- https://github.com/google-research/vision_transformer
+- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
+- https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
+- based on clip, but beats it in zero-shot classification
+- installation:
+    - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
 
 open-clip + open-coca @ 2022:
 
 - https://arxiv.org/abs/2212.07143
 - coca: https://arxiv.org/abs/2205.01917, https://github.com/lucidrains/CoCa-pytorch
 - installation:
+    - https://github.com/mlfoundations/open_clip
 
 google efficientnet @ 2020:
 
