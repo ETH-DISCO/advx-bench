@@ -234,7 +234,7 @@ gem / metaclip @ 2024:
 - https://github.com/facebookresearch/MetaCLIP
 - beats clip and openclip by a wide margin in zero-shot classification
 - massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
-- installation:
+- ✅ installation:
     - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
     - https://huggingface.co/models?search=metaclip
     - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
