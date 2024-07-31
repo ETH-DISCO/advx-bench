@@ -256,13 +256,14 @@ eva / eva-clip-18b @ 2023:
 - https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
 - clip with 18 billion parameters
 - trained using apex and xformer
-- ❌ installation:
-    - smallest model is still 35.3GB large and infeasible to be downloaded and ran on consumer hardware
-    - https://huggingface.co/papers/2402.04252
-    - https://huggingface.co/models?search=evaclip
-    - https://huggingface.co/BAAI/EVA-CLIP-8B (smallest model)
-    - https://huggingface.co/BAAI/EVA-CLIP-18B
-    - https://huggingface.co/BAAI/EVA-CLIP-8B-448
+- ✅ installation:
+    - models provided with paper are way too large (35.3 GB) and slow to be a feasible option
+        - https://huggingface.co/papers/2402.04252
+        - https://huggingface.co/models?search=evaclip
+        - https://huggingface.co/BAAI/EVA-CLIP-8B (smallest model)
+        - https://huggingface.co/BAAI/EVA-CLIP-18B
+        - https://huggingface.co/BAAI/EVA-CLIP-8B-448
+    - use open_clip's base model instead (just 2GB and reasonable inference times)
 
 ## 2.2. det (done)
 
