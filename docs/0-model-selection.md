@@ -197,6 +197,16 @@ these benchmarks are outdated or not comprehensive enough:
 
 ## 2.1. cls
 
+google lit @ 2021:
+
+- https://arxiv.org/abs/2111.07991
+- https://github.com/google-research/vision_transformer
+- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
+- https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
+- based on clip, but beats it in zero-shot classification
+- installation:
+    - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
+
 openai clip @ 2021:
 
 - https://arxiv.org/abs/2103.00020v1
@@ -208,21 +218,11 @@ openai clip @ 2021:
 - models:
     - https://github.com/openai/CLIP/blob/main/model-card.md
     - `clip.available_models()`: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px']
-- installation:
+- ✅ installation:
     - https://github.com/openai/CLIP/blob/main/notebooks/Prompt_Engineering_for_ImageNet.ipynb
     - https://github.com/openai/CLIP/blob/main/notebooks/Interacting_with_CLIP.ipynb
     - https://huggingface.co/openai/clip-vit-large-patch14
     - also roz: https://github.com/wang-research-lab/roz
-
-google lit @ 2021:
-
-- https://arxiv.org/abs/2111.07991
-- https://github.com/google-research/vision_transformer
-- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
-- https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
-- based on clip, but beats it in zero-shot classification
-- installation:
-    - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
 
 open-coca @ 2022:
 
