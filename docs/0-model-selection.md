@@ -209,8 +209,8 @@ openai clip @ 2021:
     - https://github.com/openai/CLIP/blob/main/model-card.md
     - `clip.available_models()`: ['RN50', 'RN101', 'RN50x4', 'RN50x16', 'RN50x64', 'ViT-B/32', 'ViT-B/16', 'ViT-L/14', 'ViT-L/14@336px']
 - installation:
-    - https://huggingface.co/mlunar/clip-variants/raw/555f7ba437324dd8e06b4e73fbd1605e6a0ba753/convert.py
-    - https://github.com/wang-research-lab/roz/blob/main/scripts/natural_distribution_shift/src/models/CLIPViT.py
+    - https://github.com/openai/CLIP/blob/main/notebooks/Prompt_Engineering_for_ImageNet.ipynb
+    - https://github.com/openai/CLIP/blob/main/notebooks/Interacting_with_CLIP.ipynb
     - https://huggingface.co/openai/clip-vit-large-patch14
     - also roz: https://github.com/wang-research-lab/roz
 
