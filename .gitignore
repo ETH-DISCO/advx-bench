@@ -1,3 +1,4 @@
+*.partial
 *.pth
 *.npz
 

@@ -315,12 +315,15 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
+> implement a `.pth` / `.ckpt` download script, don't push weights to git
+
 otseg+ @ 2024:
 
 - https://arxiv.org/pdf/2403.14183
 - https://github.com/cubeyoung/OTSeg
 - top perf
 - installation:
+    - https://github.com/cubeyoung/OTSeg?tab=readme-ov-file#pretrained-models
 
 maft @ 2023:
 
@@ -328,6 +331,7 @@ maft @ 2023:
 - https://github.com/jiaosiyu1999/MAFT
 - top perf
 - installation:
+    - https://github.com/jiaosiyu1999/MAFT?tab=readme-ov-file#pretrained-weights
 
 clip-dinoiser @ 2023:
 
@@ -345,13 +349,14 @@ zegformer @ 2022:
 - https://github.com/dingjiansw101/ZegFormer
 - has open vocabulary
 - installation:
+    - https://github.com/dingjiansw101/ZegFormer?tab=readme-ov-file#inference-demo-with-pre-trained-models
 
 mask2former @ 2022:
 
 - https://arxiv.org/abs/2112.01527
 - https://github.com/facebookresearch/Mask2Former
-- https://github.com/facebookresearch/Mask2Former/blob/main/INSTALL.md
 - installation:
+    - https://github.com/facebookresearch/Mask2Former/blob/main/MODEL_ZOO.md#coco-model-zoo
 
 cliprc @ 2024:
 
@@ -359,8 +364,6 @@ cliprc @ 2024:
 - https://github.com/uyzhang/CLIP-RC
 - installation:
     - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models
-    - check huggingface
-    - check if it can be compressed and pushed to Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero
 
 zegclip @ 2022:
 
@@ -396,4 +399,4 @@ grounding sam @ 2024:
 detr @ 2022:
 
 - same model as above
-- ❌ tried it out, has nice panoptic segmentation + semantic segmentation features, but limited to very specific classes (not open vocabulary)
+- ❌ zero shot, doesn't need any textual prompts and finds all labels in the image - but only works with COCO classes
