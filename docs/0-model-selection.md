@@ -317,8 +317,6 @@ grounding dino 1.5 @ 2024:
 ## 2.3. semantic seg
 
 > implement a `.pth` / `.ckpt` download script, don't push weights to git -> for each model check for huggingface weights and maybe also download the repository during the runtime as well
-> 
-> best models: otseg+, cliprc, zegclip, catseg-L, maft
 
 otseg+ @ 2024:
 
@@ -341,30 +339,23 @@ clip-dinoiser @ 2023:
 - https://arxiv.org/abs/2312.12359
 - https://github.com/wysoczanska/clip_dinoiser/
 - adds DINO for open vocabulary semantic segmentation
-- not on benchmark leaderboards
-- has open vocabulary
+- not on leaderboard - but has open vocabulary
 - installation:
-    - https://github.com/dingjiansw101/ZegFormer?tab=readme-ov-file#inference-demo-with-pre-trained-models
+    - https://github.com/wysoczanska/clip_dinoiser/blob/main/demo.ipynb
 
 zegformer @ 2022:
 
 - https://arxiv.org/abs/2112.07910
 - https://github.com/dingjiansw101/ZegFormer
-- has open vocabulary
+- not on leaderboard - but has open vocabulary
 - installation:
     - https://github.com/dingjiansw101/ZegFormer?tab=readme-ov-file#inference-demo-with-pre-trained-models
-
-mask2former @ 2022:
-
-- https://arxiv.org/abs/2112.01527
-- https://github.com/facebookresearch/Mask2Former
-- installation:
-    - https://github.com/facebookresearch/Mask2Former/blob/main/MODEL_ZOO.md#coco-model-zoo
 
 cliprc @ 2024:
 
 - https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
 - https://github.com/uyzhang/CLIP-RC
+- top perf
 - installation:
     - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models
 
@@ -372,6 +363,7 @@ zegclip @ 2022:
 
 - https://arxiv.org/abs/2212.03588
 - https://github.com/ZiqinZhou66/ZegCLIP
+- top perf
 - installation:
     - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models
 
@@ -383,9 +375,18 @@ catseg @ 2024:
 - installation:
     - https://github.com/KU-CVLAB/CAT-Seg?tab=readme-ov-file#pretrained-models
 
+mask2former @ 2022:
+
+- https://arxiv.org/abs/2112.01527
+- https://github.com/facebookresearch/Mask2Former
+- not on leaderboard
+- installation:
+    - https://github.com/facebookresearch/Mask2Former/blob/main/MODEL_ZOO.md#coco-model-zoo -> nice docs
+
 clipseg @ 2021:
 
 - https://arxiv.org/abs/2112.10003
+- not on leaderboard but very popular
 - ✅ installation:
     - https://huggingface.co/docs/transformers/main/en/model_doc/clipseg
 
@@ -396,10 +397,12 @@ grounding sam @ 2024:
 - https://github.com/IDEA-Research/Grounded-Segment-Anything?tab=readme-ov-file
 - https://huggingface.co/docs/transformers/main/en/model_doc/grounding-dino
 - particularly relevant as SAM2 just came out
+- not on leaderboard but very popular
 - ✅ installation:
     - https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Grounding%20DINO/GroundingDINO_with_Segment_Anything.ipynb
 
 detr @ 2022:
 
 - same model as above
+- not on leaderboard but very popular
 - ❌ zero shot, doesn't need any textual prompts and finds all labels in the image - but only works with COCO classes
