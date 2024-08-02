@@ -316,7 +316,40 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
-> implement a `.pth` / `.ckpt` download script, don't push weights to git -> for each model check for huggingface weights and maybe also download the repository during the runtime as well
+> the majority of these models are not open vocabulary / constrained to the labels they were trained on
+> 
+> only very few models are plug-and-play, most are only accessible through `.pth` checkpoints that must be manually downloaded with the repository / loaded into some backbone model
+
+mask2former @ 2022:
+
+- https://arxiv.org/abs/2112.01527
+- https://github.com/facebookresearch/Mask2Former
+- https://huggingface.co/models?other=mask2former
+- https://github.com/facebookresearch/Mask2Former/blob/main/MODEL_ZOO.md#coco-model-zoo
+- not on leaderboard
+- ✅ installation:
+    - see "resources" in the mask2former documentation
+    - https://huggingface.co/docs/transformers/main/en/model_doc/mask2former
+    - https://huggingface.co/blog/Mask2Former
+    - https://huggingface.co/facebook/mask2former-swin-large-coco-instance (largest version)
+
+clipseg @ 2021:
+
+- https://arxiv.org/abs/2112.10003
+- not on leaderboard but very popular
+- ✅ installation:
+    - https://huggingface.co/docs/transformers/main/en/model_doc/clipseg
+
+grounding sam @ 2024:
+
+- https://arxiv.org/abs/2303.05499
+- https://paperswithcode.com/paper/grounding-dino-marrying-dino-with-grounded
+- https://github.com/IDEA-Research/Grounded-Segment-Anything?tab=readme-ov-file
+- https://huggingface.co/docs/transformers/main/en/model_doc/grounding-dino
+- particularly relevant as SAM2 just came out
+- not on leaderboard but very popular
+- ✅ installation:
+    - https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Grounding%20DINO/GroundingDINO_with_Segment_Anything.ipynb
 
 otseg+ @ 2024:
 
@@ -366,37 +399,6 @@ zegclip @ 2022:
 - top perf
 - installation:
     - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models
-
-mask2former @ 2022:
-
-- https://arxiv.org/abs/2112.01527
-- https://github.com/facebookresearch/Mask2Former
-- https://huggingface.co/models?other=mask2former
-- https://github.com/facebookresearch/Mask2Former/blob/main/MODEL_ZOO.md#coco-model-zoo
-- not on leaderboard
-- ✅ installation:
-    - see "resources" in the mask2former documentation
-    - https://huggingface.co/docs/transformers/main/en/model_doc/mask2former
-    - https://huggingface.co/blog/Mask2Former
-    - https://huggingface.co/facebook/mask2former-swin-large-coco-instance (largest version)
-
-clipseg @ 2021:
-
-- https://arxiv.org/abs/2112.10003
-- not on leaderboard but very popular
-- ✅ installation:
-    - https://huggingface.co/docs/transformers/main/en/model_doc/clipseg
-
-grounding sam @ 2024:
-
-- https://arxiv.org/abs/2303.05499
-- https://paperswithcode.com/paper/grounding-dino-marrying-dino-with-grounded
-- https://github.com/IDEA-Research/Grounded-Segment-Anything?tab=readme-ov-file
-- https://huggingface.co/docs/transformers/main/en/model_doc/grounding-dino
-- particularly relevant as SAM2 just came out
-- not on leaderboard but very popular
-- ✅ installation:
-    - https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Grounding%20DINO/GroundingDINO_with_Segment_Anything.ipynb
 
 catseg @ 2024:
 
