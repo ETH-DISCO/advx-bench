@@ -74,6 +74,11 @@ segmentation:
     - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → Grounded HQ-SAM (2023), Grounded-SAM (2023)
     - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023) (← this doesn't make sense, it's a classification model)
 
+> sam vit 2 @ 2024 (published this week):
+> 
+> - https://ai.meta.com/research/publications/sam-2-segment-anything-in-images-and-videos/
+> - https://github.com/facebookresearch/segment-anything-2
+> 
 > sam vit @ 2023:
 > 
 > - https://arxiv.org/pdf/2304.02643
@@ -310,13 +315,6 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
-sam 2 @ 2024 (just this week):
-
-- https://ai.meta.com/research/publications/sam-2-segment-anything-in-images-and-videos/
-- https://github.com/facebookresearch/segment-anything-2
-- installation:
-    - https://github.com/facebookresearch/segment-anything-2?tab=readme-ov-file#image-prediction
-
 otseg+ @ 2024:
 
 - https://arxiv.org/pdf/2403.14183
@@ -334,15 +332,18 @@ maft @ 2023:
 clip-dinoiser @ 2023:
 
 - https://arxiv.org/abs/2312.12359
+- https://github.com/wysoczanska/clip_dinoiser/
 - adds DINO for open vocabulary semantic segmentation
 - not on benchmark leaderboards
+- has open vocabulary
 - installation:
-    - https://github.com/wysoczanska/clip_dinoiser/ (also has open vocabulary)
+    - https://github.com/dingjiansw101/ZegFormer?tab=readme-ov-file#inference-demo-with-pre-trained-models
 
 zegformer @ 2022:
 
 - https://arxiv.org/abs/2112.07910
-- https://github.com/dingjiansw101/ZegFormer (also has open vocabulary)
+- https://github.com/dingjiansw101/ZegFormer
+- has open vocabulary
 - installation:
 
 mask2former @ 2022:
@@ -352,10 +353,34 @@ mask2former @ 2022:
 - https://github.com/facebookresearch/Mask2Former/blob/main/INSTALL.md
 - installation:
 
+cliprc @ 2024:
+
+- https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
+- https://github.com/uyzhang/CLIP-RC
+- installation:
+    - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models
+    - check huggingface
+    - check if it can be compressed and pushed to Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero
+
+zegclip @ 2022:
+
+- https://arxiv.org/abs/2212.03588
+- https://github.com/ZiqinZhou66/ZegCLIP
+- installation:
+    - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models
+
+catseg @ 2024:
+
+- https://arxiv.org/abs/2303.11797
+- https://github.com/KU-CVLAB/CAT-Seg
+- top perf
+- installation:
+    - https://github.com/KU-CVLAB/CAT-Seg?tab=readme-ov-file#pretrained-models
+
 clipseg @ 2021:
 
 - https://arxiv.org/abs/2112.10003
-- installation:
+- ✅ installation:
     - https://huggingface.co/docs/transformers/main/en/model_doc/clipseg
 
 grounding sam @ 2024:
@@ -367,30 +392,6 @@ grounding sam @ 2024:
 - particularly relevant as SAM2 just came out
 - ✅ installation:
     - https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Grounding%20DINO/GroundingDINO_with_Segment_Anything.ipynb
-
-cliprc @ 2024:
-
-- https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
-- https://github.com/uyzhang/CLIP-RC
-- installation:
-    - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models (`.pth` files)
-    - check huggingface
-    - check if it can be compressed and pushed to Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero
-
-zegclip @ 2022:
-
-- https://arxiv.org/abs/2212.03588
-- https://github.com/ZiqinZhou66/ZegCLIP
-- installation:
-    - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models (`.pth` files)
-
-catseg @ 2024:
-
-- https://arxiv.org/abs/2303.11797
-- https://github.com/KU-CVLAB/CAT-Seg
-- top perf
-- installation:
-    - https://github.com/KU-CVLAB/CAT-Seg?tab=readme-ov-file#pretrained-models (`.ckpt` files)
 
 detr @ 2022:
 
