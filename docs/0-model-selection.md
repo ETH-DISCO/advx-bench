@@ -352,26 +352,11 @@ mask2former @ 2022:
 - https://github.com/facebookresearch/Mask2Former/blob/main/INSTALL.md
 - installation:
 
-cliprc @ 2024:
-
-- https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
-- https://github.com/uyzhang/CLIP-RC
-- installation:
-    - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models (`.pth` files to manually download)
-    - check huggingface
-    - check if it can be compressed and pushed to Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero
-
-zegclip @ 2022:
-
-- https://arxiv.org/abs/2212.03588
-- https://github.com/ZiqinZhou66/ZegCLIP
-- installation:
-    - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models (`.pth` files to manually download)
-
 clipseg @ 2021:
 
 - https://arxiv.org/abs/2112.10003
-- https://huggingface.co/docs/transformers/main/en/model_doc/clipseg
+- installation:
+    - https://huggingface.co/docs/transformers/main/en/model_doc/clipseg
 
 grounding sam @ 2024:
 
@@ -380,20 +365,34 @@ grounding sam @ 2024:
 - https://github.com/IDEA-Research/Grounded-Segment-Anything?tab=readme-ov-file
 - https://huggingface.co/docs/transformers/main/en/model_doc/grounding-dino
 - particularly relevant as SAM2 just came out
-- installation:
+- ✅ installation:
     - https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Grounding%20DINO/GroundingDINO_with_Segment_Anything.ipynb
+
+cliprc @ 2024:
+
+- https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
+- https://github.com/uyzhang/CLIP-RC
+- installation:
+    - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models (`.pth` files)
+    - check huggingface
+    - check if it can be compressed and pushed to Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero
+
+zegclip @ 2022:
+
+- https://arxiv.org/abs/2212.03588
+- https://github.com/ZiqinZhou66/ZegCLIP
+- installation:
+    - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models (`.pth` files)
 
 catseg @ 2024:
 
 - https://arxiv.org/abs/2303.11797
 - https://github.com/KU-CVLAB/CAT-Seg
 - top perf
-- ❌ installation:
-    - huggingface demo page is broken
-    - no pretrained models to download
-    - no documentation
+- installation:
+    - https://github.com/KU-CVLAB/CAT-Seg?tab=readme-ov-file#pretrained-models (`.ckpt` files)
 
 detr @ 2022:
 
 - same model as above
-- ❌ works well for panoptic / semantic segmentation, but not open vocabulary so not useful to us
+- ❌ tried it out, has nice panoptic segmentation + semantic segmentation features, but limited to very specific classes (not open vocabulary)
