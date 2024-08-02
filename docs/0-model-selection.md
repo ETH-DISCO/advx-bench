@@ -316,7 +316,9 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
-> implement a `.pth` / `.ckpt` download script, don't push weights to git
+> implement a `.pth` / `.ckpt` download script, don't push weights to git -> for each model check for huggingface weights and maybe also download the repository during the runtime as well
+> 
+> best models: otseg+, cliprc, zegclip, catseg-L, maft
 
 otseg+ @ 2024:
 
