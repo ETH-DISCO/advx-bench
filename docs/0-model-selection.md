@@ -116,14 +116,6 @@ zero shot classification:
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3 → LiT-22B (2023), CoCa (2022), LiT ViT-e (2022), LiT-tuning (2021)
     - https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-1 → M2-Encoder (2024), CoCa (2022), LiT-22B (2023), LiT ViT-e (2022)
 
-zero shot semantic segmentation:
-
-- https://paperswithcode.com/task/zero-shot-semantic-segmentation
-    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-coco-stuff → OTSeg+ (2024), JSeg (2024), OTSeg (2024), ZegCLIP (2022)
-    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-pascal-voc → OTSeg+ (2024), OTSeg (2024), CLIP-RC (2024), ZegCLIP (2022)
-    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-mess → CAT-SEG-L (2024)
-    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-ade20k-847 → MAFT (2023)
-
 zero shot object detection:
 
 - https://paperswithcode.com/task/zero-shot-object-detection
@@ -133,6 +125,14 @@ zero shot object detection:
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-lvis-v1-0-val → Grounding DINO 1.5 Pro (2024), OWLv2 (2023), MQ-GLIP-L (2023)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-odinw → Grounding DINO 1.5 Pro (2024)
     - https://paperswithcode.com/sota/zero-shot-object-detection-on-mscoco → Grounding DINO 1.5 Pro (2024)
+
+zero shot semantic segmentation:
+
+- https://paperswithcode.com/task/zero-shot-semantic-segmentation
+    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-coco-stuff → OTSeg+ (2024), JSeg (2024), OTSeg (2024), ZegCLIP (2022)
+    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-pascal-voc → OTSeg+ (2024), OTSeg (2024), CLIP-RC (2024), ZegCLIP (2022)
+    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-mess → CAT-SEG-L (2024)
+    - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-ade20k-847 → MAFT (2023)
 
 ## 1.3. goldblum et al. (2023)
 
@@ -226,14 +226,6 @@ open-coca @ 2022:
 - ✅ installation:
     - https://github.com/mlfoundations/open_clip
 
-google efficientnet @ 2020:
-
-- https://arxiv.org/pdf/1905.11946
-- https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
-- ✅ installation:
-    - https://huggingface.co/google/efficientnet-b0
-    - https://huggingface.co/docs/timm/en/models/efficientnet
-
 eva / eva-clip-18b @ 2023:
 
 - https://arxiv.org/pdf/2402.04252
@@ -260,6 +252,15 @@ gem / metaclip @ 2024:
     - https://huggingface.co/models?search=metaclip
     - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
 
+google efficientnet @ 2020:
+
+- https://arxiv.org/pdf/1905.11946
+- https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
+- not on any leaderboards
+- ✅ installation:
+    - https://huggingface.co/google/efficientnet-b0
+    - https://huggingface.co/docs/timm/en/models/efficientnet
+
 google lit @ 2021:
 
 - https://arxiv.org/abs/2111.07991
@@ -273,13 +274,6 @@ google lit @ 2021:
 
 ## 2.2. det
 
-owlv2 / owlvit @ 2023:
-
-- https://arxiv.org/abs/2305.01917
-- ✅ installation:
-    - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
-    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate)
-
 grounding dino @ 2024:
 
 - https://arxiv.org/abs/2303.05499
@@ -289,6 +283,13 @@ grounding dino @ 2024:
 - ✅ installation:
     - https://huggingface.co/IDEA-Research/grounding-dino-base (largest version)
     - https://huggingface.co/IDEA-Research/grounding-dino-tiny
+
+owlv2 / owlvit @ 2023:
+
+- https://arxiv.org/abs/2305.01917
+- ✅ installation:
+    - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
+    - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate)
 
 detr @ 2022:
 
