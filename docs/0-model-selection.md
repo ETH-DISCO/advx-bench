@@ -367,14 +367,6 @@ zegclip @ 2022:
 - installation:
     - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models
 
-catseg @ 2024:
-
-- https://arxiv.org/abs/2303.11797
-- https://github.com/KU-CVLAB/CAT-Seg
-- top perf
-- installation:
-    - https://github.com/KU-CVLAB/CAT-Seg?tab=readme-ov-file#pretrained-models
-
 mask2former @ 2022:
 
 - https://arxiv.org/abs/2112.01527
@@ -405,6 +397,16 @@ grounding sam @ 2024:
 - not on leaderboard but very popular
 - ✅ installation:
     - https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Grounding%20DINO/GroundingDINO_with_Segment_Anything.ipynb
+
+catseg @ 2024:
+
+- https://arxiv.org/abs/2303.11797
+- https://github.com/KU-CVLAB/CAT-Seg
+- top perf
+- ❌ installation:
+    - https://github.com/KU-CVLAB/CAT-Seg?tab=readme-ov-file#pretrained-models
+    - you must download weights + repository
+    - doesn't have any documentation, just an evaluation script that only runs with nvidia gpus
 
 detr @ 2022:
 
