@@ -316,9 +316,9 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
-> the majority of these models are not open vocabulary / constrained to the labels they were trained on
+> the majority of these models are not open vocabulary / constrained to the labels they were trained on + only accessible through `.pth` checkpoints that must be manually downloaded in addition to their repository and some other back bone (usually this process is not well documented)
 > 
-> only very few models are plug-and-play, most are only accessible through `.pth` checkpoints that must be manually downloaded with the repository / loaded into some backbone model
+> this really narrows down the options
 
 mask2former @ 2022:
 
