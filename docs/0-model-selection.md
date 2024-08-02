@@ -310,6 +310,13 @@ grounding dino 1.5 @ 2024:
 
 ## 2.3. semantic seg
 
+sam 2 @ 2024 (just this week):
+
+- https://ai.meta.com/research/publications/sam-2-segment-anything-in-images-and-videos/
+- https://github.com/facebookresearch/segment-anything-2
+- installation:
+    - https://github.com/facebookresearch/segment-anything-2?tab=readme-ov-file#image-prediction
+
 otseg+ @ 2024:
 
 - https://arxiv.org/pdf/2403.14183
@@ -350,14 +357,31 @@ cliprc @ 2024:
 - https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
 - https://github.com/uyzhang/CLIP-RC
 - installation:
-    - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models
+    - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models (`.pth` files to manually download)
+    - check huggingface
+    - check if it can be compressed and pushed to Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero
 
 zegclip @ 2022:
 
 - https://arxiv.org/abs/2212.03588
 - https://github.com/ZiqinZhou66/ZegCLIP
 - installation:
-    - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models
+    - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models (`.pth` files to manually download)
+
+clipseg @ 2021:
+
+- https://arxiv.org/abs/2112.10003
+- https://huggingface.co/docs/transformers/main/en/model_doc/clipseg
+
+grounding sam @ 2024:
+
+- https://arxiv.org/abs/2303.05499
+- https://paperswithcode.com/paper/grounding-dino-marrying-dino-with-grounded
+- https://github.com/IDEA-Research/Grounded-Segment-Anything?tab=readme-ov-file
+- https://huggingface.co/docs/transformers/main/en/model_doc/grounding-dino
+- particularly relevant as SAM2 just came out
+- installation:
+    - https://github.com/NielsRogge/Transformers-Tutorials/blob/master/Grounding%20DINO/GroundingDINO_with_Segment_Anything.ipynb
 
 catseg @ 2024:
 
