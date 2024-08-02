@@ -1,8 +1,9 @@
 MODEL_REGISTRY = dict()
 
 
-def store_model(cls):
-    # use @register_model_class decorator to store
+def register_model(cls):
+    # use @register_model decorator to store
+    print(f"registering {cls.__name__}")
     MODEL_REGISTRY[cls.__name__] = cls
     return cls
 
