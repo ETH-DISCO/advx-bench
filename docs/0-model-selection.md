@@ -197,17 +197,6 @@ these benchmarks are outdated or not comprehensive enough:
 
 ## 2.1. cls
 
-google lit @ 2021:
-
-- https://arxiv.org/abs/2111.07991
-- https://github.com/google-research/vision_transformer
-- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
-- https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
-- based on clip, but beats it in zero-shot classification
-- ❌ installation:
-    - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
-    - somehow figured it out myself but it wasn't well documented and i'm not sure if what i did was correct
-
 openai clip @ 2021:
 
 - https://arxiv.org/abs/2103.00020v1
@@ -266,6 +255,17 @@ gem / metaclip @ 2024:
     - https://huggingface.co/models?search=metaclip
     - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
 
+google lit @ 2021:
+
+- https://arxiv.org/abs/2111.07991
+- https://github.com/google-research/vision_transformer
+- https://github.com/google-research/vision_transformer/blob/main/model_cards/lit.md#model-data
+- https://github.com/google-research/vision_transformer?tab=readme-ov-file#lit-models
+- based on clip, but beats it in zero-shot classification
+- ❌ installation:
+    - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
+    - somehow figured it out myself but it wasn't well documented and i'm not sure if what i did was correct
+
 ## 2.2. det
 
 owlv2 / owlvit @ 2023:
@@ -298,7 +298,7 @@ mq-det @ 2023:
 - https://arxiv.org/pdf/2305.18980v2
 - https://github.com/yifanxu74/mq-det
 - ❌ installation:
-    - not documented how to use pre-trained models
+    - no link to pretrained models, no documentation
 
 grounding dino 1.5 @ 2024:
 
@@ -314,13 +314,6 @@ otseg+ @ 2024:
 
 - https://arxiv.org/pdf/2403.14183
 - https://github.com/cubeyoung/OTSeg
-- top perf
-- installation:
-
-catseg @ 2024:
-
-- https://arxiv.org/abs/2303.11797
-- https://github.com/KU-CVLAB/CAT-Seg
 - top perf
 - installation:
 
@@ -357,13 +350,24 @@ cliprc @ 2024:
 - https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_Exploring_Regional_Clues_in_CLIP_for_Zero-Shot_Semantic_Segmentation_CVPR_2024_paper.pdf
 - https://github.com/uyzhang/CLIP-RC
 - installation:
+    - https://github.com/uyzhang/CLIP-RC?tab=readme-ov-file#pretrained-models
 
 zegclip @ 2022:
 
 - https://arxiv.org/abs/2212.03588
 - https://github.com/ZiqinZhou66/ZegCLIP
 - installation:
-    - docker container
+    - https://github.com/ZiqinZhou66/ZegCLIP/tree/main#pretrained-models
+
+catseg @ 2024:
+
+- https://arxiv.org/abs/2303.11797
+- https://github.com/KU-CVLAB/CAT-Seg
+- top perf
+- ❌ installation:
+    - huggingface demo page is broken
+    - no pretrained models to download
+    - no documentation
 
 detr @ 2022:
 
