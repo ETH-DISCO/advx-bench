@@ -379,9 +379,14 @@ mask2former @ 2022:
 
 - https://arxiv.org/abs/2112.01527
 - https://github.com/facebookresearch/Mask2Former
+- https://huggingface.co/models?other=mask2former
+- https://github.com/facebookresearch/Mask2Former/blob/main/MODEL_ZOO.md#coco-model-zoo
 - not on leaderboard
-- installation:
-    - https://github.com/facebookresearch/Mask2Former/blob/main/MODEL_ZOO.md#coco-model-zoo -> nice docs
+- ✅ installation:
+    - see "resources" in the mask2former documentation
+    - https://huggingface.co/docs/transformers/main/en/model_doc/mask2former
+    - https://huggingface.co/blog/Mask2Former
+    - https://huggingface.co/facebook/mask2former-swin-large-coco-instance (largest version)
 
 clipseg @ 2021:
 
