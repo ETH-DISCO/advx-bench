@@ -6,7 +6,7 @@ from PIL import Image
 from utils import get_device
 
 
-def get_groundingdino_results(img: Image.Image, labels: list[str], threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
+def detect_groundingdino(img: Image.Image, labels: list[str], threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
     from transformers import AutoModelForZeroShotObjectDetection, AutoProcessor
 
     device = get_device()
@@ -29,7 +29,7 @@ def get_groundingdino_results(img: Image.Image, labels: list[str], threshold: fl
     return boxes, scores, labels
 
 
-def get_vit_results(img: Image.Image, labels: list[str], threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
+def detect_vit(img: Image.Image, labels: list[str], threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
     from transformers import OwlViTForObjectDetection, OwlViTProcessor
 
     # model_id = "google/owlvit-large-patch14" # inference too slow
@@ -52,7 +52,7 @@ def get_vit_results(img: Image.Image, labels: list[str], threshold: float) -> tu
     return boxes, scores, labels
 
 
-def get_detr_results(img: Image.Image, threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
+def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
     from transformers import AutoImageProcessor, DetrForObjectDetection
 
     model_id = "facebook/detr-resnet-101-dc5"
@@ -100,7 +100,7 @@ threshold = 0.1
 url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 img = Image.open(requests.get(url, stream=True).raw)
 
-# results = get_groundingdino_results(img, labels, threshold)
-# results = get_vit_results(img, labels, threshold)
-results = get_detr_results(img, threshold)
+# results = detect_groundingdino(img, labels, threshold)
+# results = detect_vit(img, labels, threshold)
+results = detect_detr(img, threshold)
 plot_results(results)

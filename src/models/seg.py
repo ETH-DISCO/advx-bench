@@ -1,15 +1,14 @@
-import matplotlib.pyplot as plt
 import requests
-import torch
 from PIL import Image
 
-from utils import get_device
 
 def get_clipseg_results(img: Image.Image, labels: list[str]):
     pass
 
+
 def get_groundingsam_results(img: Image.Image, labels: list[str]):
     pass
+
 
 def get_mask2former_results(img: Image.Image, labels: list[str]):
     pass

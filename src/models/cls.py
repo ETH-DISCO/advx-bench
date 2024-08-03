@@ -6,7 +6,7 @@ from PIL import Image
 from utils import get_device
 
 
-def get_clip_results(img: Image.Image, labels: list[str]) -> dict[str, float]:
+def classify_clip(img: Image.Image, labels: list[str]) -> dict[str, float]:
     import clip
 
     device = get_device()
@@ -23,7 +23,7 @@ def get_clip_results(img: Image.Image, labels: list[str]) -> dict[str, float]:
     return {label: prob for label, prob in zip(labels, probs[0])}
 
 
-def get_opencoca_results(img: Image.Image, labels: list[str]) -> dict[str, float]:
+def classify_opencoca(img: Image.Image, labels: list[str]) -> dict[str, float]:
     import open_clip
 
     model, _, preprocess = open_clip.create_model_and_transforms("coca_ViT-L-14", pretrained="mscoco_finetuned_laion2b_s13b_b90k")
@@ -43,7 +43,7 @@ def get_opencoca_results(img: Image.Image, labels: list[str]) -> dict[str, float
     return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
 
 
-def get_openeva_results(img: Image.Image, labels: list[str]) -> dict[str, float]:
+def classify_eva(img: Image.Image, labels: list[str]) -> dict[str, float]:
     import open_clip
 
     model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k")  # largest that can fit in memory
@@ -64,7 +64,7 @@ def get_openeva_results(img: Image.Image, labels: list[str]) -> dict[str, float]
     return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
 
 
-def get_gem_results(img: Image.Image, labels: list[str]) -> dict[str, float]:
+def classify_gem(img: Image.Image, labels: list[str]) -> dict[str, float]:
     from transformers import AutoModel, AutoProcessor
 
     model_id = "facebook/metaclip-h14-fullcc2.5b"
@@ -106,9 +106,9 @@ labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art
 url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 img = Image.open(requests.get(url, stream=True).raw)
 
-preds = get_clip_results(img, labels)
-# preds = get_opencoca_results(img, labels)
-# preds = get_openeva_results(img, labels)
-# preds = get_gem_results(img, labels)
+preds = classify_clip(img, labels)
+# preds = classify_opencoca(img, labels)
+# preds = classify_eva(img, labels)
+# preds = classify_gem(img, labels)
 
 plot_results(preds)
