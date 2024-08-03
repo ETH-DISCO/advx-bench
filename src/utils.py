@@ -6,8 +6,9 @@ import torch
 
 
 def set_seed(seed: int = -1) -> None:
-    if seed < 0:
+    if seed == -1:
         seed = secrets.randbelow(1_000_000_000)
+
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
