@@ -331,7 +331,7 @@ mask2former @ 2022:
 - https://github.com/facebookresearch/Mask2Former
 - https://huggingface.co/models?other=mask2former
 - https://github.com/facebookresearch/Mask2Former/blob/main/MODEL_ZOO.md#coco-model-zoo
-- not on leaderboard
+- not on leaderboard, not open vocabulary (limited to COCO or AD20k classes)
 - ✅ installation:
     - see "resources" in the mask2former documentation
     - https://huggingface.co/docs/transformers/main/en/model_doc/mask2former
