@@ -1,4 +1,3 @@
-import requests
 import torch
 from PIL import Image
 
@@ -80,12 +79,37 @@ def get_gem_predictions(img: Image.Image, labels: list[str]) -> dict[str, float]
     return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
 
 
+def plot_predictions(predictions: dict[str, float]):
+    import matplotlib.pyplot as plt
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 10))
+
+    ax1.imshow(img)
+    ax1.axis("off")
+    ax1.set_title("Image")
+
+    sorted_preds = dict(sorted(predictions.items(), key=lambda item: item[1], reverse=True))
+    ax2.barh(list(sorted_preds.keys()), list(sorted_preds.values()), color="skyblue", align='center')
+    # invert x axis
+    ax2.invert_xaxis()
+    ax2.yaxis.tick_right()
+    ax2.yaxis.set_label_position("right")
+    ax2.set_xlim(1, 0)
+    ax2.set_xlabel("Probability")
+    ax2.set_title("Predictions")
+
+    plt.tight_layout()
+    plt.show()
+
 labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
 
+import requests
 url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 img = Image.open(requests.get(url, stream=True).raw)
 
-print(get_clip_predictions(img, labels))
-print(get_open_coca_predictions(img, labels))
-print(get_open_eva_predictions(img, labels))
-print(get_gem_predictions(img, labels))
+preds = get_clip_predictions(img, labels)
+# preds = get_open_coca_predictions(img, labels)
+# preds = get_open_eva_predictions(img, labels)
+# preds = get_gem_predictions(img, labels)
+
+plot_predictions(preds)
