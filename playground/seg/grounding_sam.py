@@ -5,8 +5,6 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
 import requests
 import torch
 from PIL import Image
@@ -236,63 +234,6 @@ def get_random_css_color(num_colors: int) -> List[str]:
         "yellowgreen",
     ]
     return random.sample(named_css_colors, min(num_colors, len(named_css_colors)))
-
-
-def plot_detections_plotly(image: np.ndarray, detections: List[DetectionResult], class_colors: Optional[Dict[str, str]] = None) -> None:
-    # If class_colors is not provided, generate random colors for each class
-    if class_colors is None:
-        num_detections = len(detections)
-        colors = get_random_css_color(num_detections)
-        class_colors = {}
-        for i in range(num_detections):
-            class_colors[i] = colors[i]
-
-    fig = px.imshow(image)
-
-    # Add bounding boxes
-    shapes = []
-    annotations = []
-    for idx, detection in enumerate(detections):
-        label = detection.label
-        box = detection.box
-        score = detection.score
-        mask = detection.mask
-
-        polygon = mask_to_polygon(mask)
-
-        fig.add_trace(go.Scatter(x=[point[0] for point in polygon] + [polygon[0][0]], y=[point[1] for point in polygon] + [polygon[0][1]], mode="lines", line=dict(color=class_colors[idx], width=2), fill="toself", name=f"{label}: {score:.2f}"))
-
-        xmin, ymin, xmax, ymax = box.xyxy
-        shape = [dict(type="rect", xref="x", yref="y", x0=xmin, y0=ymin, x1=xmax, y1=ymax, line=dict(color=class_colors[idx]))]
-        annotation = [
-            dict(
-                x=(xmin + xmax) // 2,
-                y=(ymin + ymax) // 2,
-                xref="x",
-                yref="y",
-                text=f"{label}: {score:.2f}",
-            )
-        ]
-
-        shapes.append(shape)
-        annotations.append(annotation)
-
-    # Update layout
-    button_shapes = [dict(label="None", method="relayout", args=["shapes", []])]
-    button_shapes = button_shapes + [dict(label=f"Detection {idx+1}", method="relayout", args=["shapes", shape]) for idx, shape in enumerate(shapes)]
-    button_shapes = button_shapes + [dict(label="All", method="relayout", args=["shapes", sum(shapes, [])])]
-
-    fig.update_layout(
-        xaxis=dict(visible=False),
-        yaxis=dict(visible=False),
-        # margin=dict(l=0, r=0, t=0, b=0),
-        showlegend=True,
-        updatemenus=[dict(type="buttons", direction="up", buttons=button_shapes)],
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-    )
-
-    # Show plot
-    fig.show()
 
 
 """
