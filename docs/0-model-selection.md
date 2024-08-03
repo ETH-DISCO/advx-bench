@@ -24,6 +24,11 @@ overview:
 > see: https://arxiv.org/pdf/2403.10499
 >
 > has the same goal as us - but only focuses on CLIP models for cls tasks on ImageNet
+>
+> important learnings:
+> 
+> - CLIP isn't as adversarially robust as advertised
+> - ViT is more adversarially robust than RN
 
 ranking by performance (based on table 2)
 
