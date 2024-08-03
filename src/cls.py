@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+import requests
 import torch
 from PIL import Image
 
@@ -80,8 +82,6 @@ def get_gem_predictions(img: Image.Image, labels: list[str]) -> dict[str, float]
 
 
 def plot_predictions(predictions: dict[str, float]):
-    import matplotlib.pyplot as plt
-
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 10))
 
     ax1.imshow(img)
@@ -89,7 +89,7 @@ def plot_predictions(predictions: dict[str, float]):
     ax1.set_title("Image")
 
     sorted_preds = dict(sorted(predictions.items(), key=lambda item: item[1], reverse=True))
-    ax2.barh(list(sorted_preds.keys()), list(sorted_preds.values()), color="skyblue", align='center')
+    ax2.barh(list(sorted_preds.keys()), list(sorted_preds.values()), color="skyblue", align="center")
     # invert x axis
     ax2.invert_xaxis()
     ax2.yaxis.tick_right()
@@ -101,9 +101,8 @@ def plot_predictions(predictions: dict[str, float]):
     plt.tight_layout()
     plt.show()
 
-labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
 
-import requests
+labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
 url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 img = Image.open(requests.get(url, stream=True).raw)
 
