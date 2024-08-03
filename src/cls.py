@@ -46,7 +46,7 @@ def get_open_coca_predictions(img: Image.Image, labels: list[str]) -> dict[str, 
 def get_open_eva_predictions(img: Image.Image, labels: list[str]) -> dict[str, float]:
     import open_clip
 
-    model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k")
+    model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k")  # largest that can fit in memory
     model.eval()
     tokenizer = open_clip.get_tokenizer("EVA01-g-14")
 
@@ -67,9 +67,9 @@ def get_open_eva_predictions(img: Image.Image, labels: list[str]) -> dict[str, f
 def get_gem_predictions(img: Image.Image, labels: list[str]) -> dict[str, float]:
     from transformers import AutoModel, AutoProcessor
 
-    modelname = "facebook/metaclip-h14-fullcc2.5b"
-    processor = AutoProcessor.from_pretrained(modelname)
-    model = AutoModel.from_pretrained(modelname)
+    model_id = "facebook/metaclip-h14-fullcc2.5b"
+    processor = AutoProcessor.from_pretrained(model_id)
+    model = AutoModel.from_pretrained(model_id)
 
     inputs = processor(text=labels, images=img, return_tensors="pt", padding=True)
 
