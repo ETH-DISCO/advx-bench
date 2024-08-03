@@ -1,6 +1,10 @@
 # https://github.com/wang-research-lab/roz/blob/6b4b7ff9d98a0a6fb4aeb4512859c1a0b16a0138/scripts/natural_distribution_shift/src/registry.py
 # https://github.com/wang-research-lab/roz/blob/6b4b7ff9d98a0a6fb4aeb4512859c1a0b16a0138/scripts/natural_distribution_shift/src/inference.py#L115
 
+
+# figure this out later
+
+
 from pathlib import Path
 from importlib import import_module
 
@@ -13,7 +17,9 @@ def register_model(cls):
     MODEL_REGISTRY[cls.__name__] = cls
     return cls
 
+
 def load_models():
+    # not sure whether this actually works
     models_dir = Path.cwd() / "src" / "models"
 
     print(f"loading models from {models_dir}")

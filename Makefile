@@ -3,11 +3,11 @@
 .PHONY: fmt # format and remove unused imports
 fmt:
 	# pip install isort
-	isort .
-	# pip install autoflake
-	autoflake --remove-all-unused-imports --recursive --in-place .
-
 	# pip install ruff
+	# pip install autoflake
+
+	isort .
+	autoflake --remove-all-unused-imports --recursive --in-place .
 	ruff format --config line-length=500 .
 
 .PHONY: sec # check for common vulnerabilities
