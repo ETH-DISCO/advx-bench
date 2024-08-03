@@ -5,8 +5,8 @@
 # figure this out later
 
 
-from pathlib import Path
 from importlib import import_module
+from pathlib import Path
 
 MODEL_REGISTRY = dict()
 
@@ -36,6 +36,7 @@ def load_models():
                 if "__" not in f.stem:
                     print(f"loading {subdir.stem}.{f.stem}")
                     import_module(f"models.{subdir.stem}.{f.stem}")
+
 
 def get_model(model_name, **kwargs):
     if model_name in MODEL_REGISTRY:
