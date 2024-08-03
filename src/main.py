@@ -7,7 +7,8 @@ import random
 
 img_idx = random.randint(1, 24)
 cwd = Path.cwd() / 'data' / 'kodak' / f'kodim{img_idx:02d}.png'
-print(f"loading {cwd}")
+img = Image.open(cwd)
+img.show()
 
 
 # img = Image.open(cwd)
