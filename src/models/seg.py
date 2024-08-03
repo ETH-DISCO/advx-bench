@@ -1,14 +1,15 @@
+import random
+
 import matplotlib.pyplot as plt
 import numpy as np
-import torch
 import requests
-import random
+import torch
 from PIL import Image
-
 
 """
 plot utils
 """
+
 
 def get_random_color(num_colors: int) -> list[str]:
     named_css_colors = [
@@ -164,27 +165,25 @@ def get_random_color(num_colors: int) -> list[str]:
     return random.sample(named_css_colors, min(num_colors, len(named_css_colors)))
 
 
-
 def plot_results(img: Image.Image, results: list[tuple[str, torch.Tensor]]):
     plt.imshow(img)
-    plt.axis('off')
+    plt.axis("off")
 
     colors = get_random_color(len(results))
     for (label, mask), color in zip(results, colors):
         mask_np = mask.squeeze().numpy()
-        
+
         # resize the mask to match the original image dimensions
         mask_resized = np.array(Image.fromarray(mask_np).resize(img.size, Image.BILINEAR))
-        
+
         color_mask = np.zeros((*mask_resized.shape, 4))
         color_mask[..., :3] = plt.cm.colors.to_rgb(color)
         color_mask[..., 3] = mask_resized * 0.5
         plt.imshow(color_mask)
         plt.contour(mask_resized, levels=[0.5], colors=[color], alpha=0.8)
 
-    legend_elements = [plt.Line2D([0], [0], color=color, lw=4, label=label)
-                         for (label, _), color in zip(results, colors)]
-    plt.legend(handles=legend_elements, loc='center left', bbox_to_anchor=(1, 0.5))
+    legend_elements = [plt.Line2D([0], [0], color=color, lw=4, label=label) for (label, _), color in zip(results, colors)]
+    plt.legend(handles=legend_elements, loc="center left", bbox_to_anchor=(1, 0.5))
 
     plt.tight_layout()
     plt.show()
@@ -194,12 +193,12 @@ def plot_results(img: Image.Image, results: list[tuple[str, torch.Tensor]]):
 models
 """
 
+
 def get_clipseg_results(img: Image.Image, labels: list[str]) -> list[tuple[str, torch.Tensor]]:
     from transformers import AutoProcessor, CLIPSegForImageSegmentation
 
     processor = AutoProcessor.from_pretrained("CIDAS/clipseg-rd64-refined")
     model = CLIPSegForImageSegmentation.from_pretrained("CIDAS/clipseg-rd64-refined")
-
 
     inputs = processor(text=labels, images=[img] * len(labels), padding=True, return_tensors="pt")
     with torch.no_grad():

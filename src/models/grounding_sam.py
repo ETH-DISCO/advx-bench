@@ -1,4 +1,3 @@
-import random
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
@@ -80,7 +79,6 @@ def plot_detections(image: Union[Image.Image, np.ndarray], detections: List[Dete
     if save_name:
         plt.savefig(save_name, bbox_inches="tight")
     plt.show()
-
 
 
 """
