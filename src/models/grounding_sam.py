@@ -1,6 +1,5 @@
 import math
-from dataclasses import dataclass
-from typing import List, Optional, Tuple
+from typing import List, Tuple
 
 import cv2
 import matplotlib.pyplot as plt
@@ -65,36 +64,14 @@ def refine_masks(masks: torch.BoolTensor, polygon_refinement: bool = False) -> L
     return masks
 
 
-@dataclass
-class DetectionResult:
-    score: float
-    label: str
-
-    xmin: int
-    ymin: int
-    xmax: int
-    ymax: int
-
-    mask: Optional[np.array] = None
-
-
 def plot(image: Image.Image, results):
     boxes, scores, labels, masks = results
     boxes = [[math.floor(val) for val in box] for box in boxes]
-    detection_results = []
-    for box, score, label, mask in zip(boxes, scores, labels, masks):
-        detection_results.append(DetectionResult(score=score, label=label, xmin=box[0], ymin=box[1], xmax=box[2], ymax=box[3], mask=mask))
-
 
     image_cv2 = np.array(image)
     image_cv2 = cv2.cvtColor(image_cv2, cv2.COLOR_RGB2BGR)
 
-    for detection in detection_results:
-        label = detection.label
-        score = detection.score
-        xmin, ymin, xmax, ymax = detection.xmin, detection.ymin, detection.xmax, detection.ymax
-        mask = detection.mask
-
+    for label, score, (xmin, ymin, xmax, ymax), mask in zip(labels, scores, boxes, masks):
         color = np.random.randint(0, 256, size=3)
 
         # bounding box
@@ -127,7 +104,6 @@ def segment_groundeddino_sam(image: Image.Image, labels: List[str], threshold: f
     masks = processor.post_process_masks(masks=outputs.pred_masks, original_sizes=inputs.original_sizes, reshaped_input_sizes=inputs.reshaped_input_sizes)[0]
 
     masks = refine_masks(masks, polygon_refinement)
-
 
     return boxes, scores, labels, masks
 
