@@ -213,7 +213,13 @@ labels = ["a cat.", "a remote control."]
 threshold = 0.3
 
 detector_id = "IDEA-Research/grounding-dino-tiny"
-segmenter_id = "facebook/sam-vit-base"
+
+# https://huggingface.co/facebook/sam2-hiera-tiny
+# https://huggingface.co/facebook/sam2-hiera-small
+# https://huggingface.co/facebook/sam2-hiera-base-plus
+# https://huggingface.co/facebook/sam2-hiera-large
+# segmenter_id = "facebook/sam-vit-base"
+segmenter_id = "facebook/sam2-hiera-base-plus"
 
 image_array, detections = grounded_segmentation(image=image_url, labels=labels, threshold=threshold, polygon_refinement=True, detector_id=detector_id, segmenter_id=segmenter_id)
 
