@@ -62,7 +62,7 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     outputs = model(**inputs)
 
     target_sizes = torch.tensor([img.size[::-1]])
-    results = image_processor.post_process_object_detection(outputs, threshold=0.9, target_sizes=target_sizes)[0]
+    results = image_processor.post_process_object_detection(outputs, threshold, target_sizes=target_sizes)[0]
     results["boxes"] = [elem.tolist() for elem in results["boxes"]]
     results["scores"] = [elem.item() for elem in results["scores"]]
     results["labels"] = [model.config.id2label[elem.item()] for elem in results["labels"]]

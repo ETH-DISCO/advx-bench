@@ -20,10 +20,6 @@ class BoundingBox:
     xmax: int
     ymax: int
 
-    @property
-    def xyxy(self) -> List[float]:
-        return [self.xmin, self.ymin, self.xmax, self.ymax]
-
 
 @dataclass
 class DetectionResult:
@@ -120,37 +116,27 @@ def refine_masks(masks: torch.BoolTensor, polygon_refinement: bool = False) -> L
     return masks
 
 
-def segment_samv2(image: Image.Image, labels: List[str], threshold: float = 0.3, polygon_refinement: bool = False) -> List[DetectionResult]:
+def segment_groundeddino_sam(image: Image.Image, labels: List[str], threshold: float, polygon_refinement: bool) -> List[DetectionResult]:
     boxes, scores, labels = detect_groundingdino(img, labels, threshold)
-    detection_results = []
-    for box, score, label in zip(boxes, scores, labels):
-        box = [math.floor(val) for val in box]
-        detection_results.append(DetectionResult(score=score, label=label, box=BoundingBox(xmin=box[0], ymin=box[1], xmax=box[2], ymax=box[3])))
 
     # update to sam2 model
     device = get_device()
     segmenter_id = "facebook/sam-vit-base"
     segmentator = AutoModelForMaskGeneration.from_pretrained(segmenter_id).to(device)
     processor = AutoProcessor.from_pretrained(segmenter_id)
-
-    def get_boxes(results: DetectionResult) -> List[List[List[float]]]:
-        boxes = []
-        for result in results:
-            xyxy = result.box.xyxy
-            boxes.append(xyxy)
-
-        return [boxes]
-
-    boxes = get_boxes(detection_results)
-    inputs = processor(images=image, input_boxes=boxes, return_tensors="pt").to(device)
-
-    outputs = segmentator(**inputs)
+    inputs = processor(images=image, input_boxes=[boxes], return_tensors="pt").to(device)
+    with torch.no_grad():
+        outputs = segmentator(**inputs)
     masks = processor.post_process_masks(masks=outputs.pred_masks, original_sizes=inputs.original_sizes, reshaped_input_sizes=inputs.reshaped_input_sizes)[0]
+
 
     masks = refine_masks(masks, polygon_refinement)
 
-    for detection_result, mask in zip(detection_results, masks):
-        detection_result.mask = mask
+
+    boxes = [[math.floor(val) for val in box] for box in boxes]
+    detection_results = []
+    for box, score, label, mask in zip(boxes, scores, labels, masks):
+        detection_results.append(DetectionResult(score=score, label=label, box=BoundingBox(xmin=box[0], ymin=box[1], xmax=box[2], ymax=box[3]), mask=mask))
 
     return detection_results
 
@@ -161,6 +147,6 @@ threshold = 0.3
 url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 img = Image.open(requests.get(url, stream=True).raw)
 
-detections = segment_samv2(img, labels, threshold, polygon_refinement=True)
+detections = segment_groundeddino_sam(img, labels, threshold, polygon_refinement=True)
 
 plot_detections(np.array(img), detections)
