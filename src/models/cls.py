@@ -23,7 +23,10 @@ def classify_clip(img: Image.Image, labels: list[str]) -> tuple[list[str], list[
         logits_per_image, logits_per_text = model(image, text)
         probs = logits_per_image.softmax(dim=-1).cpu().numpy()
 
-    return labels, probs[0]
+    labels, probs = labels, probs[0].tolist()
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(prob, float) for prob in probs)
+    return labels, probs
 
 
 def classify_opencoca(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
@@ -43,7 +46,9 @@ def classify_opencoca(img: Image.Image, labels: list[str]) -> tuple[list[str], l
         text_features /= text_features.norm(dim=-1, keepdim=True)
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-    labels, probs = labels, text_probs[0].cpu().numpy()
+    labels, probs = labels, text_probs[0].cpu().numpy().tolist()
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(prob, float) for prob in probs)
     return labels, probs
 
 
@@ -65,7 +70,9 @@ def classify_eva(img: Image.Image, labels: list[str]) -> tuple[list[str], list[f
 
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-    labels, probs = labels, text_probs[0].cpu().numpy()
+    labels, probs = labels, text_probs[0].cpu().numpy().tolist()
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(prob, float) for prob in probs)
     return labels, probs
 
 
@@ -83,7 +90,9 @@ def classify_gem(img: Image.Image, labels: list[str]) -> tuple[list[str], list[f
         logits_per_image = outputs.logits_per_image
         text_probs = logits_per_image.softmax(dim=-1)
 
-    labels, probs = labels, text_probs[0].cpu().numpy()
+    labels, probs = labels, text_probs[0].cpu().numpy().tolist()
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(prob, float) for prob in probs)
     return labels, probs
 
 
