@@ -1,16 +1,15 @@
+import math
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
-
-import json
-from det import detect_groundingdino
 
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import requests
 import torch
+from det import detect_groundingdino
 from PIL import Image
-from transformers import AutoModelForMaskGeneration, AutoProcessor, pipeline
+from transformers import AutoModelForMaskGeneration, AutoProcessor
 from utils import get_device
 
 
@@ -32,11 +31,6 @@ class DetectionResult:
     label: str
     box: BoundingBox
     mask: Optional[np.array] = None
-
-    @classmethod
-    def from_dict(cls, detection_dict: Dict) -> "DetectionResult":
-        return cls(score=detection_dict["score"], label=detection_dict["label"], box=BoundingBox(xmin=detection_dict["box"]["xmin"], ymin=detection_dict["box"]["ymin"], xmax=detection_dict["box"]["xmax"], ymax=detection_dict["box"]["ymax"]))
-
 
 
 def plot_detections(image: Union[Image.Image, np.ndarray], detections: List[DetectionResult]) -> None:
@@ -126,28 +120,6 @@ def refine_masks(masks: torch.BoolTensor, polygon_refinement: bool = False) -> L
     return masks
 
 
-
-def detect_groundingdino_tmp(image: Image.Image, labels: List[str], threshold: float = 0.3) -> List[Dict[str, Any]]:
-
-    labels = [label if label.endswith(".") else label + "." for label in labels]
-
-    device = get_device()
-    detector_id = "IDEA-Research/grounding-dino-tiny"
-    object_detector = pipeline(model=detector_id, task="zero-shot-object-detection", device=device)
-    results = object_detector(image, candidate_labels=labels, threshold=threshold)
-
-
-    print(results)
-    results = [DetectionResult.from_dict(result) for result in results]
-    print()
-    print()
-    print()
-    print()
-    print(results)
-
-    return results
-
-
 def segment_samv2(image: Image.Image, detection_results: List[Dict[str, Any]], polygon_refinement: bool = False) -> List[DetectionResult]:
     # https://huggingface.co/facebook/sam2-hiera-tiny
     # https://huggingface.co/facebook/sam2-hiera-small
@@ -181,8 +153,6 @@ def segment_samv2(image: Image.Image, detection_results: List[Dict[str, Any]], p
     return detection_results
 
 
-
-
 labels = ["a cat", "a remote control"]
 threshold = 0.3
 
@@ -190,7 +160,11 @@ url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 img = Image.open(requests.get(url, stream=True).raw)
 
 
-detections = detect_groundingdino_tmp(img, labels, threshold)
+boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+detections = []
+for box, score, label in zip(boxes, scores, labels):
+    detections.append(DetectionResult(score=score, label=label, box=BoundingBox(xmin=math.floor(box[0]), ymin=math.floor(box[1]), xmax=math.floor(box[2]), ymax=math.floor(box[3]))))
+
 detections = segment_samv2(img, detections, polygon_refinement=True)
 
 plot_detections(np.array(img), detections)
