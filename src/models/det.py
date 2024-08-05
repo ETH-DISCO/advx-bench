@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import requests
 import torch
 from PIL import Image
 from utils import get_device
@@ -83,7 +82,7 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     return results
 
 
-def plot_detection(results: tuple[list[list[float]], list[float], list[str]]):
+def plot_detection(img: Image.Image, results: tuple[list[list[float]], list[float], list[str]]):
     boxes, scores, labels = results
     plt.imshow(img)
     for box, score, label in zip(boxes, scores, labels):
@@ -93,13 +92,13 @@ def plot_detection(results: tuple[list[list[float]], list[float], list[str]]):
     plt.show()
 
 
-labels = ["cat", "remote control", "dog"]
-threshold = 0.1
+# labels = ["cat", "remote control", "dog"]
+# threshold = 0.1
 
-url = "http://images.cocodataset.org/val2017/000000039769.jpg"
-img = Image.open(requests.get(url, stream=True).raw)
+# url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+# img = Image.open(requests.get(url, stream=True).raw)
 
-# results = detect_groundingdino(img, labels, threshold)
-# results = detect_vit(img, labels, threshold)
-results = detect_detr(img, threshold)
-plot_detection(results)
+# # results = detect_groundingdino(img, labels, threshold)
+# # results = detect_vit(img, labels, threshold)
+# results = detect_detr(img, threshold)
+# plot_detection(img, results)

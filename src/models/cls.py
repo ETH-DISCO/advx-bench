@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import requests
 import torch
 from PIL import Image
 from utils import get_device
@@ -80,7 +79,7 @@ def classify_gem(img: Image.Image, labels: list[str]) -> dict[str, float]:
     return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
 
 
-def plot_classification(predictions: dict[str, float]):
+def plot_classification(img: Image.Image, predictions: dict[str, float]):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 10))
 
     ax1.imshow(img)
@@ -101,13 +100,13 @@ def plot_classification(predictions: dict[str, float]):
     plt.show()
 
 
-labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
-url = "http://images.cocodataset.org/val2017/000000039769.jpg"
-img = Image.open(requests.get(url, stream=True).raw)
+# labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
+# url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+# img = Image.open(requests.get(url, stream=True).raw)
 
-preds = classify_clip(img, labels)
-# preds = classify_opencoca(img, labels)
-# preds = classify_eva(img, labels)
-# preds = classify_gem(img, labels)
+# results = classify_clip(img, labels)
+# # results = classify_opencoca(img, labels)
+# # results = classify_eva(img, labels)
+# # results = classify_gem(img, labels)
 
-plot_classification(preds)
+# plot_classification(img, results)

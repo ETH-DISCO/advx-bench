@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+from det import detect_groundingdino
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -8,8 +10,7 @@ import requests
 import torch
 from PIL import Image
 from transformers import AutoModelForMaskGeneration, AutoProcessor, pipeline
-
-from models.utils import get_device
+from utils import get_device
 
 """
 data structures
@@ -74,12 +75,10 @@ def annotate(image: Union[Image.Image, np.ndarray], detection_results: List[Dete
     return cv2.cvtColor(image_cv2, cv2.COLOR_BGR2RGB)
 
 
-def plot_detections(image: Union[Image.Image, np.ndarray], detections: List[DetectionResult], save_name: Optional[str] = None) -> None:
+def plot_detections(image: Union[Image.Image, np.ndarray], detections: List[DetectionResult]) -> None:
     annotated_image = annotate(image, detections)
     plt.imshow(annotated_image)
     plt.axis("off")
-    if save_name:
-        plt.savefig(save_name, bbox_inches="tight")
     plt.show()
 
 
@@ -151,7 +150,7 @@ def refine_masks(masks: torch.BoolTensor, polygon_refinement: bool = False) -> L
     return masks
 
 
-def detect_groundingdino(image: Image.Image, labels: List[str], threshold: float = 0.3) -> List[Dict[str, Any]]:
+def detect_groundingdino_tmp(image: Image.Image, labels: List[str], threshold: float = 0.3) -> List[Dict[str, Any]]:
     detector_id = "IDEA-Research/grounding-dino-tiny"
 
     labels = [label if label.endswith(".") else label + "." for label in labels]
@@ -190,19 +189,14 @@ def segment_samv2(image: Image.Image, detection_results: List[Dict[str, Any]], p
     return detection_results
 
 
-def grounded_segmentation(image: Union[Image.Image, str], labels: List[str], threshold: float = 0.3, polygon_refinement: bool = False) -> Tuple[np.ndarray, List[DetectionResult]]:
-    detections = detect_groundingdino(image, labels, threshold)
-    detections = segment_samv2(image, detections, polygon_refinement)
-
-    return np.array(image), detections
-
-
-labels = ["a cat.", "a remote control."]
+labels = ["a cat", "a remote control"]
 threshold = 0.3
 
 url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 img = Image.open(requests.get(url, stream=True).raw)
 
-image_array, detections = grounded_segmentation(image=img, labels=labels, threshold=threshold, polygon_refinement=True)
 
-plot_detections(image_array, detections, "cute_cats.png")
+detections = detect_groundingdino_tmp(img, labels, threshold)
+detections = segment_samv2(img, detections, polygon_refinement=True)
+
+plot_detections(np.array(img), detections)
