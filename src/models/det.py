@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import requests
 import torch
 from PIL import Image
-
 from utils import get_device
 
 
@@ -84,7 +83,7 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     return results
 
 
-def plot_results(results: tuple[list[list[float]], list[float], list[str]]):
+def plot_detection(results: tuple[list[list[float]], list[float], list[str]]):
     boxes, scores, labels = results
     plt.imshow(img)
     for box, score, label in zip(boxes, scores, labels):
@@ -103,4 +102,4 @@ img = Image.open(requests.get(url, stream=True).raw)
 # results = detect_groundingdino(img, labels, threshold)
 # results = detect_vit(img, labels, threshold)
 results = detect_detr(img, threshold)
-plot_results(results)
+plot_detection(results)

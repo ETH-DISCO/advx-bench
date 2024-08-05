@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import requests
 import torch
 from PIL import Image
-
 from utils import get_device
 
 
@@ -81,7 +80,7 @@ def classify_gem(img: Image.Image, labels: list[str]) -> dict[str, float]:
     return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
 
 
-def plot_results(predictions: dict[str, float]):
+def plot_classification(predictions: dict[str, float]):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 10))
 
     ax1.imshow(img)
@@ -111,4 +110,4 @@ preds = classify_clip(img, labels)
 # preds = classify_eva(img, labels)
 # preds = classify_gem(img, labels)
 
-plot_results(preds)
+plot_classification(preds)

@@ -1,18 +1,15 @@
-from seg import get_random_color
-
-import random
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
 import requests
 import torch
 from PIL import Image
 from transformers import AutoModelForMaskGeneration, AutoProcessor, pipeline
+
+from models.utils import get_device
 
 """
 data structures
@@ -126,6 +123,7 @@ def polygon_to_mask(polygon: List[Tuple[int, int]], image_shape: Tuple[int, int]
 
     return mask
 
+
 def get_boxes(results: DetectionResult) -> List[List[List[float]]]:
     boxes = []
     for result in results:
@@ -153,29 +151,28 @@ def refine_masks(masks: torch.BoolTensor, polygon_refinement: bool = False) -> L
     return masks
 
 
-def detect(image: Image.Image, labels: List[str], threshold: float = 0.3, detector_id: Optional[str] = None) -> List[Dict[str, Any]]:
-    """
-    Use Grounding DINO to detect a set of labels in an image in a zero-shot fashion.
-    """
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    detector_id = detector_id if detector_id is not None else "IDEA-Research/grounding-dino-tiny"
-    object_detector = pipeline(model=detector_id, task="zero-shot-object-detection", device=device)
+def detect_groundingdino(image: Image.Image, labels: List[str], threshold: float = 0.3) -> List[Dict[str, Any]]:
+    detector_id = "IDEA-Research/grounding-dino-tiny"
 
     labels = [label if label.endswith(".") else label + "." for label in labels]
 
+    device = get_device()
+    object_detector = pipeline(model=detector_id, task="zero-shot-object-detection", device=device)
     results = object_detector(image, candidate_labels=labels, threshold=threshold)
+
     results = [DetectionResult.from_dict(result) for result in results]
 
     return results
 
 
-def segment(image: Image.Image, detection_results: List[Dict[str, Any]], polygon_refinement: bool = False, segmenter_id: Optional[str] = None) -> List[DetectionResult]:
-    """
-    Use Segment Anything (SAM) to generate masks given an image + a set of bounding boxes.
-    """
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    segmenter_id = segmenter_id if segmenter_id is not None else "facebook/sam-vit-base"
+def segment_samv2(image: Image.Image, detection_results: List[Dict[str, Any]], polygon_refinement: bool = False) -> List[DetectionResult]:
+    # https://huggingface.co/facebook/sam2-hiera-tiny
+    # https://huggingface.co/facebook/sam2-hiera-small
+    # https://huggingface.co/facebook/sam2-hiera-base-plus
+    # https://huggingface.co/facebook/sam2-hiera-large
+    segmenter_id = "facebook/sam-vit-base"
 
+    device = get_device()
     segmentator = AutoModelForMaskGeneration.from_pretrained(segmenter_id).to(device)
     processor = AutoProcessor.from_pretrained(segmenter_id)
 
@@ -194,23 +191,10 @@ def segment(image: Image.Image, detection_results: List[Dict[str, Any]], polygon
 
 
 def grounded_segmentation(image: Union[Image.Image, str], labels: List[str], threshold: float = 0.3, polygon_refinement: bool = False) -> Tuple[np.ndarray, List[DetectionResult]]:
-
-
-
-    detector_id = "IDEA-Research/grounding-dino-tiny"
-    # https://huggingface.co/facebook/sam2-hiera-tiny
-    # https://huggingface.co/facebook/sam2-hiera-small
-    # https://huggingface.co/facebook/sam2-hiera-base-plus
-    # https://huggingface.co/facebook/sam2-hiera-large
-    segmenter_id = "facebook/sam-vit-base"
-
-    detections = detect(image, labels, threshold, detector_id)
-    detections = segment(image, detections, polygon_refinement, segmenter_id)
+    detections = detect_groundingdino(image, labels, threshold)
+    detections = segment_samv2(image, detections, polygon_refinement)
 
     return np.array(image), detections
-
-
-
 
 
 labels = ["a cat.", "a remote control."]
