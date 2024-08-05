@@ -20,7 +20,7 @@ def segment_clipseg(img: Image.Image, labels: list[str]) -> list[tuple[str, torc
     return list(zip(labels, masks))
 
 
-def segment_groundingsam(img: Image.Image, labels: list[str]):
+def segment_groundingsam(img: Image.Image, labels: list[str]) -> list[tuple[str, torch.Tensor]]:
     pass
 
 

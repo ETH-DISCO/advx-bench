@@ -46,7 +46,9 @@ def detect_vit(img: Image.Image, labels: list[str], threshold: float) -> tuple[l
     results[0]["scores"] = [elem.item() for elem in results[0]["scores"]]
     results[0]["labels"] = [labels[elem.item()] for elem in results[0]["labels"]]
 
-    boxes, scores, labels = results[0]["boxes"], results[0]["scores"], results[0]["labels"]
+    boxes = results[0]["boxes"]
+    scores = results[0]["scores"]
+    labels = results[0]["labels"]
     return boxes, scores, labels
 
 
@@ -78,8 +80,10 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     #     else:
     #         results["labels"].append("unknown")
 
-    results = results["boxes"], results["scores"], results["labels"]
-    return results
+    boxes = results["boxes"]
+    scores = results["scores"]
+    labels = results["labels"]
+    return boxes, scores, labels
 
 
 def plot_detection(img: Image.Image, results: tuple[list[list[float]], list[float], list[str]]):
