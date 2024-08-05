@@ -96,8 +96,7 @@ utils
 """
 
 
-def plot_detection(img: Image.Image, results: tuple[list[list[float]], list[float], list[str]]):
-    boxes, scores, labels = results
+def plot_detection(img: Image.Image, boxes: list[list[float]], scores: list[float], labels: list[str]):
     plt.imshow(img)
     for box, score, label in zip(boxes, scores, labels):
         plt.gca().add_patch(plt.Rectangle((box[0], box[1]), box[2] - box[0], box[3] - box[1], fill=False, edgecolor="red", lw=2))
@@ -117,7 +116,7 @@ if __name__ == "__main__":
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
-    # results = detect_groundingdino(img, labels, threshold)
-    # results = detect_vit(img, labels, threshold)
-    results = detect_detr(img, threshold)
-    plot_detection(img, results)
+    # boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    # boxes, scores, labels = detect_vit(img, labels, threshold)
+    boxes, scores, labels = detect_detr(img, threshold)
+    plot_detection(img, boxes, scores, labels)

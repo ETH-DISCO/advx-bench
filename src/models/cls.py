@@ -9,7 +9,7 @@ models
 """
 
 
-def classify_clip(img: Image.Image, labels: list[str]) -> dict[str, float]:
+def classify_clip(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
     import clip
 
     device = get_device()
@@ -23,10 +23,10 @@ def classify_clip(img: Image.Image, labels: list[str]) -> dict[str, float]:
         logits_per_image, logits_per_text = model(image, text)
         probs = logits_per_image.softmax(dim=-1).cpu().numpy()
 
-    return {label: prob for label, prob in zip(labels, probs[0])}
+    return labels, probs[0]
 
 
-def classify_opencoca(img: Image.Image, labels: list[str]) -> dict[str, float]:
+def classify_opencoca(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
     import open_clip
 
     model, _, preprocess = open_clip.create_model_and_transforms("coca_ViT-L-14", pretrained="mscoco_finetuned_laion2b_s13b_b90k")
@@ -43,10 +43,11 @@ def classify_opencoca(img: Image.Image, labels: list[str]) -> dict[str, float]:
         text_features /= text_features.norm(dim=-1, keepdim=True)
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-    return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
+    labels, probs = labels, text_probs[0].cpu().numpy()
+    return labels, probs
 
 
-def classify_eva(img: Image.Image, labels: list[str]) -> dict[str, float]:
+def classify_eva(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
     import open_clip
 
     model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k")  # largest that can fit in memory
@@ -64,10 +65,11 @@ def classify_eva(img: Image.Image, labels: list[str]) -> dict[str, float]:
 
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-    return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
+    labels, probs = labels, text_probs[0].cpu().numpy()
+    return labels, probs
 
 
-def classify_gem(img: Image.Image, labels: list[str]) -> dict[str, float]:
+def classify_gem(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
     from transformers import AutoModel, AutoProcessor
 
     model_id = "facebook/metaclip-h14-fullcc2.5b"
@@ -81,7 +83,8 @@ def classify_gem(img: Image.Image, labels: list[str]) -> dict[str, float]:
         logits_per_image = outputs.logits_per_image
         text_probs = logits_per_image.softmax(dim=-1)
 
-    return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
+    labels, probs = labels, text_probs[0].cpu().numpy()
+    return labels, probs
 
 
 """
@@ -89,15 +92,17 @@ utils
 """
 
 
-def plot_classification(img: Image.Image, predictions: dict[str, float]):
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 10))
+def plot_classification(img: Image.Image, labels: list[str], probs: dict[str, float]):
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
 
     ax1.imshow(img)
     ax1.axis("off")
     ax1.set_title("Image")
 
-    sorted_preds = dict(sorted(predictions.items(), key=lambda item: item[1], reverse=True))
-    ax2.barh(list(sorted_preds.keys()), list(sorted_preds.values()), color="skyblue", align="center")
+    labels_probs = zip(labels, probs)
+    sorted_preds = sorted(labels_probs, key=lambda x: x[1], reverse=True)
+    ax2.barh([label for label, _ in sorted_preds], [prob for _, prob in sorted_preds], color="skyblue", align="center")
+
     # invert x axis
     ax2.invert_xaxis()
     ax2.yaxis.tick_right()
@@ -119,9 +124,9 @@ if __name__ == "__main__":
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
-    results = classify_clip(img, labels)
-    # results = classify_opencoca(img, labels)
-    # results = classify_eva(img, labels)
-    # results = classify_gem(img, labels)
+    labels, probs = classify_clip(img, labels)
+    # labels, probs = classify_opencoca(img, labels)
+    # labels, probs = classify_eva(img, labels)
+    # labels, probs = classify_gem(img, labels)
 
-    plot_classification(img, results)
+    plot_classification(img, labels, probs)
