@@ -29,6 +29,10 @@ def detect_groundingdino(img: Image.Image, labels: list[str], threshold: float) 
     boxes = results["boxes"]
     scores = results["scores"]
     labels = results["labels"]
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(score, float) for score in scores)
+    assert all(isinstance(box, list) and len(box) == 4 for box in boxes)
+    assert all(all(isinstance(coord, float) for coord in box) for box in boxes)
     return boxes, scores, labels
 
 
@@ -54,6 +58,10 @@ def detect_vit(img: Image.Image, labels: list[str], threshold: float) -> tuple[l
     boxes = results[0]["boxes"]
     scores = results[0]["scores"]
     labels = results[0]["labels"]
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(score, float) for score in scores)
+    assert all(isinstance(box, list) and len(box) == 4 for box in boxes)
+    assert all(all(isinstance(coord, float) for coord in box) for box in boxes)
     return boxes, scores, labels
 
 
@@ -88,6 +96,10 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     boxes = results["boxes"]
     scores = results["scores"]
     labels = results["labels"]
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(score, float) for score in scores)
+    assert all(isinstance(box, list) and len(box) == 4 for box in boxes)
+    assert all(all(isinstance(coord, float) for coord in box) for box in boxes)
     return boxes, scores, labels
 
 
@@ -116,7 +128,8 @@ if __name__ == "__main__":
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
-    # boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    boxes, scores, labels = detect_groundingdino(img, labels, threshold)
     # boxes, scores, labels = detect_vit(img, labels, threshold)
-    boxes, scores, labels = detect_detr(img, threshold)
+    # boxes, scores, labels = detect_detr(img, threshold)
+    
     plot_detection(img, boxes, scores, labels)
