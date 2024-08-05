@@ -3,6 +3,10 @@ import torch
 from PIL import Image
 from utils import get_device
 
+"""
+models
+"""
+
 
 def detect_groundingdino(img: Image.Image, labels: list[str], threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
     from transformers import AutoModelForZeroShotObjectDetection, AutoProcessor
@@ -84,6 +88,11 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     scores = results["scores"]
     labels = results["labels"]
     return boxes, scores, labels
+
+
+"""
+utils
+"""
 
 
 def plot_detection(img: Image.Image, results: tuple[list[list[float]], list[float], list[str]]):

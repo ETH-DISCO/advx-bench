@@ -3,6 +3,10 @@ import torch
 from PIL import Image
 from utils import get_device
 
+"""
+models
+"""
+
 
 def classify_clip(img: Image.Image, labels: list[str]) -> dict[str, float]:
     import clip
@@ -77,6 +81,11 @@ def classify_gem(img: Image.Image, labels: list[str]) -> dict[str, float]:
         text_probs = logits_per_image.softmax(dim=-1)
 
     return {label: prob.item() for label, prob in zip(labels, text_probs[0])}
+
+
+"""
+utils
+"""
 
 
 def plot_classification(img: Image.Image, predictions: dict[str, float]):
