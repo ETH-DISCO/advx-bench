@@ -213,10 +213,10 @@ def get_groundingsam_results(img: Image.Image, labels: list[str]):
     pass
 
 
-labels = ["cat", "remote control"]
+# labels = ["cat", "remote control"]
 
-url = "http://images.cocodataset.org/val2017/000000039769.jpg"
-img = Image.open(requests.get(url, stream=True).raw)
+# url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+# img = Image.open(requests.get(url, stream=True).raw)
 
-results = get_clipseg_results(img, labels)
-plot_results(img, results)
+# results = get_clipseg_results(img, labels)
+# plot_results(img, results)

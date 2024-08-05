@@ -1,3 +1,5 @@
+from seg import get_random_color
+
 import random
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -84,229 +86,6 @@ def plot_detections(image: Union[Image.Image, np.ndarray], detections: List[Dete
     plt.show()
 
 
-def random_named_css_colors(num_colors: int) -> List[str]:
-    """
-    Returns a list of randomly selected named CSS colors.
-
-    Args:
-    - num_colors (int): Number of random colors to generate.
-
-    Returns:
-    - list: List of randomly selected named CSS colors.
-    """
-    # List of named CSS colors
-    named_css_colors = [
-        "aliceblue",
-        "antiquewhite",
-        "aqua",
-        "aquamarine",
-        "azure",
-        "beige",
-        "bisque",
-        "black",
-        "blanchedalmond",
-        "blue",
-        "blueviolet",
-        "brown",
-        "burlywood",
-        "cadetblue",
-        "chartreuse",
-        "chocolate",
-        "coral",
-        "cornflowerblue",
-        "cornsilk",
-        "crimson",
-        "cyan",
-        "darkblue",
-        "darkcyan",
-        "darkgoldenrod",
-        "darkgray",
-        "darkgreen",
-        "darkgrey",
-        "darkkhaki",
-        "darkmagenta",
-        "darkolivegreen",
-        "darkorange",
-        "darkorchid",
-        "darkred",
-        "darksalmon",
-        "darkseagreen",
-        "darkslateblue",
-        "darkslategray",
-        "darkslategrey",
-        "darkturquoise",
-        "darkviolet",
-        "deeppink",
-        "deepskyblue",
-        "dimgray",
-        "dimgrey",
-        "dodgerblue",
-        "firebrick",
-        "floralwhite",
-        "forestgreen",
-        "fuchsia",
-        "gainsboro",
-        "ghostwhite",
-        "gold",
-        "goldenrod",
-        "gray",
-        "green",
-        "greenyellow",
-        "grey",
-        "honeydew",
-        "hotpink",
-        "indianred",
-        "indigo",
-        "ivory",
-        "khaki",
-        "lavender",
-        "lavenderblush",
-        "lawngreen",
-        "lemonchiffon",
-        "lightblue",
-        "lightcoral",
-        "lightcyan",
-        "lightgoldenrodyellow",
-        "lightgray",
-        "lightgreen",
-        "lightgrey",
-        "lightpink",
-        "lightsalmon",
-        "lightseagreen",
-        "lightskyblue",
-        "lightslategray",
-        "lightslategrey",
-        "lightsteelblue",
-        "lightyellow",
-        "lime",
-        "limegreen",
-        "linen",
-        "magenta",
-        "maroon",
-        "mediumaquamarine",
-        "mediumblue",
-        "mediumorchid",
-        "mediumpurple",
-        "mediumseagreen",
-        "mediumslateblue",
-        "mediumspringgreen",
-        "mediumturquoise",
-        "mediumvioletred",
-        "midnightblue",
-        "mintcream",
-        "mistyrose",
-        "moccasin",
-        "navajowhite",
-        "navy",
-        "oldlace",
-        "olive",
-        "olivedrab",
-        "orange",
-        "orangered",
-        "orchid",
-        "palegoldenrod",
-        "palegreen",
-        "paleturquoise",
-        "palevioletred",
-        "papayawhip",
-        "peachpuff",
-        "peru",
-        "pink",
-        "plum",
-        "powderblue",
-        "purple",
-        "rebeccapurple",
-        "red",
-        "rosybrown",
-        "royalblue",
-        "saddlebrown",
-        "salmon",
-        "sandybrown",
-        "seagreen",
-        "seashell",
-        "sienna",
-        "silver",
-        "skyblue",
-        "slateblue",
-        "slategray",
-        "slategrey",
-        "snow",
-        "springgreen",
-        "steelblue",
-        "tan",
-        "teal",
-        "thistle",
-        "tomato",
-        "turquoise",
-        "violet",
-        "wheat",
-        "white",
-        "whitesmoke",
-        "yellow",
-        "yellowgreen",
-    ]
-
-    # Sample random named CSS colors
-    return random.sample(named_css_colors, min(num_colors, len(named_css_colors)))
-
-
-def plot_detections_plotly(image: np.ndarray, detections: List[DetectionResult], class_colors: Optional[Dict[str, str]] = None) -> None:
-    # If class_colors is not provided, generate random colors for each class
-    if class_colors is None:
-        num_detections = len(detections)
-        colors = random_named_css_colors(num_detections)
-        class_colors = {}
-        for i in range(num_detections):
-            class_colors[i] = colors[i]
-
-    fig = px.imshow(image)
-
-    # Add bounding boxes
-    shapes = []
-    annotations = []
-    for idx, detection in enumerate(detections):
-        label = detection.label
-        box = detection.box
-        score = detection.score
-        mask = detection.mask
-
-        polygon = mask_to_polygon(mask)
-
-        fig.add_trace(go.Scatter(x=[point[0] for point in polygon] + [polygon[0][0]], y=[point[1] for point in polygon] + [polygon[0][1]], mode="lines", line=dict(color=class_colors[idx], width=2), fill="toself", name=f"{label}: {score:.2f}"))
-
-        xmin, ymin, xmax, ymax = box.xyxy
-        shape = [dict(type="rect", xref="x", yref="y", x0=xmin, y0=ymin, x1=xmax, y1=ymax, line=dict(color=class_colors[idx]))]
-        annotation = [
-            dict(
-                x=(xmin + xmax) // 2,
-                y=(ymin + ymax) // 2,
-                xref="x",
-                yref="y",
-                text=f"{label}: {score:.2f}",
-            )
-        ]
-
-        shapes.append(shape)
-        annotations.append(annotation)
-
-    # Update layout
-    button_shapes = [dict(label="None", method="relayout", args=["shapes", []])]
-    button_shapes = button_shapes + [dict(label=f"Detection {idx+1}", method="relayout", args=["shapes", shape]) for idx, shape in enumerate(shapes)]
-    button_shapes = button_shapes + [dict(label="All", method="relayout", args=["shapes", sum(shapes, [])])]
-
-    fig.update_layout(
-        xaxis=dict(visible=False),
-        yaxis=dict(visible=False),
-        # margin=dict(l=0, r=0, t=0, b=0),
-        showlegend=True,
-        updatemenus=[dict(type="buttons", direction="up", buttons=button_shapes)],
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-    )
-
-    # Show plot
-    fig.show()
-
-
 """
 other utils
 """
@@ -346,16 +125,6 @@ def polygon_to_mask(polygon: List[Tuple[int, int]], image_shape: Tuple[int, int]
     cv2.fillPoly(mask, [pts], color=(255,))
 
     return mask
-
-
-def load_image(image_str: str) -> Image.Image:
-    if image_str.startswith("http"):
-        image = Image.open(requests.get(image_str, stream=True).raw).convert("RGB")
-    else:
-        image = Image.open(image_str).convert("RGB")
-
-    return image
-
 
 def get_boxes(results: DetectionResult) -> List[List[List[float]]]:
     boxes = []
@@ -424,9 +193,16 @@ def segment(image: Image.Image, detection_results: List[Dict[str, Any]], polygon
     return detection_results
 
 
-def grounded_segmentation(image: Union[Image.Image, str], labels: List[str], threshold: float = 0.3, polygon_refinement: bool = False, detector_id: Optional[str] = None, segmenter_id: Optional[str] = None) -> Tuple[np.ndarray, List[DetectionResult]]:
-    if isinstance(image, str):
-        image = load_image(image)
+def grounded_segmentation(image: Union[Image.Image, str], labels: List[str], threshold: float = 0.3, polygon_refinement: bool = False) -> Tuple[np.ndarray, List[DetectionResult]]:
+
+
+
+    detector_id = "IDEA-Research/grounding-dino-tiny"
+    # https://huggingface.co/facebook/sam2-hiera-tiny
+    # https://huggingface.co/facebook/sam2-hiera-small
+    # https://huggingface.co/facebook/sam2-hiera-base-plus
+    # https://huggingface.co/facebook/sam2-hiera-large
+    segmenter_id = "facebook/sam-vit-base"
 
     detections = detect(image, labels, threshold, detector_id)
     detections = segment(image, detections, polygon_refinement, segmenter_id)
@@ -434,17 +210,15 @@ def grounded_segmentation(image: Union[Image.Image, str], labels: List[str], thr
     return np.array(image), detections
 
 
-image_url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+
+
+
 labels = ["a cat.", "a remote control."]
 threshold = 0.3
 
-detector_id = "IDEA-Research/grounding-dino-tiny"
-# https://huggingface.co/facebook/sam2-hiera-tiny
-# https://huggingface.co/facebook/sam2-hiera-small
-# https://huggingface.co/facebook/sam2-hiera-base-plus
-# https://huggingface.co/facebook/sam2-hiera-large
-segmenter_id = "facebook/sam-vit-base"
+url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+img = Image.open(requests.get(url, stream=True).raw)
 
-image_array, detections = grounded_segmentation(image=image_url, labels=labels, threshold=threshold, polygon_refinement=True, detector_id=detector_id, segmenter_id=segmenter_id)
+image_array, detections = grounded_segmentation(image=img, labels=labels, threshold=threshold, polygon_refinement=True)
 
 plot_detections(image_array, detections, "cute_cats.png")
