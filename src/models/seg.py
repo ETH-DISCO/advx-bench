@@ -30,7 +30,7 @@ def segment_clipseg(img: Image.Image, labels: list[str]) -> list[tuple[str, torc
     return list(zip(labels, masks))
 
 
-def segment_detect_groundeddino_sam_v1(image: Image.Image, labels: list[str], threshold: float):
+def segment_groundingdino_samv1(image: Image.Image, labels: list[str], threshold: float):
     boxes, scores, labels = detect_groundingdino(img, labels, threshold)
 
     # update to sam2 model
@@ -135,12 +135,6 @@ def plot_segmentation(img: Image.Image, results: list[tuple[str, torch.Tensor]])
     plt.show()
 
 
-labels = ["a cat", "a remote control"]
-threshold = 0.3
-
-url = "http://images.cocodataset.org/val2017/000000039769.jpg"
-img = Image.open(requests.get(url, stream=True).raw)
-
 
 labels = ["cat", "remote control"]
 threshold = 0.3
@@ -151,5 +145,5 @@ img = Image.open(requests.get(url, stream=True).raw)
 # results = segment_clipseg(img, labels)
 # plot_segmentation(img, results)
 
-results = segment_detect_groundeddino_sam_v1(img, labels, threshold)
+results = segment_groundingdino_samv1(img, labels, threshold)
 plot_segmentation_detection(img, results)
