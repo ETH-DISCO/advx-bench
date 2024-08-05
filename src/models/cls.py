@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import requests
 import torch
 from PIL import Image
 from utils import get_device
@@ -109,13 +110,18 @@ def plot_classification(img: Image.Image, predictions: dict[str, float]):
     plt.show()
 
 
-# labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
-# url = "http://images.cocodataset.org/val2017/000000039769.jpg"
-# img = Image.open(requests.get(url, stream=True).raw)
+"""
+example
+"""
 
-# results = classify_clip(img, labels)
-# # results = classify_opencoca(img, labels)
-# # results = classify_eva(img, labels)
-# # results = classify_gem(img, labels)
+if __name__ == "__main__":
+    labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
+    url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+    img = Image.open(requests.get(url, stream=True).raw)
 
-# plot_classification(img, results)
+    results = classify_clip(img, labels)
+    # results = classify_opencoca(img, labels)
+    # results = classify_eva(img, labels)
+    # results = classify_gem(img, labels)
+
+    plot_classification(img, results)

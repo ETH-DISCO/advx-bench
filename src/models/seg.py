@@ -135,15 +135,19 @@ def plot_segmentation(img: Image.Image, results: list[tuple[str, torch.Tensor]])
     plt.show()
 
 
+"""
+example
+"""
 
-labels = ["cat", "remote control"]
-threshold = 0.3
+if __name__ == "__main__":
+    labels = ["cat", "remote control"]
+    threshold = 0.3
 
-url = "http://images.cocodataset.org/val2017/000000039769.jpg"
-img = Image.open(requests.get(url, stream=True).raw)
+    url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+    img = Image.open(requests.get(url, stream=True).raw)
 
-# results = segment_clipseg(img, labels)
-# plot_segmentation(img, results)
+    # results = segment_clipseg(img, labels)
+    # plot_segmentation(img, results)
 
-results = segment_groundingdino_samv1(img, labels, threshold)
-plot_segmentation_detection(img, results)
+    results = segment_groundingdino_samv1(img, labels, threshold)
+    plot_segmentation_detection(img, results)

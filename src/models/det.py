@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import requests
 import torch
 from PIL import Image
 from utils import get_device
@@ -105,13 +106,18 @@ def plot_detection(img: Image.Image, results: tuple[list[list[float]], list[floa
     plt.show()
 
 
-# labels = ["cat", "remote control", "dog"]
-# threshold = 0.1
+"""
+example
+"""
 
-# url = "http://images.cocodataset.org/val2017/000000039769.jpg"
-# img = Image.open(requests.get(url, stream=True).raw)
+if __name__ == "__main__":
+    labels = ["cat", "remote control", "dog"]
+    threshold = 0.1
 
-# # results = detect_groundingdino(img, labels, threshold)
-# # results = detect_vit(img, labels, threshold)
-# results = detect_detr(img, threshold)
-# plot_detection(img, results)
+    url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+    img = Image.open(requests.get(url, stream=True).raw)
+
+    # results = detect_groundingdino(img, labels, threshold)
+    # results = detect_vit(img, labels, threshold)
+    results = detect_detr(img, threshold)
+    plot_detection(img, results)
