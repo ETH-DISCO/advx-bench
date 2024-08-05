@@ -55,6 +55,33 @@ utils
 """
 
 
+def plot_segmentation_prob(img: Image.Image, labels: list[str], masks: list[torch.Tensor]):
+    plt.figure(figsize=(8, 5))
+    plt.imshow(img)
+    plt.axis("off")
+
+    cmap = plt.get_cmap("tab20")
+    colors = cmap(np.linspace(0, 1, len(labels)))
+
+    threshold = 0.5  # threshold above which to consider the mask value as 'true'
+    for mask, color in zip(masks, colors):
+        np_mask = mask.squeeze().cpu().numpy()
+        mask_resized = np.array(Image.fromarray(np_mask).resize(img.size, Image.BILINEAR))  # resize to fit the original image
+
+        color_mask = np.zeros((*mask_resized.shape, 4))
+        color_mask[..., :3] = color[:3]  # use the first 3 values (RGB) from the color tuple
+        color_mask[..., 3] = mask_resized * threshold
+
+        plt.imshow(color_mask, alpha=0.9)
+        plt.contour(mask_resized, levels=[threshold], colors=[color[:3]], alpha=0.9)
+
+    legend_elems = [plt.Line2D([0], [0], color=color, lw=4, label=label) for label, color in zip(labels, colors)]
+    plt.legend(handles=legend_elems, loc="center left", bbox_to_anchor=(1, 0.5))
+
+    plt.tight_layout()
+    plt.show()
+
+
 def plot_segmentation_detection(image: Image.Image, boxes: list[list[float]], scores: list[float], labels: list[str], masks: list[torch.Tensor]):
     def _refine_masks(masks: torch.BoolTensor) -> list[np.ndarray]:
         def mask_to_polygon(mask: np.ndarray) -> list[list[int]]:
@@ -107,33 +134,6 @@ def plot_segmentation_detection(image: Image.Image, boxes: list[list[float]], sc
     annotated_image = cv2.cvtColor(image_cv2, cv2.COLOR_BGR2RGB)
     plt.imshow(annotated_image)
     plt.axis("off")
-    plt.show()
-
-
-def plot_segmentation_prob(img: Image.Image, labels: list[str], masks: list[torch.Tensor]):
-    plt.figure(figsize=(8, 5))
-    plt.imshow(img)
-    plt.axis("off")
-
-    cmap = plt.get_cmap("tab20")
-    colors = cmap(np.linspace(0, 1, len(labels)))
-
-    threshold = 0.5  # threshold above which to consider the mask value as 'true'
-    for mask, color in zip(masks, colors):
-        np_mask = mask.squeeze().cpu().numpy()
-        mask_resized = np.array(Image.fromarray(np_mask).resize(img.size, Image.BILINEAR))  # resize to fit the original image
-
-        color_mask = np.zeros((*mask_resized.shape, 4))
-        color_mask[..., :3] = color[:3]  # use the first 3 values (RGB) from the color tuple
-        color_mask[..., 3] = mask_resized * threshold
-
-        plt.imshow(color_mask, alpha=0.9)
-        plt.contour(mask_resized, levels=[threshold], colors=[color[:3]], alpha=0.9)
-
-    legend_elems = [plt.Line2D([0], [0], color=color, lw=4, label=label) for label, color in zip(labels, colors)]
-    plt.legend(handles=legend_elems, loc="center left", bbox_to_anchor=(1, 0.5))
-
-    plt.tight_layout()
     plt.show()
 
 
