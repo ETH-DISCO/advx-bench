@@ -120,14 +120,16 @@ def refine_masks(masks: torch.BoolTensor, polygon_refinement: bool = False) -> L
     return masks
 
 
-def segment_samv2(image: Image.Image, detection_results: List[Dict[str, Any]], polygon_refinement: bool = False) -> List[DetectionResult]:
-    # https://huggingface.co/facebook/sam2-hiera-tiny
-    # https://huggingface.co/facebook/sam2-hiera-small
-    # https://huggingface.co/facebook/sam2-hiera-base-plus
-    # https://huggingface.co/facebook/sam2-hiera-large
-    segmenter_id = "facebook/sam-vit-base"
+def segment_samv2(image: Image.Image, labels: List[str], threshold: float = 0.3, polygon_refinement: bool = False) -> List[DetectionResult]:
+    boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    detection_results = []
+    for box, score, label in zip(boxes, scores, labels):
+        box = [math.floor(val) for val in box]
+        detection_results.append(DetectionResult(score=score, label=label, box=BoundingBox(xmin=box[0], ymin=box[1], xmax=box[2], ymax=box[3])))
 
+    # update to sam2 model
     device = get_device()
+    segmenter_id = "facebook/sam-vit-base"
     segmentator = AutoModelForMaskGeneration.from_pretrained(segmenter_id).to(device)
     processor = AutoProcessor.from_pretrained(segmenter_id)
 
@@ -159,12 +161,6 @@ threshold = 0.3
 url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 img = Image.open(requests.get(url, stream=True).raw)
 
-
-boxes, scores, labels = detect_groundingdino(img, labels, threshold)
-detections = []
-for box, score, label in zip(boxes, scores, labels):
-    detections.append(DetectionResult(score=score, label=label, box=BoundingBox(xmin=math.floor(box[0]), ymin=math.floor(box[1]), xmax=math.floor(box[2]), ymax=math.floor(box[3]))))
-
-detections = segment_samv2(img, detections, polygon_refinement=True)
+detections = segment_samv2(img, labels, threshold, polygon_refinement=True)
 
 plot_detections(np.array(img), detections)
