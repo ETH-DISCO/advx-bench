@@ -26,10 +26,13 @@ def segment_clipseg(img: Image.Image, labels: list[str]) -> tuple[list[str], lis
     logits = outputs.logits
     masks = torch.sigmoid(logits)
 
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(mask, torch.Tensor) for mask in masks)
+    assert all(mask.dtype == torch.float32 for mask in masks)
     return labels, masks
 
 
-def segment_sam1(image: Image.Image, query: list[list[float]]) -> list[tuple[str, torch.Tensor]]:
+def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
     from transformers import AutoModelForMaskGeneration, AutoProcessor
 
     device = get_device()
@@ -41,6 +44,9 @@ def segment_sam1(image: Image.Image, query: list[list[float]]) -> list[tuple[str
         outputs = segmentator(**inputs)
     masks = processor.post_process_masks(masks=outputs.pred_masks, original_sizes=inputs.original_sizes, reshaped_input_sizes=inputs.reshaped_input_sizes)[0]
 
+    assert all(isinstance(label, str) for label in labels)
+    assert all(isinstance(mask, torch.Tensor) for mask in masks)
+    assert all(mask.dtype == torch.bool for mask in masks)
     return labels, masks
 
 
@@ -104,26 +110,28 @@ def plot_segmentation_detection(image: Image.Image, boxes: list[list[float]], sc
     plt.show()
 
 
-def plot_segmentation(img: Image.Image, labels: list[str], masks: list[torch.Tensor]):
+def plot_segmentation_prob(img: Image.Image, labels: list[str], masks: list[torch.Tensor]):
+    plt.figure(figsize=(8, 5))
     plt.imshow(img)
     plt.axis("off")
 
     cmap = plt.get_cmap("tab20")
-    colors = [cmap(i / len(labels)) for i in range(len(labels))]
-    for mask, color in zip(masks, colors):
-        mask_np = mask.squeeze().numpy()
+    colors = cmap(np.linspace(0, 1, len(labels)))
 
-        # resize the mask to match the original image dimensions
-        mask_resized = np.array(Image.fromarray(mask_np).resize(img.size, Image.BILINEAR))
+    threshold = 0.5  # threshold above which to consider the mask value as 'true'
+    for mask, color in zip(masks, colors):
+        np_mask = mask.squeeze().cpu().numpy()
+        mask_resized = np.array(Image.fromarray(np_mask).resize(img.size, Image.BILINEAR))  # resize to fit the original image
 
         color_mask = np.zeros((*mask_resized.shape, 4))
         color_mask[..., :3] = color[:3]  # use the first 3 values (RGB) from the color tuple
-        color_mask[..., 3] = mask_resized * 0.5
-        plt.imshow(color_mask)
-        plt.contour(mask_resized, levels=[0.5], colors=[color], alpha=0.8)
+        color_mask[..., 3] = mask_resized * threshold
 
-    legend_elements = [plt.Line2D([0], [0], color=color, lw=4, label=label) for label, color in zip(labels, colors)]
-    plt.legend(handles=legend_elements, loc="center left", bbox_to_anchor=(1, 0.5))
+        plt.imshow(color_mask, alpha=0.9)
+        plt.contour(mask_resized, levels=[threshold], colors=[color[:3]], alpha=0.9)
+
+    legend_elems = [plt.Line2D([0], [0], color=color, lw=4, label=label) for label, color in zip(labels, colors)]
+    plt.legend(handles=legend_elems, loc="center left", bbox_to_anchor=(1, 0.5))
 
     plt.tight_layout()
     plt.show()
@@ -140,8 +148,8 @@ if __name__ == "__main__":
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
-    # labels, masks = segment_clipseg(img, labels)
-    # plot_segmentation(img, labels, masks)
+    labels, masks = segment_clipseg(img, labels)
+    plot_segmentation_prob(img, labels, masks)
 
     boxes, scores, labels = detect_groundingdino(img, labels, threshold)
     labels, masks = segment_sam1(img, query=boxes)

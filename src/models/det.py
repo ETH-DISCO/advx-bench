@@ -131,5 +131,5 @@ if __name__ == "__main__":
     boxes, scores, labels = detect_groundingdino(img, labels, threshold)
     # boxes, scores, labels = detect_vit(img, labels, threshold)
     # boxes, scores, labels = detect_detr(img, threshold)
-    
+
     plot_detection(img, boxes, scores, labels)
