@@ -134,8 +134,8 @@ if __name__ == "__main__":
     img = Image.open(requests.get(url, stream=True).raw)
 
     labels, probs = classify_clip(img, labels)
-    # labels, probs = classify_opencoca(img, labels)
-    # labels, probs = classify_eva(img, labels)
-    # labels, probs = classify_gem(img, labels)
+    labels, probs = classify_opencoca(img, labels)
+    labels, probs = classify_eva(img, labels)
+    labels, probs = classify_gem(img, labels)
 
     plot_classification(img, labels, probs)

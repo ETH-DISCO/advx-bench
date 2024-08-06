@@ -1,4 +1,5 @@
 import math
+from pathlib import Path
 
 import cv2
 import matplotlib.pyplot as plt
@@ -35,7 +36,7 @@ def segment_clipseg(img: Image.Image, labels: list[str]) -> tuple[list[str], lis
 def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
     from transformers import AutoModelForMaskGeneration, AutoProcessor
 
-    device = get_device()
+    device = get_device(disable_mps=True)
     segmenter_id = "facebook/sam-vit-base"
     segmentator = AutoModelForMaskGeneration.from_pretrained(segmenter_id).to(device)
     processor = AutoProcessor.from_pretrained(segmenter_id)
@@ -156,8 +157,8 @@ if __name__ == "__main__":
     # labels, masks = segment_sam1(img, query=boxes)
     # plot_segmentation_detection(img, boxes, scores, labels, masks)
 
-    # threshold = 0.9
-    # img = Image.open(".data/kodak/kodim14.png")
-    # boxes, scores, labels = detect_detr(img, threshold)
-    # labels, masks = segment_sam1(img, query=boxes)
-    # plot_segmentation_detection(img, boxes, scores, labels, masks)
+    threshold = 0.9
+    img = Image.open(Path(__file__).parent.parent.parent / "data" / "kodak" / "kodim14.png")
+    boxes, scores, labels = detect_detr(img, threshold)
+    labels, masks = segment_sam1(img, query=boxes)
+    plot_segmentation_detection(img, boxes, scores, labels, masks)
