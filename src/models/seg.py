@@ -161,6 +161,3 @@ if __name__ == "__main__":
     # boxes, scores, labels = detect_detr(img, threshold)
     # labels, masks = segment_sam1(img, query=boxes)
     # plot_segmentation_detection(img, boxes, scores, labels, masks)
-
-
-    # goal: generating open vocab labels (???) + grounding dino (2024) + sam2 (2024)
