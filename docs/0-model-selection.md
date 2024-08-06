@@ -393,7 +393,7 @@ sam vit 2 @ 2024 (published this week):
 - https://github.com/facebookresearch/segment-anything-2
 - absolutely top perf
 - ❌ installation:
-    - only works with an nvidia gpu
+    - only works with an nvidia gpu: `raise OSError('CUDA_HOME environment variable is not set. '`
 
 sam vit @ 2023:
 
