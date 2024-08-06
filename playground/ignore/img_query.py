@@ -1,7 +1,7 @@
-from transformers import OwlViTProcessor, OwlViTForObjectDetection
+import requests
 import torch
 from PIL import Image
-import requests
+from transformers import OwlViTForObjectDetection, OwlViTProcessor
 
 # Load model and processor
 processor = OwlViTProcessor.from_pretrained("google/owlvit-base-patch32")

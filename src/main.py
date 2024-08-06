@@ -1,10 +1,10 @@
-from pathlib import Path
-from PIL import Image
 import random
 import secrets
+from pathlib import Path
 
 import numpy as np
 import torch
+from PIL import Image
 
 
 def set_seed(seed: int = -1) -> None:
@@ -22,5 +22,5 @@ def set_seed(seed: int = -1) -> None:
 
 def get_kodak_img(idx: int) -> Image.Image:
     assert 1 <= idx <= 24
-    cwd = Path(__file__).parent.parent / 'data' / 'kodak' / f'kodim{idx:02d}.png'
+    cwd = Path(__file__).parent.parent / "data" / "kodak" / f"kodim{idx:02d}.png"
     return Image.open(cwd)

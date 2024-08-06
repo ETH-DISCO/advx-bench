@@ -13,10 +13,5 @@ pipe = pipe.to("cpu")
 
 prompt = "A cat holding a sign that says hello world"
 seed = 42
-image = pipe(
-    prompt,
-    output_type="pil",
-    num_inference_steps=4,
-    generator=torch.Generator("cpu").manual_seed(seed)
-).images[0]
+image = pipe(prompt, output_type="pil", num_inference_steps=4, generator=torch.Generator("cpu").manual_seed(seed)).images[0]
 image.save("flux-schnell.png")

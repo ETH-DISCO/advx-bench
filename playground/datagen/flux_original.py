@@ -6,13 +6,5 @@ pipe = FluxPipeline.from_pretrained("black-forest-labs/FLUX.1-schnell", torch_dt
 # pipe.to("cpu")
 
 prompt = "A cat holding a sign that says hello world"
-image = pipe(
-    prompt,
-    guidance_scale=0.0,
-    output_type="pil",
-    num_inference_steps=4,
-    max_sequence_length=256,
-    generator=torch.Generator("cpu").manual_seed(0)
-).images[0]
+image = pipe(prompt, guidance_scale=0.0, output_type="pil", num_inference_steps=4, max_sequence_length=256, generator=torch.Generator("cpu").manual_seed(0)).images[0]
 image.save("flux-schnell.png")
-

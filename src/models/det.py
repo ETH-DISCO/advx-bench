@@ -68,11 +68,11 @@ def detect_vit(img: Image.Image, labels: list[str], threshold: float) -> tuple[l
 def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
     from transformers import AutoImageProcessor, DetrForObjectDetection
 
-    model_id = "facebook/detr-resnet-101-dc5" # largest model
+    model_id = "facebook/detr-resnet-101-dc5"  # largest model
     image_processor = AutoImageProcessor.from_pretrained(model_id)
     model = DetrForObjectDetection.from_pretrained(model_id)
 
-    # query free - but results limited to coco vocabulary 
+    # query free - but results limited to coco vocabulary
     inputs = image_processor(images=img, return_tensors="pt")
     outputs = model(**inputs)
 

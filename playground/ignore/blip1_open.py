@@ -1,12 +1,12 @@
 import requests
 from PIL import Image
-from transformers import BlipProcessor, BlipForConditionalGeneration
+from transformers import BlipForConditionalGeneration, BlipProcessor
 
 processor = BlipProcessor.from_pretrained("moranyanuka/blip-image-captioning-large-mocha")
 model = BlipForConditionalGeneration.from_pretrained("moranyanuka/blip-image-captioning-large-mocha")
 
-img_url = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/demo.jpg' 
-raw_image = Image.open(requests.get(img_url, stream=True).raw).convert('RGB')
+img_url = "https://storage.googleapis.com/sfr-vision-language-research/BLIP/demo.jpg"
+raw_image = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
 
 # # conditional image captioning
 text = "a photography of"
