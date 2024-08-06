@@ -50,8 +50,6 @@ ranking by adversarial robustness (based on table 1, figure 8)
 >
 > most comprehensive collection of models
 
-### 1.2.1. overview
-
 classification:
 
 - https://paperswithcode.com/area/computer-vision/image-classification (overview)
@@ -76,39 +74,6 @@ segmentation:
 - https://paperswithcode.com/task/zero-shot-segmentation (zero shot segmentation is actually useless)
     - https://paperswithcode.com/sota/zero-shot-segmentation-on-segmentation-in-the → Grounded HQ-SAM (2023), Grounded-SAM (2023)
     - https://paperswithcode.com/sota/zero-shot-segmentation-on-ade20k-training → GEM MetaCLIP (2023) (← this doesn't make sense, it's a classification model)
-
-> sam vit 2 @ 2024 (published this week):
-> 
-> - https://ai.meta.com/research/publications/sam-2-segment-anything-in-images-and-videos/
-> - https://github.com/facebookresearch/segment-anything-2
-> 
-> sam vit @ 2023:
-> 
-> - https://arxiv.org/pdf/2304.02643
-> - https://github.com/facebookresearch/segment-anything
-> - installation:
->     - https://huggingface.co/facebook/sam-vit-base
->     - https://huggingface.co/facebook/sam-vit-huge (largest version)
->     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
->     - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
-> 
-> grounded sam @ 2024:
-> 
-> - https://arxiv.org/abs/2401.14159
-> - https://github.com/IDEA-Research/Grounded-Segment-Anything
-> - https://huggingface.co/spaces/linfanluntan/Grounded-SAM
-> - installation:
->     - docker container
->     - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
-> 
-> grounded hq-sam @ 2023:
-> 
-> - https://arxiv.org/abs/2306.01567
-> - https://github.com/SysCV/sam-hq
-> - installation:
->     - model checkpoint must be manually downloaded from google drive link
-
-### 1.2.2. selected leaderboards
 
 zero shot classification:
 
@@ -419,3 +384,39 @@ detr @ 2022:
 - not on leaderboard but very popular
 - ❌ zero shot, doesn't need any textual prompts and finds all labels in the image - but only works with COCO classes
     - could maybe be fixed through ov-detr: https://github.com/yuhangzang/OV-DETR
+
+## 2.3. semantic seg (with bounding boxes as queries)
+
+sam vit 2 @ 2024 (published this week):
+
+- https://ai.meta.com/research/publications/sam-2-segment-anything-in-images-and-videos/
+- https://github.com/facebookresearch/segment-anything-2
+- absolutely top perf
+- ❌ installation:
+    - only works with an nvidia gpu
+
+sam vit @ 2023:
+
+- https://arxiv.org/pdf/2304.02643
+- https://github.com/facebookresearch/segment-anything
+- ✅ installation:
+    - https://huggingface.co/facebook/sam-vit-base
+    - https://huggingface.co/facebook/sam-vit-huge (largest version)
+    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
+    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
+
+grounded sam @ 2024:
+
+- https://arxiv.org/abs/2401.14159
+- https://github.com/IDEA-Research/Grounded-Segment-Anything
+- https://huggingface.co/spaces/linfanluntan/Grounded-SAM
+- ❌ installation:
+    - docker container
+    - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
+
+grounded hq-sam @ 2023:
+
+- https://arxiv.org/abs/2306.01567
+- https://github.com/SysCV/sam-hq
+- ❌ installation:
+    - model checkpoint must be manually downloaded from google drive link, no other way
