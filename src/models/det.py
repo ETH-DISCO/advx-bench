@@ -72,7 +72,7 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     image_processor = AutoImageProcessor.from_pretrained(model_id)
     model = DetrForObjectDetection.from_pretrained(model_id)
 
-    # query free - but results limited to coco vocabulary
+    # query free - but results limited to coco vocabulary 
     inputs = image_processor(images=img, return_tensors="pt")
     outputs = model(**inputs)
 
@@ -123,13 +123,13 @@ example
 
 if __name__ == "__main__":
     labels = ["cat", "remote control", "dog"]
-    threshold = 0.1
+    threshold = 0.9
 
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
-    boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    # boxes, scores, labels = detect_groundingdino(img, labels, threshold)
     # boxes, scores, labels = detect_vit(img, labels, threshold)
-    # boxes, scores, labels = detect_detr(img, threshold)
 
+    boxes, scores, labels = detect_detr(img, threshold)
     plot_detection(img, boxes, scores, labels)

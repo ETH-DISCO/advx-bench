@@ -156,7 +156,8 @@ if __name__ == "__main__":
     # labels, masks = segment_sam1(img, query=boxes)
     # plot_segmentation_detection(img, boxes, scores, labels, masks)
 
-    threshold = 0.3
-    boxes, scores, labels = detect_detr(img, threshold)
-    labels, masks = segment_sam1(img, query=boxes)
-    plot_segmentation_detection(img, boxes, scores, labels, masks)
+    # threshold = 0.9
+    # img = Image.open(".data/kodak/kodim14.png")
+    # boxes, scores, labels = detect_detr(img, threshold)
+    # labels, masks = segment_sam1(img, query=boxes)
+    # plot_segmentation_detection(img, boxes, scores, labels, masks)
