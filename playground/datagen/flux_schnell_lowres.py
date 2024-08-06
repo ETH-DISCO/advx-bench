@@ -8,8 +8,7 @@ import torch
 from diffusers import FluxPipeline
 
 model_id = "black-forest-labs/FLUX.1-schnell"
-
-pipe = FluxPipeline.from_pretrained(model_id, torch_dtype=torch.float32)
+pipe = FluxPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
 pipe = pipe.to("cpu")
 
 prompt = "A cat holding a sign that says hello world"
