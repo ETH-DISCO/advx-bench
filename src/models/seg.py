@@ -142,19 +142,21 @@ example
 """
 
 if __name__ == "__main__":
-    labels = ["cat", "remote control"]
-    threshold = 0.3
-
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
+    # threshold = 0.3
+    # labels = ["cat", "remote control"]
     # labels, masks = segment_clipseg(img, labels)
     # plot_segmentation_prob(img, labels, masks)
 
+    # threshold = 0.3
+    # labels = ["cat", "remote control"]
     # boxes, scores, labels = detect_groundingdino(img, labels, threshold)
     # labels, masks = segment_sam1(img, query=boxes)
     # plot_segmentation_detection(img, boxes, scores, labels, masks)
 
+    threshold = 0.3
     boxes, scores, labels = detect_detr(img, threshold)
     labels, masks = segment_sam1(img, query=boxes)
     plot_segmentation_detection(img, boxes, scores, labels, masks)
