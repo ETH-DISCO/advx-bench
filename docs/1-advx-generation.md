@@ -17,6 +17,7 @@ generating advx:
 
 *datasets:*
 
+- data generation using flux
 - aggregators:
     - https://datasetninja.com/
     - https://huggingface.co/datasets

@@ -1,11 +1,6 @@
 we want to improve vision-based turing-tests using advx.
 
-we're looking for the strongest zero shot image recognition models (umbrella term) as of july 2024.
-
-they must be:
-
-- zero shot, open vocabulary (ideally also query free)
-- open source, easy to install and use on consumer hardware with a cpu
+we're looking for the strongest zero shot image recognition models (umbrella term) as of august 2024.
 
 these are our findings.
 
@@ -17,9 +12,9 @@ overview:
 - timm: https://huggingface.co/docs/timm/en/models
 - course: https://huggingface.co/learn/computer-vision-course/en/unit4/multimodal-models/pre-intro
 
-## 1.1. RoZ benchmark (CVPR 2024) 🔥
+## 1.1. RoZ benchmark
 
-> see: https://arxiv.org/pdf/2403.10499
+> see: https://arxiv.org/pdf/2403.10499 (CVPR 2024)
 >
 > has the same goal as us - but only focuses on CLIP models for cls tasks on ImageNet
 >
@@ -166,9 +161,29 @@ these benchmarks are outdated or not comprehensive enough:
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
 
-# 2. ease of use
+# 2. chaining models
 
-## 2.1. cls
+it's possible to chain models by ie. generating a prompt with one model and then using that prompt with another model etc.
+
+*image to text / image captioning*
+
+- using image captions to generate textual prompts for CV models
+- https://huggingface.co/tasks/image-to-text
+- https://huggingface.co/models?pipeline_tag=image-to-text
+- https://paperswithcode.com/task/image-captioning -> BLIP-2 ViT-G FlanT5 XL
+- https://huggingface.co/Salesforce/blip-image-captioning-large
+- https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
+
+*text to image / image generation*
+
+- using the same caption to generate an image to then use that image as a prompt for another model
+- https://huggingface.co/tasks/text-to-image
+- https://huggingface.co/models?pipeline_tag=image-to-text
+- https://huggingface.co/black-forest-labs/flux (state of the art)
+
+# 3. ease of use
+
+## 3.1. cls
 
 openai clip @ 2021:
 
@@ -240,7 +255,7 @@ google lit @ 2021:
     - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
     - somehow figured it out myself but it wasn't well documented and i'm not sure if what i did was correct
 
-## 2.2. det
+## 3.2. det
 
 grounding dino @ 2024:
 
@@ -282,7 +297,7 @@ grounding dino 1.5 @ 2024:
 - ❌ installation:
     - only through paid api https://deepdataspace.com/request_api, not open source
 
-## 2.3. semantic seg
+## 3.3. semantic seg
 
 > the majority of these models are not open vocabulary / constrained to the labels they were trained on + only accessible through `.pth` checkpoints that must be manually downloaded in addition to their repository and some other back bone (usually this process is not well documented)
 > 
@@ -385,7 +400,18 @@ detr @ 2022:
 - ❌ zero shot, doesn't need any textual prompts and finds all labels in the image - but only works with COCO classes
     - could maybe be fixed through ov-detr: https://github.com/yuhangzang/OV-DETR
 
-## 2.3. semantic seg (with bounding boxes as queries)
+## 3.3. semantic seg (with bounding boxes as queries)
+
+sam vit @ 2023:
+
+- https://arxiv.org/pdf/2304.02643
+- https://github.com/facebookresearch/segment-anything
+- ✅ installation:
+    - very straightforward to use
+    - https://huggingface.co/facebook/sam-vit-base
+    - https://huggingface.co/facebook/sam-vit-huge (largest version)
+    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
+    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
 
 sam vit 2 @ 2024 (published this week):
 
@@ -394,16 +420,6 @@ sam vit 2 @ 2024 (published this week):
 - absolutely top perf
 - ❌ installation:
     - only works with an nvidia gpu: `raise OSError('CUDA_HOME environment variable is not set. '`
-
-sam vit @ 2023:
-
-- https://arxiv.org/pdf/2304.02643
-- https://github.com/facebookresearch/segment-anything
-- ✅ installation:
-    - https://huggingface.co/facebook/sam-vit-base
-    - https://huggingface.co/facebook/sam-vit-huge (largest version)
-    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
-    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
 
 grounded sam @ 2024:
 
@@ -420,3 +436,18 @@ grounded hq-sam @ 2023:
 - https://github.com/SysCV/sam-hq
 - ❌ installation:
     - model checkpoint must be manually downloaded from google drive link, no other way
+
+## 3.4. image to text
+
+
+## 3.5. text to image
+
+flux v1 @ 2024:
+
+- no paper, just blog: https://blackforestlabs.ai/announcing-black-forest-labs/
+- installation:
+    - really massive models, huge compute and memory requirements (can be over 50GB large even for the "schnell" version)
+    - inference for smaller models is possible on cpu, stronger models can be accessed through an api
+    - https://github.com/black-forest-labs/flux
+    - https://huggingface.co/black-forest-labs/FLUX.1-dev
+    - https://huggingface.co/black-forest-labs/FLUX.1-schnell
