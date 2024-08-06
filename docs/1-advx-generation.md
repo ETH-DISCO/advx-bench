@@ -1,4 +1,6 @@
-evaluate models against an advx dataset
+try adversarial attacks on the chosen models
+
+see: https://github.com/wang-research-lab/roz/blob/main/scripts/common_adversarial_attack/attack.py
 
 see:
 

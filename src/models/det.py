@@ -68,11 +68,11 @@ def detect_vit(img: Image.Image, labels: list[str], threshold: float) -> tuple[l
 def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
     from transformers import AutoImageProcessor, DetrForObjectDetection
 
-    model_id = "facebook/detr-resnet-101-dc5"
+    model_id = "facebook/detr-resnet-101-dc5" # largest model
     image_processor = AutoImageProcessor.from_pretrained(model_id)
     model = DetrForObjectDetection.from_pretrained(model_id)
 
-    # no labels
+    # query free - but results limited to coco vocabulary
     inputs = image_processor(images=img, return_tensors="pt")
     outputs = model(**inputs)
 
@@ -82,7 +82,7 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     results["scores"] = [elem.item() for elem in results["scores"]]
     results["labels"] = [model.config.id2label[elem.item()] for elem in results["labels"]]
 
-    # alternatively: map model labels to custom labels
+    # note: mapping to custom labels doesn't work
     # model_labels = [model.config.id2label[elem.item()] for elem in results["labels"]]
     # results["labels"] = []
     # for ml in model_labels:

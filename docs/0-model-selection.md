@@ -4,10 +4,8 @@ we're looking for the strongest zero shot image recognition models (umbrella ter
 
 they must be:
 
-- open source
-- easy to use and fine-tune
-- have a good balance between efficiency and effectiveness
-- able to run on consumer hardware (ie. standard standing desk pc with gpu)
+- query free, zero shot, open vocabulary
+- open source, easy to install and use on consumer hardware with a cpu
 
 these are our findings.
 
@@ -420,3 +418,4 @@ detr @ 2022:
 - same model as above
 - not on leaderboard but very popular
 - ❌ zero shot, doesn't need any textual prompts and finds all labels in the image - but only works with COCO classes
+    - could maybe be fixed through ov-detr: https://github.com/yuhangzang/OV-DETR

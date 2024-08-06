@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import requests
 import torch
-from det import detect_groundingdino
+from det import *
 from PIL import Image
 from utils import get_device
 
@@ -148,9 +148,13 @@ if __name__ == "__main__":
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
-    labels, masks = segment_clipseg(img, labels)
-    plot_segmentation_prob(img, labels, masks)
+    # labels, masks = segment_clipseg(img, labels)
+    # plot_segmentation_prob(img, labels, masks)
 
-    boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    # boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    # labels, masks = segment_sam1(img, query=boxes)
+    # plot_segmentation_detection(img, boxes, scores, labels, masks)
+
+    boxes, scores, labels = detect_detr(img, threshold)
     labels, masks = segment_sam1(img, query=boxes)
     plot_segmentation_detection(img, boxes, scores, labels, masks)
