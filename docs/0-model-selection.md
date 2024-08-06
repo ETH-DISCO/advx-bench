@@ -169,11 +169,26 @@ it's possible to chain models by ie. generating a prompt with one model and then
 
 - using image captions to generate textual prompts for CV models
 - the models must be open vocabulary to be useful, otherwise they're constrained to the labels they were trained on (just like detr)
+- https://paperswithcode.com/task/image-captioning -> BLIP-2 ViT-G FlanT5 XL (not open vocab)
 - https://huggingface.co/tasks/image-to-text
 - https://huggingface.co/models?pipeline_tag=image-to-text
-- https://paperswithcode.com/task/image-captioning -> BLIP-2 ViT-G FlanT5 XL (not open vocab)
-- https://huggingface.co/Salesforce/blip-image-captioning-large
-- https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
+- https://huggingface.co/learn/computer-vision-course/en/unit4/multimodal-models/tasks-models-part1#image-captioning
+- examples:
+    - blip 1:
+        - https://huggingface.co/Salesforce/blip-vqa-base
+    - blip 2:
+        - https://huggingface.co/Salesforce/blip2-opt-2.7b
+        - https://huggingface.co/Salesforce/blip2-opt-2.7b-coco
+        - https://huggingface.co/Salesforce/blip2-flan-t5-xxl
+        - https://huggingface.co/Salesforce/instructblip-vicuna-7b (also custom instructions)
+    - git:
+        - https://huggingface.co/microsoft/git-large-coco
+        - https://huggingface.co/microsoft/git-base
+        - https://huggingface.co/microsoft/git-base-vqav2
+    - pix2struct:
+        - https://huggingface.co/google/pix2struct-textcaps-base
+    - gpt2:
+        - https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
 
 *text to image / image generation*
 
@@ -449,12 +464,11 @@ open blip @ 2023:
     - very straightforward
     - https://huggingface.co/moranyanuka/blip-image-captioning-large-mocha
 
-blip vit large v1 @ 2022:
+blip 1 @ 2022:
 
 - https://arxiv.org/abs/2201.12086
-- version 2 is difficult difficult to use
 - not open vocabulary, constrained to coco, so no advantage over detr
-- ✅ installation:
+- installation:
     - very straightforward to install, just 2 GB large
     - https://huggingface.co/Salesforce/blip-image-captioning-large
 
