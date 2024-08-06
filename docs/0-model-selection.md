@@ -440,6 +440,15 @@ grounded hq-sam @ 2023:
 
 ## 3.4. image to text
 
+open blip @ 2023:
+
+- https://arxiv.org/abs/2312.03631
+- finetuned on MS-COCO with the MOCHa RL framework
+- https://assafbk.github.io/mocha/
+- ✅ installation:
+    - very straightforward
+    - https://huggingface.co/moranyanuka/blip-image-captioning-large-mocha
+
 blip vit large v1 @ 2022:
 
 - https://arxiv.org/abs/2201.12086
