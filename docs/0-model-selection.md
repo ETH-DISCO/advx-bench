@@ -4,7 +4,7 @@ we're looking for the strongest zero shot image recognition models (umbrella ter
 
 they must be:
 
-- query free, zero shot, open vocabulary
+- zero shot, open vocabulary (ideally also query free)
 - open source, easy to install and use on consumer hardware with a cpu
 
 these are our findings.
