@@ -20,10 +20,7 @@ def set_seed(seed: int = -1) -> None:
     torch.backends.cudnn.benchmark = False
 
 
-def get_random_kodak_image() -> Image.Image:
-    img_idx = random.randint(1, 24)
-    cwd = Path(__file__).parent.parent / 'data' / 'kodak' / f'kodim{img_idx:02d}.png'
+def get_kodak_img(idx: int) -> Image.Image:
+    assert 1 <= idx <= 24
+    cwd = Path(__file__).parent.parent / 'data' / 'kodak' / f'kodim{idx:02d}.png'
     return Image.open(cwd)
-
-random_img = get_random_kodak_image()
-random_img.show()
