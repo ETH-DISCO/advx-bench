@@ -168,6 +168,7 @@ it's possible to chain models by ie. generating a prompt with one model and then
 *image to text / image captioning*
 
 - using image captions to generate textual prompts for CV models
+- none are open vocabulary, they're all constrained to the labels they were trained on (COCO, ImageNet, etc.)
 - https://huggingface.co/tasks/image-to-text
 - https://huggingface.co/models?pipeline_tag=image-to-text
 - https://paperswithcode.com/task/image-captioning -> BLIP-2 ViT-G FlanT5 XL
@@ -439,13 +440,21 @@ grounded hq-sam @ 2023:
 
 ## 3.4. image to text
 
+blip vit large v1 @ 2022:
+
+- https://arxiv.org/abs/2201.12086
+- version 2 is difficult difficult to use
+- not open vocabulary, constrained to coco, so no advantage over detr
+- ✅ installation:
+    - very straightforward to install, just 2 GB large
+    - https://huggingface.co/Salesforce/blip-image-captioning-large
 
 ## 3.5. text to image
 
 flux v1 @ 2024:
 
 - no paper, just blog: https://blackforestlabs.ai/announcing-black-forest-labs/
-- installation:
+- ✅ installation:
     - really massive models, huge compute and memory requirements (can be over 50GB large even for the "schnell" version)
     - inference for smaller models is possible on cpu, stronger models can be accessed through an api
     - https://github.com/black-forest-labs/flux
