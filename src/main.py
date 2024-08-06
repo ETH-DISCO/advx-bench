@@ -1,3 +1,5 @@
+from pathlib import Path
+from PIL import Image
 import random
 import secrets
 
@@ -18,10 +20,10 @@ def set_seed(seed: int = -1) -> None:
     torch.backends.cudnn.benchmark = False
 
 
-# img_idx = random.randint(1, 24)
-# cwd = Path.cwd() / 'data' / 'kodak' / f'kodim{img_idx:02d}.png'
-# img = Image.open(cwd)
-# img = Image.open(cwd)
-# img.show()
+def get_random_kodak_image() -> Image.Image:
+    img_idx = random.randint(1, 24)
+    cwd = Path(__file__).parent.parent / 'data' / 'kodak' / f'kodim{img_idx:02d}.png'
+    return Image.open(cwd)
 
-set_seed(0)
+random_img = get_random_kodak_image()
+random_img.show()
