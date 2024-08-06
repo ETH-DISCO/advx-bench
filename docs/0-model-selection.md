@@ -169,26 +169,29 @@ it's possible to chain models by ie. generating a prompt with one model and then
 
 - using image captions to generate textual prompts for CV models
 - the models must be open vocabulary to be useful, otherwise they're constrained to the labels they were trained on (just like detr)
+- ideally we want them to be based off a large language model
 - https://paperswithcode.com/task/image-captioning -> BLIP-2 ViT-G FlanT5 XL (not open vocab)
 - https://huggingface.co/tasks/image-to-text
 - https://huggingface.co/models?pipeline_tag=image-to-text
 - https://huggingface.co/learn/computer-vision-course/en/unit4/multimodal-models/tasks-models-part1#image-captioning
-- examples:
+- examples (open vocab):
     - blip 1:
+        - https://huggingface.co/moranyanuka/blip-image-captioning-large-mocha (dec 2023)
         - https://huggingface.co/Salesforce/blip-vqa-base
+        - https://huggingface.co/Salesforce/blip-vqa-capfilt-large
     - blip 2:
         - https://huggingface.co/Salesforce/blip2-opt-2.7b
-        - https://huggingface.co/Salesforce/blip2-opt-2.7b-coco
-        - https://huggingface.co/Salesforce/blip2-flan-t5-xxl
-        - https://huggingface.co/Salesforce/instructblip-vicuna-7b (also custom instructions)
+        - https://huggingface.co/Salesforce/blip2-opt-2.7b-coco (jan 2023)
+        - https://huggingface.co/Salesforce/blip2-flan-t5-xxl (jan 2023)
+        - https://huggingface.co/Salesforce/instructblip-vicuna-7b (may 2023)
     - git:
-        - https://huggingface.co/microsoft/git-large-coco
+        - https://huggingface.co/microsoft/git-large-coco (may 2022)
         - https://huggingface.co/microsoft/git-base
         - https://huggingface.co/microsoft/git-base-vqav2
     - pix2struct:
-        - https://huggingface.co/google/pix2struct-textcaps-base
+        - https://huggingface.co/google/pix2struct-textcaps-base (oct 2022)
     - gpt2:
-        - https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
+        - https://huggingface.co/nlpconnect/vit-gpt2-image-captioning ???
 
 *text to image / image generation*
 
@@ -455,12 +458,24 @@ grounded hq-sam @ 2023:
 
 ## 3.4. image to text
 
+gpt2 @ 2020:
+
+- paper unknown
+- installation:
+    - https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
+
+blip 2 @ 2023:
+
+- https://arxiv.org/abs/2301.12597
+- installation:
+    - https://huggingface.co/Salesforce/blip2-opt-2.7b
+
 open blip @ 2023:
 
 - https://arxiv.org/abs/2312.03631
 - finetuned on MS-COCO with the MOCHa RL framework
 - https://assafbk.github.io/mocha/
-- ✅ installation:
+- installation:
     - very straightforward
     - https://huggingface.co/moranyanuka/blip-image-captioning-large-mocha
 
