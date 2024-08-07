@@ -439,6 +439,9 @@ sam vit 2 @ 2024 (published this week):
 - absolutely top perf
 - ❌ installation:
     - only works with an nvidia gpu: `raise OSError('CUDA_HOME environment variable is not set. '`
+    - will be ported soon:
+        - https://github.com/facebookresearch/segment-anything-2/pull/128
+        - https://github.com/huggingface/transformers/pull/32394
 
 grounded sam @ 2024:
 

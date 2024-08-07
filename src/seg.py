@@ -37,6 +37,8 @@ def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str
     assert all(len(box) == 4 for box in query)
     from transformers import AutoModelForMaskGeneration, AutoProcessor
 
+    # waiting for sam2 to be ported: https://github.com/facebookresearch/segment-anything-2/pull/128
+
     device = get_device(disable_mps=True)
     segmenter_id = "facebook/sam-vit-base"
     segmentator = AutoModelForMaskGeneration.from_pretrained(segmenter_id).to(device)

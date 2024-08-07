@@ -19,13 +19,17 @@ steps:
     - see at what point it's too hard for humans vs. models
     - check if robustified model has lower accuracy
 
+# 1. existing hcaptcha datasets
+
+- https://gitlab.ethz.ch/disco-students/fs24/image-captchas
+- https://gitlab.ethz.ch/disco-students/fs24/image-captchas/-/blob/main/assets/datasets/hcaptcha_dataset_turlan/processed/0a28e4fc9452e9b90e2e08e564de91754b85db04dba33f7216378aac883f5d3f.png?ref_type=heads
 
 
 
 
 
 
-
+<!--
 
 adversarial examples:
 
@@ -43,9 +47,6 @@ naturally occurring adversarial examples:
 
 - https://github.com/hendrycks/natural-adv-examples
 
-
-
-
 datasets:
 
 - aggregators:
@@ -58,8 +59,4 @@ datasets:
     - https://www.kaggle.com/datasets/cry2003/google-recaptcha-v2-images
     - https://datasetninja.com/google-recaptcha-image
 
-
-hcaptcha:
-
-- https://gitlab.ethz.ch/disco-students/fs24/image-captchas
-- https://gitlab.ethz.ch/disco-students/fs24/image-captchas/-/blob/main/assets/datasets/hcaptcha_dataset_turlan/processed/0a28e4fc9452e9b90e2e08e564de91754b85db04dba33f7216378aac883f5d3f.png?ref_type=heads
+-->
