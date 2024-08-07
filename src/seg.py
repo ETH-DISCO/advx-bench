@@ -47,7 +47,6 @@ def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str
         outputs = segmentator(**inputs)
     masks = processor.post_process_masks(masks=outputs.pred_masks, original_sizes=inputs.original_sizes, reshaped_input_sizes=inputs.reshaped_input_sizes)[0]
 
-    assert all(isinstance(label, str) for label in labels)
     assert all(isinstance(mask, torch.Tensor) for mask in masks)
     assert all(mask.dtype == torch.bool for mask in masks)
     return labels, masks
