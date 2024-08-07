@@ -154,7 +154,6 @@ if __name__ == "__main__":
 
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
-    # img = Image.open(Path(__file__).parent.parent.parent / "data" / "kodak" / "kodim14.png")
     threshold = 0.1
     text_queries = ["cat", "remote control"]
     boxes, scores, labels = detect_groundingdino(img, text_queries, threshold)

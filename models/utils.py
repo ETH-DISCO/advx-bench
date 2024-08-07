@@ -27,9 +27,3 @@ def get_device(disable_mps=False) -> str:
         return "cuda"
     else:
         return "cpu"
-
-
-def get_kodak_img(idx: int) -> Image.Image:
-    assert 1 <= idx <= 24
-    cwd = Path(__file__).parent.parent / "data" / "kodak" / f"kodim{idx:02d}.png"
-    return Image.open(cwd)

@@ -16,6 +16,7 @@ steps:
     - evaluate the model on hcaptcha images
 
 3. present findings
+
     - see at what point it's too hard for humans vs. models
     - check if robustified model has lower accuracy
 
