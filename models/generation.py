@@ -1,5 +1,4 @@
 from PIL import Image
-
 from utils import get_device
 
 """

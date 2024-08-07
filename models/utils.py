@@ -1,10 +1,8 @@
 import random
 import secrets
-from pathlib import Path
 
 import numpy as np
 import torch
-from PIL import Image
 
 
 def set_seed(seed: int = -1) -> None:

@@ -7,7 +7,6 @@ import torch
 from det import *
 from generation import *
 from PIL import Image
-
 from utils import get_device
 
 """
@@ -32,6 +31,7 @@ def segment_clipseg(img: Image.Image, text_queries: list[str]) -> list[torch.Ten
     return masks
 
 
+# waiting for sam2: https://github.com/huggingface/transformers/pull/32394
 def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
     assert len(query) > 0
     assert all(len(box) == 4 for box in query)
@@ -157,7 +157,3 @@ if __name__ == "__main__":
     boxes, scores, labels = detect_groundingdino(img, text_queries, threshold)
     masks = segment_sam1(img, boxes)
     plot_segmentation_detection(img, boxes, scores, text_queries, masks)
-
-
-
-
