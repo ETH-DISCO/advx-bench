@@ -1,13 +1,13 @@
 import math
-from pathlib import Path
 
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-import requests
 import torch
 from det import *
+from generate import *
 from PIL import Image
+
 from utils import get_device
 
 """
@@ -15,7 +15,7 @@ models
 """
 
 
-def segment_clipseg(img: Image.Image, labels: list[str]) -> tuple[list[str], list[torch.Tensor]]:
+def segment_clipseg(img: Image.Image, labels: list[str]) -> list[torch.Tensor]:
     from transformers import AutoProcessor, CLIPSegForImageSegmentation
 
     processor = AutoProcessor.from_pretrained("CIDAS/clipseg-rd64-refined")
@@ -27,17 +27,18 @@ def segment_clipseg(img: Image.Image, labels: list[str]) -> tuple[list[str], lis
     logits = outputs.logits
     masks = torch.sigmoid(logits)
 
-    assert all(isinstance(label, str) for label in labels)
     assert all(isinstance(mask, torch.Tensor) for mask in masks)
     assert all(mask.dtype == torch.float32 for mask in masks)
-    return labels, masks
+    return masks
 
 
-def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
+def segment_sam1(image: Image.Image, query: list[list[float]]) -> list[torch.Tensor]:
+    assert len(query) > 0
+    assert all(len(box) == 4 for box in query)
     from transformers import AutoModelForMaskGeneration, AutoProcessor
 
-    device = get_device(disable_mps=True)
     segmenter_id = "facebook/sam-vit-base"
+    device = get_device(disable_mps=True)
     segmentator = AutoModelForMaskGeneration.from_pretrained(segmenter_id).to(device)
     processor = AutoProcessor.from_pretrained(segmenter_id)
     inputs = processor(images=image, input_boxes=[query], return_tensors="pt").to(device)
@@ -45,10 +46,9 @@ def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str
         outputs = segmentator(**inputs)
     masks = processor.post_process_masks(masks=outputs.pred_masks, original_sizes=inputs.original_sizes, reshaped_input_sizes=inputs.reshaped_input_sizes)[0]
 
-    assert all(isinstance(label, str) for label in labels)
     assert all(isinstance(mask, torch.Tensor) for mask in masks)
     assert all(mask.dtype == torch.bool for mask in masks)
-    return labels, masks
+    return masks
 
 
 """
@@ -142,23 +142,60 @@ def plot_segmentation_detection(image: Image.Image, boxes: list[list[float]], sc
 example
 """
 
-if __name__ == "__main__":
-    url = "http://images.cocodataset.org/val2017/000000039769.jpg"
-    img = Image.open(requests.get(url, stream=True).raw)
 
+def demo():
+    # url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+    # img = Image.open(requests.get(url, stream=True).raw)
     # threshold = 0.3
     # labels = ["cat", "remote control"]
-    # labels, masks = segment_clipseg(img, labels)
+    # masks = segment_clipseg(img, labels)
     # plot_segmentation_prob(img, labels, masks)
 
-    # threshold = 0.3
-    # labels = ["cat", "remote control"]
-    # boxes, scores, labels = detect_groundingdino(img, labels, threshold)
-    # labels, masks = segment_sam1(img, query=boxes)
+    url = "http://images.cocodataset.org/val2017/000000039769.jpg"
+    img = Image.open(requests.get(url, stream=True).raw)
+    threshold = 0.1
+    labels = ["cat", "remote control"]
+    boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    masks = segment_sam1(img, query=boxes)
+    plot_segmentation_detection(img, boxes, scores, labels, masks)
+
+    # img = Image.open(Path(__file__).parent.parent.parent / "data" / "kodak" / "kodim14.png")
+    # threshold = 0.9
+    # boxes, scores, labels = detect_detr(img, threshold)
+    # masks = segment_sam1(img, query=boxes)
     # plot_segmentation_detection(img, boxes, scores, labels, masks)
 
-    threshold = 0.9
-    img = Image.open(Path(__file__).parent.parent.parent / "data" / "kodak" / "kodim14.png")
-    boxes, scores, labels = detect_detr(img, threshold)
-    labels, masks = segment_sam1(img, query=boxes)
+
+def pipeline():
+    GREEN = "\033[92m"
+    RESET = "\033[0m"
+
+    # 1. generate an image
+    print(f"{GREEN}Generating an image...{RESET}")
+    img = gen_stable_diffusion("an illustration of a cat, a dog, and a flamingo having a picnic")
+    img.show()
+
+    # 2. caption it
+    print(f"{GREEN}Captioning the image...{RESET}")
+    from caption import caption_vqa
+    text_query = caption_vqa(img)
+    print("text_query:", text_query)
+
+    # 3. classify, detect, segment it
+    print(f"{GREEN}Classifying the image...{RESET}")
+    from cls import classify_clip, plot_classification
+    labels, probs = classify_clip(img, text_query)
+    plot_classification(img, labels, probs)
+
+    print(f"{GREEN}Detecting objects in the image...{RESET}")
+    threshold = 0.1
+    boxes, scores, labels = detect_groundingdino(img, text_query, threshold)
+
+    print(f"{GREEN}Segmenting objects in the image...{RESET}")
+    masks = segment_sam1(img, query=boxes)
     plot_segmentation_detection(img, boxes, scores, labels, masks)
+
+
+if __name__ == "__main__":
+    demo()
+    # pipeline()

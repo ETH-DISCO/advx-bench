@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import requests
 import torch
 from PIL import Image
+
 from utils import get_device
 
 """
@@ -9,7 +10,7 @@ models
 """
 
 
-def classify_clip(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
+def classify_clip(img: Image.Image, labels: list[str]) -> list[float]:
     import clip
 
     device = get_device()
@@ -23,13 +24,12 @@ def classify_clip(img: Image.Image, labels: list[str]) -> tuple[list[str], list[
         logits_per_image, logits_per_text = model(image, text)
         probs = logits_per_image.softmax(dim=-1).cpu().numpy()
 
-    labels, probs = labels, probs[0].tolist()
-    assert all(isinstance(label, str) for label in labels)
+    probs = probs[0].tolist()
     assert all(isinstance(prob, float) for prob in probs)
-    return labels, probs
+    return probs
 
 
-def classify_opencoca(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
+def classify_opencoca(img: Image.Image, labels: list[str]) -> list[float]:
     import open_clip
 
     model, _, preprocess = open_clip.create_model_and_transforms("coca_ViT-L-14", pretrained="mscoco_finetuned_laion2b_s13b_b90k")
@@ -46,13 +46,12 @@ def classify_opencoca(img: Image.Image, labels: list[str]) -> tuple[list[str], l
         text_features /= text_features.norm(dim=-1, keepdim=True)
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-    labels, probs = labels, text_probs[0].cpu().numpy().tolist()
-    assert all(isinstance(label, str) for label in labels)
+    probs = labels, text_probs[0].cpu().numpy().tolist()
     assert all(isinstance(prob, float) for prob in probs)
-    return labels, probs
+    return probs
 
 
-def classify_eva(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
+def classify_eva(img: Image.Image, labels: list[str]) -> list[float]:
     import open_clip
 
     model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k")  # largest that can fit in memory
@@ -70,13 +69,12 @@ def classify_eva(img: Image.Image, labels: list[str]) -> tuple[list[str], list[f
 
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-    labels, probs = labels, text_probs[0].cpu().numpy().tolist()
-    assert all(isinstance(label, str) for label in labels)
+    probs = labels, text_probs[0].cpu().numpy().tolist()
     assert all(isinstance(prob, float) for prob in probs)
-    return labels, probs
+    return probs
 
 
-def classify_gem(img: Image.Image, labels: list[str]) -> tuple[list[str], list[float]]:
+def classify_gem(img: Image.Image, labels: list[str]) -> list[float]:
     from transformers import AutoModel, AutoProcessor
 
     model_id = "facebook/metaclip-h14-fullcc2.5b"
@@ -90,10 +88,9 @@ def classify_gem(img: Image.Image, labels: list[str]) -> tuple[list[str], list[f
         logits_per_image = outputs.logits_per_image
         text_probs = logits_per_image.softmax(dim=-1)
 
-    labels, probs = labels, text_probs[0].cpu().numpy().tolist()
-    assert all(isinstance(label, str) for label in labels)
+    probs = labels, text_probs[0].cpu().numpy().tolist()
     assert all(isinstance(prob, float) for prob in probs)
-    return labels, probs
+    return probs
 
 
 """
@@ -101,7 +98,7 @@ utils
 """
 
 
-def plot_classification(img: Image.Image, labels: list[str], probs: dict[str, float]):
+def plot_classification(img: Image.Image, labels: list[str], probs: list[float]):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
 
     ax1.imshow(img)
@@ -133,9 +130,9 @@ if __name__ == "__main__":
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
-    labels, probs = classify_clip(img, labels)
-    labels, probs = classify_opencoca(img, labels)
-    labels, probs = classify_eva(img, labels)
-    labels, probs = classify_gem(img, labels)
+    probs = classify_clip(img, labels)
+    # probs = classify_opencoca(img, labels)
+    # probs = classify_eva(img, labels)
+    # probs = classify_gem(img, labels)
 
     plot_classification(img, labels, probs)
