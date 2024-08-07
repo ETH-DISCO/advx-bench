@@ -7,8 +7,8 @@ advx:
 - https://paperswithcode.com/task/adversarial-attack
 - https://paperswithcode.com/task/real-world-adversarial-attack
 - https://paperswithcode.com/task/adversarial-attack-detection
-- see: http://videos.rennes.inria.fr/seminaire-SoSySec/Maura-Pintor-03-02-2023/20230203-Maura-Pintor-sosysec-slides.pdf
-- see: `torchattack`
+- http://videos.rennes.inria.fr/seminaire-SoSySec/Maura-Pintor-03-02-2023/20230203-Maura-Pintor-sosysec-slides.pdf
+- torchattack library
 
 datasets:
 
