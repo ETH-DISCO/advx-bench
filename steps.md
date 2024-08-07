@@ -23,20 +23,9 @@ steps:
 
 
 
-
 # 1. existing hcaptcha datasets
 
-- https://gitlab.ethz.ch/disco-students/fs24/image-captchas
-
-
-<!-- 
-
-get gpu access
-
-try to access sam2
-
--->
-
+- https://gitlab.ethz.ch/disco-students/fs24/image-captchas -> downloaded
 
 
 
