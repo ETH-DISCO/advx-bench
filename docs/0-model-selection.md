@@ -501,3 +501,14 @@ flux v1 @ 2024:
     - https://github.com/black-forest-labs/flux
     - https://huggingface.co/black-forest-labs/FLUX.1-dev
     - https://huggingface.co/black-forest-labs/FLUX.1-schnell
+
+
+<!-- 
+
+implementing a registry for all models:
+
+- https://github.com/wang-research-lab/roz/blob/6b4b7ff9d98a0a6fb4aeb4512859c1a0b16a0138/scripts/natural_distribution_shift/src/registry.py
+- https://github.com/wang-research-lab/roz/blob/6b4b7ff9d98a0a6fb4aeb4512859c1a0b16a0138/scripts/natural_distribution_shift/src/inference.py#L115
+
+-->
+
