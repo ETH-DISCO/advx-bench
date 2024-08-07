@@ -39,7 +39,7 @@ utils
 
 
 def get_noun_chunks(sentence: str) -> list[str]:
-    # $ python -m spacy download en_core_web_sm
+    # python -m spacy download en_core_web_sm
     import spacy
 
     nlp = spacy.load("en_core_web_sm")
@@ -54,9 +54,11 @@ example
 """
 
 if __name__ == "__main__":
-    labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw).convert("RGB")
 
-    print(caption_gpt2(img))
-    print(caption_vqa(img))
+    text_query = caption_gpt2(img)
+    print(text_query)
+
+    text_query = caption_vqa(img)
+    print(text_query)

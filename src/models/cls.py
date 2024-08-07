@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import requests
 import torch
@@ -55,7 +54,7 @@ def classify_opencoca(img: Image.Image, labels: list[str]) -> list[float]:
 def classify_eva(img: Image.Image, labels: list[str]) -> list[float]:
     import open_clip
 
-    model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k") # largest that can fit in memory
+    model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k")  # largest that can fit in memory
     model.eval()
     tokenizer = open_clip.get_tokenizer("EVA01-g-14")
 

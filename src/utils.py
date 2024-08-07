@@ -20,6 +20,15 @@ def set_seed(seed: int = -1) -> None:
     torch.backends.cudnn.benchmark = False
 
 
+def get_device(disable_mps=False) -> str:
+    if torch.backends.mps.is_available() and not disable_mps:
+        return "mps"
+    elif torch.cuda.is_available():
+        return "cuda"
+    else:
+        return "cpu"
+
+
 def get_kodak_img(idx: int) -> Image.Image:
     assert 1 <= idx <= 24
     cwd = Path(__file__).parent.parent / "data" / "kodak" / f"kodim{idx:02d}.png"
