@@ -83,7 +83,6 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     results["scores"] = [elem.item() for elem in results["scores"]]
     results["labels"] = [model.config.id2label[elem.item()] for elem in results["labels"]]
 
-    # note: mapping to custom labels doesn't work
     # model_labels = [model.config.id2label[elem.item()] for elem in results["labels"]]
     # results["labels"] = []
     # for ml in model_labels:
@@ -123,14 +122,15 @@ example
 """
 
 if __name__ == "__main__":
-    labels = ["cat", "remote control", "dog"]
-    threshold = 0.3
 
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
-    # boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    labels = ["cat", "remote control", "dog"]
+    threshold = 0.1
+
+    boxes, scores, labels = detect_groundingdino(img, labels, threshold)
     # boxes, scores, labels = detect_vit(img, labels, threshold)
-    boxes, scores, labels = detect_detr(img, threshold)
+    # boxes, scores, labels = detect_detr(img, threshold)
 
     plot_detection(img, boxes, scores, labels)

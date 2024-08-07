@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import requests
 import torch
@@ -46,7 +47,7 @@ def classify_opencoca(img: Image.Image, labels: list[str]) -> list[float]:
         text_features /= text_features.norm(dim=-1, keepdim=True)
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-    probs = labels, text_probs[0].cpu().numpy().tolist()
+    probs = text_probs[0].cpu().numpy().tolist()
     assert all(isinstance(prob, float) for prob in probs)
     return probs
 
@@ -54,7 +55,7 @@ def classify_opencoca(img: Image.Image, labels: list[str]) -> list[float]:
 def classify_eva(img: Image.Image, labels: list[str]) -> list[float]:
     import open_clip
 
-    model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k")  # largest that can fit in memory
+    model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k") # largest that can fit in memory
     model.eval()
     tokenizer = open_clip.get_tokenizer("EVA01-g-14")
 
@@ -69,7 +70,7 @@ def classify_eva(img: Image.Image, labels: list[str]) -> list[float]:
 
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-    probs = labels, text_probs[0].cpu().numpy().tolist()
+    probs = text_probs[0].cpu().numpy().tolist()
     assert all(isinstance(prob, float) for prob in probs)
     return probs
 
@@ -88,7 +89,7 @@ def classify_gem(img: Image.Image, labels: list[str]) -> list[float]:
         logits_per_image = outputs.logits_per_image
         text_probs = logits_per_image.softmax(dim=-1)
 
-    probs = labels, text_probs[0].cpu().numpy().tolist()
+    probs = text_probs[0].cpu().numpy().tolist()
     assert all(isinstance(prob, float) for prob in probs)
     return probs
 
@@ -126,13 +127,14 @@ example
 """
 
 if __name__ == "__main__":
-    labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw)
 
+    labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
+
     probs = classify_clip(img, labels)
-    # probs = classify_opencoca(img, labels)
-    # probs = classify_eva(img, labels)
-    # probs = classify_gem(img, labels)
+    probs = classify_opencoca(img, labels)
+    probs = classify_eva(img, labels)
+    probs = classify_gem(img, labels)
 
     plot_classification(img, labels, probs)
