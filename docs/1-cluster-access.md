@@ -7,7 +7,7 @@ tutorials:
 - https://computing.ee.ethz.ch/Services/SLURM
 - https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29 (jupyter notebook)
 
-<br><br><br>
+<br><br>
 
 ## 1. enter network
 
@@ -36,7 +36,7 @@ conda activate jupyternb
 jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
 ```
 
-<br><br><br>
+<br><br>
 
 ## 2. setup environment
 
@@ -66,7 +66,7 @@ conda config --set solver libmamba
 
 store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT` (not the same as `scratch_net`).
 
-<br><br><br>
+<br><br>
 
 ## 3. submit batch jobs
 
@@ -161,7 +161,7 @@ echo "Finished at: $(date)"
 exit 0
 ```
 
-<br><br><br>
+<br><br>
 
 ## 4. check status and resource availability
 
