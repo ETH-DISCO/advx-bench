@@ -1,10 +1,3 @@
-# Hitchhiker's Guide to the Cluster
-
-> “In the beginning the Cluster Rules were created.  
-> This has made many people very angry and has been widely regarded as a bad move.”  
-> -- <cite>D. ADAMs ;)</cite>
-
-  
 
 # The Cluster Rules
 This is a short comprehensive summary of the cluster rules, in the rest of the documents this is elaborated on a bit.
