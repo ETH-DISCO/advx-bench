@@ -21,7 +21,8 @@ steps:
     - check if robustified model has lower accuracy
 
 
-# 1. existing hcaptcha datasets
+
+# existing hcaptcha datasets
 
 - https://gitlab.ethz.ch/disco-students/fs24/image-captchas -> downloaded
 
