@@ -1,14 +1,5 @@
 source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 
-meta:
-
-- clusters are accessible to all lab students.
-	- to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
- 	- A6000 and A100s require special privileges.
-	- 
-- clusters use a SLURM interface.
-	- only submit to arton[01-08].
-
 tutorials:
 
 - https://gitlab.ethz.ch/disco-students/cluster (job scripts)
@@ -55,7 +46,11 @@ conda config --set solver libmamba
 
 store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT` (not the same as `scratch_net`).
 
-# checking resource availability
+# submitting jobs
+
+- clusters are accessible to all lab students.
+- to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
+- A6000 and A100s require special privileges.
 
 ```bash
 # checking available resources
@@ -83,10 +78,9 @@ print('__CUDA Device Name:',torch.cuda.get_device_name(0))
 print('__CUDA Device Total Memory [GB]:',torch.cuda.get_device_properties(0).total_memory/1e9)
 ```
 
-# batch job submission
-
 you have to submit batch jobs to the slurm system.
 
+- submit jobs to only submit to arton[01-08].
 - make sure the file is executable `chmod +x job.sh`
 - you can also pass arguments `$1, $2, $3, ...` to a shell script by calling `sbatch job.sh arg1 arg2 arg3`.
 - run `sbatch job.sh`
@@ -157,7 +151,7 @@ echo "Finished at: $(date)"
 exit 0
 ```
 
-keep your jobs short. set high "nice values" for your jobs so more important stuff has a priority. submit many small jobs in an array
+keep your jobs short. set high "nice values" for your jobs so more important stuff has a priority. submit many small jobs in an array.
 
 ```bash
 sprio --long #shows queue, priority, and the priority factors
@@ -165,7 +159,7 @@ sbatch --nice=100000 job.sh #starts job with a high nice value
 scontrol update job <JOB ID> nice=100000 #changes the nice value of a qued job (default and minimum value is 0)
 ```
 
-<br><br>
+
 
 # common errors
 
