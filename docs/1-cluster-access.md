@@ -13,6 +13,13 @@ tutorials:
 
 enter network through vpn: https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN
 
+```bash
+brew update
+brew install openconnect
+sudo openconnect -u yjabary@student-net.ethz.ch --useragent=AnyConnect -g student-net sslvpn.ethz.ch
+sudo openconnect -u yjabary@staff-net.ethz.ch --useragent=AnyConnect -g staff-net sslvpn.ethz.ch
+```
+
 then ssh into the tik42 login node (but do not run any computation).
 
 ```bash
