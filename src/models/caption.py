@@ -15,19 +15,8 @@ models
 """
 
 
-def caption_gpt2(img: Image.Image) -> list[str]:
-    from transformers import pipeline
-
-    device = get_device()
-    image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning", device=device)
-    img = img.convert("RGB")
-    res = image_to_text(img)[0]["generated_text"]
-
-    assert isinstance(res, str)
-    return get_noun_chunks(res)
-
-
 def caption_blip(img: Image.Image) -> list[str]:
+    # best model
     from transformers import BlipForConditionalGeneration, BlipProcessor
 
     device = get_device()
@@ -41,6 +30,18 @@ def caption_blip(img: Image.Image) -> list[str]:
 
     out = model.generate(**inputs, max_new_tokens=30)
     res = processor.decode(out[0], skip_special_tokens=True, clean_up_tokenization_spaces=True)
+
+    assert isinstance(res, str)
+    return get_noun_chunks(res)
+
+
+def caption_gpt2(img: Image.Image) -> list[str]:
+    from transformers import pipeline
+
+    device = get_device()
+    image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning", device=device)
+    img = img.convert("RGB")
+    res = image_to_text(img)[0]["generated_text"]
 
     assert isinstance(res, str)
     return get_noun_chunks(res)
