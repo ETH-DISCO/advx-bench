@@ -75,20 +75,15 @@ you have to submit batch jobs to the slurm system.
 - clusters are accessible to all lab students.
 - to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
 - only submit jobs to `arton[01-08]`
-	- A6000 and A100s require special privileges.
+	- CPU Nodes
 	- GPU Nodes
-		- 8x A100 with 80GB on tikgpu10
-		- 8x A6000 with 48GB on tikgpu08
+		- 8x A100 with 80GB on tikgpu10 (needs special privileges)
+		- 8x A6000 with 48GB on tikgpu08 (needs special privileges)
 		- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
 		- 13x Titan RTX 24GB on tikgpu[04,05]
 		- 21x Titan XP 12GB on tikgpu[01,02,03]
 		- 2x Tesla V100 32GB on tikgpu05
 		- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
-	- CPU Nodes
-		- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
-		- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
-		- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
-		- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
 - make sure the file is executable `chmod +x job.sh`
 - you can also pass arguments `$1, $2, $3, ...` to a shell script by calling `sbatch job.sh arg1 arg2 arg3`.
 - run `sbatch job.sh`
