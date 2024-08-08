@@ -80,11 +80,26 @@ print('__CUDA Device Total Memory [GB]:',torch.cuda.get_device_properties(0).tot
 
 you have to submit batch jobs to the slurm system.
 
-- submit jobs to only submit to arton[01-08].
+- only submit jobs to `arton[01-08]`
+	- GPU Nodes
+		- 8x A100 with 80GB on tikgpu10
+		- 8x A6000 with 48GB on tikgpu08
+		- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
+		- 13x Titan RTX 24GB on tikgpu[04,05]
+		- 21x Titan XP 12GB on tikgpu[01,02,03]
+		- 2x Tesla V100 32GB on tikgpu05
+		- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
+	- CPU Nodes
+		- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
+		- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
+		- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
+		- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
 - make sure the file is executable `chmod +x job.sh`
 - you can also pass arguments `$1, $2, $3, ...` to a shell script by calling `sbatch job.sh arg1 arg2 arg3`.
 - run `sbatch job.sh`
 - update number of parallel jobs `scontrol update ArrayTaskThrottle=<count> JobId=<jobID>`
+
+example job script:
 
 ```bash
 #!/bin/bash
@@ -178,21 +193,3 @@ set the following flag before your conda command.
 ```
 CONDA_OVERRIDE_CUDA=11.7 conda ...
 ```
-
-> what kind of nodes exist on the cluster?
-
-2.2TB of GPU memory as of July 2023:
-
-- GPU Nodes
-	- 8x A100 with 80GB on tikgpu10
-	- 8x A6000 with 48GB on tikgpu08
-	- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
-	- 13x Titan RTX 24GB on tikgpu[04,05]
-	- 21x Titan XP 12GB on tikgpu[01,02,03]
-	- 2x Tesla V100 32GB on tikgpu05
-	- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
-- CPU Nodes
-	- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
