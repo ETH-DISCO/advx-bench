@@ -46,17 +46,9 @@ conda config --set solver libmamba
 
 store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT` (not the same as `scratch_net`).
 
-# submitting jobs
+# interactive jupyter session
 
-- clusters are accessible to all lab students.
-- to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
-- A6000 and A100s require special privileges.
-
-```bash
-# checking available resources
-smon_free
-squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tres-alloc:47,timeused:11,command:140,nodelist:20
-
+```
 # interactive session (permitted for prototyping)
 srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
 
@@ -68,19 +60,14 @@ conda activate jupyternb
 jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
 ```
 
-check resource allocation with:
-
-```python
-import torch
-print('__CUDNN VERSION:', torch.backends.cudnn.version())
-print('__Number CUDA Devices:', torch.cuda.device_count())
-print('__CUDA Device Name:',torch.cuda.get_device_name(0))
-print('__CUDA Device Total Memory [GB]:',torch.cuda.get_device_properties(0).total_memory/1e9)
-```
+# submitting jobs
 
 you have to submit batch jobs to the slurm system.
 
+- clusters are accessible to all lab students.
+- to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
 - only submit jobs to `arton[01-08]`
+	- A6000 and A100s require special privileges.
 	- GPU Nodes
 		- 8x A100 with 80GB on tikgpu10
 		- 8x A6000 with 48GB on tikgpu08
@@ -166,30 +153,18 @@ echo "Finished at: $(date)"
 exit 0
 ```
 
-keep your jobs short. set high "nice values" for your jobs so more important stuff has a priority. submit many small jobs in an array.
+# checking available resources
 
 ```bash
-sprio --long #shows queue, priority, and the priority factors
-sbatch --nice=100000 job.sh #starts job with a high nice value
-scontrol update job <JOB ID> nice=100000 #changes the nice value of a qued job (default and minimum value is 0)
+# checking available resources
+smon_free
+squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tres-alloc:47,timeused:11,command:140,nodelist:20
 ```
 
-
-
-# common errors
-
-> "not enough space on device"
-
-change the temporary directory which will be used by conda.
-
-```bash
-TMPDIR="/itet-stor/ETH_USERNAME/net_scratch/tmp/" && mkdir -p "${TMPDIR}" && export TMPDIR
-```
-
-> cuda version issues
-
-set the following flag before your conda command.
-
-```
-CONDA_OVERRIDE_CUDA=11.7 conda ...
+```python
+import torch
+print('__CUDNN VERSION:', torch.backends.cudnn.version())
+print('__Number CUDA Devices:', torch.cuda.device_count())
+print('__CUDA Device Name:',torch.cuda.get_device_name(0))
+print('__CUDA Device Total Memory [GB]:',torch.cuda.get_device_properties(0).total_memory/1e9)
 ```
