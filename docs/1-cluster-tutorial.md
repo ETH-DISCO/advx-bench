@@ -11,116 +11,73 @@ source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 - Jump host tik42x
 	- reachable at tik42x.ethz.ch
 	- you need to be logged into the ETH network via a VPN. but instead of using the VPN you can also use the jumphost j2tik.ethz.ch to reach tik42x.
-	- interface / logn node shouldn't run any computation.
+	- interface / logn node should not run any computation
+
 
 
 
 tutorials:
 
 - https://gitlab.ethz.ch/disco-students/cluster
-- https://computing.ee.ethz.ch/Programming/Languages/Conda
+- https://computing.ee.ethz.ch/Programming/Languages/Conda (also see `netscratch` directory)
+- https://computing.ee.ethz.ch/Services/SLURM
+- https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29 (jupyter notebook)
 
 
+## setup
 
 enter network (Cisco Client or j2tik jumphost) and ssh into login node tik42:
 
 ```bash
 ssh ETH_USERNAME@tik42x.ethz.ch
-
 ``` 
 
-## CONDA
-
-Follow [this guide](https://computing.ee.ethz.ch/Programming/Languages/Conda) on how to setup conda on the cluster, we recommend the installation on the `netscratch` directory. It is fine to run this installation on the tik42x node.
-
-Don't forget to add this to your bashrc file, usually you can edit the correct file using your favourite shell editor `nano ~/.bashrc`.
+add the following to your `~/.bashrc` file where `USER_PATH` should be the location of your conda installation, most likely under `/itet-stor/ETH_USERNAME/net_scratch`:
 
 ```bash
-[[ -f USER_PATH/conda/bin/conda ]] && eval "$(USER_PATH/conda/bin/conda shell.bash hook)"
-```
-
-### Mamba 
-
-We recommend to enable the libmamba solver for conda as described [here](https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community). 
-
-```bash
-conda update -n base conda
-```
-
-```bash
-conda install -n base conda-libmamba-solver
-conda config --set solver libmamba
-```
-
-## SLURM
-
-It is recommended to add the following to your `~/.bashrc` file where USER_PATH should be the location of your conda installation, most likely under `/itet-stor/ETH_USERNAME/net_scratch`.
-
-```bash
+# conda installation
 export SLURM_CONF=/home/sladmitet/slurm/slurm.conf
 alias smon_free="grep --color=always --extended-regexp 'free|$' /home/sladmitet/smon.txt"
 alias smon_mine="grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt"
 alias watch_smon_free="watch --interval 300 --no-title --differences --color \"grep --color=always --extended-regexp 'free|$' /home/sladmitet/smon.txt\""
 alias watch_smon_mine="watch --interval 300 --no-title --differences --color \"grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt\""
 [[ -f USER_PATH/conda/bin/conda ]] && eval "$(USER_PATH/conda/bin/conda shell.bash hook)"
-```
 
-https://computing.ee.ethz.ch/Services/SLURM
-
-add the following aliases to display the current usage
-
-```bash
+# current usage
 alias smon_free="grep --color=always --extended-regexp 'free|$' /home/sladmitet/smon.txt"
 alias smon_mine="grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt"`
 ```
 
-or `squeue` to get a list of all current jobs in the system. For more detailed information you can also use the following:
+also use [lilmamba / mamba](https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community) instead of conda because it's faster:
 
 ```bash
+conda update -n base conda
+conda install -n base conda-libmamba-solver
+conda config --set solver libmamba
+```
+
+## batch job submission
+
+```bash
+# checking available resources
+smon_free
 squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tres-alloc:47,timeused:11,command:140,nodelist:20
-```
 
-You can display a nice interface using `smon_free`
-
-### Accessing a compute node
-
-For debugging or prototype it is ok to get resources from an actual compute node (!=tik42x) through an interactive terminal (or called bash session).
-
-If you want to run actual experiments however, you should always setup a proper job script `job.sh` (more on such an example script in the sections below) and submit your jobs to slurm.
-
-*Interactive Session:*
-
-```
+# interactive session
 srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
-```
 
-*Submitting a job to SLURM:*
-
-```
+# submitting batch job
 sbatch job.sh
-```
 
-### Jupyter Notebook
-
-How to setup and use Jupyter Notebook (taken from [here](https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29)).
-
-Jupyter Notebook can easily be installed and started in a conda environment:
-
-Note: you should allocate a compute node of your choosing first, using the 
-
-```bash
+# jupyter notebook (assuming compute node already allocated)
+# will host at something like `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
+# port range [5900-5999]
 conda create --name jupyternb notebook --channel conda-forge
 conda activate jupyternb
 jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
 ```
 
-After a successful start, the notebook prints the URL it's accessible under, which looks similar to `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
-
-A notebook started like this in a Slurm job will be accessible
-
-For access from a remote PC through VPN the port range should be [5900-5999]
-
-You can check which GPUs have been allocated to you by copying this code into one of the cells:
+check resource allocation with:
 
 ```python
 import torch
