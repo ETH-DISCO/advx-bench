@@ -23,5 +23,4 @@ pipeline:
 
     - https://huggingface.co/facebook/sam2-hiera-small (needs gpu)
 
-
 for each category we also have weaker models that can run on cpu/mps architectures. but the largest / top performing models are so huge that they can't run on colab's free tier. so you either have to pay up or use the gpu cluster.
