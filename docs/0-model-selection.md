@@ -12,7 +12,7 @@ overview:
 - timm: https://huggingface.co/docs/timm/en/models
 - course: https://huggingface.co/learn/computer-vision-course/en/unit4/multimodal-models/pre-intro
 
-## 1.1. RoZ benchmark
+## RoZ benchmark
 
 > see: https://arxiv.org/pdf/2403.10499 (CVPR 2024)
 >
@@ -39,7 +39,7 @@ ranking by adversarial robustness (based on table 1, figure 8)
 - ResNet50 (Standard ImageNet model)
 - ResNet50x16 (CLIP model)
 
-## 1.2. pwc benchmarks
+## pwc benchmarks
 
 > see: https://paperswithcode.com/area/computer-vision
 >
@@ -97,7 +97,7 @@ zero shot semantic segmentation:
     - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-mess → CAT-SEG-L (2024)
     - https://paperswithcode.com/sota/zero-shot-semantic-segmentation-on-ade20k-847 → MAFT (2023)
 
-## 1.3. goldblum et al. (2023)
+## goldblum et al. (2023)
 
 > see: https://arxiv.org/pdf/2310.19909 (see chapter: "4.1 Task-Specific Backbones")
 > 
@@ -112,7 +112,7 @@ zero shot semantic segmentation:
     - Supervised SwinV2-Base trained on IN-21k (finetuned on IN-1k)
     - Supervised ConvNeXt-Base trained on IN-1k
 
-## 1.4. huggingface trends
+## huggingface trends
 
 > see: https://huggingface.co/models
 > 
@@ -122,7 +122,7 @@ zero shot semantic segmentation:
 - segmentation: cidas/clipseg-rd64-refined
 - zero shot dectection: google/owlv2-base-patch16-ensemble, idea-research/grounding-dino-tiny
 
-## 1.5 github trends
+## github trends
 
 > see: https://roboflow.com/models / https://ossinsight.io/collections/artificial-intelligence
 > 
@@ -132,7 +132,7 @@ zero shot semantic segmentation:
 - segmentation: nvidia segformer
 - detection: yolov9, grounding dino, meta detectron2, google mediapipe, meta detr
 
-## 1.6 pytorch image models benchmarks
+## pytorch image models benchmarks
 
 > see: https://github.com/huggingface/pytorch-image-models
 > 
@@ -152,7 +152,7 @@ top1 accuracy by family:
 - levit (82.60% top1, by levit_384.fb_dist_in1k)
 - vgg (74.22% top1, by vgg19_bn.tv_in1k)
 
-## 1.7. other benchmarks worth mentioning
+## other benchmarks worth mentioning
 
 these benchmarks are outdated or not comprehensive enough:
 
@@ -202,7 +202,7 @@ it's possible to chain models by ie. generating a prompt with one model and then
 
 # 3. ease of use
 
-## 3.1. cls
+## cls
 
 gem / metaclip @ 2024:
 
@@ -274,7 +274,7 @@ google lit @ 2021:
     - https://colab.research.google.com/github/google-research/vision_transformer/blob/main/lit.ipynb
     - somehow figured it out myself but it wasn't well documented and i'm not sure if what i did was correct
 
-## 3.2. det
+## det
 
 grounding dino @ 2024:
 
@@ -316,7 +316,7 @@ grounding dino 1.5 @ 2024:
 - ❌ installation:
     - only through paid api https://deepdataspace.com/request_api, not open source
 
-## 3.3. semantic seg
+## semantic seg
 
 > the majority of these models are not open vocabulary / constrained to the labels they were trained on + only accessible through `.pth` checkpoints that must be manually downloaded in addition to their repository and some other back bone (usually this process is not well documented)
 > 
@@ -419,7 +419,7 @@ detr @ 2022:
 - ❌ zero shot, doesn't need any textual prompts and finds all labels in the image - but only works with COCO classes
     - could maybe be fixed through ov-detr: https://github.com/yuhangzang/OV-DETR
 
-## 3.3. semantic seg (with bounding boxes as queries)
+## semantic seg (with bounding boxes as queries)
 
 sam vit @ 2023:
 
@@ -459,7 +459,7 @@ grounded hq-sam @ 2023:
 - ❌ installation:
     - model checkpoint must be manually downloaded from google drive link, no other way
 
-## 3.4. image to text
+## image to text
 
 gpt2 @ 2020:
 
@@ -490,7 +490,7 @@ blip 1 @ 2022:
     - very straightforward to install, just 2 GB large
     - https://huggingface.co/Salesforce/blip-image-captioning-large
 
-## 3.5. text to image
+## text to image
 
 flux v1 @ 2024:
 
