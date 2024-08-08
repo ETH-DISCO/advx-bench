@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt
 import requests
 import torch
 from PIL import Image
-from utils import get_device
+
+from .utils import get_device
 
 """
 models

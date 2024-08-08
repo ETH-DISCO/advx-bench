@@ -4,10 +4,10 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from det import *
-from generation import *
 from PIL import Image
-from utils import get_device
+
+from .det import *
+from .utils import get_device
 
 """
 models
@@ -31,7 +31,7 @@ def segment_clipseg(img: Image.Image, text_queries: list[str]) -> list[torch.Ten
     return masks
 
 
-# waiting for sam2: https://github.com/huggingface/transformers/pull/32394
+# still waiting for sam2 to be ported to transformers
 def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
     assert len(query) > 0
     assert all(len(box) == 4 for box in query)
