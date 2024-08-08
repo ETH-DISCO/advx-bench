@@ -5,22 +5,20 @@ idea: adversarial images cannot be used for captchas.
 steps:
 
 1. do quantitative evaluation of hcaptcha images we scraped so far
-    
-    - label a bunch of hcaptcha images manually
-    - evaluate some cls/det/seg models on these (not visual reasoning)
+
+    - label a bunch of hcaptcha images manually
+    - evaluate some cls/det/seg models on these (not visual reasoning)
 
 2. generate some synthetic hcaptcha images
 
-    - recreate hcaptcha images (instead of labeling them) -> study noise, distortions, perlin noise patches, circled gradients, etc.
-    - fine-tune / robustify a model on these -> or use existing models like ASAM (https://arxiv.org/abs/2405.00256)
-    - evaluate the model on hcaptcha images
+    - recreate hcaptcha images (instead of labeling them) -> study noise, distortions, perlin noise patches, circled gradients, etc.
+    - fine-tune / robustify a model on these -> or use existing models like ASAM (https://arxiv.org/abs/2405.00256)
+    - evaluate the model on hcaptcha images
 
 3. present findings
 
-    - see at what point it's too hard for humans vs. models
-    - check if robustified model has lower accuracy
-
-
+    - see at what point it's too hard for humans vs. models
+    - check if robustified model has lower accuracy
 
 
 # 1. existing hcaptcha datasets
