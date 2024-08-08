@@ -1,13 +1,8 @@
 source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 
-clusters are accessible to all thesis students. if you want to use more than half the resources, your advisor has to allocate them for you in the calendar.
+2.2TB of GPU memory as of July 2023:
 
-# Overview
-
-## What is in the system?
-Welcome to the TIK computing cluster! It is a collection of computational resources which includes CPU and GPU nodes which can be accessed through a login node on tik42x using the SLURM interface. Note that you have to be inside the ETH network (or VPN) to access the login node and login with your ETH username/credentials.
-
-As of July 2023 the cluster includes: 
+```
 - GPU Nodes
 	- 8x A100 with 80GB on tikgpu10
 	- 8x A6000 with 48GB on tikgpu08
@@ -16,17 +11,21 @@ As of July 2023 the cluster includes:
 	- 21x Titan XP 12GB on tikgpu[01,02,03]
 	- 2x Tesla V100 32GB on tikgpu05
 	- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
-- CPU Nodes (TODO I am not sure about #of cores, seems to me that there are more ...)
+- CPU Nodes
 	- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
 	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
 	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
 	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
+```
+
+- clusters are accessible to all thesis students. if you want to use more than half the resources, your advisor has to allocate them for you in the calendar.
+- clusters use a SLURM interface.
 - Jump host tik42x
 	- reachable at tik42x.ethz.ch
-	- Instead of using the VPN you can use the jumphost j2tik.ethz.ch to reach tik42x (maybe hide from students?)
-	- use as interface only, should $NOT$ run any sort of computation on the login node itself!
+	- you need to be logged into the ETH network via a VPN. but instead of using the VPN you can also use the jumphost j2tik.ethz.ch to reach tik42x.
+	- interface / logn node should just serve as the interface and not run any computations. use as interface only, should NOT run any sort of computation on the login node itself!
 	
-So roughly 2.2 TB of GPU memory, have fun!
+
 
 ## Who uses what?
 
