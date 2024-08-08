@@ -19,7 +19,7 @@ then ssh into the tik42 login node (but do not run any computation).
 ssh ETH_USERNAME@tik42x.ethz.ch
 ```
 
-you can also host jupyter notebook sessions or ssh via your ide.
+and run a jupyter notebook:
 
 ```
 # interactive session (permitted for prototyping)
