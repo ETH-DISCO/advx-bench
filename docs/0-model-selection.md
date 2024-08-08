@@ -161,7 +161,7 @@ these benchmarks are outdated or not comprehensive enough:
 - https://cocodataset.org/#detection-leaderboard (outdated, from 2020)
 - https://segmentmeifyoucan.com/leaderboard / https://arxiv.org/pdf/2104.14812 (outdated, from 2021)
 
-# 2. chaining models
+## chaining models
 
 it's possible to chain models by ie. generating a prompt with one model and then using that prompt with another model etc.
 
@@ -200,7 +200,7 @@ it's possible to chain models by ie. generating a prompt with one model and then
 - https://huggingface.co/models?pipeline_tag=image-to-text
 - https://huggingface.co/black-forest-labs/flux (state of the art)
 
-# 3. ease of use
+# 2. implementation
 
 ## cls
 
