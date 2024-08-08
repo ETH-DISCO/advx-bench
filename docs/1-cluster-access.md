@@ -13,7 +13,7 @@ tutorials:
 
 enter network through vpn: https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN
 
-then ssh into the tik42 login node (shouldn't run any computation):
+then ssh into the tik42 login node (but do not run any computation).
 
 ```bash
 ssh ETH_USERNAME@tik42x.ethz.ch
