@@ -1,6 +1,6 @@
 source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 
-
+meta:
 
 - clusters are accessible to all lab students.
 	- to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
@@ -13,20 +13,16 @@ source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 	- you need to be logged into the ETH network via a VPN. but instead of using the VPN you can also use the jumphost j2tik.ethz.ch to reach tik42x.
 	- interface / logn node should not run any computation
 
-
-
-
 tutorials:
 
-- https://gitlab.ethz.ch/disco-students/cluster
+- https://gitlab.ethz.ch/disco-students/cluster (job scripts)
 - https://computing.ee.ethz.ch/Programming/Languages/Conda (also see `netscratch` directory)
 - https://computing.ee.ethz.ch/Services/SLURM
 - https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29 (jupyter notebook)
 
-
 ## setup
 
-enter network (Cisco Client or j2tik jumphost) and ssh into login node tik42:
+enter network (Cisco Client or j2tik jumphost) and ssh into login node "tik42":
 
 ```bash
 ssh ETH_USERNAME@tik42x.ethz.ch
@@ -56,7 +52,9 @@ conda install -n base conda-libmamba-solver
 conda config --set solver libmamba
 ```
 
-## batch job submission
+store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT` (not the same as `scratch_net`).
+
+## checking resource availability
 
 ```bash
 # checking available resources
@@ -65,9 +63,6 @@ squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tre
 
 # interactive session
 srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
-
-# submitting batch job
-sbatch job.sh
 
 # jupyter notebook (assuming compute node already allocated)
 # will host at something like `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
@@ -87,53 +82,19 @@ print('__CUDA Device Name:',torch.cuda.get_device_name(0))
 print('__CUDA Device Total Memory [GB]:',torch.cuda.get_device_properties(0).total_memory/1e9)
 ```
 
+## batch job submission
 
-### Working Directories
+you have to submit batch jobs to the slurm system.
 
-Now that you have set up everything, you might wonder where you should store your files on the cluster.
-We recommend that you store the code of your project in the net_scratch directory under `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT`.
-This directory is a shared network drive with (basically) unlimited storage capacity. 
-However, it does NOT HAVE A BACKUP - so make sure you regularly commit your important files such as code.
-
-Note: this is NOT the same as scratch_net
-
-### Basics and Common Pitfalls
-
-If your installation fails because of "not enough space on device" you have to change the temporary directory which will be used by conda.
-
-```bash
-TMPDIR="/itet-stor/ETH_USERNAME/net_scratch/tmp/" && mkdir -p "${TMPDIR}" && export TMPDIR
-```
-
-Sometimes you run into issues because of CUDA versions ... then it helps to set the following flag before your conda command.
-
-```
-CONDA_OVERRIDE_CUDA=11.7 conda ...
-```
-
-# Default SLURM commands and files
-
-## Interactive Session
-
-```
-srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
-```
-
-
-## Jobscript
-
-All actual (meaning non prototyping) work should be submitted using jobscripts and sbatch.
-
-Create a file called `job.sh`, and make it executable with `chmod +x job.sh`.
-
-You can submit your job to slurm using sbatch `sbatch job.sh`
-
-Example script GPU
-
-where `DIRECTORY` should be the path to your codebase, i.e. /itet-store/ETH_USERNAME/net_scratch/projectX
+- make sure the file is executable `chmod +x job.sh`
+- you can also pass arguments `$1, $2, $3, ...` to a shell script by calling `sbatch job.sh arg1 arg2 arg3`.
+- run `sbatch job.sh`.
 
 ```bash
 #!/bin/bash
+
+# replace `DIRECTORY` with your own codebase, ie. /itet-store/ETH_USERNAME/net_scratch/projectX
+
 #SBATCH --mail-type=NONE # mail configuration: NONE, BEGIN, END, FAIL, REQUEUE, ALL
 #SBATCH --output=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%j.out # where to store the output (%j is the JOBID), subdirectory "jobs" must exist
 #SBATCH --error=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%j.err # where to store error messages
@@ -145,7 +106,6 @@ where `DIRECTORY` should be the path to your codebase, i.e. /itet-store/ETH_USER
 #CommentSBATCH --nodelist=tikgpu01 # Specify that it should run on this particular node
 #CommentSBATCH --account=tik-internal
 #CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb'
-
 
 
 ETH_USERNAME=TODO_USERNAME
@@ -195,13 +155,8 @@ echo "Finished at: $(date)"
 exit 0
 ```
 
-Note, inside the bash file you can access the comandline arguments by using `$1, $2, $3, ...` and then calling `sbatch job.sh arg1 arg2 arg3`.
 
-## Sample Repository with Jobscripts
 
-Check out this sample repository, which has a conda file for your environment as well as a regular jobscript and an array jobscript.
-
-[Gitlab repository](https://gitlab.ethz.ch/disco-students/cluster)
 
 ## Array Jobs
 
@@ -257,3 +212,22 @@ Did you add the necessary things to your bashrc file? See "Get Started > Slurm".
 	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
 	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
 	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
+
+# common errors
+
+> "not enough space on device"
+
+change the temporary directory which will be used by conda.
+
+```bash
+TMPDIR="/itet-stor/ETH_USERNAME/net_scratch/tmp/" && mkdir -p "${TMPDIR}" && export TMPDIR
+```
+
+> cuda version issues
+
+set the following flag before your conda command.
+
+```
+CONDA_OVERRIDE_CUDA=11.7 conda ...
+```
+
