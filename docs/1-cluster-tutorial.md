@@ -4,18 +4,18 @@ source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 
 ```
 GPU Nodes
-- 8x A100 with 80GB on tikgpu10
-- 8x A6000 with 48GB on tikgpu08
-- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
-- 13x Titan RTX 24GB on tikgpu[04,05]
-- 21x Titan XP 12GB on tikgpu[01,02,03]
-- 2x Tesla V100 32GB on tikgpu05
-- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
+	- 8x A100 with 80GB on tikgpu10
+	- 8x A6000 with 48GB on tikgpu08
+	- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
+	- 13x Titan RTX 24GB on tikgpu[04,05]
+	- 21x Titan XP 12GB on tikgpu[01,02,03]
+	- 2x Tesla V100 32GB on tikgpu05
+	- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
 CPU Nodes
-- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
-- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
-- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
-- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
+	- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
 ```
 
 - clusters are accessible to all thesis students. if you want to use more than half the resources, your advisor has to allocate them for you in the calendar.
