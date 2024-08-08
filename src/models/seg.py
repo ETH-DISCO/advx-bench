@@ -1,4 +1,5 @@
 import math
+import os
 
 import cv2
 import matplotlib.pyplot as plt
@@ -7,11 +8,14 @@ import requests
 import torch
 from PIL import Image
 
+os.environ["TOKENIZERS_PARALLELISM"] = "true"
+
+
 try:
-    from .det import detect_groundingdino
+    from .det import detect_vit
     from .utils import get_device
 except ImportError:
-    from det import detect_groundingdino
+    from det import detect_vit
     from utils import get_device
 
 """
@@ -159,6 +163,6 @@ if __name__ == "__main__":
     img = Image.open(requests.get(url, stream=True).raw)
     threshold = 0.1
     text_queries = ["cat", "remote control"]
-    boxes, scores, labels = detect_groundingdino(img, text_queries, threshold)
+    boxes, scores, labels = detect_vit(img, text_queries, threshold)
     masks = segment_sam1(img, boxes)
     plot_segmentation_detection(img, boxes, scores, text_queries, masks)

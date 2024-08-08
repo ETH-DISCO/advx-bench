@@ -1,7 +1,11 @@
+import os
+
 import matplotlib.pyplot as plt
 import requests
 import torch
 from PIL import Image
+
+os.environ["TOKENIZERS_PARALLELISM"] = "true"
 
 try:
     from .utils import get_device
@@ -13,7 +17,32 @@ models
 """
 
 
+def classify_metaclip(img: Image.Image, labels: list[str]) -> list[float]:
+    # best model
+    from transformers import AutoModel, AutoProcessor
+
+    device = get_device()
+    model_id = "facebook/metaclip-h14-fullcc2.5b"
+    processor = AutoProcessor.from_pretrained(model_id)
+    model = AutoModel.from_pretrained(model_id).to(device)
+
+    inputs = processor(text=labels, images=img, return_tensors="pt", padding=True)
+
+    inputs["input_ids"] = inputs["input_ids"].to(device, dtype=torch.long)
+    inputs = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in inputs.items()}
+
+    with torch.no_grad():
+        outputs = model(**inputs)
+        logits_per_image = outputs.logits_per_image
+        text_probs = logits_per_image.softmax(dim=-1)
+
+    probs = text_probs[0].cpu().numpy().tolist()
+    assert all(isinstance(prob, float) for prob in probs)
+    return probs
+
+
 def classify_clip(img: Image.Image, labels: list[str]) -> list[float]:
+    # most robust model
     import clip
 
     device = get_device()
@@ -79,29 +108,6 @@ def classify_eva(img: Image.Image, labels: list[str]) -> list[float]:
     return probs
 
 
-def classify_metaclip(img: Image.Image, labels: list[str]) -> list[float]:
-    from transformers import AutoModel, AutoProcessor
-
-    device = get_device()
-    model_id = "facebook/metaclip-h14-fullcc2.5b"
-    processor = AutoProcessor.from_pretrained(model_id)
-    model = AutoModel.from_pretrained(model_id).to(device)
-
-    inputs = processor(text=labels, images=img, return_tensors="pt", padding=True)
-
-    inputs["input_ids"] = inputs["input_ids"].to(device, dtype=torch.long)
-    inputs = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in inputs.items()}
-
-    with torch.no_grad():
-        outputs = model(**inputs)
-        logits_per_image = outputs.logits_per_image
-        text_probs = logits_per_image.softmax(dim=-1)
-
-    probs = text_probs[0].cpu().numpy().tolist()
-    assert all(isinstance(prob, float) for prob in probs)
-    return probs
-
-
 """
 utils
 """
@@ -140,9 +146,9 @@ if __name__ == "__main__":
 
     labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
 
+    probs = classify_metaclip(img, labels)
     probs = classify_clip(img, labels)
     probs = classify_opencoca(img, labels)
     probs = classify_eva(img, labels)
-    probs = classify_metaclip(img, labels)
 
     plot_classification(img, labels, probs)

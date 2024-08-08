@@ -1,7 +1,12 @@
+import os
+
 import matplotlib.pyplot as plt
 import requests
 import torch
 from PIL import Image
+
+os.environ["TOKENIZERS_PARALLELISM"] = "true"
+
 
 try:
     from .utils import get_device
@@ -82,19 +87,15 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     image_processor = AutoImageProcessor.from_pretrained(model_id)
     model = DetrForObjectDetection.from_pretrained(model_id).to(device)
 
-    # Move inputs to the device
     inputs = image_processor(images=img, return_tensors="pt")
     inputs = {k: v.to(device) for k, v in inputs.items()}
 
-    # Perform inference
     with torch.no_grad():
         outputs = model(**inputs)
 
-    # Move outputs back to CPU for post-processing
     target_sizes = torch.tensor([img.size[::-1]]).to(device)
     results = image_processor.post_process_object_detection(outputs, threshold, target_sizes=target_sizes)[0]
 
-    # Convert results to lists and move to CPU if necessary
     results["boxes"] = [elem.cpu().tolist() for elem in results["boxes"]]
     results["scores"] = [elem.cpu().item() for elem in results["scores"]]
     results["labels"] = [model.config.id2label[elem.cpu().item()] for elem in results["labels"]]
