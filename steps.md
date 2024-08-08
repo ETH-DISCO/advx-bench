@@ -22,9 +22,9 @@ steps:
 
 
 
-# existing hcaptcha datasets
+# step 1
 
-- https://gitlab.ethz.ch/disco-students/fs24/image-captchas -> downloaded
+-[ ] download https://gitlab.ethz.ch/disco-students/fs24/image-captchas
 
 
 
