@@ -6,7 +6,7 @@ from PIL import Image
 try:
     from .utils import get_device
 except ImportError:
-    from models.utils import get_device
+    from utils import get_device
 
 """
 models

@@ -10,8 +10,8 @@ try:
     from .det import detect_groundingdino
     from .utils import get_device
 except ImportError:
-    from models.det import detect_groundingdino
-    from models.utils import get_device
+    from det import detect_groundingdino
+    from utils import get_device
 
 """
 models
