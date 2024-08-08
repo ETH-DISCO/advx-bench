@@ -464,13 +464,13 @@ grounded hq-sam @ 2023:
 gpt2 @ 2020:
 
 - paper unknown
-- installation:
+- ✅ installation:
     - https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
 
 blip 2 @ 2023:
 
 - https://arxiv.org/abs/2301.12597
-- installation:
+- ✅ installation:
     - https://huggingface.co/Salesforce/blip2-opt-2.7b
 
 open blip @ 2023:
@@ -478,7 +478,7 @@ open blip @ 2023:
 - https://arxiv.org/abs/2312.03631
 - finetuned on MS-COCO with the MOCHa RL framework
 - https://assafbk.github.io/mocha/
-- installation:
+- ✅ installation:
     - very straightforward
     - https://huggingface.co/moranyanuka/blip-image-captioning-large-mocha
 
@@ -486,7 +486,7 @@ blip 1 @ 2022:
 
 - https://arxiv.org/abs/2201.12086
 - not open vocabulary, constrained to coco, so no advantage over detr
-- installation:
+- ✅ installation:
     - very straightforward to install, just 2 GB large
     - https://huggingface.co/Salesforce/blip-image-captioning-large
 
