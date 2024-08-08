@@ -5,13 +5,9 @@ meta:
 - clusters are accessible to all lab students.
 	- to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
  	- A6000 and A100s require special privileges.
-	- interactive sessions are permitted for prototyping.
+	- 
 - clusters use a SLURM interface.
 	- only submit to arton[01-08].
-- Jump host tik42x
-	- reachable at tik42x.ethz.ch
-	- you need to be logged into the ETH network via a VPN. but instead of using the VPN you can also use the jumphost j2tik.ethz.ch to reach tik42x.
-	- interface / logn node should not run any computation
 
 tutorials:
 
@@ -22,7 +18,12 @@ tutorials:
 
 # setup
 
-enter network (Cisco Client or j2tik jumphost) and ssh into login node "tik42":
+enter network:
+
+- a) https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN (vpn)
+- b) j2tik.ethz.ch (jumphost)
+
+then ssh into the tik42 login node (shouldn't run any computation):
 
 ```bash
 ssh ETH_USERNAME@tik42x.ethz.ch
@@ -61,7 +62,7 @@ store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT` (not 
 smon_free
 squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tres-alloc:47,timeused:11,command:140,nodelist:20
 
-# interactive session
+# interactive session (permitted for prototyping)
 srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
 
 # jupyter notebook (assuming compute node already allocated)
