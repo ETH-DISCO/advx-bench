@@ -1,3 +1,5 @@
+these are the best models as of august 2024.
+
 pipeline:
 
 - generate images with flux.v1
