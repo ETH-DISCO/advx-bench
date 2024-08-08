@@ -28,6 +28,7 @@ steps:
 - [ ] cluster images using cls for easier manual labeling
 
 
+- [ ] maybe also start using gpus: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA#Default-SLURM-commands-and-files
 
 
 
