@@ -1,28 +1,7 @@
 source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 
-# The Cluster Rules
-This is a short comprehensive summary of the cluster rules, in the rest of the documents this is elaborated on a bit.
-As of September 2023:
-- Cluster Access
-    - only to students that are signed up on the [thesis page](https://disco.ethz.ch/theses) of DISCO
-    - for continued access (eg. writing up and submitting) the student should still be listed on the website
-- Calendar Entry [READ-ONLY link to the DISCO-Cluster calendar](https://calendar.google.com/calendar/u/0?cid=OTdiOWQ5MjFjYmVlNzVmYjA0ODAxM2ExNzc5NTZkZmY2NmJlZjZlYWZjMGNiZWRjZjE0YjU4YWNhZDdlNDE0ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t)
-(supervisor should announce usage in the cluster calendar using [reserved] tag)
-    - You use more than 8 GPUs.
-    - You use more than half of the CPUs of a given node.
-    - You use more than half of the memory of a given node.
-- Reservations
-    - has to be entered at least 2 days in advance
-    - email to {besterma,fgroetschla}@ethz.ch with
-        ```
-        StartTime=2023-07-24T10:00:00
-        En`Time=2023-07-29T10:00:00
-        Nodes=tikgpu01,tikgpu04,tikgpu05,tikgpu06,tikgpu09
-        ReservationName`optional name
-        Users=usernames
-        ```
-> “So long - and thanks for the compute"  
-> -- <cite>D. ADAMs ;)</cite>
+clusters are accessible to all thesis students. if you want to use more than half the resources, your advisor has to allocate them for you in the calendar.
+
 # Overview
 
 ## What is in the system?
