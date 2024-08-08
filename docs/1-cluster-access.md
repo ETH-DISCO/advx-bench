@@ -165,9 +165,11 @@ exit 0
 
 ## 4. check status and resource availability
 
+check available resources
+
 ```bash
-# checking available resources
 smon_free
+
 squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tres-alloc:47,timeused:11,command:140,nodelist:20
 ```
 
