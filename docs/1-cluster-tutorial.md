@@ -20,7 +20,7 @@ tutorials:
 - https://computing.ee.ethz.ch/Services/SLURM
 - https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29 (jupyter notebook)
 
-## setup
+# setup
 
 enter network (Cisco Client or j2tik jumphost) and ssh into login node "tik42":
 
@@ -54,7 +54,7 @@ conda config --set solver libmamba
 
 store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT` (not the same as `scratch_net`).
 
-## checking resource availability
+# checking resource availability
 
 ```bash
 # checking available resources
@@ -82,7 +82,7 @@ print('__CUDA Device Name:',torch.cuda.get_device_name(0))
 print('__CUDA Device Total Memory [GB]:',torch.cuda.get_device_properties(0).total_memory/1e9)
 ```
 
-## batch job submission
+# batch job submission
 
 you have to submit batch jobs to the slurm system.
 
