@@ -6,8 +6,12 @@ import numpy as np
 import torch
 from PIL import Image
 
-from .det import *
-from .utils import get_device
+try:
+    from .det import detect_groundingdino
+    from .utils import get_device
+except ImportError:
+    from models.det import detect_groundingdino
+    from models.utils import get_device
 
 """
 models

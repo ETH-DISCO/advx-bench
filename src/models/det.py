@@ -3,7 +3,10 @@ import requests
 import torch
 from PIL import Image
 
-from .utils import get_device
+try:
+    from .utils import get_device
+except ImportError:
+    from models.utils import get_device
 
 """
 models
