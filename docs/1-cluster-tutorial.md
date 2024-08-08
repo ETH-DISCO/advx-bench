@@ -18,43 +18,18 @@ CPU Nodes
 	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
 ```
 
-- clusters are accessible to all thesis students. if you want to use more than half the resources, your advisor has to allocate them for you in the calendar.
+- clusters are accessible to all lab students.
+	- to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
+ 	- A6000 and A100s require special privileges.
+	- interactive sessions are permitted for prototyping.
 - clusters use a SLURM interface.
+	- only submit to arton[01-08].
 - Jump host tik42x
 	- reachable at tik42x.ethz.ch
 	- you need to be logged into the ETH network via a VPN. but instead of using the VPN you can also use the jumphost j2tik.ethz.ch to reach tik42x.
 	- interface / logn node should just serve as the interface and not run any computations. use as interface only, should NOT run any sort of computation on the login node itself!
-	
 
 
-## Who uses what?
-
-### Who?
-The cluster is shared amongst members of the TIK institute which mostly comprises of PhD students as well as Bachelor/Master students working on projects.
-
-### What about CPU computation?
-If you do not use GPUs you should only ever submit to arton[01-08].
-In rare cases it might make sense to also use gpu nodes which can provide lots of cpu cores or memory - this should be discussed with your supervisor first.
-
-### What about GPU computation?
-There are two different groups, the regular group, which has access to most of the GPUs mentioned. The high memory GPUs (i.e. A6000 and A100s) are reserved for the high-mem user group and access has to be requested through your supervisor. 
-
-## Usage guideline
-In general, you can use up to 4-8 GPUs at the same time. Use as few resources as possible. Should be announced in the calendar if you use more than 8 or need a full node. For prototyping it is okay to use interactive sessions, (in order of hours) otw. you have to submit using sbatch.
-
-
-## Calendar and Reservations
-
-  There exists a cluster calendar where we announce high usage of cluster resources. The following link is read-only and should be shared with the students: [DISCO-Cluster calendar](https://calendar.google.com/calendar/u/0?cid=OTdiOWQ5MjFjYmVlNzVmYjA0ODAxM2ExNzc5NTZkZmY2NmJlZjZlYWZjMGNiZWRjZjE0YjU4YWNhZDdlNDE0ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t).
- 
- We use this calendar to **announce** high usage (>= 8 GPUs) on the cluster. It serves as a basis for discussion. Additionally, you can put strict reservations into the slurm scheduling system, these announcements should be marked with a [reserved] flag in the calendar.
- 
-  @phd if you put down a reservation in the system also add "[reserved]" to the entry title.
-
-
-`[reserved] eth_username uses [tikgpuX | X gpus]`
-announcement without actual reservation: `rogerw uses tikgpu10`
-announcement with reservation: `[reserved] rogerw uses 42 GPUs on tikgpu[06-10]`
 
 # Get Started
 
