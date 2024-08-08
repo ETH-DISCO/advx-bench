@@ -89,10 +89,7 @@ def classify_metaclip(img: Image.Image, labels: list[str]) -> list[float]:
 
     inputs = processor(text=labels, images=img, return_tensors="pt", padding=True)
 
-    # convert input_ids to long type and move to the correct device
     inputs["input_ids"] = inputs["input_ids"].to(device, dtype=torch.long)
-
-    # move other tensors to the device and keep their original dtype
     inputs = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in inputs.items()}
 
     with torch.no_grad():
@@ -143,9 +140,9 @@ if __name__ == "__main__":
 
     labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
 
-    # probs = classify_clip(img, labels)
-    # probs = classify_opencoca(img, labels)
-    # probs = classify_eva(img, labels)
+    probs = classify_clip(img, labels)
+    probs = classify_opencoca(img, labels)
+    probs = classify_eva(img, labels)
     probs = classify_metaclip(img, labels)
 
     plot_classification(img, labels, probs)
