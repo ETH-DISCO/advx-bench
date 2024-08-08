@@ -80,7 +80,6 @@ def get_noun_chunks(sentence: str) -> list[str]:
     doc = nlp(sentence)
     noun_chunks = [chunk.text for chunk in doc.noun_chunks]
     noun_chunks = list(set(noun_chunks))
-
     return noun_chunks
 
 
