@@ -95,11 +95,10 @@ you have to submit batch jobs to the slurm system.
 
 example job script:
 
+replace `DIRECTORY` with your own codebase, ie. /itet-store/ETH_USERNAME/net_scratch/projectX
+
 ```bash
 #!/bin/bash
-
-# replace `DIRECTORY` with your own codebase, ie. /itet-store/ETH_USERNAME/net_scratch/projectX
-
 #SBATCH --mail-type=NONE # mail configuration: NONE, BEGIN, END, FAIL, REQUEUE, ALL
 #SBATCH --output=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%j.out # where to store the output (%j is the JOBID), subdirectory "jobs" must exist
 #SBATCH --error=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%j.err # where to store error messages
