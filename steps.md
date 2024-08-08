@@ -26,7 +26,7 @@ steps:
 
 - [x] scrape images from hcaptcha -> dune by turlan: https://gitlab.ethz.ch/disco-students/fs24/image-captchas
 - [x] get ground truth -> done by turlan in [labelstudio](https://labelstud.io/): https://gitlab.ethz.ch/disco-students/fs24/image-captchas/-/blob/main/assets/datasets/hcaptcha_dataset_turlan/project-2-at-2024-07-08-17-39-4b3e31b4.zip
-- [ ] run solvers via gpu cluster: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA#Default-SLURM-commands-and-files
+- [ ] run solvers via gpu cluster while turlan is labeling
 
 
 

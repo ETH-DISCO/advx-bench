@@ -1,3 +1,4 @@
+keys.yml
 *.partial
 *.pth
 *.pt
