@@ -24,7 +24,7 @@ steps:
 
 # step 1
 
--[ ] download https://gitlab.ethz.ch/disco-students/fs24/image-captchas
+- [ ] download https://gitlab.ethz.ch/disco-students/fs24/image-captchas
 
 
 
