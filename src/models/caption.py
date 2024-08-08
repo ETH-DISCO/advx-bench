@@ -10,8 +10,8 @@ def caption_vqa(img: Image.Image) -> list[str]:
     from transformers import BlipForQuestionAnswering, BlipProcessor
 
     model_id = "Salesforce/blip-vqa-base"
-    processor = BlipProcessor.from_pretrained(model_id)
-    model = BlipForQuestionAnswering.from_pretrained(model_id)
+    processor = BlipProcessor.from_pretrained(model_id, clean_up_tokenization_spaces=True)
+    model = BlipForQuestionAnswering.from_pretrained(model_id, clean_up_tokenization_spaces=True)
 
     question = "what is in the image?"
     inputs = processor(img, question, return_tensors="pt")
@@ -26,7 +26,7 @@ def caption_vqa(img: Image.Image) -> list[str]:
 def caption_gpt2(img: Image.Image) -> list[str]:
     from transformers import pipeline
 
-    image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
+    image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning", clean_up_tokenization_spaces=True)
     res = image_to_text(img)[0]["generated_text"]
 
     assert isinstance(res, str)

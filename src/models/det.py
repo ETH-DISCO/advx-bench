@@ -14,6 +14,7 @@ models
 
 
 def detect_groundingdino(img: Image.Image, labels: list[str], threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
+    # best model
     from transformers import AutoModelForZeroShotObjectDetection, AutoProcessor
 
     device = get_device()
@@ -43,21 +44,24 @@ def detect_groundingdino(img: Image.Image, labels: list[str], threshold: float) 
 def detect_vit(img: Image.Image, labels: list[str], threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
     from transformers import OwlViTForObjectDetection, OwlViTProcessor
 
-    # model_id = "google/owlvit-large-patch14" # inference too slow
-    model_id = "google/owlvit-base-patch32"
+    device = get_device()
+    model_id = "google/owlvit-large-patch14"
     processor = OwlViTProcessor.from_pretrained(model_id)
-    model = OwlViTForObjectDetection.from_pretrained(model_id)
+    model = OwlViTForObjectDetection.from_pretrained(model_id).to(device)
 
     texts = [labels]
     inputs = processor(text=texts, images=img, return_tensors="pt")
-    outputs = model(**inputs)
+    inputs = {k: v.to(device) for k, v in inputs.items()}
 
-    target_sizes = torch.Tensor([img.size[::-1]])
+    with torch.no_grad():
+        outputs = model(**inputs)
+
+    target_sizes = torch.Tensor([img.size[::-1]]).to(device)
     results = processor.post_process_object_detection(outputs=outputs, threshold=threshold, target_sizes=target_sizes)
 
-    results[0]["boxes"] = [elem.tolist() for elem in results[0]["boxes"]]
-    results[0]["scores"] = [elem.item() for elem in results[0]["scores"]]
-    results[0]["labels"] = [labels[elem.item()] for elem in results[0]["labels"]]
+    results[0]["boxes"] = [elem.cpu().tolist() for elem in results[0]["boxes"]]
+    results[0]["scores"] = [elem.cpu().item() for elem in results[0]["scores"]]
+    results[0]["labels"] = [labels[elem.cpu().item()] for elem in results[0]["labels"]]
 
     boxes = results[0]["boxes"]
     scores = results[0]["scores"]
@@ -73,18 +77,27 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     from transformers import AutoImageProcessor, DetrForObjectDetection
 
     model_id = "facebook/detr-resnet-101-dc5"  # largest model
+    device = get_device()
+
     image_processor = AutoImageProcessor.from_pretrained(model_id)
-    model = DetrForObjectDetection.from_pretrained(model_id)
+    model = DetrForObjectDetection.from_pretrained(model_id).to(device)
 
-    # query free - but results limited to coco vocabulary
+    # Move inputs to the device
     inputs = image_processor(images=img, return_tensors="pt")
-    outputs = model(**inputs)
+    inputs = {k: v.to(device) for k, v in inputs.items()}
 
-    target_sizes = torch.tensor([img.size[::-1]])
+    # Perform inference
+    with torch.no_grad():
+        outputs = model(**inputs)
+
+    # Move outputs back to CPU for post-processing
+    target_sizes = torch.tensor([img.size[::-1]]).to(device)
     results = image_processor.post_process_object_detection(outputs, threshold, target_sizes=target_sizes)[0]
-    results["boxes"] = [elem.tolist() for elem in results["boxes"]]
-    results["scores"] = [elem.item() for elem in results["scores"]]
-    results["labels"] = [model.config.id2label[elem.item()] for elem in results["labels"]]
+
+    # Convert results to lists and move to CPU if necessary
+    results["boxes"] = [elem.cpu().tolist() for elem in results["boxes"]]
+    results["scores"] = [elem.cpu().item() for elem in results["scores"]]
+    results["labels"] = [model.config.id2label[elem.cpu().item()] for elem in results["labels"]]
 
     # model_labels = [model.config.id2label[elem.item()] for elem in results["labels"]]
     # results["labels"] = []
@@ -99,10 +112,13 @@ def detect_detr(img: Image.Image, threshold: float) -> tuple[list[list[float]], 
     boxes = results["boxes"]
     scores = results["scores"]
     labels = results["labels"]
+
+    # Assertions for type checking
     assert all(isinstance(label, str) for label in labels)
     assert all(isinstance(score, float) for score in scores)
     assert all(isinstance(box, list) and len(box) == 4 for box in boxes)
     assert all(all(isinstance(coord, float) for coord in box) for box in boxes)
+
     return boxes, scores, labels
 
 
@@ -131,8 +147,8 @@ if __name__ == "__main__":
     labels = ["cat", "remote control", "dog"]
     threshold = 0.1
 
-    boxes, scores, labels = detect_groundingdino(img, labels, threshold)
-    boxes, scores, labels = detect_vit(img, labels, threshold)
+    # boxes, scores, labels = detect_groundingdino(img, labels, threshold)
+    # boxes, scores, labels = detect_vit(img, labels, threshold)
     boxes, scores, labels = detect_detr(img, threshold)
 
     plot_detection(img, boxes, scores, labels)

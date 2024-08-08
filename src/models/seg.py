@@ -3,6 +3,7 @@ import math
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import requests
 import torch
 from PIL import Image
 
@@ -16,6 +17,26 @@ except ImportError:
 """
 models
 """
+
+
+def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
+    # best model, while waiting for sam2 to be ported to huggingface
+    assert len(query) > 0
+    assert all(len(box) == 4 for box in query)
+    from transformers import AutoModelForMaskGeneration, AutoProcessor
+
+    device = get_device(disable_mps=True)
+    segmenter_id = "facebook/sam-vit-base"
+    segmentator = AutoModelForMaskGeneration.from_pretrained(segmenter_id).to(device)
+    processor = AutoProcessor.from_pretrained(segmenter_id)
+    inputs = processor(images=image, input_boxes=[query], return_tensors="pt").to(device)
+    with torch.no_grad():
+        outputs = segmentator(**inputs)
+    masks = processor.post_process_masks(masks=outputs.pred_masks, original_sizes=inputs.original_sizes, reshaped_input_sizes=inputs.reshaped_input_sizes)[0]
+
+    assert all(isinstance(mask, torch.Tensor) for mask in masks)
+    assert all(mask.dtype == torch.bool for mask in masks)
+    return masks
 
 
 def segment_clipseg(img: Image.Image, text_queries: list[str]) -> list[torch.Tensor]:
@@ -32,26 +53,6 @@ def segment_clipseg(img: Image.Image, text_queries: list[str]) -> list[torch.Ten
 
     assert all(isinstance(mask, torch.Tensor) for mask in masks)
     assert all(mask.dtype == torch.float32 for mask in masks)
-    return masks
-
-
-# still waiting for sam2 to be ported to transformers
-def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
-    assert len(query) > 0
-    assert all(len(box) == 4 for box in query)
-    from transformers import AutoModelForMaskGeneration, AutoProcessor
-
-    device = get_device(disable_mps=True)
-    segmenter_id = "facebook/sam-vit-base"
-    segmentator = AutoModelForMaskGeneration.from_pretrained(segmenter_id).to(device)
-    processor = AutoProcessor.from_pretrained(segmenter_id)
-    inputs = processor(images=image, input_boxes=[query], return_tensors="pt").to(device)
-    with torch.no_grad():
-        outputs = segmentator(**inputs)
-    masks = processor.post_process_masks(masks=outputs.pred_masks, original_sizes=inputs.original_sizes, reshaped_input_sizes=inputs.reshaped_input_sizes)[0]
-
-    assert all(isinstance(mask, torch.Tensor) for mask in masks)
-    assert all(mask.dtype == torch.bool for mask in masks)
     return masks
 
 
