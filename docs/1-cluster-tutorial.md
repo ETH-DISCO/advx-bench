@@ -1,22 +1,6 @@
 source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 
-2.2TB of GPU memory as of July 2023:
 
-```
-GPU Nodes
-	- 8x A100 with 80GB on tikgpu10
-	- 8x A6000 with 48GB on tikgpu08
-	- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
-	- 13x Titan RTX 24GB on tikgpu[04,05]
-	- 21x Titan XP 12GB on tikgpu[01,02,03]
-	- 2x Tesla V100 32GB on tikgpu05
-	- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
-CPU Nodes
-	- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
-```
 
 - clusters are accessible to all lab students.
 	- to use >8 gpus get your supervisor's permission first. check the calendar for high cluster usage times.
@@ -27,48 +11,51 @@ CPU Nodes
 - Jump host tik42x
 	- reachable at tik42x.ethz.ch
 	- you need to be logged into the ETH network via a VPN. but instead of using the VPN you can also use the jumphost j2tik.ethz.ch to reach tik42x.
-	- interface / logn node should just serve as the interface and not run any computations. use as interface only, should NOT run any sort of computation on the login node itself!
+	- interface / logn node shouldn't run any computation.
 
 
 
-# Get Started
+tutorials:
 
-Read through the following chapters to get started on the cluster. There is also a sample repository with some code snippets to get started in this [Gitlab repository](https://gitlab.ethz.ch/disco-students/cluster).
+- https://gitlab.ethz.ch/disco-students/cluster
+- https://computing.ee.ethz.ch/Programming/Languages/Conda
 
-## SSH Nodes
 
-To get access to the cluster you have to login to our login node tik42.
+
+enter network (Cisco Client or j2tik jumphost) and ssh into login node tik42:
+
 ```bash
 ssh ETH_USERNAME@tik42x.ethz.ch
-```
-It is also possible to directly connect with your favorite IDE (i.e. Visual Studio Code) - However, you should use this cautiously and not do resource intensive tasks using VSCode. No computation should be performed on the login node itself!
 
-You have to be inside the ETH network to directly access the login node. If you want to connect remotely either activate the ETH VPN using the Cisco Client or you can use the j2tik jumphost to get inside the ETH network. Note that this is only for direct ssh access and should not be used with your IDE.  
-```bash
-ssh ETH_USERNAME@j2tik.ethz.ch
-```
-> Inappropriate usage of the login node, i.e. running actual computation jobs or significantly impacting and slowing down the login node will be noted, reported and addressed accordingly. 
+``` 
 
 ## CONDA
 
 Follow [this guide](https://computing.ee.ethz.ch/Programming/Languages/Conda) on how to setup conda on the cluster, we recommend the installation on the `netscratch` directory. It is fine to run this installation on the tik42x node.
+
 Don't forget to add this to your bashrc file, usually you can edit the correct file using your favourite shell editor `nano ~/.bashrc`.
+
 ```bash
 [[ -f USER_PATH/conda/bin/conda ]] && eval "$(USER_PATH/conda/bin/conda shell.bash hook)"
 ```
 
 ### Mamba 
+
 We recommend to enable the libmamba solver for conda as described [here](https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community). 
+
 ```bash
 conda update -n base conda
 ```
+
 ```bash
 conda install -n base conda-libmamba-solver
 conda config --set solver libmamba
 ```
 
 ## SLURM
+
 It is recommended to add the following to your `~/.bashrc` file where USER_PATH should be the location of your conda installation, most likely under `/itet-stor/ETH_USERNAME/net_scratch`.
+
 ```bash
 export SLURM_CONF=/home/sladmitet/slurm/slurm.conf
 alias smon_free="grep --color=always --extended-regexp 'free|$' /home/sladmitet/smon.txt"
@@ -77,48 +64,57 @@ alias watch_smon_free="watch --interval 300 --no-title --differences --color \"g
 alias watch_smon_mine="watch --interval 300 --no-title --differences --color \"grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt\""
 [[ -f USER_PATH/conda/bin/conda ]] && eval "$(USER_PATH/conda/bin/conda shell.bash hook)"
 ```
+
 https://computing.ee.ethz.ch/Services/SLURM
+
 add the following aliases to display the current usage
+
 ```bash
 alias smon_free="grep --color=always --extended-regexp 'free|$' /home/sladmitet/smon.txt"
 alias smon_mine="grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt"`
 ```
+
 or `squeue` to get a list of all current jobs in the system. For more detailed information you can also use the following:
+
 ```bash
 squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tres-alloc:47,timeused:11,command:140,nodelist:20
 ```
 
 You can display a nice interface using `smon_free`
 
-  
-
 ### Accessing a compute node
 
 For debugging or prototype it is ok to get resources from an actual compute node (!=tik42x) through an interactive terminal (or called bash session).
+
 If you want to run actual experiments however, you should always setup a proper job script `job.sh` (more on such an example script in the sections below) and submit your jobs to slurm.
+
 *Interactive Session:*
+
 ```
 srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
 ```
 
 *Submitting a job to SLURM:*
+
 ```
 sbatch job.sh
 ```
 
 ### Jupyter Notebook
+
 How to setup and use Jupyter Notebook (taken from [here](https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29)).
 
 Jupyter Notebook can easily be installed and started in a conda environment:
+
 Note: you should allocate a compute node of your choosing first, using the 
+
 ```bash
 conda create --name jupyternb notebook --channel conda-forge
 conda activate jupyternb
 jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
 ```
 
-After a successful start, the notebook prints the URL it's accessible under, which looks similar to
-`http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
+After a successful start, the notebook prints the URL it's accessible under, which looks similar to `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
 
 A notebook started like this in a Slurm job will be accessible
 
@@ -145,12 +141,15 @@ However, it does NOT HAVE A BACKUP - so make sure you regularly commit your impo
 Note: this is NOT the same as scratch_net
 
 ### Basics and Common Pitfalls
+
 If your installation fails because of "not enough space on device" you have to change the temporary directory which will be used by conda.
+
 ```bash
 TMPDIR="/itet-stor/ETH_USERNAME/net_scratch/tmp/" && mkdir -p "${TMPDIR}" && export TMPDIR
 ```
 
 Sometimes you run into issues because of CUDA versions ... then it helps to set the following flag before your conda command.
+
 ```
 CONDA_OVERRIDE_CUDA=11.7 conda ...
 ```
@@ -165,14 +164,17 @@ srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
 
 
 ## Jobscript
+
 All actual (meaning non prototyping) work should be submitted using jobscripts and sbatch.
+
 Create a file called `job.sh`, and make it executable with `chmod +x job.sh`.
 
-You can submit your job to slurm using sbatch
-`sbatch job.sh`
+You can submit your job to slurm using sbatch `sbatch job.sh`
 
 Example script GPU
+
 where `DIRECTORY` should be the path to your codebase, i.e. /itet-store/ETH_USERNAME/net_scratch/projectX
+
 ```bash
 #!/bin/bash
 #SBATCH --mail-type=NONE # mail configuration: NONE, BEGIN, END, FAIL, REQUEUE, ALL
@@ -235,6 +237,7 @@ echo "Finished at: $(date)"
 # End the script with exit code 0
 exit 0
 ```
+
 Note, inside the bash file you can access the comandline arguments by using `$1, $2, $3, ...` and then calling `sbatch job.sh arg1 arg2 arg3`.
 
 ## Sample Repository with Jobscripts
@@ -246,6 +249,7 @@ Check out this sample repository, which has a conda file for your environment as
 ## Array Jobs
 
 Update the number of simultaneous Jobs while it is running.
+
 ```bash
 scontrol update ArrayTaskThrottle=<count> JobId=<jobID>
 ```
@@ -253,10 +257,11 @@ scontrol update ArrayTaskThrottle=<count> JobId=<jobID>
 For a sample script see the gitlab repository.
 
 ## Low priority Jobs
+
 For more efficient use of the cluster, you can set a priority to your jobs. The use case would be if we want to submit a lot of short (~10 minutes) array jobs, but we do not want to sit on the whole server (and keep other jobs from running). By setting our own job priority lower, we can make sure, that anyone can jump ahead of us in the queue. This can be achieved by setting a **high nice value** for our job.
 
-
 Useful commands:
+
 ```bash
 sprio --long #shows queue, priority, and the priority factors
 sbatch --nice=100000 job.sh #starts job with a high nice value
@@ -265,11 +270,33 @@ scontrol update job <JOB ID> nice=100000 #changes the nice value of a qued job (
 
 In practice, this means that everyone jumps ahead of a job with a high nice value in the queue in about 1-2 minutes after they have submitted their job. If a job is already started it will finish even if there are many other jobs in the queue and its nice value is high, so this is only useful for short jobs. Also, if a job requests several GPUs, it will still have a hard time jumping in front of 1 GPU jobs, so I would still avoid submitting nice jobs on reserved nodes.
 
-
 This feature is a small addition that can help us use the cluster more efficiently, by de-prioritizing our jobs when we submit a lot of small jobs.
-
 
 # FAQ
 
 ### slurm commands don't work on the cluster
+
 Did you add the necessary things to your bashrc file? See "Get Started > Slurm".
+
+
+
+
+
+
+# nodes
+
+2.2TB of GPU memory as of July 2023:
+
+- GPU Nodes
+	- 8x A100 with 80GB on tikgpu10
+	- 8x A6000 with 48GB on tikgpu08
+	- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
+	- 13x Titan RTX 24GB on tikgpu[04,05]
+	- 21x Titan XP 12GB on tikgpu[01,02,03]
+	- 2x Tesla V100 32GB on tikgpu05
+	- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
+- CPU Nodes
+	- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
