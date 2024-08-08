@@ -11,10 +11,7 @@ tutorials:
 
 ## 1. enter network
 
-enter network:
-
-- a) https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN (vpn)
-- b) `j2tik.ethz.ch` (jumphost) -> didn't work for me
+enter network through vpn: https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN
 
 then ssh into the tik42 login node (shouldn't run any computation):
 
