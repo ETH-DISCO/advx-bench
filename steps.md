@@ -24,7 +24,8 @@ steps:
 
 # step 1
 
-- [ ] download https://gitlab.ethz.ch/disco-students/fs24/image-captchas
+- [x] download https://gitlab.ethz.ch/disco-students/fs24/image-captchas
+- [ ] cluster images using cls for easier manual labeling
 
 
 
