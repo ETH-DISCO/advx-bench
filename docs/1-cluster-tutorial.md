@@ -88,7 +88,8 @@ you have to submit batch jobs to the slurm system.
 
 - make sure the file is executable `chmod +x job.sh`
 - you can also pass arguments `$1, $2, $3, ...` to a shell script by calling `sbatch job.sh arg1 arg2 arg3`.
-- run `sbatch job.sh`.
+- run `sbatch job.sh`
+- update number of parallel jobs `scontrol update ArrayTaskThrottle=<count> JobId=<jobID>`
 
 ```bash
 #!/bin/bash
@@ -155,24 +156,7 @@ echo "Finished at: $(date)"
 exit 0
 ```
 
-
-
-
-## Array Jobs
-
-Update the number of simultaneous Jobs while it is running.
-
-```bash
-scontrol update ArrayTaskThrottle=<count> JobId=<jobID>
-```
-
-For a sample script see the gitlab repository.
-
-## Low priority Jobs
-
-For more efficient use of the cluster, you can set a priority to your jobs. The use case would be if we want to submit a lot of short (~10 minutes) array jobs, but we do not want to sit on the whole server (and keep other jobs from running). By setting our own job priority lower, we can make sure, that anyone can jump ahead of us in the queue. This can be achieved by setting a **high nice value** for our job.
-
-Useful commands:
+keep your jobs short. set high "nice values" for your jobs so more important stuff has a priority. submit many small jobs in an array
 
 ```bash
 sprio --long #shows queue, priority, and the priority factors
@@ -180,38 +164,7 @@ sbatch --nice=100000 job.sh #starts job with a high nice value
 scontrol update job <JOB ID> nice=100000 #changes the nice value of a qued job (default and minimum value is 0)
 ```
 
-In practice, this means that everyone jumps ahead of a job with a high nice value in the queue in about 1-2 minutes after they have submitted their job. If a job is already started it will finish even if there are many other jobs in the queue and its nice value is high, so this is only useful for short jobs. Also, if a job requests several GPUs, it will still have a hard time jumping in front of 1 GPU jobs, so I would still avoid submitting nice jobs on reserved nodes.
-
-This feature is a small addition that can help us use the cluster more efficiently, by de-prioritizing our jobs when we submit a lot of small jobs.
-
-# FAQ
-
-### slurm commands don't work on the cluster
-
-Did you add the necessary things to your bashrc file? See "Get Started > Slurm".
-
-
-
-
-
-
-# nodes
-
-2.2TB of GPU memory as of July 2023:
-
-- GPU Nodes
-	- 8x A100 with 80GB on tikgpu10
-	- 8x A6000 with 48GB on tikgpu08
-	- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
-	- 13x Titan RTX 24GB on tikgpu[04,05]
-	- 21x Titan XP 12GB on tikgpu[01,02,03]
-	- 2x Tesla V100 32GB on tikgpu05
-	- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
-- CPU Nodes
-	- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
-	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
+<br><br>
 
 # common errors
 
@@ -231,3 +184,20 @@ set the following flag before your conda command.
 CONDA_OVERRIDE_CUDA=11.7 conda ...
 ```
 
+> what kind of nodes exist on the cluster?
+
+2.2TB of GPU memory as of July 2023:
+
+- GPU Nodes
+	- 8x A100 with 80GB on tikgpu10
+	- 8x A6000 with 48GB on tikgpu08
+	- 24x RTX_3090 with 24GB on tikgpu[06,07,09]
+	- 13x Titan RTX 24GB on tikgpu[04,05]
+	- 21x Titan XP 12GB on tikgpu[01,02,03]
+	- 2x Tesla V100 32GB on tikgpu05
+	- 7x GeForce RTX2080 Ti 11GB on tikgpu01 and artongpu01
+- CPU Nodes
+	- 16x Dual Octa-Core Intel Xeon E5-2690 on each [arton01-03] with 125GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton04-08] with 125GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on each [arton09-10] with 251GB
+	- 20x Dual Deca-Core Intel Xeon E5-2690 v2 on [arton11] with 535GB
