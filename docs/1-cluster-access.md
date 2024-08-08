@@ -7,18 +7,38 @@ tutorials:
 - https://computing.ee.ethz.ch/Services/SLURM
 - https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29 (jupyter notebook)
 
-# setup
+<br><br><br>
+
+## 1. enter network
 
 enter network:
 
 - a) https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN (vpn)
-- b) j2tik.ethz.ch (jumphost)
+- b) `j2tik.ethz.ch` (jumphost)
 
 then ssh into the tik42 login node (shouldn't run any computation):
 
 ```bash
 ssh ETH_USERNAME@tik42x.ethz.ch
-``` 
+```
+
+you can also host jupyter notebook sessions or ssh via your ide.
+
+```
+# interactive session (permitted for prototyping)
+srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
+
+# jupyter notebook (assuming compute node already allocated)
+# will host at something like `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
+# port range [5900-5999]
+conda create --name jupyternb notebook --channel conda-forge
+conda activate jupyternb
+jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
+```
+
+<br><br><br>
+
+## 2. setup environment
 
 add the following to your `~/.bashrc` file where `USER_PATH` should be the location of your conda installation, most likely under `/itet-stor/ETH_USERNAME/net_scratch`:
 
@@ -36,7 +56,7 @@ alias smon_free="grep --color=always --extended-regexp 'free|$' /home/sladmitet/
 alias smon_mine="grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt"`
 ```
 
-also use [lilmamba / mamba](https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community) instead of conda because it's faster:
+also use lilmamba / mamba instead of conda because it's faster: https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community
 
 ```bash
 conda update -n base conda
@@ -46,21 +66,9 @@ conda config --set solver libmamba
 
 store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT` (not the same as `scratch_net`).
 
-# interactive jupyter session
+<br><br><br>
 
-```
-# interactive session (permitted for prototyping)
-srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
-
-# jupyter notebook (assuming compute node already allocated)
-# will host at something like `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
-# port range [5900-5999]
-conda create --name jupyternb notebook --channel conda-forge
-conda activate jupyternb
-jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
-```
-
-# submitting jobs
+## 3. submit batch jobs
 
 you have to submit batch jobs to the slurm system.
 
@@ -153,7 +161,9 @@ echo "Finished at: $(date)"
 exit 0
 ```
 
-# checking available resources
+<br><br><br>
+
+## 4. check status and resource availability
 
 ```bash
 # checking available resources
