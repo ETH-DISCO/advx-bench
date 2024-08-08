@@ -202,9 +202,70 @@ it's possible to chain models by ie. generating a prompt with one model and then
 
 # 2. implementation
 
+## image generation
+
+flux v1 @ 2024: 🔥🔥🔥
+
+- no paper, just blog: https://blackforestlabs.ai/announcing-black-forest-labs/
+- demo:
+    - https://replicate.com/black-forest-labs/flux-schnell
+    - https://fal.ai/models/fal-ai/flux/schnell
+- ✅ installation:
+    - really massive models, huge compute and memory requirements (can be over 50GB large even for the "schnell" version)
+    - inference for smaller models is possible on cpu, stronger models can be accessed through an api
+    - https://github.com/black-forest-labs/flux
+    - https://huggingface.co/black-forest-labs/FLUX.1-dev
+    - https://huggingface.co/black-forest-labs/FLUX.1-schnell
+
+stable diffusion @ 2023:
+
+- https://huggingface.co/models?search=stable-diffusion
+- many versions, some need a gpu, some don't
+- ✅ installation:
+    - https://huggingface.co/runwayml/stable-diffusion-v1-5
+
+## image captioning
+
+llama3 @ 2024: 🔥🔥🔥
+
+- https://github.com/OpenBMB/MiniCPM-V
+- ❌ installation:
+    - requires cuda gpu
+    - https://huggingface.co/openbmb/MiniCPM-Llama3-V-2_5
+    - https://huggingface.co/openbmb/MiniCPM-Llama3-V-2_5-int4
+
+blip 2 @ 2023:
+
+- https://arxiv.org/abs/2301.12597
+- ✅ installation:
+    - https://huggingface.co/Salesforce/blip2-opt-2.7b
+
+blip 1 @ 2022:
+
+- https://arxiv.org/abs/2201.12086
+- not open vocabulary, constrained to coco, so no advantage over detr
+- ✅ installation:
+    - very straightforward to install, just 2 GB large
+    - https://huggingface.co/Salesforce/blip-image-captioning-large
+
+open blip @ 2023:
+
+- https://arxiv.org/abs/2312.03631
+- finetuned on MS-COCO with the MOCHa RL framework
+- https://assafbk.github.io/mocha/
+- ✅ installation:
+    - very straightforward
+    - https://huggingface.co/moranyanuka/blip-image-captioning-large-mocha
+
+gpt2 @ 2020:
+
+- paper unknown
+- ✅ installation:
+    - https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
+
 ## cls
 
-gem / metaclip @ 2024:
+meta clip / gem @ 2024: 🔥🔥🔥
 
 - https://arxiv.org/pdf/2309.16671
 - https://github.com/facebookresearch/MetaCLIP
@@ -214,6 +275,28 @@ gem / metaclip @ 2024:
     - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
     - https://huggingface.co/models?search=metaclip
     - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
+
+eva / eva-clip-18b @ 2023:
+
+- https://arxiv.org/pdf/2402.04252
+- https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
+- clip with 18 billion parameters
+- trained using apex and xformer
+- ✅ installation:
+    - models provided with paper are way too large (35.3 GB) and slow to be a feasible option
+        - https://huggingface.co/papers/2402.04252
+        - https://huggingface.co/models?search=evaclip
+        - https://huggingface.co/BAAI/EVA-CLIP-8B (smallest model)
+        - https://huggingface.co/BAAI/EVA-CLIP-18B
+        - https://huggingface.co/BAAI/EVA-CLIP-8B-448
+    - use open_clip's base model instead (just 2GB and reasonable inference times)
+
+open-coca @ 2022:
+
+- https://arxiv.org/abs/2212.07143
+- coca: https://arxiv.org/abs/2205.01917, https://github.com/lucidrains/CoCa-pytorch
+- ✅ installation:
+    - https://github.com/mlfoundations/open_clip
 
 openai clip @ 2021:
 
@@ -231,28 +314,6 @@ openai clip @ 2021:
     - https://github.com/openai/CLIP/blob/main/notebooks/Interacting_with_CLIP.ipynb
     - https://huggingface.co/openai/clip-vit-large-patch14
     - also roz: https://github.com/wang-research-lab/roz
-
-open-coca @ 2022:
-
-- https://arxiv.org/abs/2212.07143
-- coca: https://arxiv.org/abs/2205.01917, https://github.com/lucidrains/CoCa-pytorch
-- ✅ installation:
-    - https://github.com/mlfoundations/open_clip
-
-eva / eva-clip-18b @ 2023:
-
-- https://arxiv.org/pdf/2402.04252
-- https://github.com/baaivision/EVA/tree/master/EVA-CLIP-18B
-- clip with 18 billion parameters
-- trained using apex and xformer
-- ✅ installation:
-    - models provided with paper are way too large (35.3 GB) and slow to be a feasible option
-        - https://huggingface.co/papers/2402.04252
-        - https://huggingface.co/models?search=evaclip
-        - https://huggingface.co/BAAI/EVA-CLIP-8B (smallest model)
-        - https://huggingface.co/BAAI/EVA-CLIP-18B
-        - https://huggingface.co/BAAI/EVA-CLIP-8B-448
-    - use open_clip's base model instead (just 2GB and reasonable inference times)
 
 google efficientnet @ 2020:
 
@@ -276,7 +337,7 @@ google lit @ 2021:
 
 ## det
 
-grounding dino @ 2024:
+grounding dino @ 2024: 🔥🔥🔥
 
 - https://arxiv.org/abs/2303.05499
 - https://github.com/IDEA-Research/GroundingDINO
@@ -289,6 +350,7 @@ grounding dino @ 2024:
 owlv2 / owlvit @ 2023:
 
 - https://arxiv.org/abs/2305.01917
+- largest owl
 - ✅ installation:
     - https://huggingface.co/google/owlv2-base-patch16-ensemble → uses clip as backbone with vit-B/16
     - https://huggingface.co/google/owlvit-base-patch32 → uses clip as backbone with vit-B/32 (slower but more accurate)
@@ -315,6 +377,46 @@ grounding dino 1.5 @ 2024:
 - bleeding edge, still actively being developed
 - ❌ installation:
     - only through paid api https://deepdataspace.com/request_api, not open source
+
+## semantic seg (bounding boxes as queries)
+
+sam vit 2 @ 2024 (published this week): 🔥🔥🔥
+
+- https://ai.meta.com/research/publications/sam-2-segment-anything-in-images-and-videos/
+- https://github.com/facebookresearch/segment-anything-2
+- absolutely top perf
+- ❌ installation:
+    - only works with an nvidia gpu: `raise OSError('CUDA_HOME environment variable is not set. '`
+    - will be ported soon:
+        - https://github.com/facebookresearch/segment-anything-2/pull/128
+        - https://github.com/huggingface/transformers/pull/32394
+
+sam vit @ 2023:
+
+- https://arxiv.org/pdf/2304.02643
+- https://github.com/facebookresearch/segment-anything
+- ✅ installation:
+    - very straightforward to use
+    - https://huggingface.co/facebook/sam-vit-base
+    - https://huggingface.co/facebook/sam-vit-huge (largest version)
+    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
+    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
+
+grounded sam @ 2024:
+
+- https://arxiv.org/abs/2401.14159
+- https://github.com/IDEA-Research/Grounded-Segment-Anything
+- https://huggingface.co/spaces/linfanluntan/Grounded-SAM
+- ❌ installation:
+    - docker container
+    - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
+
+grounded hq-sam @ 2023:
+
+- https://arxiv.org/abs/2306.01567
+- https://github.com/SysCV/sam-hq
+- ❌ installation:
+    - model checkpoint must be manually downloaded from google drive link, no other way
 
 ## semantic seg
 
@@ -418,100 +520,3 @@ detr @ 2022:
 - not on leaderboard but very popular
 - ❌ zero shot, doesn't need any textual prompts and finds all labels in the image - but only works with COCO classes
     - could maybe be fixed through ov-detr: https://github.com/yuhangzang/OV-DETR
-
-## semantic seg (with bounding boxes as queries)
-
-sam vit @ 2023:
-
-- https://arxiv.org/pdf/2304.02643
-- https://github.com/facebookresearch/segment-anything
-- ✅ installation:
-    - very straightforward to use
-    - https://huggingface.co/facebook/sam-vit-base
-    - https://huggingface.co/facebook/sam-vit-huge (largest version)
-    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb
-    - https://github.com/facebookresearch/segment-anything/blob/main/notebooks/predictor_example.ipynb
-
-sam vit 2 @ 2024 (published this week):
-
-- https://ai.meta.com/research/publications/sam-2-segment-anything-in-images-and-videos/
-- https://github.com/facebookresearch/segment-anything-2
-- absolutely top perf
-- ❌ installation:
-    - only works with an nvidia gpu: `raise OSError('CUDA_HOME environment variable is not set. '`
-    - will be ported soon:
-        - https://github.com/facebookresearch/segment-anything-2/pull/128
-        - https://github.com/huggingface/transformers/pull/32394
-
-grounded sam @ 2024:
-
-- https://arxiv.org/abs/2401.14159
-- https://github.com/IDEA-Research/Grounded-Segment-Anything
-- https://huggingface.co/spaces/linfanluntan/Grounded-SAM
-- ❌ installation:
-    - docker container
-    - docker doesn't support [apple mps](https://github.com/pytorch/pytorch/issues/81224) as a pytorch backend which then restricts the entire project to cpu or cuda backends
-
-grounded hq-sam @ 2023:
-
-- https://arxiv.org/abs/2306.01567
-- https://github.com/SysCV/sam-hq
-- ❌ installation:
-    - model checkpoint must be manually downloaded from google drive link, no other way
-
-## image to text
-
-gpt2 @ 2020:
-
-- paper unknown
-- ✅ installation:
-    - https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
-
-blip 2 @ 2023:
-
-- https://arxiv.org/abs/2301.12597
-- ✅ installation:
-    - https://huggingface.co/Salesforce/blip2-opt-2.7b
-
-open blip @ 2023:
-
-- https://arxiv.org/abs/2312.03631
-- finetuned on MS-COCO with the MOCHa RL framework
-- https://assafbk.github.io/mocha/
-- ✅ installation:
-    - very straightforward
-    - https://huggingface.co/moranyanuka/blip-image-captioning-large-mocha
-
-blip 1 @ 2022:
-
-- https://arxiv.org/abs/2201.12086
-- not open vocabulary, constrained to coco, so no advantage over detr
-- ✅ installation:
-    - very straightforward to install, just 2 GB large
-    - https://huggingface.co/Salesforce/blip-image-captioning-large
-
-## text to image
-
-flux v1 @ 2024:
-
-- no paper, just blog: https://blackforestlabs.ai/announcing-black-forest-labs/
-- demo:
-    - https://replicate.com/black-forest-labs/flux-schnell
-    - https://fal.ai/models/fal-ai/flux/schnell
-- ✅ installation:
-    - really massive models, huge compute and memory requirements (can be over 50GB large even for the "schnell" version)
-    - inference for smaller models is possible on cpu, stronger models can be accessed through an api
-    - https://github.com/black-forest-labs/flux
-    - https://huggingface.co/black-forest-labs/FLUX.1-dev
-    - https://huggingface.co/black-forest-labs/FLUX.1-schnell
-
-
-<!-- 
-
-implementing a registry for all models:
-
-- https://github.com/wang-research-lab/roz/blob/6b4b7ff9d98a0a6fb4aeb4512859c1a0b16a0138/scripts/natural_distribution_shift/src/registry.py
-- https://github.com/wang-research-lab/roz/blob/6b4b7ff9d98a0a6fb4aeb4512859c1a0b16a0138/scripts/natural_distribution_shift/src/inference.py#L115
-
--->
-
