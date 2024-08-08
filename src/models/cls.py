@@ -35,12 +35,13 @@ def classify_clip(img: Image.Image, labels: list[str]) -> list[float]:
 def classify_opencoca(img: Image.Image, labels: list[str]) -> list[float]:
     import open_clip
 
-    model, _, preprocess = open_clip.create_model_and_transforms("coca_ViT-L-14", pretrained="mscoco_finetuned_laion2b_s13b_b90k")
+    device = get_device()
+    model, _, preprocess = open_clip.create_model_and_transforms("coca_ViT-L-14", pretrained="mscoco_finetuned_laion2b_s13b_b90k", device=device)
     model.eval()
     tokenizer = open_clip.get_tokenizer("coca_ViT-L-14")
 
-    image = preprocess(img).unsqueeze(0)
-    text = tokenizer(labels)
+    image = preprocess(img).unsqueeze(0).to(device)
+    text = tokenizer(labels).to(device)
 
     with torch.no_grad():
         image_features = model.encode_image(image)
@@ -57,12 +58,13 @@ def classify_opencoca(img: Image.Image, labels: list[str]) -> list[float]:
 def classify_eva(img: Image.Image, labels: list[str]) -> list[float]:
     import open_clip
 
-    model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k")  # largest that can fit in memory
+    device = get_device()
+    model, _, preprocess = open_clip.create_model_and_transforms("EVA01-g-14", pretrained="laion400m_s11b_b41k", device=device)  # largest that can fit in memory
     model.eval()
     tokenizer = open_clip.get_tokenizer("EVA01-g-14")
 
-    image = preprocess(img).unsqueeze(0)
-    text = tokenizer(labels)
+    image = preprocess(img).unsqueeze(0).to(device)
+    text = tokenizer(labels).to(device)
 
     with torch.no_grad():
         image_features = model.encode_image(image)
@@ -77,14 +79,21 @@ def classify_eva(img: Image.Image, labels: list[str]) -> list[float]:
     return probs
 
 
-def classify_gem(img: Image.Image, labels: list[str]) -> list[float]:
+def classify_metaclip(img: Image.Image, labels: list[str]) -> list[float]:
     from transformers import AutoModel, AutoProcessor
 
+    device = get_device()
     model_id = "facebook/metaclip-h14-fullcc2.5b"
     processor = AutoProcessor.from_pretrained(model_id)
-    model = AutoModel.from_pretrained(model_id)
+    model = AutoModel.from_pretrained(model_id).to(device)
 
     inputs = processor(text=labels, images=img, return_tensors="pt", padding=True)
+
+    # convert input_ids to long type and move to the correct device
+    inputs["input_ids"] = inputs["input_ids"].to(device, dtype=torch.long)
+
+    # move other tensors to the device and keep their original dtype
+    inputs = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in inputs.items()}
 
     with torch.no_grad():
         outputs = model(**inputs)
@@ -134,9 +143,9 @@ if __name__ == "__main__":
 
     labels = ["quirky kittens on a couch", "chaotic remote controls", "a work of art"]
 
-    probs = classify_clip(img, labels)
-    probs = classify_opencoca(img, labels)
-    probs = classify_eva(img, labels)
-    probs = classify_gem(img, labels)
+    # probs = classify_clip(img, labels)
+    # probs = classify_opencoca(img, labels)
+    # probs = classify_eva(img, labels)
+    probs = classify_metaclip(img, labels)
 
     plot_classification(img, labels, probs)

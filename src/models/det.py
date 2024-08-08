@@ -132,7 +132,7 @@ if __name__ == "__main__":
     threshold = 0.1
 
     boxes, scores, labels = detect_groundingdino(img, labels, threshold)
-    # boxes, scores, labels = detect_vit(img, labels, threshold)
-    # boxes, scores, labels = detect_detr(img, threshold)
+    boxes, scores, labels = detect_vit(img, labels, threshold)
+    boxes, scores, labels = detect_detr(img, threshold)
 
     plot_detection(img, boxes, scores, labels)

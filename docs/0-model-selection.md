@@ -204,6 +204,17 @@ it's possible to chain models by ie. generating a prompt with one model and then
 
 ## 3.1. cls
 
+gem / metaclip @ 2024:
+
+- https://arxiv.org/pdf/2309.16671
+- https://github.com/facebookresearch/MetaCLIP
+- beats clip and openclip by a wide margin in zero-shot classification
+- massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
+- ✅ installation:
+    - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
+    - https://huggingface.co/models?search=metaclip
+    - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
+
 openai clip @ 2021:
 
 - https://arxiv.org/abs/2103.00020v1
@@ -242,17 +253,6 @@ eva / eva-clip-18b @ 2023:
         - https://huggingface.co/BAAI/EVA-CLIP-18B
         - https://huggingface.co/BAAI/EVA-CLIP-8B-448
     - use open_clip's base model instead (just 2GB and reasonable inference times)
-
-gem / metaclip @ 2024:
-
-- https://arxiv.org/pdf/2309.16671
-- https://github.com/facebookresearch/MetaCLIP
-- beats clip and openclip by a wide margin in zero-shot classification
-- massive speedup possible through flash attention and scaled dot product attention (but requires a gpu): https://huggingface.co/docs/transformers/main/en/model_doc/clip#expected-speedups-with-flash-attention-and-sdpa
-- ✅ installation:
-    - https://github.com/facebookresearch/MetaCLIP?tab=readme-ov-file#quick-start
-    - https://huggingface.co/models?search=metaclip
-    - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b (largest version)
 
 google efficientnet @ 2020:
 
