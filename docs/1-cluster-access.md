@@ -94,7 +94,7 @@ you have to submit batch jobs to the slurm system.
 
 example job script:
 
-replace `DIRECTORY` with your own codebase, ie. /itet-store/ETH_USERNAME/net_scratch/projectX
+replace `DIRECTORY` with your own codebase, ie. `/itet-store/ETH_USERNAME/net_scratch/projectX`
 
 ```bash
 #!/bin/bash
