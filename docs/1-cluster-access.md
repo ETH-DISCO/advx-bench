@@ -1,5 +1,3 @@
-> ⚠️ as an external student i do not have vpn access to the ETH network.
-
 source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 
 tutorials:
