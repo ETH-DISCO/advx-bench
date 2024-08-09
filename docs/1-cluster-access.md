@@ -9,20 +9,21 @@ tutorials:
 
 <br><br>
 
-## 1. enter network
+## 1. ssh into server
 
-enter network through vpn: https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN
+first enable your VPN.
+
+- vpn docs: https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN
+- based on my experience the openconnect CLI doesn't work. so i suggest downloading the the cisco anyconnect client and using the following credentials:
+	- server: `https://sslvpn.ethz.ch`
+	- username: `<username>@student-net.ethz.ch`
+	- password: your network password (also called Radius password, see: https://www.password.ethz.ch/)
+
+then ssh into the tik42 login node and (but do not run any computation):
 
 ```bash
-brew update
-brew install openconnect
-sudo openconnect -u <username>@student-net.ethz.ch --useragent=AnyConnect -g student-net sslvpn.ethz.ch
-```
-
-then ssh into the tik42 login node (but do not run any computation).
-
-```bash
-ssh ETH_USERNAME@tik42x.ethz.ch
+ssh <username>@tik42x.ethz.ch
+# use your default password (also called LDAPS/AD password)
 ```
 
 and run a jupyter notebook:
@@ -33,6 +34,7 @@ srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
 
 # jupyter notebook (assuming compute node already allocated)
 # will host at something like `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
+
 # port range [5900-5999]
 conda create --name jupyternb notebook --channel conda-forge
 conda activate jupyternb
@@ -109,7 +111,6 @@ replace `DIRECTORY` with your own codebase, ie. `/itet-store/ETH_USERNAME/net_sc
 #CommentSBATCH --nodelist=tikgpu01 # Specify that it should run on this particular node
 #CommentSBATCH --account=tik-internal
 #CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb'
-
 
 ETH_USERNAME=TODO_USERNAME
 PROJECT_NAME=cluster
