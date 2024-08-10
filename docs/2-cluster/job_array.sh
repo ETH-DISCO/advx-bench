@@ -12,7 +12,7 @@
 #CommentSBATCH --account=tik-internal
 #CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb'
 
-# Warning: don't change the comments above, they are macros for the job submission script and any linebreaks will break the script
+# Warning: don't change the comments above, they are macros for slurm.
 
 # ------------------------------
 
