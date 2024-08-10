@@ -36,6 +36,7 @@ up:
 	git push
 
 # --------------------------------------------------------------- conda
+
 .ONESHELL:
 SHELL = /bin/bash
 CONDA_DEACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda deactivate
