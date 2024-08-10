@@ -84,42 +84,13 @@ Alternatively you can also clone your repository directly on the cluster.
 
 # 3. Submit batch jobs
 
+To submit a job to the cluster you can use the `sbatch` command. An example job script is provided in `job.sh` and you can submit it using `sbatch job.sh`.
 
-Then you can submit it using `sbatch job.sh`.
+Similarly if you have lots of jobs, you can use an array job to start them all and make sure that only x of them are running at the same time. An example job script is provided in `job_array.sh` and you can submit it using `sbatch job_array.sh`.
 
-Similarly if you have lots of jobs, you can use an array job to start them all and make sure that only x of them are running at the same time.
-A similar sample script is proivded and you can use `sbatch array_job.sh` to try it.
+To debug the scripts locally, you can create the conda environment using `conda env create -f env.yml` activate it with `conda activate cluster-tutorial` and call `python job.py`.
 
-
-
-This repository contains a sample MNIST script in `main.py`. 
-
-First, create the conda environment using `conda env create -f env.yml` then you can activate it using `conda activate intro-cluster`.
-
-Afterwards you can simply call `python main.py` and your MNIST training should start, double check the output on what type of GPU are you running?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Debugging
+# Debugging and Prototyping
 
 Job scripts don't show the output in real time.
 

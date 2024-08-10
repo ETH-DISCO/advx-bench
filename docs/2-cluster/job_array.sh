@@ -10,11 +10,8 @@
 #SBATCH --array=0-3%2 # run 10 jobs in paralle, but only 2 at a time
 #CommentSBATCH --nodelist=tikgpu01 # Specify that it should run on this particular node
 #CommentSBATCH --account=tik-internal
-#CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb'
+#CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb's
 
-# Warning: don't change the comments above, they are macros for slurm.
-
-# ------------------------------
 
 # Parse username
 while getopts u: flag
@@ -30,7 +27,6 @@ then
 fi
 echo "username: $ETH_USERNAME";
 PROJECT_NAME=cluster
-
 DIRECTORY=/itet-stor/${ETH_USERNAME}/net_scratch/${PROJECT_NAME}
 CONDA_ENVIRONMENT=cluster-tutorial
 mkdir -p ${DIRECTORY}/jobs
@@ -60,7 +56,7 @@ conda activate ${CONDA_ENVIRONMENT}
 echo "Conda activated"
 cd ${DIRECTORY}
 
-python main_array.py ${SLURM_ARRAY_TASK_ID}
+python job_array.py ${SLURM_ARRAY_TASK_ID}
 
 echo "Finished at: $(date)"
 exit 0

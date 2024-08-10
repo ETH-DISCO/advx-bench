@@ -11,9 +11,6 @@
 #CommentSBATCH --account=tik-internal
 #CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb'
 
-# Warning: don't change the comments above, they are macros for slurm.
-
-# ------------------------------
 
 # Parse username
 while getopts u: flag
@@ -29,7 +26,6 @@ then
 fi
 echo "username: $ETH_USERNAME";
 PROJECT_NAME=cluster
-
 DIRECTORY=/itet-stor/${ETH_USERNAME}/net_scratch/${PROJECT_NAME}
 CONDA_ENVIRONMENT=cluster-tutorial
 mkdir -p ${DIRECTORY}/jobs
@@ -58,7 +54,7 @@ conda activate ${CONDA_ENVIRONMENT}
 echo "Conda activated"
 cd ${DIRECTORY}
 
-python mnist.py
+python job.py
 
 echo "Finished at: $(date)"
 exit 0
