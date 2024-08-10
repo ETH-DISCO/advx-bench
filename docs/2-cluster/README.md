@@ -29,8 +29,8 @@ Host tik42x
 
 Once you're in you'll have access to:
 
-- Compute: the login node is only for file management and job submission. do not run any computation on the login node. Run batch jobs on the compute nodes using the slurm system. The slurm system is a common job scheduler used in many HPC systems so it's a good skill to learn. You'll find plenty of resources online.
-- Storage: use `/itet-stor/<username>/net_scratch` for your data.
+- Compute: The login node is only for file management and job submission. do not run any computation on the login node. Run batch jobs on the compute nodes using the SLURM system. SLURM is a common job scheduler used in many HPC systems so mastering it is time well spent. You'll find plenty of resources online.
+- Storage: Use `/itet-stor/<username>/net_scratch` to store your data.
 
 Keep in mind:
 
@@ -88,6 +88,11 @@ squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tre
 
 
 
+Then you can submit it using `sbatch job.sh`.
+
+Similarly if you have lots of jobs, you can use an array job to start them all and make sure that only x of them are running at the same time.
+A similar sample script is proivded and you can use `sbatch array_job.sh` to try it.
+
 
 
 
@@ -101,19 +106,7 @@ Afterwards you can simply call `python main.py` and your MNIST training should s
 
 
 
-## Submit your first job
 
-We only use interactive sessions for debugging or prototyping and submit the rest of the jobs using jobscripts.
-A simple sample jobscript is provided in `job.sh`. NOTE: You have to adjust some parameters inside the script such as your username and the right directories!
-
-Then you can submit it using `sbatch job.sh`.
-
-
-
-## Submit your first array job
-
-Similarly if you have lots of jobs, you can use an array job to start them all and make sure that only x of them are running at the same time.
-A similar sample script is proivded and you can use `sbatch array_job.sh` to try it.
 
 
 
@@ -160,8 +153,6 @@ conda deactivate
 ```
 
 # References
-
-Internal resources:
 
 - outdated tutorial: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 - up-to-date tutorial: https://gitlab.ethz.ch/disco-students/cluster
