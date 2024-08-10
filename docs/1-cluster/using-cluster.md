@@ -1,8 +1,6 @@
-# using the cluster
-
 this guide will help you get started with the TIK cluster at ETH Zurich.
 
-## 1. ssh into the cluster
+# 1. ssh into the cluster
 
 first enable your VPN.
 
@@ -18,7 +16,7 @@ then ssh into the tik42 login node and use your default password (also called LD
 ssh <username>@tik42x.ethz.ch
 ```
 
-alternatively you can configure a shortcut in your `~/.ssh/config` file:
+you can also configure a shortcut in your `~/.ssh/config` file to be able to ssh using just `ssh j2tik` or `ssh tik42x` in the future.
 
 ```
 Host j2tik
@@ -29,14 +27,12 @@ Host tik42x
   User <username>
 ```
 
-congrats, you're in!
+once you're in you'll have access to:
 
 - compute: the login node is only for file management and job submission. do not run any computation on the login node. run batch jobs on the compute nodes using the slurm system.
 - storage: use `/itet-stor/<username>/net_scratch` for your data.
 
-<br><br>
-
-## 2. setup environment
+# 2. setup environment
 
 once you're in, you'll have to do some setup.
 
@@ -208,7 +204,7 @@ jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
 
 # references
 
-tutorials:
+internal resources:
 
 - outdated tutorial: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
 - most recent tutorial: https://gitlab.ethz.ch/disco-students/cluster
