@@ -26,6 +26,10 @@ do not run any computation on the login node or you will get in trouble.
 ssh <username>@tik42x.ethz.ch
 ```
 
+<br><br>
+
+## 2. setup environment
+
 once you're in, you'll have to do some setup:
 
 ```bash
@@ -37,27 +41,6 @@ echo 'export LANG=en_US.UTF-8' >> ~/.bashrc
 echo 'export LANGUAGE=en_US.UTF-8' >> ~/.bashrc
 source ~/.bashrc
 ```
-
-<!-- 
-now you should also be able to run a jupyter notebook:
-
-```bash
-# interactive session (permitted for prototyping)
-srun --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
-
-# jupyter notebook (assuming compute node already allocated)
-# will host at something like `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
-
-# port range [5900-5999]
-conda create --name jupyternb notebook --channel conda-forge
-conda activate jupyternb
-jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
-```
--->
-
-<br><br>
-
-## 2. setup environment
 
 add the following to your `~/.bashrc` file where `USER_PATH` should be the location of your conda installation, most likely under `/itet-stor/ETH_USERNAME/net_scratch`:
 
@@ -192,3 +175,20 @@ print('__Number CUDA Devices:', torch.cuda.device_count())
 print('__CUDA Device Name:',torch.cuda.get_device_name(0))
 print('__CUDA Device Total Memory [GB]:',torch.cuda.get_device_properties(0).total_memory/1e9)
 ```
+
+<!-- 
+now you should also be able to run a jupyter notebook:
+
+```bash
+# interactive session (permitted for prototyping)
+srun --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
+
+# jupyter notebook (assuming compute node already allocated)
+# will host at something like `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
+
+# port range [5900-5999]
+conda create --name jupyternb notebook --channel conda-forge
+conda activate jupyternb
+jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
+```
+-->
