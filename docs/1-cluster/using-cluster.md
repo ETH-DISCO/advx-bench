@@ -1,13 +1,6 @@
-source: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
+# using the cluster
 
-tutorials:
-
-- https://gitlab.ethz.ch/disco-students/cluster (job scripts)
-- https://computing.ee.ethz.ch/Programming/Languages/Conda (also see `netscratch` directory)
-- https://computing.ee.ethz.ch/Services/SLURM
-- https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29 (jupyter notebook)
-
-<br><br>
+this guide will help you get started with the TIK cluster at ETH Zurich.
 
 ## 1. ssh into the cluster
 
@@ -20,19 +13,40 @@ first enable your VPN.
 	- password: your network password (also called Radius password, see: https://www.password.ethz.ch/)
 
 then ssh into the tik42 login node and use your default password (also called LDAPS/AD password).
-do not run any computation on the login node or you will get in trouble.
 
 ```bash
 ssh <username>@tik42x.ethz.ch
 ```
 
+alternatively you can configure a shortcut in your `~/.ssh/config` file:
+
+```
+Host j2tik
+  HostName j2tik.ethz.ch
+  User <username>
+Host tik42x
+  HostName tik42x.ethz.ch
+  User <username>
+```
+
+congrats, you're in!
+
+- compute: the login node is only for file management and job submission. do not run any computation on the login node. run batch jobs on the compute nodes using the slurm system.
+- storage: use `/itet-stor/<username>/net_scratch` for your data.
+
 <br><br>
 
 ## 2. setup environment
 
-once you're in, you'll have to do some setup:
+once you're in, you'll have to do some setup.
 
 ```bash
+# update this line with your username
+export ETH_USERNAME=<username>
+
+# ----
+
+# language settings (otherwise some commands might break)
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
@@ -40,25 +54,24 @@ echo 'export LC_ALL=en_US.UTF-8' >> ~/.bashrc
 echo 'export LANG=en_US.UTF-8' >> ~/.bashrc
 echo 'export LANGUAGE=en_US.UTF-8' >> ~/.bashrc
 source ~/.bashrc
-```
 
-add the following to your `~/.bashrc` file where `USER_PATH` should be the location of your conda installation, most likely under `/itet-stor/ETH_USERNAME/net_scratch`:
-
-```bash
-# conda installation
+# slurm convenience commands
+export USER_PATH=/itet-stor/${ETH_USERNAME}/net_scratch
 export SLURM_CONF=/home/sladmitet/slurm/slurm.conf
 alias smon_free="grep --color=always --extended-regexp 'free|$' /home/sladmitet/smon.txt"
 alias smon_mine="grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt"
 alias watch_smon_free="watch --interval 300 --no-title --differences --color \"grep --color=always --extended-regexp 'free|$' /home/sladmitet/smon.txt\""
 alias watch_smon_mine="watch --interval 300 --no-title --differences --color \"grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt\""
-[[ -f USER_PATH/conda/bin/conda ]] && eval "$(USER_PATH/conda/bin/conda shell.bash hook)"
-
-# current usage
 alias smon_free="grep --color=always --extended-regexp 'free|$' /home/sladmitet/smon.txt"
-alias smon_mine="grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt"`
+alias smon_mine="grep --color=always --extended-regexp '${USER}|$' /home/sladmitet/smon.txt"
+source ~/.bashrc
+
+# conda installation
+[[ -f ${USER_PATH}/conda/bin/conda ]] && eval "$(${USER_PATH}/conda/bin/conda shell.bash hook)"
+source ~/.bashrc
 ```
 
-also use lilmamba / mamba instead of conda because it's faster: https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community
+also use lilmamba / mamba instead of conda because it's a: https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community
 
 ```bash
 conda update -n base conda
@@ -66,7 +79,7 @@ conda install -n base conda-libmamba-solver
 conda config --set solver libmamba
 ```
 
-store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT` (not the same as `scratch_net`).
+store all your data in: `/itet-stor/ETH_USERNAME/net_scratch/YOUR_PROJECT`.
 
 <br><br>
 
@@ -192,3 +205,13 @@ conda activate jupyternb
 jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
 ```
 -->
+
+# references
+
+tutorials:
+
+- outdated tutorial: https://hackmd.io/hYACdY2aR1-F3nRdU8q5dA
+- most recent tutorial: https://gitlab.ethz.ch/disco-students/cluster
+- conda install: https://computing.ee.ethz.ch/Programming/Languages/Conda
+- slurm docs: https://computing.ee.ethz.ch/Services/SLURM
+- jupyter notebook docs: https://computing.ee.ethz.ch/FAQ/JupyterNotebook?highlight=%28notebook%29
