@@ -14,21 +14,20 @@ tutorials:
 first enable your VPN.
 
 - vpn docs: https://www.isg.inf.ethz.ch/Main/ServicesNetworkVPN
-- based on my experience the openconnect CLI doesn't work. so i suggest downloading the the cisco anyconnect client and using the following credentials:
+- based on my experience the openconnect CLI doesn't work. so i suggest downloading the the cisco anyconnect client and using the following settings:
 	- server: `https://sslvpn.ethz.ch`
 	- username: `<username>@student-net.ethz.ch`
 	- password: your network password (also called Radius password, see: https://www.password.ethz.ch/)
 
-then ssh into the tik42 login node and (but do not run any computation):
+then ssh into the tik42 login node and use your default password (also called LDAPS/AD password). do not run any computation.
 
 ```bash
 ssh <username>@tik42x.ethz.ch
-# use your default password (also called LDAPS/AD password)
 ```
 
 and run a jupyter notebook:
 
-```
+```bash
 # interactive session (permitted for prototyping)
 srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
 
