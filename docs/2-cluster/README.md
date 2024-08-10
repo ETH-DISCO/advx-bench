@@ -72,28 +72,23 @@ echo 'export LANG=en_US.UTF-8' >> ~/.bashrc
 echo 'export LANGUAGE=en_US.UTF-8' >> ~/.bashrc
 ```
 
-# 3. Submit batch jobs
+# 2. Upload your code
 
-First check which nodes are available:
+The most straightforward way to upload your code is to use `scp`:
 
 ```bash
-smon_free
-
-squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tres-alloc:47,timeused:11,command:140,nodelist:20
+scp -r /path/to/your/code <username>@tik42x.ethz.ch:/itet-stor/<username>/net_scratch
 ```
 
+Alternatively you can also clone your repository directly on the cluster.
 
-
-
-
+# 3. Submit batch jobs
 
 
 Then you can submit it using `sbatch job.sh`.
 
 Similarly if you have lots of jobs, you can use an array job to start them all and make sure that only x of them are running at the same time.
 A similar sample script is proivded and you can use `sbatch array_job.sh` to try it.
-
-
 
 
 
@@ -128,9 +123,14 @@ Afterwards you can simply call `python main.py` and your MNIST training should s
 
 Job scripts don't show the output in real time.
 
-For debugging purposes it might make sense to attach your terminal to individual compute nodes. This can be done using the following command (ie. for tikgpu06):
+For debugging or prototyping purposes it might make sense to attach your terminal to individual compute nodes.
 
 ```bash
+# check node availability
+smon_free
+squeue --Format=jobarrayid:9,state:10,partition:14,reasonlist:16,username:10,tres-alloc:47,timeused:11,command:140,nodelist:20
+
+# attach to a tikgpu06 node assuming it's free
 srun  --mem=25GB --gres=gpu:01 --nodelist tikgpu06 --pty bash -i
 ```
 
@@ -142,7 +142,7 @@ conda activate jupyternb
 jupyter notebook --no-browser --port 5998 --ip $(hostname -f) # port range [5900-5999]
 ```
 
-The hosted notebook will be available at a link similar to `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af` where the hostname is the same as the one you SSH'd into.
+The output will then show you at which link you can access the notebook.
 
 Make sure to deactivate the conda environment after you're done debugging:
 
@@ -150,6 +150,25 @@ Make sure to deactivate the conda environment after you're done debugging:
 conda remove --yes --name jupyternb --all
 conda env list
 conda deactivate
+exit # back to login node
+```
+
+# Fallback
+
+If you're on a tight deadline and can't get the cluster to work, you can always fall back to using cloud GPUs.
+
+Here are some pricing comparisons:
+
+- https://cloud-gpus.com/
+- https://getdeploying.com/reference/cloud-gpu
+
+As of August 2024, Google Colab's free tier offers a Tesla T4 with 15GB of RAM (the highest tier you can get for free) and 12 hours of runtime:
+
+```
+__CUDNN VERSION: 8906
+__Number CUDA Devices: 1
+__CUDA Device Name: Tesla T4
+__CUDA Device Total Memory [GB]: 15.835660288
 ```
 
 # References
