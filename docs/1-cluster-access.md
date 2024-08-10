@@ -9,7 +9,7 @@ tutorials:
 
 <br><br>
 
-## 1. ssh into server
+## 1. ssh into the cluster
 
 first enable your VPN.
 
@@ -19,17 +19,31 @@ first enable your VPN.
 	- username: `<username>@student-net.ethz.ch`
 	- password: your network password (also called Radius password, see: https://www.password.ethz.ch/)
 
-then ssh into the tik42 login node and use your default password (also called LDAPS/AD password). do not run any computation.
+then ssh into the tik42 login node and use your default password (also called LDAPS/AD password).
+do not run any computation on the login node or you will get in trouble.
 
 ```bash
 ssh <username>@tik42x.ethz.ch
 ```
 
-and run a jupyter notebook:
+once you're in, you'll have to do some setup:
+
+```bash
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+echo 'export LC_ALL=en_US.UTF-8' >> ~/.bashrc
+echo 'export LANG=en_US.UTF-8' >> ~/.bashrc
+echo 'export LANGUAGE=en_US.UTF-8' >> ~/.bashrc
+source ~/.bashrc
+```
+
+<!-- 
+now you should also be able to run a jupyter notebook:
 
 ```bash
 # interactive session (permitted for prototyping)
-srun  --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
+srun --mem=25GB --gres=gpu:01 --exclude=tikgpu[06-10] --pty bash -i
 
 # jupyter notebook (assuming compute node already allocated)
 # will host at something like `http://<hostname>.ee.ethz.ch:5998/?token=5586e5faa082d5fe606efad0a0033ad0d6dd898fe0f5c7af`
@@ -39,6 +53,7 @@ conda create --name jupyternb notebook --channel conda-forge
 conda activate jupyternb
 jupyter notebook --no-browser --port 5998 --ip $(hostname -f)
 ```
+-->
 
 <br><br>
 
