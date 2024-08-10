@@ -1,12 +1,13 @@
 #!/bin/bash
 #SBATCH --mail-type=NONE # mail configuration: NONE, BEGIN, END, FAIL, REQUEUE, ALL
-#SBATCH --output=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%j.out # where to store the output (%j is the JOBID), subdirectory "log" must exist
-#SBATCH --error=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%j.err # where to store error messages
+#SBATCH --output=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%A-%a.out # where to store the output (%j is the JOBID), subdirectory "log" must exist
+#SBATCH --error=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%A-%a.err # where to store error messages
 #SBATCH --mem=20G
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
 #SBATCH --exclude=tikgpu10,tikgpu[06-09]
+#SBATCH --array=0-3%2 # run 10 jobs in paralle, but only 2 at a time
 #CommentSBATCH --nodelist=tikgpu01 # Specify that it should run on this particular node
 #CommentSBATCH --account=tik-internal
 #CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb'
@@ -43,7 +44,7 @@ echo "Running on node: $(hostname)"
 echo "In directory: $(pwd)"
 echo "Starting on: $(date)"
 echo "SLURM_JOB_ID: ${SLURM_JOB_ID}"
-
+echo "SLURM_ARRAY_TASK_ID: ${SLURM_ARRAY_TASK_ID}"
 
 [[ -f /itet-stor/${ETH_USERNAME}/net_scratch/conda/bin/conda ]] && eval "$(/itet-stor/${ETH_USERNAME}/net_scratch/conda/bin/conda shell.bash hook)"
 conda activate ${CONDA_ENVIRONMENT}
@@ -51,7 +52,8 @@ echo "Conda activated"
 cd ${DIRECTORY}
 
 # Execute your code
-python main.py
+# Here you want to use a different configuration depending on $SLUM_ARRAY_TASK_ID
+python main_array.py ${SLURM_ARRAY_TASK_ID}
 
 # Send more noteworthy information to the output log
 echo "Finished at: $(date)"

@@ -1,25 +1,36 @@
 #!/bin/bash
 #SBATCH --mail-type=NONE # mail configuration: NONE, BEGIN, END, FAIL, REQUEUE, ALL
-#SBATCH --output=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%A-%a.out # where to store the output (%j is the JOBID), subdirectory "log" must exist
-#SBATCH --error=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%A-%a.err # where to store error messages
+#SBATCH --output=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%j.out # where to store the output (%j is the JOBID), subdirectory "log" must exist
+#SBATCH --error=/itet-stor/TODO_USERNAME/net_scratch/cluster/jobs/%j.err # where to store error messages
 #SBATCH --mem=20G
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
 #SBATCH --exclude=tikgpu10,tikgpu[06-09]
-#SBATCH --array=0-3%2 # run 10 jobs in paralle, but only 2 at a time
 #CommentSBATCH --nodelist=tikgpu01 # Specify that it should run on this particular node
 #CommentSBATCH --account=tik-internal
 #CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb'
 
 
 
-ETH_USERNAME=TODO_USERNAME
+# parse username
+while getopts u: flag
+do
+    case "${flag}" in
+        u) ETH_USERNAME=${OPTARG};;
+    esac
+done
+if [ -z "$ETH_USERNAME" ]
+then
+    echo "username is missing, please provide it with -u flag"
+    exit 1
+fi
+echo "username: $ETH_USERNAME";
 PROJECT_NAME=cluster
+
 DIRECTORY=/itet-stor/${ETH_USERNAME}/net_scratch/${PROJECT_NAME}
 CONDA_ENVIRONMENT=intro-cluster
 mkdir -p ${DIRECTORY}/jobs
-#TODO: change your ETH USERNAME and other stuff from above according + in the #SBATCH output and error the path needs to be double checked!
 
 # Exit on errors
 set -o errexit
@@ -39,12 +50,10 @@ export TMPDIR
 cd "${TMPDIR}" || exit 1
 
 # Send some noteworthy information to the output log
-
 echo "Running on node: $(hostname)"
 echo "In directory: $(pwd)"
 echo "Starting on: $(date)"
 echo "SLURM_JOB_ID: ${SLURM_JOB_ID}"
-echo "SLURM_ARRAY_TASK_ID: ${SLURM_ARRAY_TASK_ID}"
 
 [[ -f /itet-stor/${ETH_USERNAME}/net_scratch/conda/bin/conda ]] && eval "$(/itet-stor/${ETH_USERNAME}/net_scratch/conda/bin/conda shell.bash hook)"
 conda activate ${CONDA_ENVIRONMENT}
@@ -52,8 +61,7 @@ echo "Conda activated"
 cd ${DIRECTORY}
 
 # Execute your code
-# Here you want to use a different configuration depending on $SLUM_ARRAY_TASK_ID
-python main_array.py ${SLURM_ARRAY_TASK_ID}
+python main.py
 
 # Send more noteworthy information to the output log
 echo "Finished at: $(date)"
