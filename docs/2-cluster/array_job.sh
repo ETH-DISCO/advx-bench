@@ -12,14 +12,28 @@
 #CommentSBATCH --account=tik-internal
 #CommentSBATCH --constraint='titan_rtx|tesla_v100|titan_xp|a100_80gb'
 
+# Warning: don't change the comments above, they are macros for the job submission script and any linebreaks will break the script
 
+# ------------------------------
 
-ETH_USERNAME=TODO_USERNAME
+# Parse username
+while getopts u: flag
+do
+    case "${flag}" in
+        u) ETH_USERNAME=${OPTARG};;
+    esac
+done
+if [ -z "$ETH_USERNAME" ]
+then
+    echo "username is missing, please provide it with -u flag"
+    exit 1
+fi
+echo "username: $ETH_USERNAME";
 PROJECT_NAME=cluster
+
 DIRECTORY=/itet-stor/${ETH_USERNAME}/net_scratch/${PROJECT_NAME}
-CONDA_ENVIRONMENT=intro-cluster
+CONDA_ENVIRONMENT=cluster-tutorial
 mkdir -p ${DIRECTORY}/jobs
-#TODO: change your ETH USERNAME and other stuff from above according + in the #SBATCH output and error the path needs to be double checked!
 
 # Exit on errors
 set -o errexit
@@ -33,12 +47,7 @@ fi
 trap "exit 1" HUP INT TERM
 trap 'rm -rf "${TMPDIR}"' EXIT
 export TMPDIR
-
-# Change the current directory to the location where you want to store temporary files, exit if changing didn't succeed.
-# Adapt this to your personal preference
 cd "${TMPDIR}" || exit 1
-
-# Send some noteworthy information to the output log
 
 echo "Running on node: $(hostname)"
 echo "In directory: $(pwd)"
@@ -51,12 +60,7 @@ conda activate ${CONDA_ENVIRONMENT}
 echo "Conda activated"
 cd ${DIRECTORY}
 
-# Execute your code
-# Here you want to use a different configuration depending on $SLUM_ARRAY_TASK_ID
 python main_array.py ${SLURM_ARRAY_TASK_ID}
 
-# Send more noteworthy information to the output log
 echo "Finished at: $(date)"
-
-# End the script with exit code 0
 exit 0
