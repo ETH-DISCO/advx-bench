@@ -1,12 +1,6 @@
 see: https://github.com/ETH-DISCO/cluster-tutorial/blob/main/README.md
 
 ```bash
-# install deps
-pip install ipywidgets jupyterlab_widgets --no-cache-dir --user --verbose
-pip install torch torchvision torchaudio --no-cache-dir --user --verbose
-pip install huggingface_hub pynvml accelerate numpy diffuser transformers --no-cache-dir --user --verbose
-
-# huggingface login for gated models
 huggingface-cli login
 ```
 
