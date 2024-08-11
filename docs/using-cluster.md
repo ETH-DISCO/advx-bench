@@ -1,18 +1,6 @@
 see: https://github.com/ETH-DISCO/cluster-tutorial/blob/main/README.md
 
 ```bash
-# set up
-conda create --name jupyternb notebook --channel conda-forge --yes
-conda activate jupyternb
-jupyter notebook --no-browser --port 5998 --ip $(hostname -f) # port range [5900-5999]
-
-# tear down
-conda deactivate
-conda env list
-conda remove --all --yes --name jupyternb
-```
-
-```bash
 # install deps
 pip install ipywidgets jupyterlab_widgets --no-cache-dir --user --verbose
 pip install torch torchvision torchaudio --no-cache-dir --user --verbose
