@@ -1,24 +1,24 @@
 see: https://github.com/ETH-DISCO/cluster-tutorial/blob/main/README.md
 
 ```bash
-
+# install deps
+pip install ipywidgets jupyterlab_widgets --no-cache-dir --user --verbose
 pip install torch torchvision torchaudio --no-cache-dir --user --verbose
-pip install pynvml numpy diffuser transformers --no-cache-dir --user --verbose
+pip install huggingface_hub pynvml accelerate numpy diffuser transformers --no-cache-dir --user --verbose
 
+# update path after installing
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
+
+# huggingface login for gated models
+huggingface-cli login
 ```
 
----
-
-these are the best models as of august 2024.
-
-pipeline:
+selected models:
 
 - step 1) generate images with flux.v1
 
     - https://huggingface.co/black-forest-labs/FLUX.1-dev (needs gpu)
-    - https://fal.ai/models/fal-ai/flux-realism
 
 - step 2) caption images with llama3
 
@@ -36,5 +36,3 @@ pipeline:
 - step 5) segment images with sam vit 2 (using boundary boxes from previous step)
 
     - https://huggingface.co/facebook/sam2-hiera-small (needs gpu)
-
-for each category we also have weaker models that can run on cpu/mps architectures. but the largest / top performing models are so huge that they break google colab's free tier. so you either have to pay up or use the gpu cluster.
