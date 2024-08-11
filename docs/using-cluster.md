@@ -6,10 +6,6 @@ pip install ipywidgets jupyterlab_widgets --no-cache-dir --user --verbose
 pip install torch torchvision torchaudio --no-cache-dir --user --verbose
 pip install huggingface_hub pynvml accelerate numpy diffuser transformers --no-cache-dir --user --verbose
 
-# update path after installing
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-
 # huggingface login for gated models
 huggingface-cli login
 ```
