@@ -1,4 +1,4 @@
-see: https://github.com/ETH-DISCO/cluster-tutorial/blob/main/README.md
+see: https://github.com/ETH-DISCO/cluster-tutorial/blob/main/README.md#2-using-apptainer
 
 ```bash
 # install deps
