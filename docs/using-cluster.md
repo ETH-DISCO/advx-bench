@@ -6,12 +6,6 @@ huggingface-cli login
 
 ---
 
-1) check how well we can solve hcaptcha
-
-2) check how well we can reconstruct hcaptcha
-
----
-
 selected models:
 
 - step 1) generate images with flux.v1
