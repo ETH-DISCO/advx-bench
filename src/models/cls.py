@@ -18,7 +18,7 @@ models
 
 
 def classify_metaclip(img: Image.Image, labels: list[str]) -> list[float]:
-    # best model
+    # best model for cpu, gpu
     from transformers import AutoModel, AutoProcessor
 
     device = get_device()
@@ -42,7 +42,7 @@ def classify_metaclip(img: Image.Image, labels: list[str]) -> list[float]:
 
 
 def classify_clip(img: Image.Image, labels: list[str]) -> list[float]:
-    # most robust model
+    # most adv robust model
     import clip
 
     device = get_device()

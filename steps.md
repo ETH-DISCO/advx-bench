@@ -24,12 +24,39 @@ steps:
 
 # step 1
 
-- [x] scrape images from hcaptcha -> dune by turlan: https://gitlab.ethz.ch/disco-students/fs24/image-captchas
-- [x] get ground truth -> done by turlan in [labelstudio](https://labelstud.io/): https://gitlab.ethz.ch/disco-students/fs24/image-captchas/-/blob/main/assets/datasets/hcaptcha_dataset_turlan/project-2-at-2024-07-08-17-39-4b3e31b4.zip
-- [ ] run solvers via gpu cluster while turlan is labeling
+turlan's ground truth:
 
+- https://gitlab.ethz.ch/disco-students/fs24/image-captchas
+- https://gitlab.ethz.ch/disco-students/fs24/image-captchas/-/blob/main/assets/datasets/hcaptcha_dataset_turlan/project-2-at-2024-07-08-17-39-4b3e31b4.zip
 
+running models:
 
+- step 1) caption images with llama3
+
+    - https://huggingface.co/openbmb/MiniCPM-Llama3-V-2_5 (needs gpu)
+    - https://huggingface.co/openbmb/MiniCPM-Llama3-V-2_5-int4 (needs gpu, int4 quantized)
+
+- step 2) classify with meta clip
+
+    - https://huggingface.co/facebook/metaclip-h14-fullcc2.5b ✅ (runs on laptop)
+
+- step 3) detect boundary boxes with grounding dino
+
+    - https://huggingface.co/IDEA-Research/grounding-dino-base ✅ (runs on laptop)
+
+- step 4) segment images with sam vit 2 (using boundary boxes from previous step)
+
+    - https://huggingface.co/facebook/sam2-hiera-small (needs gpu)
+
+<!--
+
+# step 2
+
+generating synthetic hcaptcha images:
+
+- https://huggingface.co/black-forest-labs/FLUX.1-dev (needs gpu)
+
+-->
 
 <!--
 

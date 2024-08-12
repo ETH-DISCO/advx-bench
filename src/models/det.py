@@ -19,7 +19,7 @@ models
 
 
 def detect_vit(img: Image.Image, labels: list[str], threshold: float) -> tuple[list[list[float]], list[float], list[str]]:
-    # best model
+    # best model for cpu, gpu
     from transformers import OwlViTForObjectDetection, OwlViTProcessor
 
     device = get_device()

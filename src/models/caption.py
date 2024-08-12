@@ -1,6 +1,7 @@
 import os
 
 import requests
+import torch
 from PIL import Image
 
 os.environ["TOKENIZERS_PARALLELISM"] = "true"
@@ -15,8 +16,35 @@ models
 """
 
 
+def caption_llama3(img: Image.Image) -> list[str]:
+    # best model for gpu
+    assert torch.cuda.is_available(), "GPU not available"
+    from transformers import AutoModel, AutoTokenizer
+
+    model = AutoModel.from_pretrained("openbmb/MiniCPM-Llama3-V-2_5", trust_remote_code=True, torch_dtype=torch.float16)
+    model = model.to(device="cuda")
+
+    tokenizer = AutoTokenizer.from_pretrained("openbmb/MiniCPM-Llama3-V-2_5", trust_remote_code=True)
+    model.eval()
+
+    image = Image.open("xx.jpg").convert("RGB")
+    question = "What is in the image?"
+    msgs = [{"role": "user", "content": question}]
+
+    res = model.chat(
+        image=image,
+        msgs=msgs,
+        tokenizer=tokenizer,
+        sampling=True,  # if sampling=False, beam_search will be used by default
+        temperature=0.7,
+        # system_prompt='' # pass system_prompt if needed
+    )
+    assert isinstance(res, list)
+    return res
+
+
 def caption_blip(img: Image.Image) -> list[str]:
-    # best model
+    # best model for cpu
     from transformers import BlipForConditionalGeneration, BlipProcessor
 
     device = get_device()

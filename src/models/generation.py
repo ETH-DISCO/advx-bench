@@ -17,6 +17,7 @@ models
 
 
 def gen_fluxv1(prompt: str) -> Image.Image:
+    # best model for gpu
     assert torch.cuda.is_available(), "GPU not available"
     import torch
     from diffusers import FluxPipeline
@@ -31,7 +32,7 @@ def gen_fluxv1(prompt: str) -> Image.Image:
 
 
 def gen_stable_diffusion(prompt: str) -> Image.Image:
-    # best model, while waiting for flux-v1 to be ported to huggingface
+    # best model for cpu
     from diffusers import DiffusionPipeline
 
     device = get_device()
