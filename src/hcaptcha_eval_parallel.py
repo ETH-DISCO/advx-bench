@@ -19,11 +19,16 @@ def process_image(args):
     img = Image.open(file)
     threshold = 0.1
 
+    print("filename:", filename, "- stage 0")
     captions: list[str] = caption_blip(img)
+    print("filename:", filename, "- stage 1")
     probs: list[float] = classify_metaclip(img, captions)
+    print("filename:", filename, "- stage 2")
     detection: tuple[list[list[float]], list[float], list[str]] = detect_vit(img, captions, threshold)
+    print("filename:", filename, "- stage 3")
     boxes, scores, labels = detection
     masks: torch.Tensor = segment_sam1(img, boxes)
+    print("filename:", filename, "- stage 4")
 
     def ensure_contiguous(tensor):
         if len(tensor) == 0:
