@@ -35,7 +35,8 @@ def segment_sam2(image: Image.Image, query: list[list[float]]) -> list[torch.Ten
 
 def segment_sam1(image: Image.Image, query: list[list[float]]) -> list[torch.Tensor]:
     # best model for cpu
-    assert len(query) > 0
+    if len(query) == 0:
+        return []
     assert all(len(box) == 4 for box in query)
     from transformers import AutoModelForMaskGeneration, AutoProcessor
 

@@ -14,7 +14,12 @@ from models.seg import segment_sam1
 
 
 def ensure_contiguous(tensor):
-    return tensor.contiguous() if not tensor.is_contiguous() else tensor
+    if len(tensor) == 0:
+        return torch.empty(0)
+    elif tensor.is_contiguous():
+        return tensor
+    else:
+        return tensor.contiguous()
 
 
 datapath = Path.cwd() / "data" / "hcaptcha"
@@ -29,21 +34,17 @@ for subdir in subdirs:
         filename = file.stem
 
         if (outputpath / f"{categoryname}_{filename}.safetensors").exists():
-            print(f"file already exists: {categoryname}_{filename}.safetensors")
+            print(f"skipping: `{categoryname}_{filename}.safetensors`")
             continue
 
         img = Image.open(file)
         threshold = 0.1
 
         captions: list[str] = caption_blip(img)
-        print("passed stage 1/4")
         probs: list[float] = classify_metaclip(img, captions)
-        print("passed stage 2/4")
         detection: tuple[list[list[float]], list[float], list[str]] = detect_vit(img, captions, threshold)
         boxes, scores, labels = detection
-        print("passed stage 3/4")
         masks: torch.Tensor = segment_sam1(img, boxes)
-        print("passed stage 4/4")
 
         img_tensor = ensure_contiguous(torch.from_numpy(np.array(img)).permute(2, 0, 1).float() / 255.0)
         data_dict = {
@@ -57,5 +58,4 @@ for subdir in subdirs:
         }
 
         save_file(data_dict, outputpath / f"{categoryname}_{filename}.safetensors")
-        print(f"saved {categoryname}_{filename}.safetensors")
         os.system(f"git add . && git commit -m 'autocommit' && git push")
