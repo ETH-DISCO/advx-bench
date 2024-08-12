@@ -1,9 +1,5 @@
 see: https://github.com/ETH-DISCO/cluster-tutorial/blob/main/README.md
 
-```bash
-huggingface-cli login
-```
-
 ---
 
 selected models:

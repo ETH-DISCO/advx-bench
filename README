@@ -1,7 +1,7 @@
 Usage:
 
-- Some models are gated by huggingface for harm prevention. You need to sign up for an API key and authenticate.
+- Some models are gated by huggingface for harm prevention. Authenticate with `huggingface-cli login`.
 
 Thanks to:
 
-- Turlan Kuzhagaliyev (@TKZ10) for providing the scraped hcaptcha dataset.
+- Turlan Kuzhagaliyev (@TKZ10) for scraping hcaptcha.
