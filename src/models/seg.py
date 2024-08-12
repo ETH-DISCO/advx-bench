@@ -23,7 +23,7 @@ models
 """
 
 
-def segment_sam2(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
+def segment_sam2(image: Image.Image, query: list[list[float]]) -> list[torch.Tensor]:
     # best model for gpu
 
     # still being ported to huggingface
@@ -33,7 +33,7 @@ def segment_sam2(image: Image.Image, query: list[list[float]]) -> tuple[list[str
     pass
 
 
-def segment_sam1(image: Image.Image, query: list[list[float]]) -> tuple[list[str], list[torch.Tensor]]:
+def segment_sam1(image: Image.Image, query: list[list[float]]) -> list[torch.Tensor]:
     # best model for cpu
     assert len(query) > 0
     assert all(len(box) == 4 for box in query)
