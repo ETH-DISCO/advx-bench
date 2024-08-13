@@ -1,4 +1,5 @@
 import json
+import random
 from pathlib import Path
 
 from PIL import Image
@@ -14,6 +15,7 @@ assert datapath.exists()
 assert outputpath.exists()
 
 datafiles = list(datapath.glob("*.png"))
+random.shuffle(datafiles)
 
 for file in tqdm(datafiles):
     if (outputpath / f"{file.stem}.json").exists():
@@ -30,4 +32,4 @@ for file in tqdm(datafiles):
     }
 
     with open(outputpath / f"{file.stem}.json", "w") as f:
-        json.dump(out, f)
+        json.dump(out, f, indent=4)
