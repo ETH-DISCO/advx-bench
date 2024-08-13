@@ -1,0 +1,3083 @@
+{
+  "model_name": "ViT-B-16",
+  "pretrained": "openai",
+  "top_1_acc": 0.8101604278074866,
+  "top_5_acc": 0.93048128342246,
+  "images_cnt": 374,
+  "challenge_151": {
+    "per_challenge_top_1_acc": 0.9444444444444444,
+    "per_challenge_top_5_acc": 1.0,
+    "9cd9864b9673ba982b8cd1513f09e7005247c43b6d610d5fcbd5dcaceeb572a8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "lion", "zebra", "toilet", "cat"]
+    },
+    "aa21b97eb04aefc20cbfbedf23a252ce39300510c56e29dc5174f275ca930f97.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": [
+        "butterfly",
+        "insect",
+        "bug (insect)",
+        "bug",
+        "computer chip"
+      ]
+    },
+    "fbd6b960434e7c9600c737a5af7046fd10984d308c718a3ad0eaccee089ae624.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": [
+        "butterfly",
+        "insect",
+        "bug (insect)",
+        "bug",
+        "computer chip"
+      ]
+    },
+    "66f4462456359636efdbb6dcf2403e10276586c86076c2fff86f1180c74aa7b5.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": ["butterfly", "insect", "bug (insect)", "bird", "bug"]
+    },
+    "8422c7aa315e5eec4b087a596cd200f7ed649e9446ff6e766df2580d96c42ed0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": ["butterfly", "bug (insect)", "insect", "bug", "bird"]
+    },
+    "21edac66f4fd0d2a1b0fd3f34877ef80a08d1ed032a7d80bef1f02ccb1087fb.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bug (insect)",
+      "top_1_pred": "bug (insect)",
+      "top_5_pred": ["bug (insect)", "insect", "bug", "orange", "carrot"]
+    },
+    "40dc47abee5a4a9d7e638381b6c433e74e00dc7088223d9890d526e1e547f687.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "mouse",
+      "top_1_pred": "mouse",
+      "top_5_pred": ["mouse", "squirrel", "frog", "bug (insect)", "rabbit"]
+    },
+    "b930274e91f83901885d82971259ad2efbd10de27e80e1bc21f5c382b7cd26.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "lion", "zebra", "microwave", "monitor"]
+    },
+    "b852fee8ec62db9d596e6baecd94b0c4a700ca705692587f430a245386598313.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "mouse",
+      "top_1_pred": "mouse",
+      "top_5_pred": ["mouse", "squirrel", "rabbit", "diver", "frog"]
+    },
+    "0c666aa0f68939edfb5c65b992abdea4468863a0b9d99035c5d68aba0572027b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "chicken", "bird", "computer chip", "turkey"]
+    },
+    "dc2b5c43991728442cbc4eccbef0017df259937db07049671ec1a36952f10203.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "bug (insect)",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "bug (insect)", "bug", "mouse", "cow"]
+    },
+    "2ae5ebcb70afd12ea5c6bf08d6b95bbbdb9089bbac7921c57b4d87a11e5ed431.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": [
+        "duck",
+        "bird",
+        "penguin and duck",
+        "diver",
+        "computer chip"
+      ]
+    },
+    "0568dc76ef84044aa64829952eff15a22ce0a6a91d1bb6763b2aac55f9d439d7.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bug (insect)",
+      "top_1_pred": "bug (insect)",
+      "top_5_pred": ["bug (insect)", "insect", "bug", "butterfly", "crab"]
+    },
+    "8ad112fe4e7c22238f38a4d47b13f577b7a052658d14ed334fa284d6a88b97ba.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "mouse",
+      "top_1_pred": "mouse",
+      "top_5_pred": ["mouse", "rabbit", "dog", "computer chip", "sheep"]
+    },
+    "948514de07386f0e08584c22169e2dea92567030df7adf867ef37eb26ccb9a68.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bug (insect)",
+      "top_1_pred": "bug (insect)",
+      "top_5_pred": ["bug (insect)", "insect", "mouse", "bug", "butterfly"]
+    },
+    "5a27304d5d6c074ab7c91e4f8bd79e2bc1918abba53d7df9229474ae989e319a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "dolphin", "diver", "penguin and duck"]
+    },
+    "537feb069e3077d51d8b380c00a2682ebff2e56854bbbb6529be625783603dd7.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "lion", "zebra", "cat", "mouse"]
+    },
+    "c721d9f0e10e3d32237392f5a7a7a05fa128ea7647ad866476062ce9aa9fa5d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "zebra", "toilet", "lion", "cat"]
+    }
+  },
+  "challenge_133": {
+    "per_challenge_top_1_acc": 0.8333333333333334,
+    "per_challenge_top_5_acc": 1.0,
+    "88eb409f22c40171c676d26ea6f5688d3c8d9cec3e96d5e31641eea12187cfc.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "zebra", "cat", "orange", "deer"]
+    },
+    "6557e62564e10599ab8538a0e85d57cc5c637aa74af356f20e3d36e89df2e5c0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "bear",
+      "top_5_pred": ["bear", "snowboard", "sheep", "giant panda", "koala"]
+    },
+    "3baf396eb34374e0c3ea8a726517c362a2e408035fd2d978ad199b77b55ce5f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "rabbit", "mouse", "deer", "cutting board"]
+    },
+    "0f6d78a40264cef1997ebe70019388f56341aaa92ef097fdc70ee99e9caac536.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": [
+        "squirrel",
+        "orange",
+        "cutting board",
+        "cell phone",
+        "person"
+      ]
+    },
+    "023fa07cef87b90a08f33b869a288898cbf435b93dd26bb45ffd5f0121f080bc.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "zebra", "lion", "sea", "diver"]
+    },
+    "8396ebd60f3974b24cc8494ab2c338fd03594ebec2e1aa28c2bf878a2df0376f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "zebra", "cat", "lion", "snowboard"]
+    },
+    "7809b29e851131b88cf3d68ab036e1193a3764ce3997b7da4f5f82ddc32d5c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "diver", "lion", "turkey", "zebra"]
+    },
+    "7c52994b91618b0a220b4a308654212a57ad4bdb7606084a88c22a62b32da9a4.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "bear",
+      "top_5_pred": ["bear", "snowboard", "teddy bear", "skis", "microwave"]
+    },
+    "7ca98718149cb331656e5662fd4b81a6ba390b6c198e34cb9d10120aa3303010.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "red panda", "rabbit", "mouse", "deer"]
+    },
+    "f5d06d3f2dce3bbd3367cc615455a62b03365e5dead1776c33c576299ad3d698.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "bear",
+      "top_5_pred": [
+        "bear",
+        "teddy bear",
+        "snowboard",
+        "skateboard",
+        "backpack"
+      ]
+    },
+    "43a8ac297d681404d56dfa68e3e482396807deb1326487e6b807e71bc86b42b7.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "zebra", "lion", "cat", "orange"]
+    },
+    "9521f6892913f3225504571cc06e2a06848ff7cd267f90fb456d0b6cc0dd5a4c.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "bear", "snowboard", "lion", "zebra"]
+    },
+    "91bbfd803ba524d790c52b88fc3ac9578ca603a3d6244169442ef544d5d7340f.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "snowboard",
+      "top_5_pred": ["snowboard", "bear", "elephant", "orca", "wolf"]
+    },
+    "0f56b8c853a41b67835e60d01bb249ec65004aa4e67545c6b458363dc5f9c29a.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "koala",
+      "top_5_pred": ["koala", "squirrel", "rabbit", "mouse", "orange"]
+    },
+    "2fb61c1801a9e6affe5a549263846a15440bab2ce35bc2b882b59839616979a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "bear",
+      "top_5_pred": [
+        "bear",
+        "snowboard",
+        "teddy bear",
+        "microwave",
+        "giant panda"
+      ]
+    },
+    "216e4f9d657f0a98686eb51f2851997f164df4243d26e99c7f767625db3ef855.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "deer", "koala", "tvmonitor", "mouse"]
+    },
+    "788abeeac4a4abe108c9d30ed952cb629b9d0e68c473b9ade16666229a6629a4.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "bear",
+      "top_5_pred": ["bear", "lion", "teddy bear", "snowboard", "bed"]
+    },
+    "3281e3028d2f34c05a29194902ee68b335f37cfeaa0401561a1da2ce4b277b28.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "turkey", "lion", "red panda", "crocodile"]
+    }
+  },
+  "challenge_131": {
+    "per_challenge_top_1_acc": 1.0,
+    "per_challenge_top_5_acc": 1.0,
+    "051605ccb3b7e4d1f5eeb4fdd2fdecdbbf8cb35c5a346c4c7a5888251e609933.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "diningtable", "turkey", "book", "apple"]
+    },
+    "604411afbb374f2dc0013cea51b49aba3e1f396ff8188488144cda95478efc3a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": ["butterfly", "insect", "bug (insect)", "kite", "bug"]
+    },
+    "8bf9b35f15da0b602a6ba11d2a66f6c1ec8baf1f154065e9bfec3fe396d70e5f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": ["butterfly", "insect", "bug (insect)", "kite", "bug"]
+    },
+    "c92823bccf634c05acf02e4892c85db45b0a59604dbf2cc5476fd5db117b2df4.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "carrot", "crab", "mouse", "squirrel"]
+    },
+    "46ca87dfd926a631faa386c40194914ecc8b4b624aa6d500da75b8a6a697884f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "lion",
+      "top_1_pred": "lion",
+      "top_5_pred": ["lion", "dog", "bear", "tiger", "wolf"]
+    },
+    "a41efd6dd21ea047af555aa6a7bafda9618a15d1292e50a2d9565f126a517453.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": ["butterfly", "insect", "bug (insect)", "bug", "kite"]
+    },
+    "a246d6937907ed920195f09e30d1123f383e6f925b3102115a5e7e0dc6edc766.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "lion",
+      "top_1_pred": "lion",
+      "top_5_pred": ["lion", "tiger", "bear", "zebra", "wolf"]
+    },
+    "7dc4890b04f45f61ea3d5668f86a01a14d98e1d140b040789212467494d118f1.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "mouse", "rabbit", "tvmonitor", "pottedplant"]
+    },
+    "1d7793d2ee885958c53ac4c0b1e532bbb8071dd9bc854a5c506a2417fd0b86e7.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "rabbit", "deer", "mouse", "turkey"]
+    },
+    "a42c3742c30af62c7087c78caf38d0fdb456136105010e89906e4c2c30c5dcc8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "carrot", "mouse", "crab", "monitor"]
+    },
+    "a2d133169e6d6b093b3371c1d7594e0ca9c66d4147e4f47372dbc00925f2771b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "mouse", "turkey", "book", "rabbit"]
+    },
+    "a5c8dc601379feca625a12ecfeadf9998aa859dfaa612ea7f0bae2b402ad58d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "lion",
+      "top_1_pred": "lion",
+      "top_5_pred": ["lion", "bear", "dog", "tiger", "wolf"]
+    },
+    "be2d9c48aab7093c38bedff465cbac08647a99ed31e599b033f115ef798c8b6d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": ["butterfly", "insect", "bug (insect)", "bug", "kite"]
+    },
+    "3203a93dd673ee1b6c97a4dd76e2728800ac50d6da77bae4d4680b68d7e08c10.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": ["butterfly", "insect", "bug (insect)", "kite", "bug"]
+    },
+    "8d74bcc3b65478fbdaa79cc76b995a77e9ec4b9acd3ef7151ed16210baa9bd65.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "butterfly",
+      "top_1_pred": "butterfly",
+      "top_5_pred": ["butterfly", "insect", "bug (insect)", "bug", "kite"]
+    },
+    "84fb2521a7a10dc814fed9ca8468328d072c972ea470c9b73b0ed9a0fd23e7c0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "lion",
+      "top_1_pred": "lion",
+      "top_5_pred": ["lion", "bear", "tiger", "deer", "zebra"]
+    },
+    "122ed09a9a04a7a16978ef2c22bdb000577274671d7756a82f3f172a07006925.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "mouse", "book", "apple", "diningtable"]
+    },
+    "0a068b73eb9065bdbd8f58be0cdc7be937235231ca4067e7fef83bad0711d239.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "orange", "turkey", "mouse", "plant"]
+    }
+  },
+  "challenge_108": {
+    "per_challenge_top_1_acc": 0.8421052631578947,
+    "per_challenge_top_5_acc": 0.8421052631578947,
+    "c9515a1f3b0b267b1415e4df52cd217f926b83e35768b10341c1524aa1d0ac86.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "car",
+      "top_1_pred": "car",
+      "top_5_pred": [
+        "car",
+        "monstertruck",
+        "truck",
+        "minivan (car)",
+        "formula 1 car"
+      ]
+    },
+    "aa346b2c2a6982d3171da8d4351f7884e1ccc18a9ee0beb4e73ebd5524cfbcf6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "zebra", "deer", "cow"]
+    },
+    "d0bc54078062e313e761f5e053a5e8acae3459291bad112857fcb65a5feb951.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "zebra", "cow", "giraffe"]
+    },
+    "9b77dbb0d26b5bdf839fd1b07de557f45b259709da5533e9739afabc1d504eb3.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "zebra", "elephant", "deer"]
+    },
+    "a1a530950a12e56be99b52708429825af4afa122286a2d9280c88f910e472095.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "pig",
+      "top_1_pred": "pig",
+      "top_5_pred": ["pig", "cow", "sheep", "squirrel", "deer"]
+    },
+    "844c47ad1dffb186c8fb3e4d8d366db9fd16fd2b53e33402d96075dc45d446c6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "zebra", "monitor", "kite"]
+    },
+    "f2e57a0c6e2cfc1491c1127770dbdbf1ee09eb8e9a90356820f624189c0f83e8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "pig",
+      "top_1_pred": "pig",
+      "top_5_pred": ["pig", "wolf", "horse", "cow", "sheep"]
+    },
+    "8e4001a1f26cbe6a293031ca7fe1f3feb48db5abbbe6b34e1588824589c1c316.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "wolf",
+      "top_1_pred": "wolf",
+      "top_5_pred": ["wolf", "dog", "toilet", "bear", "laptop"]
+    },
+    "3edc6c141e24a64728ca4f2ca9133a8a3096b443ea017c5ec1bc9d7cf8ceadd.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "pig",
+      "top_1_pred": "person",
+      "top_5_pred": ["person", "toilet", "book", "cell phone", "dancer"]
+    },
+    "248e0f7c3503962f6cc281d337a05a3cdb9510234f623e3349dd3f778c9765ab.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "boat",
+      "top_1_pred": "boat",
+      "top_5_pred": ["boat", "sea", "turkey", "kite", "bird"]
+    },
+    "5a20e98b4a3e249cbb52ef84081f68007a82ced61c23a1c5f7aa22abd53462c0.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "pig",
+      "top_1_pred": "bear",
+      "top_5_pred": ["bear", "lion", "wolf", "elephant", "toilet"]
+    },
+    "1b0bdb9c00d7f650defee396171c58e4cbe69995d47db26f3962cefe2ac94bf5.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "car",
+      "top_1_pred": "car",
+      "top_5_pred": ["car", "truck", "minivan (car)", "monstertruck", "remote"]
+    },
+    "fc58e79e0dd33272c80e0fdaa59d5f3a5f8fcb5ade7a0a9f5d0ae6237bf2028a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "deer", "zebra", "cow"]
+    },
+    "baddc2a403881b20e5cf306ffc4ed4667213d0220780208570016f277c516a8d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "cow", "zebra", "apple"]
+    },
+    "9d10e9a2d3583edc52aae54a9c58a10db13adaf248367c69661b5db185140bbb.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "apple", "kite", "carrot"]
+    },
+    "66d2384883bafa2b7fbe94433f35fcd4f936c34bfdfe7dc1fd752d81e3543fdb.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "pig",
+      "top_1_pred": "pig",
+      "top_5_pred": ["pig", "wolf", "rabbit", "cow", "deer"]
+    },
+    "99b8e2843db856cfd1c12e44e40003bc69752a1717dd7350c76c1b10b8ec9e0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "zebra", "butterfly", "cow"]
+    },
+    "8f134b51a33031c7c80016984f1e8c5c6a120583891b474a504aaa99276c3eca.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "zebra", "deer", "wolf"]
+    },
+    "5d34aa74a89fe854b5b3bc7b3dd94af10f9e861954656ebbccf3edc97fa41cfd.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "pig",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "car", "horseman", "carrot", "cow"]
+    }
+  },
+  "challenge_72": {
+    "per_challenge_top_1_acc": 0.8947368421052632,
+    "per_challenge_top_5_acc": 1.0,
+    "68de5fd3da2167b2e35ba94b859cc659c12e948153712775d33ad16e19121380.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tree",
+      "top_1_pred": "tree",
+      "top_5_pred": [
+        "tree",
+        "coral (aquatic plant)",
+        "plant",
+        "koala",
+        "broccoli"
+      ]
+    },
+    "b91a59d4ed4a33728d1fd78c7f6ebf3e3724b57f8910d843e8fa93cec7782c8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monstertruck",
+      "top_1_pred": "monstertruck",
+      "top_5_pred": ["monstertruck", "truck", "car", "minivan", "minivan (car)"]
+    },
+    "df3768319cbd36ac953a21e830863df18859051476aee02edf63af7dec80d925.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tree",
+      "top_1_pred": "tree",
+      "top_5_pred": ["tree", "koala", "tvmonitor", "deer", "plant"]
+    },
+    "2abc737e1acf36d720fcdbe6cd1c1f001671c528199d6b8d778768d3eac06fb9.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monstertruck",
+      "top_1_pred": "monstertruck",
+      "top_5_pred": ["monstertruck", "truck", "car", "minivan (car)", "minivan"]
+    },
+    "b69776e9f614c16dd9f98cd97f2101b8ea5165ad798e8436507900e6602a45d6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tree",
+      "top_1_pred": "tree",
+      "top_5_pred": ["tree", "plant", "apple", "tv", "monitor"]
+    },
+    "7dd0ca6a266d01462d514851330584894f3bec7627edc0aa73dd01506bcba08d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "formula 1 car",
+      "top_1_pred": "formula 1 car",
+      "top_5_pred": ["formula 1 car", "mouse", "car", "toaster", "monstertruck"]
+    },
+    "2baa4adcf4e7c51c69f182bcc35479c5e105a0f329cac063b039cbe1a1039ec3.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "formula 1 car",
+      "top_1_pred": "formula 1 car",
+      "top_5_pred": ["formula 1 car", "car", "banana", "cup", "sandwich"]
+    },
+    "99fee44d297145bee2e5746e9dab3404bd202eed39314fd4088e41497cb66be8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monstertruck",
+      "top_1_pred": "monstertruck",
+      "top_5_pred": ["monstertruck", "truck", "car", "bug", "train"]
+    },
+    "d30a5660f84f94c5a01a833c8be1c598ce05fa349e9a2dabdb9e52854f462ca2.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "factory",
+      "top_1_pred": "train",
+      "top_5_pred": ["train", "factory", "snowboard", "camera", "fire hydrant"]
+    },
+    "90197caa51c2c1ac59e60586f8cb41f8c58f43e2fe9d2839275972e5dca66c76.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monstertruck",
+      "top_1_pred": "monstertruck",
+      "top_5_pred": ["monstertruck", "truck", "snowboard", "car", "factory"]
+    },
+    "33fd22c74f97adf79b4528daf227f1e3613f09252c57ca06fc50111a06c1154d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "factory",
+      "top_1_pred": "factory",
+      "top_5_pred": ["factory", "boat", "city", "train", "monitor"]
+    },
+    "263293971938a87f63e41a979ec6c4add0e14eeeadd4d449f642867c3d8ac1d1.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monstertruck",
+      "top_1_pred": "monstertruck",
+      "top_5_pred": ["monstertruck", "truck", "car", "formula 1 car", "minivan"]
+    },
+    "58437bd34fd6b4e4f745a2621de6cb7c1ea388bd672784955c70b2aed47ddaa9.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tree",
+      "top_1_pred": "tree",
+      "top_5_pred": ["tree", "plant", "tv", "koala", "computer chip"]
+    },
+    "2ac442f064c01891fd9a91ba0b0fe91382eaadb357d6f42bbd41787dc608f10d.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "leaf",
+      "top_1_pred": "bird",
+      "top_5_pred": [
+        "bird",
+        "leaf",
+        "butterfly",
+        "plant",
+        "coral (aquatic plant)"
+      ]
+    },
+    "4a310c0c1ea9f7a494c4900da10883758cf1450ec357eee69a30ccd890c03f1c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tree",
+      "top_1_pred": "tree",
+      "top_5_pred": ["tree", "leaf", "deer", "koala", "bug"]
+    },
+    "f5076549b6ce22735cd61d1751944e25ad52f3776c73682db23ffd3bd7e28c28.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monstertruck",
+      "top_1_pred": "monstertruck",
+      "top_5_pred": [
+        "monstertruck",
+        "truck",
+        "car",
+        "surfboard",
+        "minivan (car)"
+      ]
+    },
+    "8fecbd3fb1b6c77236119e1cf49620b9be2efe3037d40a1d7291d9a3bbba1d9d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "factory",
+      "top_1_pred": "factory",
+      "top_5_pred": ["factory", "notes", "monitor", "remote", "plant"]
+    },
+    "b60712b25d1a35a6f8fc105fba4babb87e6f2b5ce37b5d850695a952cfd6dd8c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monstertruck",
+      "top_1_pred": "monstertruck",
+      "top_5_pred": ["monstertruck", "truck", "car", "minivan (car)", "minivan"]
+    },
+    "b2762577bc104733502003d333e2df3e6efe2d07b35d2a9e9e8a23c848e0eca6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monstertruck",
+      "top_1_pred": "monstertruck",
+      "top_5_pred": ["monstertruck", "truck", "car", "minivan (car)", "minivan"]
+    }
+  },
+  "challenge_48": {
+    "per_challenge_top_1_acc": 0.631578947368421,
+    "per_challenge_top_5_acc": 0.8947368421052632,
+    "c326b637336d8ff2872de5cf4aab6f8ae33a95f0f318b5a23c7a0f0db932e386.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "plant",
+      "top_1_pred": "plant",
+      "top_5_pred": [
+        "plant",
+        "leaf",
+        "coral (aquatic plant)",
+        "pottedplant",
+        "banana"
+      ]
+    },
+    "826b2a7904bca11f6eedb18493429186b2e86125f12ab44106fe9b17662f76f0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "printer",
+      "top_1_pred": "printer",
+      "top_5_pred": [
+        "printer",
+        "monitor",
+        "laptop",
+        "tvmonitor",
+        "computer chip"
+      ]
+    },
+    "09bb3859d6f3b98344389cfbccd622e17ac12b6724144e5108f18906a55bda.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "crab",
+      "top_1_pred": "bug (insect)",
+      "top_5_pred": ["bug (insect)", "crab", "bug", "insect", "sea"]
+    },
+    "9b768c426ca388091fd213ef912c2d5c613dbf0c7d8a27598ceda970a1fd671.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "plant",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": [
+        "coral (aquatic plant)",
+        "plant",
+        "leaf",
+        "pottedplant",
+        "vase"
+      ]
+    },
+    "d8486bbcdd27b14da5bc300797b83c968cdabd2f624d682c2337ac81c0021d23.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "printer",
+      "top_1_pred": "cutting board",
+      "top_5_pred": [
+        "cutting board",
+        "diningtable",
+        "kitchen",
+        "oven",
+        "microwave"
+      ]
+    },
+    "11856a8925e88010292185721e5fca9e115d998aaa541b6ac33afc6dde846b21.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "printer",
+      "top_1_pred": "printer",
+      "top_5_pred": [
+        "printer",
+        "toaster",
+        "computer chip",
+        "monitor",
+        "tvmonitor"
+      ]
+    },
+    "db59876b94bbd3b22db48483ae5fd215fce1cbf62bcdc8e6ed73b56ed45d5a67.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "crab",
+      "top_1_pred": "crab",
+      "top_5_pred": ["crab", "sea", "bug", "diver", "coral"]
+    },
+    "fa9c8b7494bfcc3aae81d6d1d7a61cc5f97a2043fb5267c90d618bb6a7a9e820.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "plant",
+      "top_1_pred": "plant",
+      "top_5_pred": [
+        "plant",
+        "leaf",
+        "coral (aquatic plant)",
+        "pottedplant",
+        "tree"
+      ]
+    },
+    "d410f244518d3ac00e4c936d905e887003ee19d1e3ff3e87effd1bf4c2d69ad4.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "plant",
+      "top_1_pred": "plant",
+      "top_5_pred": [
+        "plant",
+        "leaf",
+        "coral (aquatic plant)",
+        "pottedplant",
+        "tree"
+      ]
+    },
+    "f0650bd7e89e411743da27a1b2048b6846e2cc1870fc13ec05c52ddc352d3eb7.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "plant",
+      "top_1_pred": "frog",
+      "top_5_pred": ["frog", "fork", "tree", "broccoli", "banana"]
+    },
+    "6fe1362577a9e6ecd0bc8fce1d3b99a2732c8f22cfe1076cfc1886657f7f3623.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "plant",
+      "top_1_pred": "plant",
+      "top_5_pred": [
+        "plant",
+        "coral (aquatic plant)",
+        "pottedplant",
+        "leaf",
+        "vase"
+      ]
+    },
+    "d59ab24b20e7a64db864252fa8d4d68afba728b4620d13f82986a9528265b08d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "computer chip",
+      "top_1_pred": "computer chip",
+      "top_5_pred": [
+        "computer chip",
+        "computer board",
+        "factory",
+        "laptop",
+        "microwave"
+      ]
+    },
+    "a486ae4870165d8d24b8f4fa7baa41ee0cc5bd70692c8fb06626122fe198cc9.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "printer",
+      "top_1_pred": "laptop",
+      "top_5_pred": [
+        "laptop",
+        "keyboard",
+        "printer",
+        "tvmonitor",
+        "diningtable"
+      ]
+    },
+    "7e5f0bc2f70e205a4d9e49b10d35dd5b7bb9f3fe447b5a7af50ddde38d7d75fd.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "crab",
+      "top_1_pred": "crab",
+      "top_5_pred": ["crab", "sea", "bug", "diver", "skis"]
+    },
+    "32523cd3a501d2c6e9d504959f3edfbb6d63d8f1bff4666ad2d0f72c0d2b4a6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "printer",
+      "top_1_pred": "printer",
+      "top_5_pred": ["printer", "microwave", "tvmonitor", "toaster", "apple"]
+    },
+    "c63cd37375d50b92d28aa643d62da81553ee24b2ce76cafcb9f56bb9f4a94eda.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "printer",
+      "top_1_pred": "printer",
+      "top_5_pred": ["printer", "tvmonitor", "microwave", "monitor", "apple"]
+    },
+    "0702527a5bcdd8b5ec92aa140b60f8f47709950b26e8737905ee210901cfebc2.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "printer",
+      "top_1_pred": "printer",
+      "top_5_pred": ["printer", "monitor", "tvmonitor", "laptop", "microwave"]
+    },
+    "59297bf97faecc9cd6f6c311eea98959902b81faba16af44b05bb05b6b608098.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "plant",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": [
+        "coral (aquatic plant)",
+        "vase",
+        "plant",
+        "pottedplant",
+        "leaf"
+      ]
+    },
+    "6fce4320e0a808714ad521a71ff7589d945cd5c42cd27fced675df8f2463bd2.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "plant",
+      "top_1_pred": "leaf",
+      "top_5_pred": [
+        "leaf",
+        "plant",
+        "coral (aquatic plant)",
+        "pottedplant",
+        "carrot"
+      ]
+    }
+  },
+  "challenge_69": {
+    "per_challenge_top_1_acc": 0.8421052631578947,
+    "per_challenge_top_5_acc": 0.9473684210526315,
+    "583056ab36a28b7be32d54768b80a84baf824a0d56a2b530705b6a06581dad3a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cutting board",
+      "top_1_pred": "cutting board",
+      "top_5_pred": [
+        "cutting board",
+        "laptop",
+        "diningtable",
+        "computer board",
+        "monitor"
+      ]
+    },
+    "0d176eb365b2296844d8faf1091536f2e33360a1091ab9f7bde38e52010e929.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "orca",
+      "top_1_pred": "orca",
+      "top_5_pred": ["orca", "dolphin", "shark", "diver", "shark (fish)"]
+    },
+    "5ab86996a6b5a10b494efea10bff7421f38e010b6cf8b1cbf62449eed6658c85.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "orca",
+      "top_1_pred": "dolphin",
+      "top_5_pred": ["dolphin", "orca", "diver", "sea", "penguin"]
+    },
+    "b5b0560b57b2e6972b7f61e5da6b443311b0504976e3582f88b74d272d79057c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "kitchen",
+      "top_1_pred": "kitchen",
+      "top_5_pred": [
+        "kitchen",
+        "cutting board",
+        "oven",
+        "microwave",
+        "diningtable"
+      ]
+    },
+    "233c83be32b39d4899d60238e7034a730fd217c0c81de95f57315283be15898c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giant panda",
+      "top_1_pred": "giant panda",
+      "top_5_pred": ["giant panda", "panda", "red panda", "bear", "teddy bear"]
+    },
+    "b5d8dcf7983067779c2645f9395eb155e5847fa5cc10fa190383849c02effe0f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cutting board",
+      "top_1_pred": "cutting board",
+      "top_5_pred": [
+        "cutting board",
+        "knife",
+        "baseball bat",
+        "fork",
+        "sandwich"
+      ]
+    },
+    "6be17d72659737990b3f4a768cea9272c54a86e51336dc34175a1441e0234d43.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "red panda",
+      "top_1_pred": "red panda",
+      "top_5_pred": ["red panda", "panda", "giant panda", "dog", "cup"]
+    },
+    "960c8de9eb2755ce89539843dd49bd02cc7582403f65de94ec3af20f181c691f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "orca",
+      "top_1_pred": "orca",
+      "top_5_pred": ["orca", "dolphin", "shark", "diver", "shark (fish)"]
+    },
+    "c12f6e8c67325e7a535780163fba20682d69adeb7e10c6a9803675ba89f22a98.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cutting board",
+      "top_1_pred": "cutting board",
+      "top_5_pred": [
+        "cutting board",
+        "diningtable",
+        "chair",
+        "baseball bat",
+        "factory"
+      ]
+    },
+    "64545dcb7752779c8ebf5f3f507ae9f2b5184d445e69dc6c79b1992ee5ea8a8a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "chicken ",
+      "top_1_pred": "chicken",
+      "top_5_pred": ["chicken", "lion", "dog", "rabbit", "duck"]
+    },
+    "6a2d3b3a2f4f97742ae6446c693493a855b5eec6dbcf68b746b38c5832fa9cd0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "orca",
+      "top_1_pred": "orca",
+      "top_5_pred": ["orca", "dolphin", "diver", "sea", "shark"]
+    },
+    "74c495f0a527078d7d59b086c43d7e620dd7c341009c75b03a6ee9f492346047.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giant panda",
+      "top_1_pred": "giant panda",
+      "top_5_pred": ["giant panda", "panda", "red panda", "bear", "cow"]
+    },
+    "42ab59e598bbc6020a865e54e02c1bcf5516b84e7fddd05630b70633748eb7a3.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "orca",
+      "top_1_pred": "dolphin",
+      "top_5_pred": ["dolphin", "orca", "diver", "sea", "shark"]
+    },
+    "4b6265a4b94ffd2094535a4324adeb2a8f8e5ea7a7a102796fcb722c65aaef44.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "chicken ",
+      "top_1_pred": "chicken",
+      "top_5_pred": ["chicken", "bird", "turkey", "duck", "handbag"]
+    },
+    "81384552de8f1e0af9e09ac87dfb6b4a68d827d62ec5472e4ff5ed661a07bf34.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "red panda",
+      "top_1_pred": "red panda",
+      "top_5_pred": ["red panda", "giant panda", "panda", "bear", "tiger"]
+    },
+    "0b947fb0b1c2663dd6e1600354c8f3ff9011bd286c1a42ba09a2dd4368fe5cb8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cutting board",
+      "top_1_pred": "cutting board",
+      "top_5_pred": [
+        "cutting board",
+        "bench",
+        "diningtable",
+        "skateboard",
+        "chair"
+      ]
+    },
+    "f2b05f0136bbe02b4a83fae4d98b3bf0ac0e2ce3dbdc4d0946b93ed21d3a506d.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "chicken ",
+      "top_1_pred": "ballerina (dancer)",
+      "top_5_pred": ["ballerina (dancer)", "dancer", "person", "wolf", "lion"]
+    },
+    "2d8992e9a03381c196e606c695c581734f7bc714abd55771ddb67033d8a7accc.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cutting board",
+      "top_1_pred": "cutting board",
+      "top_5_pred": [
+        "cutting board",
+        "surfboard",
+        "skis",
+        "skateboard",
+        "baseball bat"
+      ]
+    },
+    "5b55d15c9de98c0977c8ef7ee5e686a848c5aa6d91e07ba66ee54cca21830b6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "red panda",
+      "top_1_pred": "red panda",
+      "top_5_pred": ["red panda", "panda", "giant panda", "cow", "tiger"]
+    }
+  },
+  "challenge_68": {
+    "per_challenge_top_1_acc": 0.9473684210526315,
+    "per_challenge_top_5_acc": 1.0,
+    "12ec110938aa1ddca098e1e93505a0a4332d5debe623356aa43c9b96ca08c818.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "wolf",
+      "top_1_pred": "wolf",
+      "top_5_pred": ["wolf", "dog", "bear", "lion", "deer"]
+    },
+    "1c4bb5ff26729a4efc3aac5f63473b96a74b35c20ad500a3b6c3efb340300c56.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giraffe",
+      "top_1_pred": "giraffe",
+      "top_5_pred": ["giraffe", "deer", "cow", "rabbit", "mouse"]
+    },
+    "6e62353d86d09458f14032e77cbe45cb1d4df73c8a56db08c80f573c4ed9263.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giraffe",
+      "top_1_pred": "giraffe",
+      "top_5_pred": ["giraffe", "deer", "zebra", "banana", "horse"]
+    },
+    "6681a5f955ad99030904001a1533826f24bbc5911f0e4c0926679999b1d7146.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "chicken ",
+      "top_1_pred": "chicken",
+      "top_5_pred": ["chicken", "turkey", "bird", "duck", "sandwich"]
+    },
+    "458b45e27350f8eb13d69b64ed95b8351f93f61f2cefab866d190094e6f318e5.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "tvmonitor", "penguin and duck", "chicken"]
+    },
+    "4bab7d9d8c43fdd52865550a30bdc801197f4456372e493c2724cf2bebc3938f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "wolf",
+      "top_1_pred": "wolf",
+      "top_5_pred": ["wolf", "dog", "bear", "deer", "frisbee"]
+    },
+    "c7bc63e8a23688580d686b72be8d21af77cc6a31f4cbe9131701decc07619b70.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giraffe",
+      "top_1_pred": "giraffe",
+      "top_5_pred": ["giraffe", "deer", "cell phone", "horse", "microwave"]
+    },
+    "823383bc88dcb1f6f3a29ee276c21188fd39ce1d378f39da872ad570de3b38ab.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "wolf",
+      "top_1_pred": "wolf",
+      "top_5_pred": ["wolf", "dog", "bear", "printer", "frisbee"]
+    },
+    "6d25a2e90fbeda82e6673868d2ee138c579c116219e81f744a440a9b607461e9.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "wolf",
+      "top_1_pred": "wolf",
+      "top_5_pred": ["wolf", "dog", "lion", "deer", "tiger"]
+    },
+    "83c21a38aac65375b271a3293bfd2d1655391bb4917d314c6f2b80d10555c980.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "chicken", "turkey", "monitor"]
+    },
+    "9959fd983137530307bdfa8c80cdacf1e198b7e2183f1e95265110e9e7eb8a4d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "wolf",
+      "top_1_pred": "wolf",
+      "top_5_pred": ["wolf", "dog", "computer chip", "cow", "laptop"]
+    },
+    "42c94d475978659c30ea11890ac501561cb0b2f23f35607c56a890350b7b2a6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "toilet", "monitor", "laptop"]
+    },
+    "c2e51cdee664425f640f1a1e3c03fb5b22a64b13d6c7c691163529d38162a41.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giraffe",
+      "top_1_pred": "giraffe",
+      "top_5_pred": ["giraffe", "deer", "zebra", "hi hat", "horse"]
+    },
+    "c229581b4d0ce9b2e158c1f7cd44b56aa97aad4522a80007b4ed6f4a13b6aff3.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giraffe",
+      "top_1_pred": "giraffe",
+      "top_5_pred": ["giraffe", "deer", "hi hat", "zebra", "cell phone"]
+    },
+    "40a14ca34a53fb8482501ecd1f1a0111685bc50483c2044bea1ed11e9c51ff0f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giraffe",
+      "top_1_pred": "giraffe",
+      "top_5_pred": ["giraffe", "deer", "cell phone", "monitor", "zebra"]
+    },
+    "c99dab92b36518752d4be9742804ad691bee3413f8085b223580e271b3d5bc97.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "penguin and duck", "tvmonitor", "chicken"]
+    },
+    "aee9e2ea5107051e293070c325a2837715c1521cee7e04b0251a6c91760b67d1.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "wolf",
+      "top_1_pred": "wolf",
+      "top_5_pred": ["wolf", "dog", "bear", "person", "monitor"]
+    },
+    "40ecf9807bf5afb6f06c28b1eca6466d3d8b14706df8d3419b779ea448335f55.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "giraffe",
+      "top_1_pred": "cow",
+      "top_5_pred": ["cow", "deer", "horse", "giraffe", "dog"]
+    },
+    "5b2ea9328364c93d4dc8fc7b6cf9747c7507aeaa93602b9d8181cdedc76a8e10.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "giraffe",
+      "top_1_pred": "giraffe",
+      "top_5_pred": ["giraffe", "deer", "zebra", "horse", "lion"]
+    }
+  },
+  "challenge_78": {
+    "per_challenge_top_1_acc": 0.9473684210526315,
+    "per_challenge_top_5_acc": 1.0,
+    "6c89297661fb7c5b64a4b9dc443f6e0a2466caa5dd8481f1855dacfbe2de4158.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "zebra",
+      "top_1_pred": "zebra",
+      "top_5_pred": ["zebra", "giraffe", "deer", "lion", "horse"]
+    },
+    "c7ffb893cfc487cb1fe2f38911a0aedb51928b03ee0a279739ec11c828469e2c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "pig",
+      "top_1_pred": "pig",
+      "top_5_pred": ["pig", "cow", "sheep", "dog", "mouse"]
+    },
+    "a90c7ad5d8fbd0735671a3f56c1bb847ad54497c44d716bef3cf0a9d07aef842.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "tiger", "rabbit", "zebra", "kite"]
+    },
+    "cdd74e02ef104975efe09312b939604dfcbcf4b05de57033b2abb08b66286c5d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "zebra",
+      "top_1_pred": "zebra",
+      "top_5_pred": ["zebra", "giraffe", "tiger", "lion", "horse"]
+    },
+    "529a98bda31649e2410e35f140f9aa4c64817753f9474b2776dbe26de456ed48.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "tiger", "rabbit", "kite", "mouse"]
+    },
+    "cbe7e92564514360bae554d22770daa869430fae416cb3ca74fe98a4d11baf7a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "tiger", "mouse", "lion", "handbag"]
+    },
+    "b65fffb69a6daa77f27712f63322036a5e5d05ffa28517bad0805f30f78c6eca.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "boat",
+      "top_1_pred": "boat",
+      "top_5_pred": ["boat", "sea", "turkey", "remote", "diver"]
+    },
+    "82b5fbda8e3b8cda36f654dfd9e5f80b0f77433043f4e0a5a053e861100c5c2b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "pig",
+      "top_1_pred": "pig",
+      "top_5_pred": ["pig", "sheep", "mouse", "cow", "chicken"]
+    },
+    "478a2a1de5bfbfdd10ee7df14bdc4084ec463eddae0f2bb3ac5e0046044cef9c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "boat",
+      "top_1_pred": "boat",
+      "top_5_pred": ["boat", "turkey", "sea", "remote", "shark"]
+    },
+    "c69006c37cef7157bdcc213ac0fa9b99e49045b629bafc0f2d1ac05650a18c32.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "zebra",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "zebra", "lion", "toilet", "microwave"]
+    },
+    "369110d7cf112958d21f4c431947b10535f8a202e662c07a5dfa77e053edc57b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "zebra",
+      "top_1_pred": "zebra",
+      "top_5_pred": ["zebra", "boat", "horse", "giraffe", "orca"]
+    },
+    "a4dbf900ebfb9bf60b889074434f420efb4b4aad6a832ffd1f2ba8d0e0b5afec.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "dog",
+      "top_1_pred": "dog",
+      "top_5_pred": ["dog", "hot dog", "computer chip", "frisbee", "cow"]
+    },
+    "7479ccf0d32f48d5aa20c30cd12ccf22ec725034de7a3f355d0c52b58f4742c1.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "zebra",
+      "top_1_pred": "zebra",
+      "top_5_pred": ["zebra", "giraffe", "lion", "tiger", "horse"]
+    },
+    "dd4c7c22728864e2a72901cfd279dbc268adf8f3a5f3ae508b37c2d9493843ff.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "tiger", "kite", "lion", "orange"]
+    },
+    "90f8e5c74e226de3572374007b960c88a79d8e05bca94ac23e4ab7c4c4ccc5cd.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "dog",
+      "top_1_pred": "dog",
+      "top_5_pred": ["dog", "hot dog", "squirrel", "bug", "mouse"]
+    },
+    "a0dc6e07475b64c67c520db7095a89cf16d29a56ef8da8912eba4432616708a5.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "tiger", "leaf", "squirrel", "zebra"]
+    },
+    "6462ccf4a577c31e7050241294664f5c7dddbffdf66c4044535181765736c011.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "boat",
+      "top_1_pred": "boat",
+      "top_5_pred": ["boat", "turkey", "sea", "remote", "kite"]
+    },
+    "919d333f9d6565f5fea8ad3dffa8186adb958c0a99f8fcdd80f48449b54d9487.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "zebra",
+      "top_1_pred": "zebra",
+      "top_5_pred": ["zebra", "horse", "giraffe", "horseman", "cow"]
+    },
+    "db603d3d2cdf6227fc5a97cd185ac615cb520e4fd031598f91eb3c409d78adcb.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "pig",
+      "top_1_pred": "pig",
+      "top_5_pred": ["pig", "sheep", "cow", "turkey", "capybara"]
+    }
+  },
+  "challenge_107": {
+    "per_challenge_top_1_acc": 0.3888888888888889,
+    "per_challenge_top_5_acc": 0.3888888888888889,
+    "60a5700475d19e01f26d6ac1c90955dcb5ac9965af9ed79318c0b296a3e74d57.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "crocodile",
+      "top_1_pred": "crocodile",
+      "top_5_pred": ["crocodile", "frog", "monitor", "mouse", "dog"]
+    },
+    "3f175ff33723b7b195db55b14c35784e534a1b1491a29ce082f537b786186aa5.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "boat",
+      "top_1_pred": "shoes",
+      "top_5_pred": ["shoes", "snowboard", "hi hat", "skateboard", "toilet"]
+    },
+    "8d846a3366549ce84e1867d6248f9ff485f5ef559692d9b433e42c1945e59346.png": {
+      "top1": 0,
+      "top5": 0,
+      "gt": "shopping cart",
+      "top_1_pred": "zebra",
+      "top_5_pred": ["zebra", "rabbit", "sheep", "mouse", "lion"]
+    },
+    "b33b94993f7c7411353565c5c64ac2d80ac6cc185c067a62ce78343b960cf0ba.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "boat",
+      "top_1_pred": "person",
+      "top_5_pred": ["person", "camera", "computer chip", "dancer", "chair"]
+    },
+    "c71dcbdb494091f8077578c02f99dea2c378ee81fd4f42c282810aa791368e5d.png": {
+      "top1": 0,
+      "top5": 0,
+      "gt": "shopping cart",
+      "top_1_pred": "mouse",
+      "top_5_pred": ["mouse", "rabbit", "squirrel", "lion", "donut"]
+    },
+    "20e8f84a21bb46b4cf867b8e51e5a193a975cae17aaff0aeca68d531bca65099.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "ballerina (dancer)",
+      "top_1_pred": "dancer",
+      "top_5_pred": [
+        "dancer",
+        "ballerina (dancer)",
+        "ballerina",
+        "diver",
+        "toilet"
+      ]
+    },
+    "09f08ca5423b32129b976e9710e31bc56f0f09740c97cf7a191476b29c506cef.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "ballerina (dancer)",
+      "top_1_pred": "ballerina (dancer)",
+      "top_5_pred": [
+        "ballerina (dancer)",
+        "dancer",
+        "ballerina",
+        "person",
+        "bird"
+      ]
+    },
+    "fb104775d36155605674b64118a0cca89449f3662ca0cd0f76bbbec29abf850c.png": {
+      "top1": 0,
+      "top5": 0,
+      "gt": "shopping cart",
+      "top_1_pred": "dog",
+      "top_5_pred": ["dog", "sheep", "cow", "rabbit", "zebra"]
+    },
+    "ccf11b1006469c8d454d5134f8f15aa68b867b853f4615d9bfbcc3ddd9e96eb7.png": {
+      "top1": 0,
+      "top5": 0,
+      "gt": "shopping cart",
+      "top_1_pred": "bicycle",
+      "top_5_pred": ["bicycle", "donut", "zebra", "snowboard", "sheep"]
+    },
+    "f7acbbd9237d27db7213568a2c417cc7f200bcb6535326dc483af30f4b31a8bc.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark (fish)",
+      "top_5_pred": ["shark (fish)", "shark", "fish", "dolphin", "aeroplane"]
+    },
+    "ab227371b59449722eb49f0e4070108e8071a6f870eb8a831675ab4e2e40a334.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "boat",
+      "top_1_pred": "monitor",
+      "top_5_pred": ["monitor", "chair", "mouse", "clock", "computer chip"]
+    },
+    "020afc6948298fd2fbc4ca6a023898f8106e418d4ce167b2029fa2752d2c04b8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "boat",
+      "top_1_pred": "boat",
+      "top_5_pred": ["boat", "oven", "toaster", "cup", "cutting board"]
+    },
+    "c10a0fbacc84b003c3201e5b94497e9c5b5b56d7b6edab86a1fab96781ea318f.png": {
+      "top1": 0,
+      "top5": 0,
+      "gt": "shopping cart",
+      "top_1_pred": "computer chip",
+      "top_5_pred": ["computer chip", "butterfly", "sheep", "printer", "kite"]
+    },
+    "20cce3bf71bcbf02387ac7272e57951dc83736dd45e0ab14e5c40da403cba98f.png": {
+      "top1": 0,
+      "top5": 0,
+      "gt": "shopping cart",
+      "top_1_pred": "computer chip",
+      "top_5_pred": ["computer chip", "clock", "butterfly", "leaf", "insect"]
+    },
+    "09fca2ae3283aafd612ea0332e07ff996b6fb7effbbd4b17dace6f757320e4b4.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "ballerina (dancer)",
+      "top_1_pred": "ballerina (dancer)",
+      "top_5_pred": [
+        "ballerina (dancer)",
+        "dancer",
+        "ballerina",
+        "person",
+        "kite"
+      ]
+    },
+    "a035128654e5c3a927ec1223d1c72e820855f7e365f2c5009cb864a550a749.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark (fish)",
+      "top_5_pred": ["shark (fish)", "shark", "fish", "dolphin", "diver"]
+    },
+    "83adf687faecd806d036eb5cfa027723f9746d9bb5e73106d6ece0164dd0c669.png": {
+      "top1": 0,
+      "top5": 0,
+      "gt": "shopping cart",
+      "top_1_pred": "computer chip",
+      "top_5_pred": ["computer chip", "kite", "toilet", "clock", "butterfly"]
+    },
+    "228a5126e63bd65ebe6bd12141a9e0079a0c6a869e51095c4859891d8a6b0c3.png": {
+      "top1": 0,
+      "top5": 0,
+      "gt": "shopping cart",
+      "top_1_pred": "computer chip",
+      "top_5_pred": ["computer chip", "laptop", "sheep", "toilet", "kite"]
+    }
+  },
+  "challenge_98": {
+    "per_challenge_top_1_acc": 0.6666666666666666,
+    "per_challenge_top_5_acc": 0.8888888888888888,
+    "54f5a5628b78e047dcd3801376818718a0e82d19d1df7ee5fcb6432a7b139370.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "mouse", "tiger", "rabbit", "squirrel"]
+    },
+    "78f9a30175c6e4300ee342f0722f62f74a358f8c051849468ede0117c5a355c5.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bicycle",
+      "top_1_pred": "bicycle",
+      "top_5_pred": [
+        "bicycle",
+        "motorbike",
+        "orange",
+        "cutting board",
+        "scissors"
+      ]
+    },
+    "4ae37169bf699f705ee4aa84e3b69458c95e4ac5a60bc548e590b2322e29b101.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "computer chip", "dog", "lion", "toilet"]
+    },
+    "87ca612d75dbe25c34c89374f7c73dc1bed72b3ad05fd91240b78a1c93bcbcd9.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bicycle",
+      "top_1_pred": "bicycle",
+      "top_5_pred": ["bicycle", "motorbike", "diningtable", "toilet", "sheep"]
+    },
+    "d4f3c3278ef618553bf945d447290d4b2f6b474f94ba7b1f746d801095f588db.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "mouse", "laptop", "monitor", "printer"]
+    },
+    "0138961ef5292211a5a5df0d28110caa0696cfb1f1cb6c2176482b145341492c.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "motorbike",
+      "top_1_pred": "computer chip",
+      "top_5_pred": ["computer chip", "mouse", "bowl", "bug", "tv"]
+    },
+    "cef8de255d56479064ba8009ec2322f0faf102b3135a9ef21ac02eefaf9b7e9f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bicycle",
+      "top_1_pred": "bicycle",
+      "top_5_pred": [
+        "bicycle",
+        "motorbike",
+        "cutting board",
+        "diningtable",
+        "wine glass"
+      ]
+    },
+    "5eaccc031c2df11af5dc80fd5ba040cc42f87c224df28f916d3507d5c7ca0b72.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "motorbike",
+      "top_1_pred": "lion",
+      "top_5_pred": ["lion", "mouse", "rabbit", "sheep", "bear"]
+    },
+    "5e5120add7c787b48b1742a7ce5e7727d74b6037a0715bc35726e5de7193bf01.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "mouse", "lion", "tiger", "dancer"]
+    },
+    "18d751113da99e85a95079839bd8fecacd3f5f6d7fa64c45b168a08fe7537ba1.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "motorbike",
+      "top_1_pred": "bicycle",
+      "top_5_pred": ["bicycle", "motorbike", "bug", "bug (insect)", "zebra"]
+    },
+    "b30546ad79814116f3efd0885966165c41ef7956ef70e54e28e1446a1c297623.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "bicycle",
+      "top_1_pred": "cutting board",
+      "top_5_pred": ["cutting board", "frisbee", "donut", "clock", "bicycle"]
+    },
+    "404371af7b8ed0a9e7bc605fb781d287478de67221e0a6ea607e417be1269b09.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bicycle",
+      "top_1_pred": "bicycle",
+      "top_5_pred": [
+        "bicycle",
+        "motorbike",
+        "scissors",
+        "fork",
+        "tennis racket"
+      ]
+    },
+    "9038a650f75684288f5e8dc1d8ff3d6333f85457e7b8174d6fd79d7496dde5c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark",
+      "top_5_pred": ["shark", "shark (fish)", "dolphin", "orca", "fish"]
+    },
+    "6aa133ebe8bd7fc459047dcd86440a7d9127dfc0c05c801fb067aee172de223.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bicycle",
+      "top_1_pred": "bicycle",
+      "top_5_pred": ["bicycle", "motorbike", "minivan (car)", "mouse", "horse"]
+    },
+    "885e3c8279c218b13f93b128904cb9bab2865dfaf43eba85202e39e4d326c0a2.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "rabbit", "mouse", "fire hydrant", "squirrel"]
+    },
+    "f6cf0c75a0149b32e3839f05ead2c1b6af0ab041d14005b78dce4ff50f72eccc.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "motorbike",
+      "top_1_pred": "bicycle",
+      "top_5_pred": ["bicycle", "motorbike", "kite", "fork", "sheep"]
+    },
+    "613fc5134ec02c11babac3f5d57ce0655214c287a21120ee2ca14b420ee4b70a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "cat",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "mouse", "tiger", "squirrel", "kite"]
+    },
+    "c40f9f42f09e1db19dbbd3faa2e8ca57d0db67e4e43930dd70ecf980dc0a2519.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "horseman",
+      "top_1_pred": "dancer",
+      "top_5_pred": ["dancer", "ballerina (dancer)", "deer", "horse", "toilet"]
+    }
+  },
+  "challenge_92": {
+    "per_challenge_top_1_acc": 0.8421052631578947,
+    "per_challenge_top_5_acc": 1.0,
+    "f8455991b961060c69bfc2c3a4d23556cf5af1ae09c52ad8376413a09bd009a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "camera",
+      "top_1_pred": "camera",
+      "top_5_pred": ["camera", "computer chip", "bug", "cell phone", "toaster"]
+    },
+    "3e737b59789b3b9b9d49962a1f8773f5692f9e54dc4bb474f9bcde4974a24713.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "ring (jewelry)",
+      "top_1_pred": "ring (jewelry)",
+      "top_5_pred": [
+        "ring (jewelry)",
+        "jewelry",
+        "butterfly",
+        "bowl",
+        "monitor"
+      ]
+    },
+    "2d599296e5c53299e1ea1a43c310f50e8db24185c1708a292302458786d89c0a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "ring (jewelry)",
+      "top_1_pred": "ring (jewelry)",
+      "top_5_pred": [
+        "ring (jewelry)",
+        "jewelry",
+        "butterfly",
+        "apple",
+        "computer chip"
+      ]
+    },
+    "9047ddc0ee291c61899103c2c7c00b9019bcacfd15f2ff36f9696aea20d205a8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tv",
+      "top_1_pred": "tv",
+      "top_5_pred": ["tv", "tvmonitor", "microwave", "monitor", "oven"]
+    },
+    "c5e4d26ee666478bd5ed539afe5101e33c02a89f0282163421c81c218cd979e6.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "tv",
+      "top_1_pred": "tvmonitor",
+      "top_5_pred": ["tvmonitor", "tv", "remote", "monitor", "laptop"]
+    },
+    "b84a58415bf5c173ac2f57f2a55aa54776533d347ec8631a996e261e3fd6a30f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "ring (jewelry)",
+      "top_1_pred": "ring (jewelry)",
+      "top_5_pred": [
+        "ring (jewelry)",
+        "jewelry",
+        "butterfly",
+        "ballerina (dancer)",
+        "crab"
+      ]
+    },
+    "363bf495d48350426777b68f86542d5cdf085ce3c357d00ea554b1216888902b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "chicken", "bird", "turkey", "rabbit"]
+    },
+    "6922a94c076df7a1d513acceb85605505b8d73c367118b4cf8fc2fc05296b555.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tv",
+      "top_1_pred": "tv",
+      "top_5_pred": ["tv", "tvmonitor", "remote", "sofa", "monitor"]
+    },
+    "2ecb4b7492cf37ce419f764a06d8b30c5349edffffa7a1fecf5bb39ea998542a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "chicken", "penguin and duck", "toilet"]
+    },
+    "ff7009337ef6df51b58ffcdf0333ca531c57aa15305fe3918c53d2a3e760c13c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "ring (jewelry)",
+      "top_1_pred": "ring (jewelry)",
+      "top_5_pred": ["ring (jewelry)", "jewelry", "butterfly", "bowl", "donut"]
+    },
+    "b58a111f50747674effae1ccd6344480fb4eb01bc6da0be3b10f9e0675e21696.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "chicken", "bird", "turkey", "monitor"]
+    },
+    "6a579b25a48424fad0f8ae6636a0b10379553d650877e22d7ae2f1001c99c5fb.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "chicken", "chair", "tie"]
+    },
+    "121bd1266ef0170659b5030c4a12dfbb8f446433911a060827c32fd16b10b8e1.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "tv",
+      "top_1_pred": "tvmonitor",
+      "top_5_pred": ["tvmonitor", "tv", "remote", "monitor", "microwave"]
+    },
+    "3b778732555dba69019f55072810782e0b08559f551f248a32f6e1885e897df7.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "tv",
+      "top_1_pred": "tvmonitor",
+      "top_5_pred": ["tvmonitor", "tv", "monitor", "apple", "laptop"]
+    },
+    "bfadd0f5feb9d0bfefcbbce26df675a901962cfa99ad7fdaaee71180b5a95ba0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "eggs",
+      "top_1_pred": "eggs",
+      "top_5_pred": ["eggs", "diningtable", "cutting board", "bowl", "kitchen"]
+    },
+    "6acb35daafa2c5cf02d1cce2d7aff2d06137e300cc7877525122de00dce5dfe8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "camera",
+      "top_1_pred": "camera",
+      "top_5_pred": ["camera", "bug", "diver", "bug (insect)", "factory"]
+    },
+    "392bf36d606920b0f4a1d10e41d1260e07bcaef7f914297b9c08cb5d05cba7b8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tv",
+      "top_1_pred": "tv",
+      "top_5_pred": ["tv", "tvmonitor", "monitor", "microwave", "remote"]
+    },
+    "c4e318425f87d7dfab70de4349dce17f647efd5b70cd393e80b26295f93b3685.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "ring (jewelry)",
+      "top_1_pred": "ring (jewelry)",
+      "top_5_pred": [
+        "ring (jewelry)",
+        "jewelry",
+        "baseball glove",
+        "apple",
+        "diver"
+      ]
+    },
+    "16287662e93705241e6deb6f6cdffd724b318870423fd71165f16dce5366be2a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "camera",
+      "top_1_pred": "camera",
+      "top_5_pred": ["camera", "book", "baseball glove", "apple", "person"]
+    }
+  },
+  "challenge_96": {
+    "per_challenge_top_1_acc": 1.0,
+    "per_challenge_top_5_acc": 1.0,
+    "2de0b78dfeb1aaa112a99e9ebbb92da8649a3e0e3f53b7265d4b62a959da29c8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "deer",
+      "top_1_pred": "deer",
+      "top_5_pred": ["deer", "giraffe", "rabbit", "mouse", "squirrel"]
+    },
+    "da8ab64bd5c1d27858c93a81d82f11f350899232c49f62963e0730316dd4efa8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "monitor", "apple", "cup"]
+    },
+    "011cf61ad1232b45a78f5ec3fba17802fe2c74955c3b6f24c8e841e2456e82f8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "penguin",
+      "top_1_pred": "penguin",
+      "top_5_pred": ["penguin", "penguin and duck", "bird", "duck", "chicken"]
+    },
+    "b29e65177394078a94947a7c3ddd1bef5e3b6a13a982cfa8b2769f9fe012d5d0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "penguin", "penguin and duck", "chicken"]
+    },
+    "af660d21e4dc864e2aeb293fb1b7b51b17329a91e29d22621a2a6d25e66cfe49.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "apple", "cow", "turkey"]
+    },
+    "f2378eca35cdf88c5f0ac4ca00cf2ed10ad3ff5f8ca565e24901535904f5c68d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "apple", "carrot", "monitor"]
+    },
+    "af0efd0c6fe49fdaf4aa1fd11f2d66de69be38feac395ce4e746b7cb0b656391.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "apple", "monitor", "book"]
+    },
+    "0d1162d87466d3943890f98d33640df5eec2decfdd6a4512fe0b0c29e8214ef2.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "carrot", "apple", "monitor"]
+    },
+    "8c63c1a4ef436e0c47fdf0ae0c4b2575667fb32dff919495c18b0963881a1f5d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "penguin and duck ",
+      "top_1_pred": "penguin and duck",
+      "top_5_pred": [
+        "penguin and duck",
+        "bird",
+        "duck",
+        "penguin",
+        "tennis racket"
+      ]
+    },
+    "670628b7daeb3c2eb3c80f8b57c3a3cdcbc7030e983c7353ae8236561961396c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "apple", "cow", "monitor"]
+    },
+    "46f8acb1de809e4a5eaca7780f9abb3b7bc58bf4d92bf7e29bc33ddc9eb52b98.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "apple", "handbag", "monitor"]
+    },
+    "d2036fbcc3022f44ff05f3870ce3adfa0601bbcb0b89174a9aff12e9e5eba373.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "monitor", "carrot", "book"]
+    },
+    "0c87f493acaaff8f30bc5ed5074cbcb972fa0d70f4c6d69d027bcf52c66e9087.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "penguin",
+      "top_1_pred": "penguin",
+      "top_5_pred": ["penguin", "penguin and duck", "bird", "duck", "diver"]
+    },
+    "fc89814d8c1acb6917c81be27f22c0b8f838313a90c65689dbd732f17a42cb62.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "deer",
+      "top_1_pred": "deer",
+      "top_5_pred": ["deer", "rabbit", "monitor", "cow", "giraffe"]
+    },
+    "1923a04efabb30265aab23b394cb2e215fcc4d6af875af9bb5113d1d86067490.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "deer",
+      "top_1_pred": "deer",
+      "top_5_pred": ["deer", "giraffe", "duck", "rabbit", "squirrel"]
+    },
+    "08dee9d4db0726939b69191c174e0102c1aabf6c5f975fc1aed5f9042e338489.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "penguin",
+      "top_1_pred": "penguin",
+      "top_5_pred": [
+        "penguin",
+        "penguin and duck",
+        "bird",
+        "diver",
+        "snowboard"
+      ]
+    },
+    "d3911fbb273e59f44b71521418f4f72a5c998c94a3776e3371ba62bff5ceaae1.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "orange", "carrot", "monitor"]
+    },
+    "d1687589a214687e7c5032752fe9a28f470d464bc20a7e06e159554ee975fc3b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "hair drier", "chicken", "toilet"]
+    },
+    "a71884b827c23f5d69b24e821ef246b677f8f058a61dd6b7efd0aba38c781972.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "deer",
+      "top_1_pred": "deer",
+      "top_5_pred": ["deer", "giraffe", "rabbit", "handbag", "monitor"]
+    }
+  },
+  "challenge_99": {
+    "per_challenge_top_1_acc": 0.6842105263157895,
+    "per_challenge_top_5_acc": 0.9473684210526315,
+    "3336202f289d5a5b0a460a0b56325b337ca8789b207c22f5d7c8ed36942d0175.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "hi hat",
+      "top_1_pred": "donut",
+      "top_5_pred": ["donut", "baseball glove", "bowl", "hi hat", "sandwich"]
+    },
+    "09c23596b86156828b9d6453dafab41f91f128b7dc3b5e0599b4da81166c4e0.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "chicken ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "chicken", "turkey", "penguin"]
+    },
+    "74e056a368296b2c56d72d86c8b0d4f662615ede5abe446e69ab79ac504af04f.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "dolphin",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": [
+        "coral (aquatic plant)",
+        "diver",
+        "fish",
+        "dolphin",
+        "duck"
+      ]
+    },
+    "a7382e855cfd2f1ba0b9a5f7a646b97a96a69ad0a0629f076e8ef3c7c8eb6a44.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "hi hat",
+      "top_1_pred": "bowl",
+      "top_5_pred": ["bowl", "hi hat", "spoon", "sports ball", "baseball glove"]
+    },
+    "c93289f66b14e36916e212ba0aac4e78a302f61b300c87bcfc65f9bfb54745a6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "dolphin",
+      "top_1_pred": "dolphin",
+      "top_5_pred": ["dolphin", "orca", "shark", "shark (fish)", "diver"]
+    },
+    "94a0b654b7c89572cf8c0a869d7d11af4acee17814bc5731efd198115a16cf50.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "hi hat",
+      "top_1_pred": "hi hat",
+      "top_5_pred": ["hi hat", "monitor", "computer chip", "clock", "bowl"]
+    },
+    "7f5eb529958bd8931cee6a7f3b2174fdf030962084661736d05606b2eef70b1f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "coral (aquatic plant)",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": [
+        "coral (aquatic plant)",
+        "fish",
+        "diver",
+        "sea",
+        "shark (fish)"
+      ]
+    },
+    "2536855a95d21907e09e709fc7bac566debc080d8a6307d6b10f2b74a703c5e6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "coral (aquatic plant)",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": ["coral (aquatic plant)", "sea", "coral", "fish", "diver"]
+    },
+    "8135a9954d1f80df70f64cc771f192b0d5d7f9bf64f7a1077de01de2df9e54a0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "chicken ",
+      "top_1_pred": "chicken",
+      "top_5_pred": ["chicken", "turkey", "bird", "duck", "dancer"]
+    },
+    "188d18b6ec4d35a6c38d386e45e154d484d9b1a4632e1e87888feff6ed13ecbf.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "chicken ",
+      "top_1_pred": "chicken",
+      "top_5_pred": ["chicken", "turkey", "duck", "bird", "toilet"]
+    },
+    "5131512c618b82a37753cae87d92a1452b1812aaf09623b59547913a6b029f98.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "coral (aquatic plant)",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": ["coral (aquatic plant)", "fish", "diver", "sea", "coral"]
+    },
+    "a3e24a006d1597d403e7c16c32ef9430786aca2be6ae84a71fa59471bf84447.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "notes",
+      "top_1_pred": "notes",
+      "top_5_pred": ["notes", "keyboard", "laptop", "cutting board", "printer"]
+    },
+    "f6965da6058c6e5bb865a887c708f5127638a9e6809bf88c19541e4aa557810c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "coral (aquatic plant)",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": ["coral (aquatic plant)", "coral", "sea", "diver", "tree"]
+    },
+    "d21229debacd00aa34aea0afcb547cb58597b178c4a4e10713221df15c9b598a.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "dolphin",
+      "top_1_pred": "diver",
+      "top_5_pred": ["diver", "person", "toilet", "microwave", "computer chip"]
+    },
+    "a618dcc86f80dd93b51c4dc31ea91f388cbd00826d7773bbff5f3084c7fef4e2.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "dolphin",
+      "top_1_pred": "dolphin",
+      "top_5_pred": ["dolphin", "apple", "duck", "fish", "elephant"]
+    },
+    "bce096dc40adfc62be4a3a2bf552df539b481f1d7ae555d78e732aff1073c6d6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "hi hat",
+      "top_1_pred": "hi hat",
+      "top_5_pred": ["hi hat", "bowl", "spoon", "toilet", "ring (jewelry)"]
+    },
+    "c78bbef8d148f835ec9bfc1c310c94bbb862d9f53f8cde5a0f5ad2e7863f2e69.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "coral (aquatic plant)",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": ["coral (aquatic plant)", "sea", "diver", "fish", "coral"]
+    },
+    "c848e5a7132be9ad9d003a0f30fb2ce1a1460ef4a25f0605813baac5ece88c5d.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "hi hat",
+      "top_1_pred": "bowl",
+      "top_5_pred": ["bowl", "computer chip", "hi hat", "vase", "cup"]
+    },
+    "1e1f932aef47f1aab2697d205c3e2e184f4026998b7a5c5afc744fb4ecf98519.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "coral (aquatic plant)",
+      "top_1_pred": "coral (aquatic plant)",
+      "top_5_pred": ["coral (aquatic plant)", "sea", "fish", "diver", "coral"]
+    }
+  },
+  "challenge_100": {
+    "per_challenge_top_1_acc": 0.7894736842105263,
+    "per_challenge_top_5_acc": 1.0,
+    "90393f08c6ce7da8d3e1312ab5946e80a54f08be3475cbfb6c6d0fb83770ab9.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monitor",
+      "top_1_pred": "monitor",
+      "top_5_pred": ["monitor", "tvmonitor", "laptop", "tv", "remote"]
+    },
+    "31bc7f532d82b2c58650e5f6c21587bf4793edcfe344579b20c960683b6d6c0f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "capybara",
+      "top_1_pred": "capybara",
+      "top_5_pred": ["capybara", "bear", "pig", "squirrel", "frisbee"]
+    },
+    "980c6e21057eeaa6b00e4c183afd46cccb0e2babc8675d0db291dcfbd700d87c.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "monitor",
+      "top_1_pred": "tv",
+      "top_5_pred": ["tv", "monitor", "tvmonitor", "microwave", "remote"]
+    },
+    "003e3056b2cbfb7db01807f4424820d61d4513e74472d1bac2961478a9e725c8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "capybara",
+      "top_1_pred": "capybara",
+      "top_5_pred": ["capybara", "bear", "squirrel", "pig", "monitor"]
+    },
+    "5b4aad87bceae252b442a95ae7e33473aa098b9b9c14e8da30f3482a1aafd90.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monitor",
+      "top_1_pred": "monitor",
+      "top_5_pred": ["monitor", "laptop", "tvmonitor", "snowboard", "keyboard"]
+    },
+    "14e01821b131b0140978d53ccd2e9aff01ca410aa71a091c2a085dc9ee112804.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "capybara",
+      "top_1_pred": "capybara",
+      "top_5_pred": ["capybara", "bear", "squirrel", "pig", "frisbee"]
+    },
+    "7b5e7a2b2a30ce42a7681b7a2d3c1b6afff82906d1d6fcddbaec8335476165e0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "capybara",
+      "top_1_pred": "capybara",
+      "top_5_pred": ["capybara", "squirrel", "carrot", "mouse", "monitor"]
+    },
+    "de6590098245b6ef130bd8cb4f9c7cccd3cb6b99dc3d221b8a6ce072488a995b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monitor",
+      "top_1_pred": "monitor",
+      "top_5_pred": ["monitor", "tvmonitor", "laptop", "remote", "sea"]
+    },
+    "7d01653ef0c5b597fa44a02ca5908f9b2ac4b9a4b309c43eff98d888fc9d167f.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "monitor",
+      "top_1_pred": "laptop",
+      "top_5_pred": [
+        "laptop",
+        "keyboard",
+        "monitor",
+        "tvmonitor",
+        "computer chip"
+      ]
+    },
+    "4c617666043164c8917d11d9e61fbda910713617609a8d7b028ebc56cd462afa.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "capybara",
+      "top_1_pred": "cow",
+      "top_5_pred": ["cow", "deer", "giraffe", "capybara", "sheep"]
+    },
+    "7bc01ca5fea46456727f928fc655dbeecb39c42cc2c32a4acf06ec3dd15608ab.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monitor",
+      "top_1_pred": "monitor",
+      "top_5_pred": ["monitor", "tvmonitor", "keyboard", "computer board", "tv"]
+    },
+    "fb22485b96c252865fa330c461665a27dc872936c85366cb85ae8ef2a249eff3.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "capybara",
+      "top_1_pred": "capybara",
+      "top_5_pred": ["capybara", "bear", "pig", "mouse", "squirrel"]
+    },
+    "23b0cb5bd87ac19694cc54a1a1eee4ac9b0f42a7b3e2ece5793279e87af381f0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "vending machine",
+      "top_1_pred": "vending machine",
+      "top_5_pred": [
+        "vending machine",
+        "parking meter",
+        "tvmonitor",
+        "bus",
+        "traffic light"
+      ]
+    },
+    "91096b63c85d5678da07fa868c173050f16f7a259cd2224a506db9b10694797d.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "monitor",
+      "top_1_pred": "laptop",
+      "top_5_pred": ["laptop", "monitor", "tvmonitor", "apple", "remote"]
+    },
+    "09319507bc0a75af9d061fbb9480ca182b11e82081cbe4e7b43d9c7724098a9b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "camera",
+      "top_1_pred": "camera",
+      "top_5_pred": [
+        "camera",
+        "parking meter",
+        "monitor",
+        "tvmonitor",
+        "remote"
+      ]
+    },
+    "109891a01435f198b5ec8edd38714a6bfc472a321594428c4210a24ae36e2c2.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "capybara",
+      "top_1_pred": "capybara",
+      "top_5_pred": ["capybara", "pig", "rabbit", "bear", "squirrel"]
+    },
+    "8c14ae01288bfce020de049c7cad9937289fb36fe4646ef38bd1dc906f9b45c9.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "vending machine",
+      "top_1_pred": "vending machine",
+      "top_5_pred": [
+        "vending machine",
+        "refrigerator",
+        "parking meter",
+        "microwave",
+        "truck"
+      ]
+    },
+    "7f645e9fcfd77c9fe0f6926cc59fd0a43951a572407ad99a3e453af39e83debf.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "monitor",
+      "top_1_pred": "monitor",
+      "top_5_pred": ["monitor", "tvmonitor", "tv", "remote", "laptop"]
+    },
+    "a6e178fe3e724b24b664c4c9585449b20fd1c4418d0315d7f11b2f51514beed2.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "camera",
+      "top_1_pred": "camera",
+      "top_5_pred": [
+        "camera",
+        "parking meter",
+        "monitor",
+        "fire hydrant",
+        "remote"
+      ]
+    }
+  },
+  "challenge_101": {
+    "per_challenge_top_1_acc": 0.7894736842105263,
+    "per_challenge_top_5_acc": 1.0,
+    "58413fe8d4b409347a7243fe76cd78d3f8c85006e7ce0507f3396b81a2791ef1.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "computer board",
+      "top_1_pred": "microwave",
+      "top_5_pred": [
+        "microwave",
+        "computer board",
+        "clock",
+        "cell phone",
+        "computer chip"
+      ]
+    },
+    "9b7e251d3e9e1ce33336c966edcdd3660f6b3320d7e2ef3218dcd0e8141a0a65.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shoes",
+      "top_1_pred": "shoes",
+      "top_5_pred": ["shoes", "snowboard", "baseball glove", "monitor", "book"]
+    },
+    "bffedc930dd642a7d91b663cd0d78fd650ed5fcc6dc77ac58436f275dc595f59.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "chicken", "turkey", "penguin and duck"]
+    },
+    "1354b1a69e61c28cf25b7a22716a3a2cdbb7db5e62b0ee6909d53e9ff5bbcf42.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "shoes",
+      "top_1_pred": "snowboard",
+      "top_5_pred": [
+        "snowboard",
+        "shoes",
+        "skateboard",
+        "diver",
+        "baseball glove"
+      ]
+    },
+    "b5f8e1f8bd2370d138427d62ff0decc1ecc61c52bf95df7fca5b79d73008244b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "tvmonitor", "bird", "penguin and duck", "chicken"]
+    },
+    "7b7866a19ee4a799b9459732d79d5f2550961a835aeaf32ab5291f7fb7e6f1f1.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "computer board",
+      "top_1_pred": "computer board",
+      "top_5_pred": [
+        "computer board",
+        "computer chip",
+        "parking meter",
+        "monitor",
+        "cell phone"
+      ]
+    },
+    "fba8e7c9109c7993654b6796940952680f07a59a961a2db3aafab969d5ea4246.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "penguin and duck", "diver", "chicken"]
+    },
+    "07e3ed49058ce524a922e3109b5f609530741f07e9814b630f14506c37e0dba.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shoes",
+      "top_1_pred": "shoes",
+      "top_5_pred": ["shoes", "turkey", "snowboard", "diver", "book"]
+    },
+    "4a761fb4b3d3a20466145646c7f29ab8795131aca64bae9cfae77bb4b6fb7c1d.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "camera",
+      "top_1_pred": "camera",
+      "top_5_pred": ["camera", "remote", "cell phone", "clock", "tvmonitor"]
+    },
+    "d0eb92038c477d9283f44f29cc94628251cebebb67716cd6000414562b02f8d1.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shoes",
+      "top_1_pred": "shoes",
+      "top_5_pred": [
+        "shoes",
+        "diver",
+        "monitor",
+        "sea",
+        "coral (aquatic plant)"
+      ]
+    },
+    "0f357a9662c9a8a283553085ff6d5964fc374db5b66c52a413bebd57c8573d5f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "camera",
+      "top_1_pred": "camera",
+      "top_5_pred": [
+        "camera",
+        "remote",
+        "monitor",
+        "tvmonitor",
+        "parking meter"
+      ]
+    },
+    "56230d6eb1692ad8404a7a58bfdb4c2b6307031fc2b497ef2f42ca10cc88958c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "eggs",
+      "top_1_pred": "eggs",
+      "top_5_pred": [
+        "eggs",
+        "bowl",
+        "ring (jewelry)",
+        "plant",
+        "coral (aquatic plant)"
+      ]
+    },
+    "9b30755433beeceebbf6c943ea9a44f4b3738f030176788d622af36aed6c9ef2.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "camera",
+      "top_1_pred": "parking meter",
+      "top_5_pred": [
+        "parking meter",
+        "camera",
+        "monitor",
+        "tvmonitor",
+        "remote"
+      ]
+    },
+    "191f1305a31314ec10e28a98de7fdb7fedbb26eb25dc790b6f46c69f95143ee7.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "computer board",
+      "top_1_pred": "computer board",
+      "top_5_pred": [
+        "computer board",
+        "computer chip",
+        "laptop",
+        "microwave",
+        "monitor"
+      ]
+    },
+    "cf0798ac9f0cb238308d16af39eb01b5bf575b6896c777d5bbab9d0638aea1a5.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "computer board",
+      "top_1_pred": "parking meter",
+      "top_5_pred": [
+        "parking meter",
+        "clock",
+        "tennis racket",
+        "computer board",
+        "computer chip"
+      ]
+    },
+    "ffc1ea6dc012536b1c6a1f2742e1fd93b36f76ce6ef6da46bec40f1f22099172.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shoes",
+      "top_1_pred": "shoes",
+      "top_5_pred": ["shoes", "snowboard", "skis", "skateboard", "turkey"]
+    },
+    "930af8a11b0d01842520c9ff5e47c493f961d49a3aeaf6f361b4dfe5f656c8fd.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "chicken", "penguin and duck", "mouse"]
+    },
+    "8bf5c40db58833e624cc6e724e171bf99faf272e5e589f57f1a3097919714ca7.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "penguin and duck", "chicken", "diver"]
+    },
+    "072bcae2f2b5a7cca6ce41c2d05a8a3c66c5012e5ef67ca4f2f4354c6054c4c2.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shoes",
+      "top_1_pred": "shoes",
+      "top_5_pred": ["shoes", "snowboard", "skis", "turkey", "zebra"]
+    }
+  },
+  "challenge_102": {
+    "per_challenge_top_1_acc": 0.5263157894736842,
+    "per_challenge_top_5_acc": 0.7368421052631579,
+    "72be0bd79823a8307ed98be9ec0cac8ec9e00384ab59c4239a4ff16c657fe6c6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "tree", "red panda", "mouse", "deer"]
+    },
+    "6df2f298ea7394cca19949468354ad2a02f969b4b520b080ef549ca105984d48.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "bear",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "deer", "capybara", "cow", "squirrel"]
+    },
+    "7a015ac99569ef7ac0d138c82f1c3cbcd098bf63cb0226c60f79e4082861c783.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "koala",
+      "top_1_pred": "koala",
+      "top_5_pred": ["koala", "bear", "teddy bear", "baseball bat", "mouse"]
+    },
+    "2f670306d11aa99246bbb3fd24a87c0162c09f8559944643a211c62faaec5e0b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "koala", "mouse", "tree", "deer"]
+    },
+    "fbb2b880a1befa5787367840982a2ca0fb6c75f73127665ee395f8140993ed2f.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "bear",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "cow", "horseman", "bowl", "sports ball"]
+    },
+    "730d5dcb19f0cd7eb79ea8bfee377e94e99beb7d9e66a9fdc3080a94abc4c518.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "bear",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "cow", "deer", "capybara"]
+    },
+    "c14e0058e13cd49d69fc0bdcc7459e8742bcabfddfad300a79926a47f6c36826.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "cow",
+      "top_5_pred": ["cow", "horse", "bear", "capybara", "deer"]
+    },
+    "af641863157ce7d3ab4392769ae5d03855565f0a3a034a5b7b614d82d953ff48.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "orange", "tree", "book", "leaf"]
+    },
+    "8540e1bcc4588a9ef144f664454caaed30e43562ba5c184f2155b0acae515a4.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "rabbit", "deer", "mouse", "orange"]
+    },
+    "9783ad0d425bfb05e6e92c47865f95d16bccc06536d757194829fe3ae07755cb.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "mouse", "monitor", "deer", "tree"]
+    },
+    "0ece5492ff5168e31ec6576feb7f09e5f8c2de7a11e1296f4db99b757b147715.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "koala",
+      "top_1_pred": "koala",
+      "top_5_pred": ["koala", "teddy bear", "bear", "rabbit", "mouse"]
+    },
+    "1d919da70d6c8c6e163f06c89fa6c643f8c433830f96d41833353635f6795b12.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "squirrel",
+      "top_1_pred": "cat",
+      "top_5_pred": ["cat", "rabbit", "mouse", "penguin", "chicken"]
+    },
+    "69b1472a70c432a0f228de3d55f195b6c57fff51410f3fec01e73b8bbefb74d9.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "koala",
+      "top_1_pred": "koala",
+      "top_5_pred": ["koala", "bear", "mouse", "tennis racket", "knife"]
+    },
+    "72a1320d8d9a9525b4ff726d50c8cbc6eecac9943de34dd292abf04428e62189.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "koala",
+      "top_1_pred": "koala",
+      "top_5_pred": ["koala", "mouse", "bear", "rabbit", "tennis racket"]
+    },
+    "f175fb2cc11fb9a4b9ddc7f3e1b536f6f885b4431d7512a293625e1ae8cf3783.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "capybara",
+      "top_5_pred": ["capybara", "cow", "horse", "sheep", "bear"]
+    },
+    "4a31d5c98cbe8dcc663ffad619d4eb5f6904e4ecf0faf72099484c1e3e95e0a3.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "koala",
+      "top_1_pred": "shoes",
+      "top_5_pred": ["shoes", "koala", "snowboard", "bear", "baseball glove"]
+    },
+    "313a0ddabb725993e1d7eab7937e97b047d403ffd3b8cb26b62c8ff46205e97.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "koala",
+      "top_1_pred": "koala",
+      "top_5_pred": ["koala", "bear", "hi hat", "mouse", "bird"]
+    },
+    "2e00a6e8d93bffb6393e2fc4caede10f686a80deddbaa9c98d54fd073403707d.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "bear",
+      "top_1_pred": "capybara",
+      "top_5_pred": ["capybara", "bear", "squirrel", "horse", "lion"]
+    },
+    "951b19e6debacb5a4fdb2511d49dd9dac624b8f5fec8261d77514c773b2b185.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "bear",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "horseman", "cow", "sheep", "elephant"]
+    }
+  },
+  "challenge_112": {
+    "per_challenge_top_1_acc": 0.7894736842105263,
+    "per_challenge_top_5_acc": 0.9473684210526315,
+    "ca33b3afedbbeb07943a372ac069e2b0ef3de98a7fcdb22f15dcc1dc52dd9cc7.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "turkey ",
+      "top_1_pred": "turkey",
+      "top_5_pred": ["turkey", "chicken", "bird", "duck", "diningtable"]
+    },
+    "12153cb052681f41b0fd5aad5fe89009b62ffa1711686ceab49a3e7d0ab0e775.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "dolphin",
+      "top_1_pred": "dolphin",
+      "top_5_pred": ["dolphin", "shark (fish)", "shark", "fish", "orca"]
+    },
+    "14490fde33f1b0416859d85012f38cc21139f2c8345be93adbb4299c14e95188.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "minivan (car)",
+      "top_1_pred": "minivan (car)",
+      "top_5_pred": ["minivan (car)", "bus", "minivan", "truck", "car"]
+    },
+    "4f67c323bdd982913b981d9d8c6242a2ed83e0edd0012aea7aa8b4d53ff6ea43.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "diver",
+      "top_1_pred": "diver",
+      "top_5_pred": [
+        "diver",
+        "coral (aquatic plant)",
+        "sea",
+        "fish",
+        "shark (fish)"
+      ]
+    },
+    "47c16f9bbbbc874eb400460e9c4672982b6c32722257024ae1da91487d8d6e58.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "dolphin",
+      "top_1_pred": "dolphin",
+      "top_5_pred": [
+        "dolphin",
+        "elephant",
+        "sheep",
+        "coral (aquatic plant)",
+        "bird"
+      ]
+    },
+    "620b1b8e8e586265ce60eb8f357fa52b15b7323e8fa487ad93bdd5f160cbc90a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "turkey ",
+      "top_1_pred": "turkey",
+      "top_5_pred": ["turkey", "chicken", "bird", "duck", "frisbee"]
+    },
+    "63a3d2594eb5db8db3e6342b0895967472387d1a866069fc5b959e8011d2ba55.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "diver",
+      "top_1_pred": "diver",
+      "top_5_pred": [
+        "diver",
+        "coral (aquatic plant)",
+        "sea",
+        "shark (fish)",
+        "fish"
+      ]
+    },
+    "395c4093c9a01664d720e709724252dd797904f3c246612fb2af76d9933ff87c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "turkey ",
+      "top_1_pred": "turkey",
+      "top_5_pred": ["turkey", "chicken", "bird", "diningtable", "duck"]
+    },
+    "6aab9940709879db0f89dc1819a0ccbfe9cadc6f9fddb3f6dfac2a04daabf237.png": {
+      "top1": true,
+      "top5": true,
+      "gt": " city view",
+      "top_1_pred": "city",
+      "top_5_pred": ["city", "city view", "building", "bus", "traffic light"]
+    },
+    "76612a36044f2a6606e291623cba15090f7320e2952decc02d7bffb05ca60fe2.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "diver",
+      "top_1_pred": "diver",
+      "top_5_pred": [
+        "diver",
+        "coral (aquatic plant)",
+        "crab",
+        "shark (fish)",
+        "fish"
+      ]
+    },
+    "c6e91403be7aa2f55cccab68e95ebecad89aab589eb8285ef69cd9ec03b45046.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "dolphin",
+      "top_1_pred": "mouse",
+      "top_5_pred": ["mouse", "dolphin", "penguin", "frog", "sheep"]
+    },
+    "7e40eab89be3c8bcfdc6854408f4241736df8cc1b9b5b0e4f3ea29d7fedbdc33.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "minivan (car)",
+      "top_1_pred": "truck",
+      "top_5_pred": ["truck", "bus", "monstertruck", "car", "minivan (car)"]
+    },
+    "7271ffb946868c72cf1ce2fd5e1b72da9f848a76bc54a6b42cd221e075d8b11b.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "turkey ",
+      "top_1_pred": "turkey",
+      "top_5_pred": ["turkey", "chicken", "bird", "duck", "microwave"]
+    },
+    "34ce67a8a3de3956ffe9be7b651b3ec999c41f9e83e60c17cc89c1dc645a5000.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "dolphin",
+      "top_1_pred": "dolphin",
+      "top_5_pred": ["dolphin", "shark", "shark (fish)", "orca", "duck"]
+    },
+    "48500c3f0728973438bcf4fb1ea7f5c544ab1491cd86494391536abd0fb5782f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "minivan (car)",
+      "top_1_pred": "minivan (car)",
+      "top_5_pred": ["minivan (car)", "truck", "minivan", "bus", "monstertruck"]
+    },
+    "74acb605f51e28c9e35a4e56f07ffecd76903bd51dcf002b69af1ed6b3c5b02.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "turkey ",
+      "top_1_pred": "turkey",
+      "top_5_pred": ["turkey", "chicken", "bird", "diningtable", "hair drier"]
+    },
+    "083b1960ef85e7f0a1dcca05b70d066fdb535001e0051e245915d8b94cbea36c.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "minivan (car)",
+      "top_1_pred": "bus",
+      "top_5_pred": ["bus", "minivan (car)", "minivan", "car", "truck"]
+    },
+    "2a46eecf9eaceb63db393abd52df1d057402c0a1b95687859b89cb2aeade5674.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "diver",
+      "top_1_pred": "diver",
+      "top_5_pred": [
+        "diver",
+        "coral (aquatic plant)",
+        "sea",
+        "shark (fish)",
+        "fish"
+      ]
+    },
+    "152357e061c504a7682a69e33790f76f8f82967c63b503df8fa66ac7b20ebd4f.png": {
+      "top1": false,
+      "top5": false,
+      "gt": "dolphin",
+      "top_1_pred": "bird",
+      "top_5_pred": ["bird", "duck", "chicken", "sheep", "penguin"]
+    }
+  },
+  "challenge_106": {
+    "per_challenge_top_1_acc": 0.8421052631578947,
+    "per_challenge_top_5_acc": 1.0,
+    "d79389c17186213670ac8193e139a56114f24a96bf999f6aa06a4eb9db50454.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "truck",
+      "top_1_pred": "truck",
+      "top_5_pred": ["truck", "car", "monstertruck", "bus", "duck"]
+    },
+    "d051663fba285554fbed7c33a7abacb9855de9a07797c8ab7c621c6fee3b4522.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "tvmonitor", "hair drier", "person"]
+    },
+    "578141dd49a2915195ec9ed7cbba24a101140fb2821858a522ba61ce48fb681b.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "lion",
+      "top_5_pred": ["lion", "tiger", "zebra", "toilet", "refrigerator"]
+    },
+    "5efe6fe2a87fa5d6ab93ebd4f218d2b86012ad8da987dcc70edfb66386349133.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": [
+        "duck",
+        "bird",
+        "chicken",
+        "hair drier",
+        "penguin and duck"
+      ]
+    },
+    "448f1c9e4162bdd82b1100b7b4aeb17ae95500938c48c0f101ed407c424a0d78.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "zebra", "lion", "toilet", "bear"]
+    },
+    "7204842f45126e1638c975b950adc5ef23abdcb8c1b89b31007c37b2bf2067d3.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "frog",
+      "top_1_pred": "frog",
+      "top_5_pred": ["frog", "crab", "dog", "cup", "tv"]
+    },
+    "f12899e90422237f488a63b3f42019ae27aaa8b7266456e5887a1f1f7d4bcb57.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "truck",
+      "top_5_pred": ["truck", "duck", "penguin and duck", "bird", "penguin"]
+    },
+    "295b90e90745bfeec299ac34f5e62bfd9cdb91dadd5a37a1c7394fe508ce2108.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "book", "ballerina (dancer)", "hi hat"]
+    },
+    "f1145af5fee67d54e934a244b0f63d6d9d00dcd606a78d7a67a1260699decc8c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "truck",
+      "top_1_pred": "truck",
+      "top_5_pred": ["truck", "turkey", "monstertruck", "factory", "bus"]
+    },
+    "9852fd217de9f63839679343986051936215764cdba4b5fdf5539f5fce85d101.png": {
+      "top1": false,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "snowboard",
+      "top_5_pred": ["snowboard", "horse", "horseman", "turkey", "apple"]
+    },
+    "cbaac7980898aae06bddb792113ab28776bbd3687cbf45f282a3a5c8e1f9009f.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "lion", "zebra", "toilet", "microwave"]
+    },
+    "ab9017a952fd26c793e75ef3e15f68b5be62efb6b5a12ec4f816fb66f4447532.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "truck",
+      "top_1_pred": "truck",
+      "top_5_pred": ["truck", "car", "monstertruck", "duck", "turkey"]
+    },
+    "2e3459e0963ba3c0ac58505a4bf6c3c19fb3bc1bd64bb9aef8494bdc37026647.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "lion", "bear", "zebra", "microwave"]
+    },
+    "713ac3dbf0fb26e3bdced24586a61aae704cb1066a12eb8fcf639e0c5bfad095.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "chicken", "rabbit", "penguin and duck"]
+    },
+    "5001ea6e81eac1f02cd6161e69e966cc293ff88bf02a6b3e63006789b41733a0.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "lion", "zebra", "kite", "computer board"]
+    },
+    "b9614312e02583065b13873a3559e523821384669f398db0dd103c3b108621a6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "lion", "zebra", "toilet", "microwave"]
+    },
+    "0d4bc0d1cd1fde3e9f71d1ab61734eda750b2bc23e526baad4dfa04ab966590c.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "duck ",
+      "top_1_pred": "duck",
+      "top_5_pred": ["duck", "bird", "chicken", "penguin and duck", "sheep"]
+    },
+    "f2d95f197944f769cae3b1729310444a0fb9ac2621e21d0bcdb093a78a485424.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "horse",
+      "top_1_pred": "horse",
+      "top_5_pred": ["horse", "snowboard", "horseman", "bicycle", "train"]
+    },
+    "5d9779bbbb4e1c5d538138bfa8951f242633c422a56312de7973374597bf270a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "tiger",
+      "top_1_pred": "tiger",
+      "top_5_pred": ["tiger", "cat", "zebra", "lion", "bear"]
+    }
+  },
+  "challenge_150": {
+    "per_challenge_top_1_acc": 1.0,
+    "per_challenge_top_5_acc": 1.0,
+    "40c02011f010c44875563113f4c4f399fd752fe3ddd62e4154d2d138e9658.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark",
+      "top_5_pred": ["shark", "shark (fish)", "diver", "fish", "sea"]
+    },
+    "b18b4fb018bdafc6a50f672d36efef85e53f18674fe23cefd9d0b35c7b2647dd.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bird",
+      "top_1_pred": "bird",
+      "top_5_pred": ["bird", "duck", "kite", "traffic light", "diver"]
+    },
+    "37301aeb61081a636881271a68ed7a8b7a2b5cc7d32ba358fff129eddd2b6742.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark",
+      "top_5_pred": [
+        "shark",
+        "shark (fish)",
+        "diver",
+        "fish",
+        "coral (aquatic plant)"
+      ]
+    },
+    "5880ff8e61a7c26751e28cb7da0aa9f593a83e6130d63cb0b571c9e728434df.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "carrot", "deer", "squirrel", "mouse"]
+    },
+    "5bfd6e08fdb22c3aed9ae14cfd0248a1dc7635a858a4d50eafefbf950d643670.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "carrot", "deer", "squirrel", "mouse"]
+    },
+    "c09b7e2e5b658c58de49a6605ae6f15a06997d7daa704e1f28e983de68b65b48.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bird",
+      "top_1_pred": "bird",
+      "top_5_pred": ["bird", "kite", "plant", "butterfly", "turkey"]
+    },
+    "a971099020887eee073e30854a67c7846f5202c88aefabbce62e648d2cf66972.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "deer", "mouse", "squirrel", "carrot"]
+    },
+    "4dfd0cf78ae86bf6c5e0c20bfb0ab6e09b2f719b34c1deef7b55e45261cdb50.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark",
+      "top_5_pred": ["shark", "shark (fish)", "diver", "fish", "sea"]
+    },
+    "17cc2446b2a80fe044383803bd532bb9b7cc4c1295f9bd03bcdacaee59810334.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "deer", "tiger", "koala", "carrot"]
+    },
+    "79c2678f693c5ca0c670d3dcfff74026181fd088247d203659a617254235ce96.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "tree", "turkey", "mouse", "leaf"]
+    },
+    "7de12ddafc37224149b38aab75135cc94ba6b9ea35f28c842903151211b9f8d8.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "deer", "carrot", "squirrel", "koala"]
+    },
+    "6c60972e0f9e603386889a16af8820902bc9af6f5e43d9ba6737afc7e30ca820.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark",
+      "top_5_pred": ["shark", "shark (fish)", "diver", "fish", "sea"]
+    },
+    "39d122067a4fe8a3a6ee7644ac5260036e6eb0e9fc1bb5901646db590e8e4bcf.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "squirrel",
+      "top_1_pred": "squirrel",
+      "top_5_pred": ["squirrel", "tree", "donut", "mouse", "leaf"]
+    },
+    "a32d1bff921dc3a4db62e2563a2661ec9a7671c4534c2ee3faa3ae0233fb7756.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "plant", "carrot", "bug", "pottedplant"]
+    },
+    "9c136a7c5807037d3257b7ee6dacb028e42b0dc678641e2342226d01cee25470.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark",
+      "top_5_pred": ["shark", "shark (fish)", "sea", "diver", "orca"]
+    },
+    "f945ae0fb71053a48b7e906edb119a8c3fba162ad4078c6a9878ce4f7798ff6.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "bird",
+      "top_1_pred": "bird",
+      "top_5_pred": ["bird", "kite", "dancer", "ballerina (dancer)", "diver"]
+    },
+    "ce6040635209386bc91959adf7a2445f4831441e83d9af32870406e476fbf583.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "rabbit",
+      "top_1_pred": "rabbit",
+      "top_5_pred": ["rabbit", "carrot", "deer", "tiger", "squirrel"]
+    },
+    "9a5193a634ffcb10db20c88f08980c38bf3987438dd63b7dfc3a56fe6101f22a.png": {
+      "top1": true,
+      "top5": true,
+      "gt": "shark (fish)",
+      "top_1_pred": "shark",
+      "top_5_pred": ["shark", "shark (fish)", "diver", "sea", "fish"]
+    }
+  }
+}
