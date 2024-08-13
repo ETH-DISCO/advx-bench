@@ -13,15 +13,6 @@ from models.det import detect_vit
 from models.seg import segment_sam1
 
 
-def ensure_contiguous(tensor):
-    if len(tensor) == 0:
-        return torch.empty(0)
-    elif tensor.is_contiguous():
-        return tensor
-    else:
-        return tensor.contiguous()
-
-
 datapath = Path.cwd() / "data" / "hcaptcha"
 outputpath = Path.cwd() / "data" / "hcaptcha-eval"
 assert datapath.exists()
@@ -45,6 +36,14 @@ for subdir in subdirs:
         detection: tuple[list[list[float]], list[float], list[str]] = detect_vit(img, captions, threshold)
         boxes, scores, labels = detection
         masks: torch.Tensor = segment_sam1(img, boxes)
+
+        def ensure_contiguous(tensor):
+            if len(tensor) == 0:
+                return torch.empty(0)
+            elif tensor.is_contiguous():
+                return tensor
+            else:
+                return tensor.contiguous()
 
         img_tensor = ensure_contiguous(torch.from_numpy(np.array(img)).permute(2, 0, 1).float() / 255.0)
         data_dict = {
