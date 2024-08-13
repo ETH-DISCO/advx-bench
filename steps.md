@@ -20,6 +20,7 @@ steps:
     - see at what point it's too hard for humans vs. models
     - check if robustified model has lower accuracy
 
+solver framework: https://github.com/QIN2DIM/hcaptcha-challenger
 
 
 # step 1
