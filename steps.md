@@ -48,6 +48,8 @@ running models:
 
     - https://huggingface.co/facebook/sam2-hiera-small (needs gpu)
 
+TODO: merge binary-selection and image-selection folders
+
 <!--
 
 # step 2
