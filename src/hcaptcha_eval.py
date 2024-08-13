@@ -12,7 +12,6 @@ from models.cls import classify_metaclip
 from models.det import detect_vit
 from models.seg import segment_sam1
 
-
 datapath = Path.cwd() / "data" / "hcaptcha"
 outputpath = Path.cwd() / "data" / "hcaptcha-eval"
 assert datapath.exists()
