@@ -1,5 +1,7 @@
 conference: https://advml-frontier.github.io/
 
+turlan's repo: https://gitlab.ethz.ch/disco-students/fs24/image-captchas
+
 idea: adversarial images cannot be used for captchas.
 
 steps:
@@ -10,6 +12,8 @@ steps:
     - evaluate some cls/det/seg models on these (not visual reasoning)
 
 2. generate some synthetic hcaptcha images
+    
+    - learn from insights from step 1, check wha tthe models failed on
 
     - recreate hcaptcha images (instead of labeling them) -> study noise, distortions, perlin noise patches, circled gradients, etc.
     - fine-tune / robustify a model on these -> or use existing models like ASAM (https://arxiv.org/abs/2405.00256)
@@ -24,11 +28,6 @@ solver framework: https://github.com/QIN2DIM/hcaptcha-challenger
 
 
 # step 1
-
-turlan's ground truth:
-
-- https://gitlab.ethz.ch/disco-students/fs24/image-captchas
-- https://gitlab.ethz.ch/disco-students/fs24/image-captchas/-/blob/main/assets/datasets/hcaptcha_dataset_turlan/project-2-at-2024-07-08-17-39-4b3e31b4.zip
 
 running models:
 
@@ -49,7 +48,6 @@ running models:
 
     - https://huggingface.co/facebook/sam2-hiera-small (needs gpu)
 
-TODO: merge binary-selection and image-selection folders
 
 <!--
 
