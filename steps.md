@@ -79,8 +79,6 @@ running models:
 
 
 
-
-
 <!--
 
 # step 2
@@ -90,6 +88,8 @@ generating synthetic hcaptcha images:
 - https://huggingface.co/black-forest-labs/FLUX.1-dev (needs gpu)
 
 -->
+
+
 
 <!--
 
