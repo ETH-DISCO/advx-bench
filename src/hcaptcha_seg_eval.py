@@ -25,6 +25,9 @@ for file in tqdm(files):
     img = Image.open(file)
     threshold = 0.1
 
+    img = img.convert('RGB')        
+    assert img.mode == 'RGB' and len(np.array(img).shape) == 3
+
     captions: list[str] = caption_blip(img)
     probs: list[float] = classify_metaclip(img, captions)
     detection: tuple[list[list[float]], list[float], list[str]] = detect_vit(img, captions, threshold)
@@ -39,7 +42,9 @@ for file in tqdm(files):
         else:
             return tensor.contiguous()
 
+    
     img_tensor = ensure_contiguous(torch.from_numpy(np.array(img)).permute(2, 0, 1).float() / 255.0)
+
     data_dict = {
         "image": img_tensor,
         "captions": ensure_contiguous(torch.tensor([ord(c) for c in "|".join(captions)], dtype=torch.int32)),
