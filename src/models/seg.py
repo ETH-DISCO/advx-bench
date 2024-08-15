@@ -26,11 +26,11 @@ models
 def segment_sam2(image: Image.Image, query: list[list[float]]) -> list[torch.Tensor]:
     # best model for gpu
 
-    # still being ported to huggingface
     # see: https://github.com/facebookresearch/segment-anything-2/
     # see: https://huggingface.co/facebook/sam2-hiera-small
     # see: https://huggingface.co/facebook/sam2-hiera-large
-    pass
+
+    raise NotImplementedError("model is still being ported to huggingface.")
 
 
 def segment_sam1(image: Image.Image, query: list[list[float]]) -> list[torch.Tensor]:
