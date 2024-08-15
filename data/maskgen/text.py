@@ -43,4 +43,4 @@ for i in range(num_words):
     
     context.restore()
 
-surface.write_to_png(Path("data/custom/text.png"))
+surface.write_to_png(Path("data/maskgen/text.png"))
