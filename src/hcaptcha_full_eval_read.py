@@ -42,11 +42,5 @@ assert datapath.exists()
 
 for file in datapath.glob("*.safetensors"):
     print(f"Data from {file.stem}:")
-    data_dict = load_file(file)
-    for key, value in data_dict.items():
-        print(f"{key}: {value.shape if hasattr(value, 'shape') else value}")
-        print(value)
-
     load_and_decode_safetensor(file)
-
     print("-" * 20)
