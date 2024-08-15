@@ -34,14 +34,14 @@ def draw_concentric_circles(x, y, max_radius, num_rings):
         context.stroke()
 
 
-count = 3
+grid_width = 3
 num_rings = 12
-max_radius = WIDTH / 2 / count
+max_radius = WIDTH / 2 / grid_width
 
-for row in range(count):
-    for col in range(count):
-        x = (col + 0.5) * WIDTH / count
-        y = (row + 0.5) * WIDTH / count
+for row in range(grid_width):
+    for col in range(grid_width):
+        x = (col + 0.5) * WIDTH / grid_width
+        y = (row + 0.5) * WIDTH / grid_width
         draw_concentric_circles(x, y, max_radius, num_rings)
 
 surface.write_to_png(Path("data/maskgen/circles.png"))
