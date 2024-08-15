@@ -13,8 +13,8 @@ def load_and_decode_safetensor(file_path):
         if key == "image":
             # convert image tensor to PIL Image and display
             img = Image.fromarray((tensor.permute(1, 2, 0).numpy() * 255).astype(np.uint8))
-            img.show()
-            print(f"Image shape: {tensor.shape}")
+            # img.show()
+            print(f"Image size: {img.size}")
 
         elif key == "captions" or key == "detection_labels":
             # decode int32 tensors to strings
@@ -41,6 +41,6 @@ datapath = Path.cwd() / "data" / "hcaptcha" / "seg" / "eval"
 assert datapath.exists()
 
 for file in datapath.glob("*.safetensors"):
-    print(f"Data from {file.stem}:")
+    print(f"Reading {file.stem}:")
     load_and_decode_safetensor(file)
-    print("-" * 20)
+    print("-" * 40)
