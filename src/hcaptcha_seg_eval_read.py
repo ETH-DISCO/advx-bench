@@ -111,9 +111,10 @@ for file in datapath.glob("*.safetensors"):
     if (datapath / f"{file.stem}_combined.png").exists():
         print(f"skipping {file.stem}.png")
     else:
+        plt.figure(figsize=(10, 8))
         plt.imshow(combined)
         plt.axis("off")
         plt.savefig(datapath / f"{file.stem}_combined.png")
-        plt.show
+        plt.close()
 
     print("-" * 40)
