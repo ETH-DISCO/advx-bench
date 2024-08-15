@@ -15,10 +15,17 @@ def draw_concentric_circles(x, y, max_radius, num_rings):
         radius = max_radius * (i + 1) / num_rings
         context.arc(x, y, radius, 0, 2 * math.pi)
 
-        # gradient: pink -> blue
-        color = (1 - i / num_rings, 0, i / num_rings)
+        # blue -> yellow -> red
+        color_ratio = i / (num_rings - 1)
+        if color_ratio < 0.5:
+            # blue -> yellow
+            rgb_color = (color_ratio * 2, color_ratio * 2, 1 - color_ratio * 2)
+        else:
+            # yellow -> red
+            rgb_color = (1, 2 - color_ratio * 2, 0)
 
-        context.set_source_rgb(*color)
+
+        context.set_source_rgb(*rgb_color)
         context.set_line_width(1.5)
         context.stroke()
 
