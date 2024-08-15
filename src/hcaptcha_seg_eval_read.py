@@ -1,19 +1,11 @@
+import math
 from pathlib import Path
 
-import numpy as np
-from PIL import Image
-from safetensors.torch import load_file
-
-import math
-import os
-
 import cv2
-import matplotlib.pyplot as plt
 import numpy as np
-import requests
 import torch
 from PIL import Image
-
+from safetensors.torch import load_file
 
 
 def get_img(image: Image.Image, boxes: list[list[float]], scores: list[float], labels: list[str], masks: list[torch.Tensor]):
@@ -67,6 +59,7 @@ def get_img(image: Image.Image, boxes: list[list[float]], scores: list[float], l
 
     annotated_image = cv2.cvtColor(image_cv2, cv2.COLOR_BGR2RGB)
     return annotated_image
+
 
 def load_and_decode_safetensor(file_path):
     data_dict = load_file(file_path)
