@@ -1,7 +1,6 @@
 from pathlib import Path
-import cairo
 
-# Set up constants for the drawing
+import cairo
 
 WIDTH, HEIGHT = 1000, 1000
 
@@ -13,7 +12,6 @@ context.set_source_rgba(0, 0, 0, 0)
 def draw_concentric_squares(x, y, size, num_squares):
     step = size / num_squares
     for i in range(num_squares):
-
         if i == 0:
             context.set_source_rgb(0, 0, 1)
         elif i == num_squares - 1:
@@ -26,6 +24,7 @@ def draw_concentric_squares(x, y, size, num_squares):
         height = size - i * step
         context.rectangle(x + (size - width) / 2, y + (size - height) / 2, width, height)
         context.stroke()
+
 
 grid_width = 3
 num_squares = 10
