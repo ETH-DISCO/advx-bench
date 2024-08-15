@@ -13,7 +13,7 @@ from models.det import detect_vit
 from models.seg import segment_sam1
 
 datapath = Path.cwd() / "data" / "hcaptcha" / "seg" / "data"
-outputpath = Path.cwd() / "data" / "hcaptcha-eval"
+outputpath = Path.cwd() / "data" / "hcaptcha" / "seg" / "eval"
 assert datapath.exists()
 files = [x for x in datapath.iterdir() if x.is_file()]
 

@@ -37,15 +37,15 @@ def load_and_decode_safetensor(file_path):
             print(tensor)
 
 
-datapath = Path.cwd() / "data" / "hcaptcha-eval"
+datapath = Path.cwd() / "data" / "hcaptcha" / "seg" / "eval"
 assert datapath.exists()
 
 for file in datapath.glob("*.safetensors"):
     print(f"Data from {file.stem}:")
-    # data_dict = load_file(file)
-    # for key, value in data_dict.items():
-    #     print(f"{key}: {value.shape if hasattr(value, 'shape') else value}")
-    #     print(value)
+    data_dict = load_file(file)
+    for key, value in data_dict.items():
+        print(f"{key}: {value.shape if hasattr(value, 'shape') else value}")
+        print(value)
 
     load_and_decode_safetensor(file)
 
