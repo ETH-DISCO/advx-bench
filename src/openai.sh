@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -k|--key) key="$2"; shift ;;
@@ -8,7 +9,9 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-echo -e "key=$key"
+echo -e "key=$key\n\n"
+
+# see: https://platform.openai.com/docs/api-reference/images
 
 curl https://api.openai.com/v1/images/generations \
   -H "Content-Type: application/json" \
