@@ -4,4 +4,4 @@ Usage:
 
 Thanks to:
 
-- Turlan Kuzhagaliyev (@TKZ10) for hcaptcha scraping and manual labeling.
+- Turlan Kuzhagaliyev (@TKZ10) for scraping hcaptcha to provide the cls/seg dataset.
