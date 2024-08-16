@@ -1,4 +1,5 @@
 import json
+import os
 import random
 from pathlib import Path
 
@@ -20,6 +21,7 @@ random.shuffle(datafiles)
 for file in tqdm(datafiles):
     if (outputpath / f"{file.stem}.json").exists():
         print(f"skipping: `{file.stem}.json`")
+        continue
 
     img: Image = Image.open(file)
     captions: list[str] = caption_blip(img)
@@ -33,3 +35,5 @@ for file in tqdm(datafiles):
 
     with open(outputpath / f"{file.stem}.json", "w") as f:
         json.dump(out, f, indent=4)
+
+    os.system(f"git add . && git commit -m 'autocommit' && git push")
