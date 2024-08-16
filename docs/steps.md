@@ -2,6 +2,14 @@ conference: https://advml-frontier.github.io/
 
 turlan's repo: https://gitlab.ethz.ch/disco-students/fs24/image-captchas
 
+---
+
+1. how well can we solve hcaptcha? where do our models suck? (turlans eval + yahyas eval)
+2. how well do the masks and distortions they're using generalize?
+3. can we robustify our models against them?
+
+---
+
 next steps:
 
 - start writing, try to present the results we've already got
