@@ -44,4 +44,4 @@ for row in range(grid_width):
         y = (row + 0.5) * WIDTH / grid_width
         draw_concentric_circles(x, y, max_radius, num_rings)
 
-surface.write_to_png(Path("data/maskgen/circles.png"))
+surface.write_to_png(Path("src/maskgen/circles.png"))

@@ -35,4 +35,4 @@ for row in range(grid_width):
         y = row * (HEIGHT // grid_width)
         draw_concentric_squares(x, y, WIDTH // grid_width, num_squares)
 
-surface.write_to_png(Path("data/maskgen/square.png"))
+surface.write_to_png(Path("src/maskgen/square.png"))

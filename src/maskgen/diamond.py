@@ -47,4 +47,4 @@ for row in range(-1, HEIGHT // int(diamond_size / 2) + 2):
             draw_diamond(center_x, center_y, size, color)
 
 
-surface.write_to_png(Path("data/maskgen/diamond.png"))
+surface.write_to_png(Path("src/maskgen/diamond.png"))
