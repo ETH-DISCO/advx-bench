@@ -28,4 +28,4 @@ for x in range(0, WIDTH + STEP, STEP):
             size = STEP - (i * STEP / 4)
             draw_knit(x, y, size, color)
 
-surface.write_to_png(Path("data/maskgen/knit.png"))
+surface.write_to_png(Path("src/maskgen/knit.png"))
