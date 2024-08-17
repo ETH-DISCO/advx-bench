@@ -6,7 +6,7 @@ from utils import get_device
 
 def encode_vit_mae(img: Image.Image) -> torch.Tensor:
     # best model for cpu, gpu
-    from transformers import ViTMAEModel, ViTImageProcessor
+    from transformers import ViTImageProcessor, ViTMAEModel
 
     device = get_device()
     model_id = "facebook/vit-mae-base"
@@ -18,7 +18,7 @@ def encode_vit_mae(img: Image.Image) -> torch.Tensor:
 
     with torch.no_grad():
         outputs = model(**inputs)
-        embedding = outputs.last_hidden_state.mean(dim=1) # avg pooling over sequence length
+        embedding = outputs.last_hidden_state.mean(dim=1)  # avg pooling over sequence length
 
     return embedding
 
