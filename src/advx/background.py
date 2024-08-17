@@ -96,9 +96,32 @@ def get_zigzag_background(
     return img
 
 
+def get_gradient_background(
+    width=1000,
+    height=700,
+):
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+    ctx = cairo.Context(surface)
+
+    color1 = (random.random(), random.random(), random.random())
+    color2 = (random.random(), random.random(), random.random())
+
+    pat = cairo.LinearGradient(0.0, 0.0, 0.0, height)
+    pat.add_color_stop_rgb(0, *color1)
+    pat.add_color_stop_rgb(1, *color2)
+
+    ctx.rectangle(0, 0, width, height)
+    ctx.set_source(pat)
+    ctx.fill()
+
+    img = Image.frombuffer("RGBA", (width, height), surface.get_data(), "raw", "BGRA", 0, 1)
+    return img
+
+
 if __name__ == "__main__":
     # img = get_perlin_background()
     img = get_zigzag_background()
+    img = get_gradient_background()
     plt.imshow(img)
     plt.axis("off")
     plt.show()
