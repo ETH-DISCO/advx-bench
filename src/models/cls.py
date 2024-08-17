@@ -12,6 +12,7 @@ try:
 except ImportError:
     from utils import get_device
 
+
 """
 models
 """
