@@ -12,7 +12,7 @@ def get_circle_mask(
     height: int = 1000,
     row_count: int = 3,
     ring_count: int = 12,
-    max_radius: Optional[int] = None
+    max_radius: Optional[int] = None,
 ) -> Image.Image:
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
     context = cairo.Context(surface)

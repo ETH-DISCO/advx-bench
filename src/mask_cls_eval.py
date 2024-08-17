@@ -18,6 +18,7 @@ from PIL import Image
 from skimage.metrics import structural_similarity
 from tqdm import tqdm
 
+
 """
 codecs
 """
