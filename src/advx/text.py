@@ -1,8 +1,10 @@
 import math
 import random
-from pathlib import Path
-
+import matplotlib
+matplotlib.use('Agg')  # Use the 'Agg' backend instead of the default
+import matplotlib.pyplot as plt
 import cairo
+import numpy as np
 
 WIDTH, HEIGHT = 1000, 1000
 
@@ -10,7 +12,6 @@ surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, WIDTH, HEIGHT)
 context = cairo.Context(surface)
 context.set_source_rgba(0, 0, 0, 0)
 context.paint()
-
 
 words = ["banana", "apple", "orange", "grape", "pear", "donkey", "elephant", "giraffe", "hippopotamus", "kangaroo"]
 
@@ -42,4 +43,11 @@ for i in range(num_words):
 
     context.restore()
 
-surface.write_to_png(Path("text.png"))
+# Convert the Cairo surface to a numpy array
+buf = surface.get_data()
+data = np.ndarray(shape=(HEIGHT, WIDTH, 4), dtype=np.uint8, buffer=buf)
+
+# Create a new figure and display the image
+plt.figure(figsize=(10, 10))
+plt.imshow(data)
+plt.axis('off')

@@ -47,7 +47,6 @@ def get_circle_mask(
             draw_concentric_circles(x, y, ring_count)
 
     # surface.write_to_png(Path("circles.png"))
-    # return Image.fromarray(np.ndarray(shape=(height, width, 4), dtype=np.uint8, buffer=surface.get_data()), "RGBA")
     return Image.frombuffer("RGBA", (width, height), surface.get_data(), "raw", "BGRA", 0, 1)
 
 
@@ -97,16 +96,33 @@ def get_word_mask(
     height: int = 1000,
     num_words: int = 15,
     font_range: tuple[int, int] = (20, 100),
-    words: list[str] = ["bonjour", "salut", "coucou", "hello", "hola", "ciao", "hallo"],
+    words: list[str] = ["cat", "guacamole", "hat", "penguin", "dog", "elephant"],
+    avoid_center: bool = True,
 ):
+    import matplotlib
+    matplotlib.use('Agg') # matplotlib can't render fonts
+
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
     context = cairo.Context(surface)
     context.set_source_rgba(0, 0, 0, 0)
     context.paint()
 
     for _ in range(num_words):
-        x = random.randint(0, width)
-        y = random.randint(0, height)
+        if avoid_center:
+            x = random.choices([
+                random.randint(0, width // 10),
+                random.randint(width * 9 // 10, width),
+                random.randint(0, width)
+            ], weights=[4, 4, 1])[0]
+            y = random.choices([
+                random.randint(0, height // 10),
+                random.randint(height * 9 // 10, height),
+                random.randint(0, height)
+            ], weights=[4, 4, 1])[0]
+        else:
+            x = random.randint(0, width)
+            y = random.randint(0, height)
+
         context.set_font_size(random.randint(*font_range))
 
         word = random.choice(words)
@@ -123,16 +139,15 @@ def get_word_mask(
 
         grayshade = random.random()
         context.set_source_rgb(grayshade, grayshade, grayshade)
+
         context.move_to(0, 0)
         context.show_text(word)
+
         context.restore()
 
-    return Image.frombuffer("RGBA", (width, height), surface.get_data(), "raw", "BGRA", 0, 1)
-
+    return Image.fromarray(np.ndarray(shape=(height, width, 4), dtype=np.uint8, buffer=surface.get_data()), "RGBA")
 
 
 if __name__ == "__main__":
     img = get_word_mask()
-    plt.imshow(img)
-    plt.axis("off")
-    plt.show()
+    img.save("mask.png")
