@@ -1,3 +1,15 @@
+# --------------------------------------------------------------- venv
+
+.PHONY: venv-install # install venv environment
+venv-install:
+	python -m venv vero
+	source vero/bin/activate
+	deactivate
+
+.PHONY: venv-clean # remove venv environment
+venv-clean:
+	rm -rf venv
+
 # --------------------------------------------------------------- conda
 
 .PHONY: conda-get-yaml # generate an environment yaml file
@@ -28,6 +40,7 @@ conda-install:
 
 .PHONY: conda-clean # remove conda environment
 conda-clean:
+	# conda clean --all
 	@bash -c '\
 		source $$(conda info --base)/etc/profile.d/conda.sh; conda activate base; \
 		conda remove --yes --name con --all; \

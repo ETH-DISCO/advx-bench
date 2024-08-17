@@ -1,0 +1,14 @@
+clip==1.0
+diffusers==0.30.0.dev0
+matplotlib==3.8.4
+numpy==1.24.4
+opencv_python==4.9.0.80
+opencv_python_headless==4.10.0.84
+Pillow==10.4.0
+pycairo==1.26.1
+Requests==2.32.3
+safetensors==0.4.4
+spacy==3.7.4
+torch==2.4.0
+tqdm==4.66.4
+transformers==4.44.0
