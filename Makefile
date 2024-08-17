@@ -2,9 +2,13 @@
 
 .PHONY: venv-install # install venv environment
 venv-install:
-	python -m venv vero
-	source vero/bin/activate
-	deactivate
+	python -m venv venv;
+	@bash -c '\
+		source venv/bin/activate; \
+		pip install --upgrade pip; \
+		pip install -r requirements.txt; \
+	'
+	@echo "\n\n# To activate this environment, use\n#\n#     $ source venv/bin/activate\n#\n# To deactivate an active environment, use\n#\n#     $ deactivate"
 
 .PHONY: venv-clean # remove venv environment
 venv-clean:
@@ -71,7 +75,7 @@ sec:
 reqs:
 	pip install pipreqs
 	rm -rf requirements.txt
-	pipreqs .
+	pipreqs . --mode no-pin
 
 .PHONY: up # pull remote changes and push local changes
 up:
