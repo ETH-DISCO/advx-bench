@@ -1,0 +1,17 @@
+clip
+datasets
+diffusers
+matplotlib
+numpy
+opencv_python
+opencv_python_headless
+Pillow
+pycairo
+Requests
+safetensors
+skimage
+spacy
+torch
+torchvision
+tqdm
+transformers
