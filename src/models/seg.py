@@ -31,7 +31,7 @@ def segment_sam2(image: Image.Image, query: list[list[float]]) -> list[torch.Ten
     # see: https://huggingface.co/facebook/sam2-hiera-small
     # see: https://huggingface.co/facebook/sam2-hiera-large
 
-    raise NotImplementedError("model is still being ported to huggingface.")
+    raise NotImplementedError("not implemented")
 
 
 def segment_sam1(image: Image.Image, query: list[list[float]]) -> list[torch.Tensor]:

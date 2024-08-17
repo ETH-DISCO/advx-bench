@@ -1,3 +1,4 @@
+import random
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -91,8 +92,47 @@ def get_square_mask(
     return Image.frombuffer("RGBA", (width, height), surface.get_data(), "raw", "BGRA", 0, 1)
 
 
+def get_word_mask(
+    width: int = 1000,
+    height: int = 1000,
+    num_words: int = 15,
+    font_range: tuple[int, int] = (20, 100),
+    words: list[str] = ["bonjour", "salut", "coucou", "hello", "hola", "ciao", "hallo"],
+):
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+    context = cairo.Context(surface)
+    context.set_source_rgba(0, 0, 0, 0)
+    context.paint()
+
+    for _ in range(num_words):
+        x = random.randint(0, width)
+        y = random.randint(0, height)
+        context.set_font_size(random.randint(*font_range))
+
+        word = random.choice(words)
+        orientation = random.choice(["horizontal", "vertical", "flipped"])
+
+        context.save()
+        context.translate(x, y)
+
+        if orientation == "vertical":
+            context.rotate(-math.pi / 2)
+        elif orientation == "flipped":
+            context.rotate(random.uniform(0, 2 * math.pi))
+            context.scale(-1 if random.random() > 0.5 else 1, -1 if random.random() > 0.5 else 1)
+
+        grayshade = random.random()
+        context.set_source_rgb(grayshade, grayshade, grayshade)
+        context.move_to(0, 0)
+        context.show_text(word)
+        context.restore()
+
+    return Image.frombuffer("RGBA", (width, height), surface.get_data(), "raw", "BGRA", 0, 1)
+
+
+
 if __name__ == "__main__":
-    img = get_square_mask()
+    img = get_word_mask()
     plt.imshow(img)
     plt.axis("off")
     plt.show()
