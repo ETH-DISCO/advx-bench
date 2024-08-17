@@ -1,4 +1,5 @@
 import random
+import string
 
 import cairo
 import matplotlib.pyplot as plt
@@ -99,16 +100,17 @@ def get_zigzag_background(
 def get_gradient_background(
     width=1000,
     height=700,
+    num_colors=3,
 ):
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
     ctx = cairo.Context(surface)
 
-    color1 = (random.random(), random.random(), random.random())
-    color2 = (random.random(), random.random(), random.random())
-
+    colors = [(random.random(), random.random(), random.random()) for _ in range(num_colors)]
     pat = cairo.LinearGradient(0.0, 0.0, 0.0, height)
-    pat.add_color_stop_rgb(0, *color1)
-    pat.add_color_stop_rgb(1, *color2)
+    num_colors = len(colors)
+
+    for i, color in enumerate(colors):
+        pat.add_color_stop_rgb(i / (num_colors - 1), *color)
 
     ctx.rectangle(0, 0, width, height)
     ctx.set_source(pat)
@@ -118,10 +120,55 @@ def get_gradient_background(
     return img
 
 
+def get_random_background(
+    width=1000,
+    height=700,
+    num_colors=3,
+    num_letters=500,
+):
+    import matplotlib
+
+    matplotlib.use("Agg")  # matplotlib can't render fonts
+
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+    ctx = cairo.Context(surface)
+
+    colors = [(random.random(), random.random(), random.random()) for _ in range(num_colors)]
+    pat = cairo.LinearGradient(0.0, 0.0, 0.0, height)
+    num_colors = len(colors)
+
+    for i, color in enumerate(colors):
+        pat.add_color_stop_rgb(i / (num_colors - 1), *color)
+
+    ctx.rectangle(0, 0, width, height)
+    ctx.set_source(pat)
+    ctx.fill()
+
+    for _ in range(num_letters):
+        letter = random.choice(string.ascii_letters + string.digits + string.punctuation)
+        x = random.uniform(0, width)
+        y = random.uniform(0, height)
+        font_size = random.uniform(10, 50)
+        color = (random.random(), random.random(), random.random())
+
+        ctx.select_font_face("Arial", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
+        ctx.set_font_size(font_size)
+        ctx.move_to(x, y)
+        ctx.set_source_rgb(*color)
+        ctx.show_text(letter)
+
+    img = Image.frombuffer("RGBA", (width, height), surface.get_data(), "raw", "BGRA", 0, 1)
+    return img
+
+
 if __name__ == "__main__":
-    # img = get_perlin_background()
-    img = get_zigzag_background()
-    img = get_gradient_background()
+    img = get_perlin_background()
+    # img = get_zigzag_background()
+    # img = get_gradient_background()
+    # img = get_random_background()
+
     plt.imshow(img)
     plt.axis("off")
     plt.show()
+
+    # img.save("background.png")
