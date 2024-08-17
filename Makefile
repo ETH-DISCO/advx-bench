@@ -2,7 +2,7 @@
 
 .PHONY: venv-install # install venv environment
 venv-install:
-	python -m venv venv;
+	python3 -m venv venv;
 	@bash -c '\
 		source venv/bin/activate; \
 		pip install --upgrade pip; \
