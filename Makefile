@@ -2,10 +2,10 @@
 
 .PHONY: venv-install # install venv environment
 venv-install:
+	pip install --upgrade pip
 	python -m venv venv;
 	@bash -c '\
 		source venv/bin/activate; \
-		pip install --upgrade pip; \
 		pip install -r requirements.txt; \
 	'
 	@echo "\n\n# To activate this environment, use\n#\n#     $ source venv/bin/activate\n#\n# To deactivate an active environment, use\n#\n#     $ deactivate"

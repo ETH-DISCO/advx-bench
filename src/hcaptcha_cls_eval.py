@@ -1,4 +1,12 @@
 """
+install dependencies:
+
+$ pip install git+https://github.com/openai/CLIP.git
+$ pip install open-clip-torch
+$ python -m spacy download en_core_web_sm
+$ pip install torch torchvision torchaudio
+$ pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless Pillow Requests spacy transformers accelerate
+
 check progress:
 
 $ echo -e "scale=2; $(ls -al ./data/hcaptcha/cls/eval | wc -l) / $(ls -al ./data/hcaptcha/cls/data | wc -l) * 100" | bc | xargs printf "%.2f%%\n"
