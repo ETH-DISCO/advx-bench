@@ -1,5 +1,6 @@
 import numpy as np
 import requests
+import torch
 from PIL import Image
 
 
@@ -54,6 +55,15 @@ def get_rounded_corners(
             img_with_transparency.putpixel((x, y), img.getpixel((x, y))[:-1] + (mask.getpixel((x, y)),))
 
     return img_with_transparency
+
+
+def get_device(disable_mps=False) -> str:
+    if torch.backends.mps.is_available() and not disable_mps:
+        return "mps"
+    elif torch.cuda.is_available():
+        return "cuda"
+    else:
+        return "cpu"
 
 
 if __name__ == "__main__":
