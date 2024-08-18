@@ -3,6 +3,35 @@ import requests
 from PIL import Image
 
 
+def place_within(
+    background: Image.Image,
+    inner: Image.Image,
+    inner_ratio: float = 0.25,
+    inner_position: tuple[int, int] = (-1, -1),
+):
+    target_area = inner_ratio * background.size[0] * background.size[1]
+    aspect_ratio = inner.size[0] / inner.size[1]
+
+    new_height = int(np.sqrt(target_area / aspect_ratio))
+    new_width = int(aspect_ratio * new_height)
+
+    inner_resized = inner.resize((new_width, new_height), Image.LANCZOS)
+
+    paste_position = (inner_position[0] if inner_position[0] >= 0 else (background.size[0] - new_width) // 2, inner_position[1] if inner_position[1] >= 0 else (background.size[1] - new_height) // 2)
+    result = background.copy()
+    result.paste(inner_resized, paste_position, inner_resized)
+    return result
+
+
+def add_overlay(background: Image.Image, overlay: Image.Image, opacity: int) -> Image.Image:
+    overlay = overlay.resize(background.size)
+    result = Image.new("RGBA", background.size)
+    result.paste(background, (0, 0))
+    mask = Image.new("L", overlay.size, opacity)
+    result.paste(overlay, (0, 0), mask)
+    return result
+
+
 def get_rounded_corners(
     img: Image.Image,
     fraction: float = 0.3,
@@ -25,26 +54,6 @@ def get_rounded_corners(
             img_with_transparency.putpixel((x, y), img.getpixel((x, y))[:-1] + (mask.getpixel((x, y)),))
 
     return img_with_transparency
-
-
-def place_within(
-    background: Image.Image,
-    inner: Image.Image,
-    inner_ratio: float = 0.25,
-    inner_position: tuple[int, int] = (-1, -1),
-):
-    target_area = inner_ratio * background.size[0] * background.size[1]
-    aspect_ratio = inner.size[0] / inner.size[1]
-
-    new_height = int(np.sqrt(target_area / aspect_ratio))
-    new_width = int(aspect_ratio * new_height)
-
-    inner_resized = inner.resize((new_width, new_height), Image.LANCZOS)
-
-    paste_position = (inner_position[0] if inner_position[0] >= 0 else (background.size[0] - new_width) // 2, inner_position[1] if inner_position[1] >= 0 else (background.size[1] - new_height) // 2)
-    result = background.copy()
-    result.paste(inner_resized, paste_position, inner_resized)
-    return result
 
 
 if __name__ == "__main__":

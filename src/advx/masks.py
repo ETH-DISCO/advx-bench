@@ -213,15 +213,6 @@ def get_diamond_mask(
     return Image.frombuffer("RGBA", (width, height), surface.get_data(), "raw", "BGRA", 0, 1)
 
 
-def add_overlay(background: Image.Image, overlay: Image.Image, opacity: int) -> Image.Image:
-    overlay = overlay.resize(background.size)
-    result = Image.new("RGBA", background.size)
-    result.paste(background, (0, 0))
-    mask = Image.new("L", overlay.size, opacity)
-    result.paste(overlay, (0, 0), mask)
-    return result
-
-
 if __name__ == "__main__":
     img = get_diamond_mask()
     img.save("mask.png")
