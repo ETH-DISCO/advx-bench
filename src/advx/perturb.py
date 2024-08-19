@@ -102,11 +102,13 @@ def get_fgsm_clipvit_imagenet(image: Image.Image, target_idx: int, labels: list,
             image_features = model.encode_image(input_tensor)
             text_features = model.encode_text(text_inputs)
             logits_per_image = (100.0 * image_features @ text_features.T).softmax(dim=-1)
-            print("original predictions:", logits_per_image)
+            original_label_preds = [(labels[i], logits_per_image[0, i].item()) for i in range(len(labels))]
+            print("original label predictions:", original_label_preds)
 
             perturbed_features = model.encode_image(perturbed_data)
             perturbed_logits = (100.0 * perturbed_features @ text_features.T).softmax(dim=-1)
-            print("perturbed predictions:", perturbed_logits)
+            perturbed_label_preds = [(labels[i], perturbed_logits[0, i].item()) for i in range(len(labels))]
+            print("perturbed label predictions:", perturbed_label_preds)
 
     return transforms.ToPILImage()(perturbed_data.squeeze(0))
 
