@@ -138,7 +138,7 @@ if __name__ == "__main__":
 
     target_idx = 0
     labels = ["a photo of a dog", "a photo of a bird", "a photo of a cat"]
-    epsilon = 0.8
+    epsilon = 0.8 # larger epsilon for CLIP-ViT because it's more robust
     perturbed = get_fgsm_clipvit_imagenet(image, target_idx, labels, epsilon, debug=True)
 
     perturbed.show()
