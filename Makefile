@@ -1,46 +1,49 @@
 # --------------------------------------------------------------- venv
 
-.PHONY: venv-install # install venv environment
-venv-install:
-	pip install --upgrade pip
-	python -m venv venv;
-	@bash -c '\
-		source venv/bin/activate; \
-		pip install -r requirements.txt; \
-	'
-	@echo "\n\n# To activate this environment, use\n#\n#     $ source venv/bin/activate\n#\n# To deactivate an active environment, use\n#\n#     $ deactivate"
+.PHONY: init # init .venv with some reqs to get started
+init:
+	# init venv
+	pip install uv
+	rm -rf .venv
+	uv venv
 
-.PHONY: venv-clean # remove venv environment
-venv-clean:
-	rm -rf venv
+	# get reqs
+	rm -rf requirements.txt requirements.in
+	pipreqs . --mode no-pin --encoding latin-1
+	mv requirements.txt requirements.in
+
+	# install reqs
+	uv pip compile requirements.in -o requirements.txt
+	uv pip install -r requirements.txt
+
+	# cleanup
+	rm -rf requirements.txt requirements.in
+
+.PHONY: lock # freeze pip and lock reqs
+lock:
+	uv pip freeze | uv pip compile - -o requirements.txt
 
 # --------------------------------------------------------------- utils
 
-.PHONY: fmt # format and remove unused imports
+.PHONY: fmt # format codebase
 fmt:
-	# pip install isort
-	# pip install ruff
-	# pip install autoflake
+	uv pip install isort
+	uv pip install ruff
+	uv pip install autoflake
 
 	isort .
 	autoflake --remove-all-unused-imports --recursive --in-place .
 	ruff format --config line-length=500 .
 
-.PHONY: sec # check for common vulnerabilities
+.PHONY: sec # check for vulns
 sec:
-	pip install bandit
-	pip install safety
+	uv pip install bandit
+	uv pip install safety
 	
 	bandit -r .
 	safety check --full-report
 
-.PHONY: reqs # generate requirements.txt file
-reqs:
-	pip install pipreqs
-	rm -rf requirements.txt
-	pipreqs . --mode no-pin
-
-.PHONY: up # pull remote changes and push local changes
+.PHONY: up # pull and push changes
 up:
 	git pull
 	git add .
@@ -49,4 +52,5 @@ up:
 
 .PHONY: help # generate help message
 help:
+	@echo "Usage: make [target]\n"
 	@grep '^.PHONY: .* #' Makefile | sed 's/\.PHONY: \(.*\) # \(.*\)/\1	\2/' | expand -t20
