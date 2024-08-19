@@ -1,22 +1,20 @@
 # --------------------------------------------------------------- venv
 
-.PHONY: init # init .venv with some reqs to get started
+.PHONY: init # initialize virtual environment
 init:
 	# init venv
 	pip install uv
 	rm -rf .venv
 	uv venv
 
-	# get reqs
+	# install reqs
 	rm -rf requirements.txt requirements.in
 	pipreqs . --mode no-pin --encoding latin-1
 	mv requirements.txt requirements.in
 
-	# install reqs
 	uv pip compile requirements.in -o requirements.txt
 	uv pip install -r requirements.txt
 
-	# cleanup
 	rm -rf requirements.txt requirements.in
 
 .PHONY: lock # freeze pip and lock reqs
