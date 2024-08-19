@@ -1,2 +1,1 @@
-# new metric: https://pypi.org/project/clean-fid/
-
+# work in progress
