@@ -1,297 +1,297 @@
 {
-  "categories": [
-    {
-      "id": 0,
-      "name": "Bucket"
-    },
-    {
-      "id": 1,
-      "name": "alarm_clock"
-    },
-    {
-      "id": 2,
-      "name": "apple"
-    },
-    {
-      "id": 3,
-      "name": "backpack"
-    },
-    {
-      "id": 4,
-      "name": "ballerina_human"
-    },
-    {
-      "id": 5,
-      "name": "bear"
-    },
-    {
-      "id": 6,
-      "name": "bed"
-    },
-    {
-      "id": 7,
-      "name": "bike"
-    },
-    {
-      "id": 8,
-      "name": "boat"
-    },
-    {
-      "id": 9,
-      "name": "building"
-    },
-    {
-      "id": 10,
-      "name": "burger"
-    },
-    {
-      "id": 11,
-      "name": "cake_food"
-    },
-    {
-      "id": 12,
-      "name": "car"
-    },
-    {
-      "id": 13,
-      "name": "carriage"
-    },
-    {
-      "id": 14,
-      "name": "cat"
-    },
-    {
-      "id": 15,
-      "name": "chicken_animal"
-    },
-    {
-      "id": 16,
-      "name": "chicken_food"
-    },
-    {
-      "id": 17,
-      "name": "crane_(machine)"
-    },
-    {
-      "id": 18,
-      "name": "crocodile"
-    },
-    {
-      "id": 19,
-      "name": "cup"
-    },
-    {
-      "id": 20,
-      "name": "deer"
-    },
-    {
-      "id": 21,
-      "name": "dog"
-    },
-    {
-      "id": 22,
-      "name": "dolphin"
-    },
-    {
-      "id": 23,
-      "name": "donut"
-    },
-    {
-      "id": 24,
-      "name": "drone"
-    },
-    {
-      "id": 25,
-      "name": "duck"
-    },
-    {
-      "id": 26,
-      "name": "eagle"
-    },
-    {
-      "id": 27,
-      "name": "elephant"
-    },
-    {
-      "id": 28,
-      "name": "fish"
-    },
-    {
-      "id": 29,
-      "name": "flower"
-    },
-    {
-      "id": 30,
-      "name": "fries_(food)"
-    },
-    {
-      "id": 31,
-      "name": "frog"
-    },
-    {
-      "id": 32,
-      "name": "glasses"
-    },
-    {
-      "id": 33,
-      "name": "goat"
-    },
-    {
-      "id": 34,
-      "name": "guitar"
-    },
-    {
-      "id": 35,
-      "name": "heavy_machinery"
-    },
-    {
-      "id": 36,
-      "name": "helicopter"
-    },
-    {
-      "id": 37,
-      "name": "helmet"
-    },
-    {
-      "id": 38,
-      "name": "horse"
-    },
-    {
-      "id": 39,
-      "name": "human"
-    },
-    {
-      "id": 40,
-      "name": "koala"
-    },
-    {
-      "id": 41,
-      "name": "lion"
-    },
-    {
-      "id": 42,
-      "name": "microwave_oven"
-    },
-    {
-      "id": 43,
-      "name": "motorcycle"
-    },
-    {
-      "id": 44,
-      "name": "mountain_(view)"
-    },
-    {
-      "id": 45,
-      "name": "mouse"
-    },
-    {
-      "id": 46,
-      "name": "ocean_(view)"
-    },
-    {
-      "id": 47,
-      "name": "onion"
-    },
-    {
-      "id": 48,
-      "name": "orange"
-    },
-    {
-      "id": 49,
-      "name": "penguin"
-    },
-    {
-      "id": 50,
-      "name": "pig_(boar)"
-    },
-    {
-      "id": 51,
-      "name": "pumpkin"
-    },
-    {
-      "id": 52,
-      "name": "refrigerator"
-    },
-    {
-      "id": 53,
-      "name": "retail_shop_(view)"
-    },
-    {
-      "id": 54,
-      "name": "rhino"
-    },
-    {
-      "id": 55,
-      "name": "ring_(jewelery)"
-    },
-    {
-      "id": 56,
-      "name": "rocket"
-    },
-    {
-      "id": 57,
-      "name": "shovel"
-    },
-    {
-      "id": 58,
-      "name": "sky_(view)"
-    },
-    {
-      "id": 59,
-      "name": "sloth"
-    },
-    {
-      "id": 60,
-      "name": "street_lamp"
-    },
-    {
-      "id": 61,
-      "name": "sun"
-    },
-    {
-      "id": 62,
-      "name": "tea_pot"
-    },
-    {
-      "id": 63,
-      "name": "tiger"
-    },
-    {
-      "id": 64,
-      "name": "toaster"
-    },
-    {
-      "id": 65,
-      "name": "tomato"
-    },
-    {
-      "id": 66,
-      "name": "tree"
-    },
-    {
-      "id": 67,
-      "name": "turkey_bird"
-    },
-    {
-      "id": 68,
-      "name": "watering_can"
-    },
-    {
-      "id": 69,
-      "name": "wheelbarrow"
-    },
-    {
-      "id": 70,
-      "name": "wolf"
-    },
-    {
-      "id": 71,
-      "name": "zebra"
+    "categories": [
+        {
+            "id": 0,
+            "name": "Bucket"
+        },
+        {
+            "id": 1,
+            "name": "alarm_clock"
+        },
+        {
+            "id": 2,
+            "name": "apple"
+        },
+        {
+            "id": 3,
+            "name": "backpack"
+        },
+        {
+            "id": 4,
+            "name": "ballerina_human"
+        },
+        {
+            "id": 5,
+            "name": "bear"
+        },
+        {
+            "id": 6,
+            "name": "bed"
+        },
+        {
+            "id": 7,
+            "name": "bike"
+        },
+        {
+            "id": 8,
+            "name": "boat"
+        },
+        {
+            "id": 9,
+            "name": "building"
+        },
+        {
+            "id": 10,
+            "name": "burger"
+        },
+        {
+            "id": 11,
+            "name": "cake_food"
+        },
+        {
+            "id": 12,
+            "name": "car"
+        },
+        {
+            "id": 13,
+            "name": "carriage"
+        },
+        {
+            "id": 14,
+            "name": "cat"
+        },
+        {
+            "id": 15,
+            "name": "chicken_animal"
+        },
+        {
+            "id": 16,
+            "name": "chicken_food"
+        },
+        {
+            "id": 17,
+            "name": "crane_(machine)"
+        },
+        {
+            "id": 18,
+            "name": "crocodile"
+        },
+        {
+            "id": 19,
+            "name": "cup"
+        },
+        {
+            "id": 20,
+            "name": "deer"
+        },
+        {
+            "id": 21,
+            "name": "dog"
+        },
+        {
+            "id": 22,
+            "name": "dolphin"
+        },
+        {
+            "id": 23,
+            "name": "donut"
+        },
+        {
+            "id": 24,
+            "name": "drone"
+        },
+        {
+            "id": 25,
+            "name": "duck"
+        },
+        {
+            "id": 26,
+            "name": "eagle"
+        },
+        {
+            "id": 27,
+            "name": "elephant"
+        },
+        {
+            "id": 28,
+            "name": "fish"
+        },
+        {
+            "id": 29,
+            "name": "flower"
+        },
+        {
+            "id": 30,
+            "name": "fries_(food)"
+        },
+        {
+            "id": 31,
+            "name": "frog"
+        },
+        {
+            "id": 32,
+            "name": "glasses"
+        },
+        {
+            "id": 33,
+            "name": "goat"
+        },
+        {
+            "id": 34,
+            "name": "guitar"
+        },
+        {
+            "id": 35,
+            "name": "heavy_machinery"
+        },
+        {
+            "id": 36,
+            "name": "helicopter"
+        },
+        {
+            "id": 37,
+            "name": "helmet"
+        },
+        {
+            "id": 38,
+            "name": "horse"
+        },
+        {
+            "id": 39,
+            "name": "human"
+        },
+        {
+            "id": 40,
+            "name": "koala"
+        },
+        {
+            "id": 41,
+            "name": "lion"
+        },
+        {
+            "id": 42,
+            "name": "microwave_oven"
+        },
+        {
+            "id": 43,
+            "name": "motorcycle"
+        },
+        {
+            "id": 44,
+            "name": "mountain_(view)"
+        },
+        {
+            "id": 45,
+            "name": "mouse"
+        },
+        {
+            "id": 46,
+            "name": "ocean_(view)"
+        },
+        {
+            "id": 47,
+            "name": "onion"
+        },
+        {
+            "id": 48,
+            "name": "orange"
+        },
+        {
+            "id": 49,
+            "name": "penguin"
+        },
+        {
+            "id": 50,
+            "name": "pig_(boar)"
+        },
+        {
+            "id": 51,
+            "name": "pumpkin"
+        },
+        {
+            "id": 52,
+            "name": "refrigerator"
+        },
+        {
+            "id": 53,
+            "name": "retail_shop_(view)"
+        },
+        {
+            "id": 54,
+            "name": "rhino"
+        },
+        {
+            "id": 55,
+            "name": "ring_(jewelery)"
+        },
+        {
+            "id": 56,
+            "name": "rocket"
+        },
+        {
+            "id": 57,
+            "name": "shovel"
+        },
+        {
+            "id": 58,
+            "name": "sky_(view)"
+        },
+        {
+            "id": 59,
+            "name": "sloth"
+        },
+        {
+            "id": 60,
+            "name": "street_lamp"
+        },
+        {
+            "id": 61,
+            "name": "sun"
+        },
+        {
+            "id": 62,
+            "name": "tea_pot"
+        },
+        {
+            "id": 63,
+            "name": "tiger"
+        },
+        {
+            "id": 64,
+            "name": "toaster"
+        },
+        {
+            "id": 65,
+            "name": "tomato"
+        },
+        {
+            "id": 66,
+            "name": "tree"
+        },
+        {
+            "id": 67,
+            "name": "turkey_bird"
+        },
+        {
+            "id": 68,
+            "name": "watering_can"
+        },
+        {
+            "id": 69,
+            "name": "wheelbarrow"
+        },
+        {
+            "id": 70,
+            "name": "wolf"
+        },
+        {
+            "id": 71,
+            "name": "zebra"
+        }
+    ],
+    "info": {
+        "year": 2024,
+        "version": "1.0",
+        "contributor": "Label Studio"
     }
-  ],
-  "info": {
-    "year": 2024,
-    "version": "1.0",
-    "contributor": "Label Studio"
-  }
 }
