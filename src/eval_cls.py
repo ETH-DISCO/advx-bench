@@ -78,14 +78,13 @@ if __name__ == "__main__":
         results = {
             **config,
             # semantic similarity
-            "cosine_similarity": get_cosine_similarity(x, advx_x),
+            "cosine_sim": get_cosine_similarity(x, advx_x),
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
             # accuracy
             "img_id": id,
-            "ground_truth_label_id": label_id,
-            "ground_truth_label": get_imagenet_label(label_id),
-            "ground_truth_caption": caption,
+            "label": get_imagenet_label(label_id),
+            "caption": caption,
             "x_acc1": x_acc5[0],
             "advx_acc1": advx_acc5[0],
             "x_acc5": any(x_acc5),
