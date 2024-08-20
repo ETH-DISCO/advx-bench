@@ -110,7 +110,7 @@ for i, combination in enumerate(random_combinations):
         advx_features.append(get_inception_features(advx_x))
 
         def get_acc_boolmask(img: Image.Image) -> list[bool]:
-            preds = list(zip(range(len(labels)), classify_clip(img, labels)))
+            preds = list(zip(range(len(labels)), classify_clip(img, labels))) # most adversarially robust model model based on the RoZ paper
             preds.sort(key=lambda x: x[1], reverse=True)
             top5_keys, top5_vals = zip(*preds[:5])
             top5_mask = [label_id == key for key in top5_keys]
