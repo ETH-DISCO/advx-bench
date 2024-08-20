@@ -15,7 +15,6 @@ from advx.masks import get_diamond_mask, get_word_mask, get_circle_mask, get_kni
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_fid, get_inception_features, get_kid, get_psnr, get_ssim
 from models.cls import classify_clip
-from utils import set_seed
 
 
 def get_imagenet_generator(size: int, seed: Optional[int] = None) -> Generator:
@@ -72,8 +71,6 @@ COMBINATIONS = {
     "mask": ["circle", "square", "diamond", "knit", "word"],
     "opacity": [0, 64, 128, 192, 255], # range from 0 (transparent) to 255 (opaque)
 }
-random_combinations = list(itertools.product(*COMBINATIONS.values()))
-random.shuffle(random_combinations)
 
 
 """
@@ -81,6 +78,8 @@ eval loop
 """
 
 
+random_combinations = list(itertools.product(*COMBINATIONS.values()))
+random.shuffle(random_combinations)
 for combination in random_combinations:
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
