@@ -26,26 +26,7 @@ from ultralytics import YOLO
 codecs
 """
 
-
-class CodecInterface(ABC):
-    @abstractmethod
-    def encode(self, x: torch.Tensor) -> dict:
-        pass
-
-    @abstractmethod
-    def decode(self, bneck_obj: dict) -> dict:
-        pass
-
-    @abstractmethod
-    def compress(self, x: torch.Tensor) -> dict:
-        pass
-
-    @abstractmethod
-    def decompress(self, compressed_data: dict) -> torch.Tensor:
-        pass
-
-
-class Bmshj2018Codec(CodecInterface):
+class Bmshj2018Codec:
     # .encode and .decode don't reduce the image size in bytes but translate the image to a latent space and back.
     # .compress and .decompress are the ones that return the size reduced image in bytes.
 
@@ -91,13 +72,7 @@ object detectors
 """
 
 
-class ObjectdetectorInterface(ABC):
-    @abstractmethod
-    def detect(self, image: Image.Image) -> tuple[list[list[float]], list[float], list[str]]:
-        pass
-
-
-class YOLODetector(ObjectdetectorInterface):
+class YOLODetector:
     def __init__(self):
         self.model = YOLO("yolov8n.pt")
 
@@ -120,13 +95,7 @@ dataset
 """
 
 
-class DatasetInterface(ABC):
-    @abstractmethod
-    def get_generator(self):
-        pass
-
-
-class CocoDataset(DatasetInterface):
+class CocoDataset:
     def __init__(self):
         self.dataset = load_dataset("detection-datasets/coco", split="val", streaming=True)
 

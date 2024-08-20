@@ -19,127 +19,13 @@ from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize
 from tqdm import tqdm
-
-"""
-codecs
-"""
+from models.utils import get_device, set_seed
 
 
-class CodecInterface(ABC):
-    @abstractmethod
-    def encode(self, x: torch.Tensor) -> dict:
-        pass
-
-    @abstractmethod
-    def decode(self, bneck_obj: dict) -> dict:
-        pass
-
-    @abstractmethod
-    def compress(self, x: torch.Tensor) -> dict:
-        pass
-
-    @abstractmethod
-    def decompress(self, compressed_data: dict) -> torch.Tensor:
-        pass
-
-
-class Bmshj2018Codec(CodecInterface):
-    # .encode and .decode don't reduce the image size in bytes but translate the image to a latent space and back.
-    # .compress and .decompress are the ones that return the size reduced image in bytes.
-
-    def __init__(self, quality):
-        kwargs = {
-            "quality": quality,
-            "metric": "mse",  # important for psnr
-        }
-        self.model = bmshj2018_factorized(pretrained=True, progress=True, **kwargs).eval()
-
-    def encode(self, x):
-        with torch.no_grad():
-            y = self.model.g_a(x)
-            y_q, y_likelihoods = self.model.entropy_bottleneck(y)
-            num_pixels = x.size(2) * x.size(3)
-            bpp = torch.sum(torch.log2(y_likelihoods)) / (-num_pixels)
-        return {"latent": y_q, "likelihoods": y_likelihoods, "bpp": bpp.item()}
-
-    def decode(self, bneck_obj):
-        with torch.no_grad():
-            y_q = bneck_obj["latent"]
-            x_hat = self.model.g_s(y_q)
-        return {"x_hat": x_hat}
-
-    def compress(self, x):
-        encoded = self.encode(x)
-        compressed_latent = encoded["latent"]
-        buffer = io.BytesIO()
-        torch.save(compressed_latent, buffer)
-        compressed_bytes = buffer.getvalue()
-        return {"compressed": compressed_bytes, "bpp": encoded["bpp"]}
-
-    def decompress(self, compressed_data):
-        buffer = io.BytesIO(compressed_data["compressed"])
-        latent = torch.load(buffer, weights_only=True)
-        decoded = self.decode({"latent": latent})
-        x_hat = decoded["x_hat"]
-        return x_hat
-
-
-"""
-classifiers
-"""
-
-
-class ClassifierInterface(ABC):
-    @abstractmethod
-    def predict_top_k(self, image: torch.Tensor, k: int) -> list:
-        pass
-
-
-class Resnet50Classifier(ClassifierInterface):
-    def __init__(self):
-        self.model = timm.create_model("resnet50", pretrained=True).eval()
-
-    def predict_top_k(self, image, k):
-        with torch.no_grad():
-            output = self.model(image)
-        _, top_k = torch.topk(output, k)
-        return top_k.squeeze().tolist()
-
-
-"""
-dataset
-"""
-
-
-class DatasetInterface(ABC):
-    @abstractmethod
-    def get_generator(self):
-        pass
-
-
-class ImagenetDataset(DatasetInterface):
-    def __init__(self):
-        self.dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True)
-
-    def get_generator(self, size):
-        subset = self.dataset.take(size).shuffle(seed=41)
-        for elem in subset:
-            yield elem["image_id"], elem["image"].convert("RGB"), elem["label"], elem["caption_enriched"]
-
-
-"""
-utils
-"""
-
-
-def set_seed(seed: int) -> None:
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
+def get_imagenet_generator(size, seed=41):
+    subset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(size).shuffle(seed=seed)
+    for elem in subset:
+        yield elem["image_id"], elem["image"].convert("RGB"), elem["label"], elem["caption_enriched"]
 
 
 def get_fid(real_features, fake_features):
@@ -186,8 +72,8 @@ main
 if __name__ == "__main__":
     set_seed(41)
 
-    outpath = Path.cwd() / "eval" / "eval_cls.csv"
-    fidkidpath = Path.cwd() / "eval" / "eval_cls_fidkid.csv"
+    outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
+    fidkidpath = Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv"
     outpath.unlink(missing_ok=True)
     fidkidpath.unlink(missing_ok=True)
 
