@@ -23,6 +23,12 @@ def get_imagenet_generator(size: int, seed: int = 41):
     for elem in subset:
         yield elem["image_id"], elem["image"].convert("RGB"), elem["label"], elem["caption_enriched"]
 
+def get_imagenet_label(idx: int) -> str:
+    datapath = Path.cwd() / "data" / "imagenet_labels.json"
+    data = json.loads(datapath.read_text())
+    return data[str(idx)]
+
+
 
 def get_fid(real_features, fake_features):
     # FID (Fréchet Inception Distance)
@@ -54,10 +60,6 @@ def get_kid(real_features, fake_features, subset_size=1000):
     return np.mean(mmds)
 
 
-def get_imagenet_label(idx: int) -> str:
-    datapath = Path.cwd() / "data" / "imagenet_labels.json"
-    data = json.loads(datapath.read_text())
-    return data[str(idx)]
 
 
 """

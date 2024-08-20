@@ -25,6 +25,12 @@ def get_coco_generator(size: int, seed: int):
         yield elem["image_id"], elem["image"].convert("RGB"), elem["objects"]["bbox"], elem["objects"]["category"]
 
 
+def get_coco_label(idx: int) -> str:
+    datapath = Path.cwd() / "data" / "coco_labels.json"
+    data = json.loads(datapath.read_text())
+    return data[str(idx)]
+
+
 def get_fid(real_features, fake_features):
     # FID (Fréchet Inception Distance)
     real_features = np.array(real_features)
@@ -67,10 +73,6 @@ def get_iou(box1: list[float], box2: list[float]) -> float:
     return intersection / (box1_area + box2_area - intersection)
 
 
-def get_coco_label(idx: int) -> str:
-    datapath = Path.cwd() / "data" / "coco_labels.json"
-    data = json.loads(datapath.read_text())
-    return data[str(idx)]
 
 
 """
