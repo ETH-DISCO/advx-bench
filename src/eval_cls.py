@@ -74,10 +74,8 @@ if __name__ == "__main__":
         x_acc5 = get_acc_boolmask(x_image)
         advx_acc5 = get_acc_boolmask(advx_image)
 
-        config.pop("outpath")
-        config.pop("fidkidpath")
         results = {
-            **config,
+            "subset_size": config["subset_size"],
             # semantic similarity
             "cosine_sim": get_cosine_similarity(x, advx_x),
             "psnr": get_psnr(x, advx_x),
