@@ -1,8 +1,7 @@
-import itertools
-from typing import Generator, Optional
-import random
 import csv
+import itertools
 import json
+import random
 from pathlib import Path
 
 import torch
@@ -11,18 +10,10 @@ from datasets import load_dataset
 from PIL import Image
 from tqdm import tqdm
 
-from advx.masks import get_diamond_mask, get_word_mask, get_circle_mask, get_knit_mask, get_square_mask
+from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
 from advx.utils import add_overlay
-from metrics.metrics import get_cosine_similarity, get_fid, get_inception_features, get_kid, get_psnr, get_ssim
+from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
 from models.cls import classify_clip
-
-
-def get_imagenet_generator(size: int, seed: Optional[int] = None) -> Generator:
-    if seed is None:
-        seed = random.randint(0, 1000)
-    subset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(size).shuffle(seed=seed)  # type: ignore
-    for elem in subset:
-        yield elem["image_id"], elem["image"].convert("RGB"), elem["label"], elem["caption_enriched"]  # type: ignore
 
 
 def get_imagenet_label(idx: int) -> str:
@@ -40,28 +31,28 @@ def get_imagenet_labels() -> list[str]:
 def get_advx(img: Image.Image, combination: dict) -> Image.Image:
     density = combination["density"]
     if combination["mask"] == "diamond":
-        density = int(density / 10) # 1 -> 10 (count per row)
+        density = int(density / 10)  # 1 -> 10 (count per row)
         img = add_overlay(img, get_diamond_mask(), opacity=combination["opacity"])
 
     elif combination["mask"] == "circle":
-        density = int(density / 10) # 1 -> 10 (count per row)
+        density = int(density / 10)  # 1 -> 10 (count per row)
         img = add_overlay(img, get_circle_mask(), opacity=combination["opacity"])
 
     elif combination["mask"] == "square":
-        density = int(density / 10) # 1 -> 10 (count per row)
+        density = int(density / 10)  # 1 -> 10 (count per row)
         img = add_overlay(img, get_square_mask(), opacity=combination["opacity"])
 
     elif combination["mask"] == "knit":
-        density = int(density * 10) # 10 -> 1000 (iterations)
+        density = int(density * 10)  # 10 -> 1000 (iterations)
         img = add_overlay(img, get_knit_mask(), opacity=combination["opacity"])
 
     elif combination["mask"] == "word":
-        density = int(density * 2) # 2 -> 200 (words)
+        density = int(density * 2)  # 2 -> 200 (words)
         img = add_overlay(img, get_word_mask(words=get_imagenet_labels()), opacity=combination["opacity"])
 
     else:
         raise ValueError(f"Unknown mask: {combination['mask']}")
-    
+
     return img
 
 
@@ -81,8 +72,8 @@ CONFIG["fidkidpath"].unlink(missing_ok=True)
 
 COMBINATIONS = {
     "mask": ["circle", "square", "diamond", "knit", "word"],
-    "opacity": [0, 64, 128, 192, 255], # range from 0 (transparent) to 255 (opaque)
-    "density": [1, 25, 50, 75, 100], # percentage of the image covered by the mask
+    "opacity": [0, 64, 128, 192, 255],  # range from 0 (transparent) to 255 (opaque)
+    "density": [1, 25, 50, 75, 100],  # percentage of the image covered by the mask
 }
 
 
@@ -95,14 +86,14 @@ random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
-for i, combination in enumerate(random_combinations):
-    print(f">>> iteration {i+1}/{len(random_combinations)}")
+dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(CONFIG["subset_size"]).shuffle(seed=random.randint(0, 1000))
+dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
+labels = get_imagenet_labels()
+
+for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
-    dataset = get_imagenet_generator(size=CONFIG["subset_size"])
-    labels = get_imagenet_labels()
-
-    for id, x_image, label_id, caption in tqdm(dataset, total=CONFIG["subset_size"]):
+    for id, x_image, label_id, caption in dataset:
         advx_image = get_advx(x_image, combination)
 
         transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
@@ -122,12 +113,10 @@ for i, combination in enumerate(random_combinations):
         results = {
             # settings
             **combination,
-
             # semantic similarity
             "cosine_sim": get_cosine_similarity(x, advx_x),
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
-            
             # accuracy
             "img_id": id,
             "label": get_imagenet_label(label_id),

@@ -1,9 +1,9 @@
-import itertools
-from typing import Generator, Optional
-import random
 import csv
+import itertools
 import json
+import random
 from pathlib import Path
+from typing import Generator, Optional
 
 import torch
 import torchvision.transforms as transforms
@@ -11,7 +11,7 @@ from datasets import load_dataset
 from PIL import Image
 from tqdm import tqdm
 
-from advx.masks import get_diamond_mask, get_word_mask, get_circle_mask, get_knit_mask, get_square_mask
+from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_fid, get_inception_features, get_kid, get_psnr, get_ssim
 from models.cls import classify_clip
@@ -69,7 +69,7 @@ CONFIG["fidkidpath"].unlink(missing_ok=True)
 
 COMBINATIONS = {
     "mask": ["circle", "square", "diamond", "knit", "word"],
-    "opacity": [0, 64, 128, 192, 255], # range from 0 (transparent) to 255 (opaque)
+    "opacity": [0, 64, 128, 192, 255],  # range from 0 (transparent) to 255 (opaque)
 }
 
 
@@ -86,7 +86,7 @@ for i, combination in enumerate(random_combinations):
     print(f">>> iteration {i+1}/{len(random_combinations)}")
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
-    dataset = get_imagenet_generator(size=CONFIG["subset_size"])
+    dataset = get_imagenet_generator(size=CONFIG["subset_size"]) # note: you shouldn't use different subsets for each combination
     labels = get_imagenet_labels()
 
     x_features = []
@@ -95,7 +95,6 @@ for i, combination in enumerate(random_combinations):
     # example subset for this combination --------------------
 
     for id, x_image, label_id, caption in tqdm(dataset, total=CONFIG["subset_size"]):
-        
         # get advx --------------------------------------------
 
         advx_image = get_advx(x_image, combination)
@@ -110,7 +109,7 @@ for i, combination in enumerate(random_combinations):
         advx_features.append(get_inception_features(advx_x))
 
         def get_acc_boolmask(img: Image.Image) -> list[bool]:
-            preds = list(zip(range(len(labels)), classify_clip(img, labels))) # most adversarially robust model model based on the RoZ paper
+            preds = list(zip(range(len(labels)), classify_clip(img, labels)))  # most adversarially robust model model based on the RoZ paper
             preds.sort(key=lambda x: x[1], reverse=True)
             top5_keys, top5_vals = zip(*preds[:5])
             top5_mask = [label_id == key for key in top5_keys]
@@ -123,12 +122,10 @@ for i, combination in enumerate(random_combinations):
             # settings
             **combination,
             # "subset_size": CONFIG["subset_size"],
-
             # semantic similarity
             "cosine_sim": get_cosine_similarity(x, advx_x),
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
-            
             # accuracy
             "img_id": id,
             "label": get_imagenet_label(label_id),
