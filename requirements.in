@@ -12,7 +12,7 @@ Requests
 safetensors
 scikit_learn
 scipy
-skimage
+scikit-image
 spacy
 torch
 torchvision
