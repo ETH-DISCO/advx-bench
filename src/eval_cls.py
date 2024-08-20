@@ -83,7 +83,7 @@ random.shuffle(random_combinations)
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
 for i, combination in enumerate(random_combinations):
-    print(f"\033[0miteration {i+1}/{len(random_combinations)}\033[92m")
+    print(f">>> iteration {i+1}/{len(random_combinations)}")
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
     dataset = get_imagenet_generator(size=CONFIG["subset_size"])
