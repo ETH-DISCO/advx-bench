@@ -38,18 +38,30 @@ def get_imagenet_labels() -> list[str]:
 
 
 def get_advx(img: Image.Image, combination: dict) -> Image.Image:
+    density = combination["density"]
     if combination["mask"] == "diamond":
+        density = int(density / 10) # 1 -> 10 (count per row)
         img = add_overlay(img, get_diamond_mask(), opacity=combination["opacity"])
-    elif combination["mask"] == "word":
-        img = add_overlay(img, get_word_mask(words=get_imagenet_labels()), opacity=combination["opacity"])
+
     elif combination["mask"] == "circle":
+        density = int(density / 10) # 1 -> 10 (count per row)
         img = add_overlay(img, get_circle_mask(), opacity=combination["opacity"])
-    elif combination["mask"] == "knit":
-        img = add_overlay(img, get_knit_mask(), opacity=combination["opacity"])
+
     elif combination["mask"] == "square":
+        density = int(density / 10) # 1 -> 10 (count per row)
         img = add_overlay(img, get_square_mask(), opacity=combination["opacity"])
+
+    elif combination["mask"] == "knit":
+        density = int(density * 10) # 10 -> 1000 (iterations)
+        img = add_overlay(img, get_knit_mask(), opacity=combination["opacity"])
+
+    elif combination["mask"] == "word":
+        density = int(density * 2) # 2 -> 200 (words)
+        img = add_overlay(img, get_word_mask(words=get_imagenet_labels()), opacity=combination["opacity"])
+
     else:
         raise ValueError(f"Unknown mask: {combination['mask']}")
+    
     return img
 
 
@@ -70,7 +82,7 @@ CONFIG["fidkidpath"].unlink(missing_ok=True)
 COMBINATIONS = {
     "mask": ["circle", "square", "diamond", "knit", "word"],
     "opacity": [0, 64, 128, 192, 255], # range from 0 (transparent) to 255 (opaque)
-    "density": [1, 3, 5, 7, 9], # density of the mask (ie. number of shapes per column/row)
+    "density": [1, 25, 50, 75, 100], # percentage of the image covered by the mask
 }
 
 
@@ -98,7 +110,7 @@ for i, combination in enumerate(random_combinations):
         advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
         def get_acc_boolmask(img: Image.Image) -> list[bool]:
-            preds = list(zip(range(len(labels)), classify_clip(img, labels))) # most adversarially robust model model based on the RoZ paper
+            preds = list(zip(range(len(labels)), classify_clip(img, labels)))
             preds.sort(key=lambda x: x[1], reverse=True)
             top5_keys, top5_vals = zip(*preds[:5])
             top5_mask = [label_id == key for key in top5_keys]
