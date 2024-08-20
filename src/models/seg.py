@@ -160,7 +160,7 @@ def plot_segmentation_detection(image: Image.Image, boxes: list[list[float]], sc
 
 
 """
-example
+example usage
 """
 
 

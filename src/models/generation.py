@@ -54,8 +54,9 @@ def gen_stable_diffusion_light(prompt: str) -> Image.Image:
 
 
 """
-example
+example usage
 """
+
 
 if __name__ == "__main__":
     prompt = "a photo of an astronaut riding a horse on mars"

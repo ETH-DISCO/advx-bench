@@ -68,5 +68,20 @@ def get_iou(box1: list[float], box2: list[float]) -> float:
 
 
 """
-example
+example usage
 """
+
+if __name__ == "__main__":
+    real_features = np.random.rand(1000, 2048)
+    fake_features = np.random.rand(1000, 2048)
+
+    fid = get_fid(real_features, fake_features)
+    print(f"fid: {fid}")
+
+    kid = get_kid(real_features, fake_features, subset_size=100)
+    print(f"kid: {kid}")
+
+    box1 = [0, 0, 10, 10]
+    box2 = [5, 5, 15, 15]
+    iou = get_iou(box1, box2)
+    print(f"iou: {iou}")

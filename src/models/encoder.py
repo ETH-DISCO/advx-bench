@@ -23,6 +23,11 @@ def encode_vit_mae(img: Image.Image) -> torch.Tensor:
     return embedding
 
 
+"""
+example usage
+"""
+
+
 if __name__ == "__main__":
     img = Image.open(requests.get("http://images.cocodataset.org/val2017/000000039769.jpg", stream=True).raw).convert("RGB")
     embedding = encode_vit_mae(img)

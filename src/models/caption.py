@@ -113,8 +113,9 @@ def get_noun_chunks(sentence: str) -> list[str]:
 
 
 """
-example
+example usage
 """
+
 
 if __name__ == "__main__":
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
