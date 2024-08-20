@@ -8,6 +8,8 @@ from datasets import load_dataset
 from PIL import Image
 from tqdm import tqdm
 
+from advx.masks import get_diamond_mask
+from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_fid, get_inception_features, get_kid, get_psnr, get_ssim
 from models.cls import classify_clip
 from utils import set_seed
@@ -31,9 +33,11 @@ def get_imagenet_labels() -> list[str]:
     return list(data.values())
 
 
-def get_advx(image: Image.Image, config: dict) -> Image.Image:
+def get_advx(img: Image.Image, config: dict) -> Image.Image:
     # apply stuff based on config...
-    return image
+    if config["mask"] == "diamond":
+        img = add_overlay(img, get_diamond_mask(), 69)
+    return img
 
 
 if __name__ == "__main__":
@@ -43,7 +47,8 @@ if __name__ == "__main__":
         "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
         "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv",
         "subset_size": 25,
-        # advx config ...
+        # advx config
+        "mask": "diamond",  # circle, square, diamond, knit, word
     }
     config["outpath"].unlink(missing_ok=True)
     config["fidkidpath"].unlink(missing_ok=True)
@@ -83,7 +88,7 @@ if __name__ == "__main__":
             # accuracy
             "img_id": id,
             "label": get_imagenet_label(label_id),
-            "caption": caption,
+            "caption": caption.replace("\n", ""),
             "x_acc1": x_acc5[0],
             "advx_acc1": advx_acc5[0],
             "x_acc5": any(x_acc5),
