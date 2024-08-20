@@ -32,7 +32,7 @@ def get_imagenet_labels() -> list[str]:
 
 
 def get_advx(image: Image.Image, config: dict) -> Image.Image:
-    # apply
+    # apply stuff based on config...
     return image
 
 
@@ -40,11 +40,10 @@ if __name__ == "__main__":
     set_seed(41)
 
     config = {
-        "outpath": Path.cwd() / "data" / "eval" / "eval_cls.json",
-        "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.json",
+        "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
+        "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv",
         "subset_size": 25,
-        # advx config
-        # ...
+        # advx config ...
     }
     config["outpath"].unlink(missing_ok=True)
     config["fidkidpath"].unlink(missing_ok=True)
@@ -75,6 +74,8 @@ if __name__ == "__main__":
         x_acc5 = get_acc_boolmask(x_image)
         advx_acc5 = get_acc_boolmask(advx_image)
 
+        config.pop("outpath")
+        config.pop("fidkidpath")
         results = {
             **config,
             # semantic similarity
