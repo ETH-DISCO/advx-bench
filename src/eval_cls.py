@@ -65,15 +65,15 @@ if __name__ == "__main__":
         x_features.append(get_inception_features(x))
         advx_features.append(get_inception_features(advx_x))
 
-        def get_clip_acc_mask(img: Image.Image) -> list[bool]:
+        def get_acc_boolmask(img: Image.Image) -> list[bool]:
             preds = list(zip(range(len(labels)), classify_clip(img, labels)))
             preds.sort(key=lambda x: x[1], reverse=True)
             top5_keys, top5_vals = zip(*preds[:5])
             top5_mask = [label_id == key for key in top5_keys]
             return top5_mask
 
-        x_acc5 = get_clip_acc_mask(x_image)
-        advx_acc5 = get_clip_acc_mask(advx_image)
+        x_acc5 = get_acc_boolmask(x_image)
+        advx_acc5 = get_acc_boolmask(advx_image)
 
         results = {
             **config,
