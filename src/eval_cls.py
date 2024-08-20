@@ -1,3 +1,6 @@
+import itertools
+from typing import Generator, Optional
+import random
 import csv
 import json
 from pathlib import Path
@@ -8,14 +11,16 @@ from datasets import load_dataset
 from PIL import Image
 from tqdm import tqdm
 
-from advx.masks import get_diamond_mask
+from advx.masks import get_diamond_mask, get_word_mask, get_circle_mask, get_knit_mask, get_square_mask
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_fid, get_inception_features, get_kid, get_psnr, get_ssim
 from models.cls import classify_clip
 from utils import set_seed
 
 
-def get_imagenet_generator(size: int, seed: int = 41):
+def get_imagenet_generator(size: int, seed: Optional[int] = None) -> Generator:
+    if seed is None:
+        seed = random.randint(0, 1000)
     subset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(size).shuffle(seed=seed)  # type: ignore
     for elem in subset:
         yield elem["image_id"], elem["image"].convert("RGB"), elem["label"], elem["caption_enriched"]  # type: ignore
@@ -33,34 +38,58 @@ def get_imagenet_labels() -> list[str]:
     return list(data.values())
 
 
-def get_advx(img: Image.Image, config: dict) -> Image.Image:
-    # apply stuff based on config...
-    if config["mask"] == "diamond":
-        img = add_overlay(img, get_diamond_mask(), 69)
+def get_advx(img: Image.Image, combination: dict) -> Image.Image:
+    if combination["mask"] == "diamond":
+        img = add_overlay(img, get_diamond_mask(), opacity=combination["opacity"])
+    elif combination["mask"] == "word":
+        img = add_overlay(img, get_word_mask(words=get_imagenet_labels()), opacity=combination["opacity"])
+    elif combination["mask"] == "circle":
+        img = add_overlay(img, get_circle_mask(), opacity=combination["opacity"])
+    elif combination["mask"] == "knit":
+        img = add_overlay(img, get_knit_mask(), opacity=combination["opacity"])
+    elif combination["mask"] == "square":
+        img = add_overlay(img, get_square_mask(), opacity=combination["opacity"])
+    else:
+        raise ValueError(f"Unknown mask: {combination['mask']}")
     return img
 
 
-if __name__ == "__main__":
-    set_seed(41)
+"""
+config
+"""
 
-    config = {
-        "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-        "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv",
-        "subset_size": 25,
-        # advx config
-        "mask": "diamond",  # circle, square, diamond, knit, word
-    }
-    config["outpath"].unlink(missing_ok=True)
-    config["fidkidpath"].unlink(missing_ok=True)
 
-    dataset = get_imagenet_generator(size=config["subset_size"])
+CONFIG = {
+    "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
+    "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv",
+    "subset_size": 100,
+}
+CONFIG["outpath"].unlink(missing_ok=True)
+CONFIG["fidkidpath"].unlink(missing_ok=True)
+
+
+COMBINATIONS = {
+    "mask": ["circle", "square", "diamond", "knit", "word"],
+    "opacity": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+}
+random_combinations = list(itertools.product(*COMBINATIONS.values()))
+random.shuffle(random_combinations)
+
+
+"""
+eval loop
+"""
+
+
+for combination in random_combinations:
+    dataset = get_imagenet_generator(size=CONFIG["subset_size"])
     labels = get_imagenet_labels()
 
     x_features = []
     advx_features = []
 
-    for id, x_image, label_id, caption in tqdm(dataset, total=config["subset_size"]):
-        advx_image = get_advx(x_image, config)
+    for id, x_image, label_id, caption in tqdm(dataset, total=CONFIG["subset_size"]):
+        advx_image = get_advx(x_image, combination)
 
         transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
         x: torch.Tensor = transform(x_image).unsqueeze(0)
@@ -79,12 +108,16 @@ if __name__ == "__main__":
         x_acc5 = get_acc_boolmask(x_image)
         advx_acc5 = get_acc_boolmask(advx_image)
 
+
         results = {
-            "subset_size": config["subset_size"],
+            "subset_size": CONFIG["subset_size"],
+            "combination": combination,
+
             # semantic similarity
             "cosine_sim": get_cosine_similarity(x, advx_x),
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
+            
             # accuracy
             "img_id": id,
             "label": get_imagenet_label(label_id),
@@ -95,18 +128,23 @@ if __name__ == "__main__":
             "advx_acc5": 1 if any(advx_acc5) else 0,
         }
 
-        with open(config["outpath"], mode="a") as f:
+        with open(CONFIG["outpath"], mode="a") as f:
             writer = csv.DictWriter(f, fieldnames=results.keys())
-            if config["outpath"].stat().st_size == 0:
+            if CONFIG["outpath"].stat().st_size == 0:
                 writer.writeheader()
             writer.writerow(results)
 
-    with open(config["fidkidpath"], mode="a") as f:
+    """
+    fid / kid for this combination
+    """
+
+    with open(CONFIG["fidkidpath"], mode="a") as f:
         metrics = {
+            "combination": combination,
             "fid": get_fid(x_features, x_features),
-            "kid": get_kid(advx_features, advx_features, config["subset_size"]),
+            "kid": get_kid(advx_features, advx_features, CONFIG["subset_size"]),
         }
         writer = csv.DictWriter(f, fieldnames=metrics.keys())
-        if config["fidkidpath"].stat().st_size == 0:
+        if CONFIG["fidkidpath"].stat().st_size == 0:
             writer.writeheader()
         writer.writerow(metrics)
