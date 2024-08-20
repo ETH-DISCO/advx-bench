@@ -13,14 +13,12 @@ import torch.nn.functional as F
 import torchvision.transforms as transforms
 from compressai.zoo import bmshj2018_factorized
 from datasets import load_dataset
-from PIL import Image
 from scipy.linalg import sqrtm
 from skimage.metrics import structural_similarity
 from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize
 from tqdm import tqdm
-
 
 """
 codecs

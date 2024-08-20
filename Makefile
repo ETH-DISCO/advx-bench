@@ -88,9 +88,9 @@ docker-clean:
 
 .PHONY: fmt # format codebase
 fmt:
-	uv pip install isort
-	uv pip install ruff
-	uv pip install autoflake
+	# pip install isort
+	# pip install ruff
+	# pip install autoflake
 
 	isort .
 	autoflake --remove-all-unused-imports --recursive --in-place .
@@ -98,8 +98,8 @@ fmt:
 
 .PHONY: sec # check for vulns
 sec:
-	uv pip install bandit
-	uv pip install safety
+	pip install bandit
+	pip install safety
 	
 	bandit -r .
 	safety check --full-report

@@ -22,7 +22,6 @@ from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToPIL
 from tqdm import tqdm
 from ultralytics import YOLO
 
-
 """
 codecs
 """
@@ -250,6 +249,7 @@ if __name__ == "__main__":
                 if not filtered:
                     return [], [], []
                 return map(list, zip(*filtered))
+
             x_boxes, x_probs, x_labels = det_model.detect(ToPILImage()(x_hat.squeeze()))
             x_hat_boxes, x_hat_probs, x_hat_labels = det_model.detect(ToPILImage()(x.squeeze()))
             x_probs_50_95, x_boxes_50_95, x_labels_50_95 = filter_detections(x_probs, x_boxes, x_labels)
