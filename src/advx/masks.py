@@ -171,9 +171,11 @@ def get_knit_mask(
 def get_diamond_mask(
     width: int = 1000,
     height: int = 1000,
-    diamond_size: int = 200,
     diamond_count: int = 10,
+    diamonds_per_row: int = 5,
 ):
+    diamond_size = width // diamonds_per_row
+
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
     context = cairo.Context(surface)
     context.set_source_rgba(0, 0, 0, 0)
@@ -196,10 +198,13 @@ def get_diamond_mask(
             t = (i - 1) / (max_i - 1)  # blue -> red gradient
             return (0, 0.5 * (1 - t), 0, 1)
 
-    for row in range(-1, height // int(diamond_size / 2) + 2):
-        for col in range(-1, width // diamond_size + 2):
+    rows = height // (diamond_size // 2) + 2
+    cols = diamonds_per_row
+
+    for row in range(-1, rows):
+        for col in range(-1, cols + 1):
             center_x = col * diamond_size
-            center_y = row * int(diamond_size / 2)
+            center_y = row * (diamond_size // 2)
 
             # row offset
             if row % 2 == 1:
@@ -219,4 +224,5 @@ example usage
 
 if __name__ == "__main__":
     img = get_diamond_mask()
-    img.save("mask.png")
+    # img.save("mask.png")
+    img.show()
