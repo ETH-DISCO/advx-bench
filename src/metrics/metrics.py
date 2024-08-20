@@ -1,12 +1,16 @@
 import time
-from typing import Callable
+from typing import Callable, Union
 
 import numpy as np
+import requests
 import torch
+from PIL import Image
 from scipy.linalg import sqrtm
 from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
-from torchvision.transforms import CenterCrop, Compose, Normalize, Resize
+from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
+from transformers import ViTFeatureExtractor, ViTModel
+from utils import get_device
 
 
 def get_time_result(func: Callable, *args):
@@ -67,21 +71,53 @@ def get_iou(box1: list[float], box2: list[float]) -> float:
     return intersection / (box1_area + box2_area - intersection)
 
 
+def get_cosine_similarity(x: Union[torch.Tensor, Image.Image], y: Union[torch.Tensor, Image.Image]) -> float:
+    device = get_device()
+    model_name = "google/vit-base-patch16-224"
+    feature_extractor = ViTFeatureExtractor.from_pretrained(model_name)
+    model = ViTModel.from_pretrained(model_name).to(device)
+
+    def process_input(input_data):
+        if isinstance(input_data, Image.Image):
+            return feature_extractor(images=input_data, return_tensors="pt")
+        elif isinstance(input_data, torch.Tensor):
+            if input_data.dim() == 3:
+                input_data = input_data.unsqueeze(0)
+            return feature_extractor(images=input_data, return_tensors="pt")
+        else:
+            raise TypeError(f"input should be PIL Image or torch.Tensor. got {type(input_data)}")
+
+    inputs1 = process_input(x)
+    inputs2 = process_input(y)
+
+    inputs1 = {k: v.to(device) for k, v in inputs1.items()}
+    inputs2 = {k: v.to(device) for k, v in inputs2.items()}
+
+    with torch.no_grad():
+        outputs1 = model(**inputs1)
+        outputs2 = model(**inputs2)
+
+    latents1 = outputs1.last_hidden_state[:, 0, :]  # use CLS token as image representation
+    latents2 = outputs2.last_hidden_state[:, 0, :]
+
+    cosine_sim = torch.nn.functional.cosine_similarity(latents1, latents2).item()
+    return cosine_sim
+
+
 """
 example usage
 """
 
+
 if __name__ == "__main__":
-    real_features = np.random.rand(1000, 2048)
-    fake_features = np.random.rand(1000, 2048)
+    url1 = "http://images.cocodataset.org/val2017/000000039769.jpg"
+    url2 = "http://images.cocodataset.org/val2017/000000000285.jpg"
 
-    fid = get_fid(real_features, fake_features)
-    print(f"fid: {fid}")
+    image1 = Image.open(requests.get(url1, stream=True).raw).convert("RGB")
+    image2 = Image.open(requests.get(url2, stream=True).raw).convert("RGB")
 
-    kid = get_kid(real_features, fake_features, subset_size=100)
-    print(f"kid: {kid}")
+    image1_tensor = ToTensor()(image1).unsqueeze(0)
+    image2_tensor = ToTensor()(image2).unsqueeze(0)
 
-    box1 = [0, 0, 10, 10]
-    box2 = [5, 5, 15, 15]
-    iou = get_iou(box1, box2)
-    print(f"iou: {iou}")
+    print(f"Cosine similarity: {get_cosine_similarity(image1, image2)}")
+    print(f"Cosine similarity: {get_cosine_similarity(image1_tensor, image2_tensor)}")
