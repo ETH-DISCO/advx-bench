@@ -16,17 +16,22 @@
 
 # from models.utils import set_seed
 
+import json
+from pathlib import Path
 
-# def get_coco_generator(size: int, seed: int):
-#     subset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(size).shuffle(seed=41)
-#     for elem in subset:
-#         yield elem["image_id"], elem["image"].convert("RGB"), elem["objects"]["bbox"], elem["objects"]["category"]
+from datasets import load_dataset
 
 
-# def get_coco_label(idx: int) -> str:
-#     datapath = Path.cwd() / "data" / "coco_labels.json"
-#     data = json.loads(datapath.read_text())
-#     return data[str(idx)]
+def get_coco_generator(size: int, seed: int):
+    subset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(size).shuffle(seed=41)
+    for elem in subset:
+        yield elem["image_id"], elem["image"].convert("RGB"), elem["objects"]["bbox"], elem["objects"]["category"]
+
+
+def get_coco_label(idx: int) -> str:
+    datapath = Path.cwd() / "data" / "coco_labels.json"
+    data = json.loads(datapath.read_text())
+    return data[str(idx)]
 
 
 # if __name__ == "__main__":

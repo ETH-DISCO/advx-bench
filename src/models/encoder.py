@@ -1,6 +1,7 @@
 import requests
 import torch
 from PIL import Image
+
 from utils import get_device
 
 

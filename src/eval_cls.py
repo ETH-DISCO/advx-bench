@@ -2,16 +2,15 @@ import csv
 import json
 from pathlib import Path
 
-import numpy as np
 import torch
-import torch.nn.functional as F
 import torchvision.transforms as transforms
 from datasets import load_dataset
-from skimage.metrics import structural_similarity
+from PIL import Image
 from tqdm import tqdm
 
-from metrics.metrics import get_fid, get_inception_features, get_kid
-from models.utils import set_seed
+from metrics.metrics import get_cosine_similarity, get_fid, get_inception_features, get_kid, get_psnr, get_ssim
+from models.cls import classify_clip
+from utils import set_seed
 
 
 def get_imagenet_generator(size: int, seed: int = 41):
@@ -26,17 +25,23 @@ def get_imagenet_label(idx: int) -> str:
     return data[str(idx)]
 
 
-def get_advx(x: torch.Tensor, config: dict) -> torch.Tensor:
+def get_imagenet_labels() -> list[str]:
+    datapath = Path.cwd() / "data" / "imagenet_labels.json"
+    data = json.loads(datapath.read_text())
+    return list(data.values())
+
+
+def get_advx(image: Image.Image, config: dict) -> Image.Image:
     # apply
-    return x
+    return image
 
 
 if __name__ == "__main__":
     set_seed(41)
 
     config = {
-        "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-        "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv",
+        "outpath": Path.cwd() / "data" / "eval" / "eval_cls.json",
+        "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.json",
         "subset_size": 25,
         # advx config
         # ...
@@ -45,46 +50,60 @@ if __name__ == "__main__":
     config["fidkidpath"].unlink(missing_ok=True)
 
     dataset = get_imagenet_generator(size=config["subset_size"])
+    labels = get_imagenet_labels()
 
     x_features = []
     advx_features = []
 
-    for id, image, label_id, caption in tqdm(dataset, total=config["subset_size"]):
-        transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+    for id, x_image, label_id, caption in tqdm(dataset, total=config["subset_size"]):
+        advx_image = get_advx(x_image, config)
 
-        x: torch.Tensor = transform(image).unsqueeze(0)
-        advx: torch.Tensor = get_advx(x, config)
+        transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+        x: torch.Tensor = transform(x_image).unsqueeze(0)
+        advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
         x_features.append(get_inception_features(x))
-        advx_features.append(get_inception_features(advx))
+        advx_features.append(get_inception_features(advx_x))
 
-        imgnet_normalize = lambda x: (x - torch.tensor([0.485, 0.456, 0.406]).view(1, 3, 1, 1)) / torch.tensor([0.229, 0.224, 0.225]).view(1, 3, 1, 1)
-        metrics = {
+        def get_clip_acc_mask(img: Image.Image) -> list[bool]:
+            preds = list(zip(range(len(labels)), classify_clip(img, labels)))
+            preds.sort(key=lambda x: x[1], reverse=True)
+            top5_keys, top5_vals = zip(*preds[:5])
+            top5_mask = [label_id == key for key in top5_keys]
+            return top5_mask
+
+        x_acc5 = get_clip_acc_mask(x_image)
+        advx_acc5 = get_clip_acc_mask(advx_image)
+
+        results = {
+            **config,
             # semantic similarity
-            # "latent_cosine_similarity": F.cosine_similarity(codec.encode(x)["latent"].view(1, -1), codec.encode(x_hat)["latent"].view(1, -1)).item(), ---> write function to get latents
-            "psnr": (20 * torch.log10(1.0 / torch.sqrt(torch.mean((x - x_hat) ** 2)))).item(),
-            "ssim": structural_similarity(np.array(x.squeeze().permute(1, 2, 0).cpu().numpy()), np.array(x_hat.squeeze().permute(1, 2, 0).cpu().numpy()), multichannel=True, channel_axis=2, data_range=1.0),
+            "cosine_similarity": get_cosine_similarity(x, advx_x),
+            "psnr": get_psnr(x, advx_x),
+            "ssim": get_ssim(x, advx_x),
             # accuracy
             "img_id": id,
-            "ground_truth": label_id,
+            "ground_truth_label_id": label_id,
             "ground_truth_label": get_imagenet_label(label_id),
             "ground_truth_caption": caption,
-            "x_preds_top5": json.dumps(dict(zip(resnet.predict_top_k(imgnet_normalize(x), 5), F.softmax(resnet.model(x), dim=1).squeeze().tolist()))),
-            "x_hat_preds_top5": json.dumps(dict(zip(resnet.predict_top_k(imgnet_normalize(x_hat), 5), F.softmax(resnet.model(x_hat), dim=1).squeeze().tolist()))),
+            "x_acc1": x_acc5[0],
+            "advx_acc1": advx_acc5[0],
+            "x_acc5": any(x_acc5),
+            "advx_acc5": any(advx_acc5),
         }
-        with open(outpath, mode="a") as f:
-            writer = csv.DictWriter(f, fieldnames=metrics.keys())
-            if outpath.stat().st_size == 0:
-                writer.writeheader()
-            writer.writerow(metrics)
 
-    with open(fidkidpath, mode="a") as f:
+        with open(config["outpath"], mode="a") as f:
+            writer = csv.DictWriter(f, fieldnames=results.keys())
+            if config["outpath"].stat().st_size == 0:
+                writer.writeheader()
+            writer.writerow(results)
+
+    with open(config["fidkidpath"], mode="a") as f:
         metrics = {
-            "quality": quality,
-            "fid": get_fid(x_features, advx_features),
-            "kid": get_kid(x_features, advx_features, config["subset_size"]),
+            "fid": get_fid(x_features, x_features),
+            "kid": get_kid(advx_features, advx_features, config["subset_size"]),
         }
         writer = csv.DictWriter(f, fieldnames=metrics.keys())
-        if fidkidpath.stat().st_size == 0:
+        if config["fidkidpath"].stat().st_size == 0:
             writer.writeheader()
         writer.writerow(metrics)

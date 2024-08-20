@@ -10,6 +10,7 @@ from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
 from transformers import ViTFeatureExtractor, ViTModel
+
 from utils import get_device
 
 
@@ -25,8 +26,18 @@ def get_inception_features(x: torch.Tensor) -> np.ndarray:
     inception_transform = Compose([Resize(299), CenterCrop(299), Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
     with torch.no_grad():
         feature = inception(inception_transform(x)).squeeze().cpu().numpy()
-    print(type(feature))
     return feature
+
+
+def get_psnr(x: torch.Tensor, x_hat: torch.Tensor) -> float:
+    mse = torch.mean((x - x_hat) ** 2)
+    return float(20 * torch.log10(1.0 / torch.sqrt(mse)))
+
+
+def get_ssim(x: torch.Tensor, x_hat: torch.Tensor) -> float:
+    from skimage.metrics import structural_similarity
+
+    return structural_similarity(np.array(x.squeeze().permute(1, 2, 0).cpu().numpy()), np.array(x_hat.squeeze().permute(1, 2, 0).cpu().numpy()), multichannel=True, channel_axis=2, data_range=1.0)
 
 
 def get_fid(real_features: np.ndarray, fake_features: np.ndarray) -> float:

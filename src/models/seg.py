@@ -16,6 +16,7 @@ try:
     from .utils import get_device
 except ImportError:
     from det import detect_vit
+
     from utils import get_device
 
 
