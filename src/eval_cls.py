@@ -88,8 +88,15 @@ for combination in random_combinations:
     x_features = []
     advx_features = []
 
+    # example subset for this combination --------------------
+
     for id, x_image, label_id, caption in tqdm(dataset, total=CONFIG["subset_size"]):
+        
+        # get advx --------------------------------------------
+
         advx_image = get_advx(x_image, combination)
+
+        # compare x and advx ----------------------------------
 
         transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
         x: torch.Tensor = transform(x_image).unsqueeze(0)
@@ -134,9 +141,7 @@ for combination in random_combinations:
                 writer.writeheader()
             writer.writerow(results)
 
-    """
-    fid / kid for this combination
-    """
+    # get fid/kid for this combination ------------------------
 
     with open(CONFIG["fidkidpath"], mode="a") as f:
         metrics = {
