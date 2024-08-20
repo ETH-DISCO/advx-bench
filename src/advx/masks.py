@@ -222,6 +222,7 @@ def get_diamond_mask(
 example usage
 """
 
+
 if __name__ == "__main__":
     img = get_diamond_mask()
     # img.save("mask.png")
