@@ -8,10 +8,8 @@ import torch
 import torch.nn.functional as F
 import torchvision.transforms as transforms
 from datasets import load_dataset
-from scipy.linalg import sqrtm
 from skimage.metrics import structural_similarity
 from sklearn.metrics import average_precision_score
-from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToPILImage
 from tqdm import tqdm
@@ -29,55 +27,6 @@ def get_coco_label(idx: int) -> str:
     datapath = Path.cwd() / "data" / "coco_labels.json"
     data = json.loads(datapath.read_text())
     return data[str(idx)]
-
-
-def get_fid(real_features, fake_features):
-    # FID (Fréchet Inception Distance)
-    real_features = np.array(real_features)
-    fake_features = np.array(fake_features)
-    mu1, sigma1 = real_features.mean(axis=0), np.cov(real_features, rowvar=False)
-    mu2, sigma2 = fake_features.mean(axis=0), np.cov(fake_features, rowvar=False)
-    ssdiff = np.sum((mu1 - mu2) ** 2)
-    covmean = sqrtm(sigma1.dot(sigma2))
-    if np.iscomplexobj(covmean):
-        covmean = covmean.real
-    fid = ssdiff + np.trace(sigma1 + sigma2 - 2 * covmean)
-    return fid
-
-
-def get_kid(real_features, fake_features, subset_size=1000):
-    # KID (Kernel Inception Distance)
-    real_features = np.array(real_features)
-    fake_features = np.array(fake_features)
-    n = min(real_features.shape[0], fake_features.shape[0], subset_size)
-    real_subset = real_features[:n]
-    fake_subset = fake_features[:n]
-    mmds = []
-    for i in range(n):
-        mmd = polynomial_kernel(real_subset[i : i + 1], fake_subset).mean()
-        mmd -= polynomial_kernel(real_subset[i : i + 1], real_subset).mean()
-        mmd += polynomial_kernel(fake_subset[i : i + 1], fake_subset).mean()
-        mmds.append(mmd)
-    return np.mean(mmds)
-
-
-def get_iou(box1: list[float], box2: list[float]) -> float:
-    # iou = intersection over union
-    x1, y1, x2, y2 = box1
-    x1_, y1_, x2_, y2_ = box2
-    xi1, yi1 = max(x1, x1_), max(y1, y1_)
-    xi2, yi2 = min(x2, x2_), min(y2, y2_)
-    intersection = max(0, xi2 - xi1) * max(0, yi2 - yi1)
-    box1_area = (x2 - x1) * (y2 - y1)
-    box2_area = (x2_ - x1_) * (y2_ - y1_)
-    return intersection / (box1_area + box2_area - intersection)
-
-
-
-
-"""
-main
-"""
 
 
 if __name__ == "__main__":
