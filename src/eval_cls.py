@@ -89,10 +89,10 @@ if __name__ == "__main__":
             "img_id": id,
             "label": get_imagenet_label(label_id),
             "caption": caption.replace("\n", ""),
-            "x_acc1": x_acc5[0],
-            "advx_acc1": advx_acc5[0],
-            "x_acc5": any(x_acc5),
-            "advx_acc5": any(advx_acc5),
+            "x_acc1": 1 if x_acc5[0] else 0,
+            "advx_acc1": 1 if advx_acc5[0] else 0,
+            "x_acc5": 1 if any(x_acc5) else 0,
+            "advx_acc5": 1 if any(advx_acc5) else 0,
         }
 
         with open(config["outpath"], mode="a") as f:
