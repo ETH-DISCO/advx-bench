@@ -1,7 +1,12 @@
 mask,opacity,subset_size,cosine_sim,psnr,ssim,img_id,label,caption,x_acc1,advx_acc1,x_acc5,advx_acc5
-word,90,25,0.9999102354049683,14.8749361038208,0.8145483,ILSVRC2012_val_00047204,"golfcart, golf cart",a small car with a canopy on it,0,0,0,0
-word,90,25,0.9999367594718933,10.800684928894043,0.7762608,ILSVRC2012_val_00006601,shower cap,a little girl wearing a pink and white hat,0,1,1,1
-word,90,25,0.9998917579650879,14.054500579833984,0.71047324,ILSVRC2012_val_00044838,coffeepot,a coffee pot with a cartoon character on it,1,1,1,1
-word,90,25,0.9999889731407166,22.19147491455078,0.7797094,ILSVRC2012_val_00048869,"yellow lady's slipper, yellow lady-slipper, Cypripedium calceolus, Cypripedium parviflorum",a yellow flower with a brown center,1,1,1,1
-word,90,25,0.9998956322669983,14.576139450073242,0.7909846,ILSVRC2012_val_00006947,Welsh springer spaniel,a woman petting a dog on the beach,1,1,1,1
-word,90,25,0.99993497133255,16.2446346282959,0.78579015,ILSVRC2012_val_00043263,earthstar,a flower shaped object,1,1,1,1
+square,0,25,0.9999998807907104,inf,1.0,ILSVRC2012_val_00029849,"trailer truck, tractor trailer, trucking rig, rig, articulated lorry, semi",a truck is driving through a warehouse,0,0,1,1
+square,0,25,1.0,inf,1.0,ILSVRC2012_val_00034999,envelope,a pink and white checkered table cloth,0,0,1,1
+square,0,25,1.0,inf,1.0,ILSVRC2012_val_00044505,"African grey, African gray, Psittacus erithacus",a woman holding a bird,1,1,1,1
+square,0,25,1.0,inf,1.0,ILSVRC2012_val_00010961,Petri dish,a person holding a camera lens,0,0,1,1
+square,0,25,1.0,inf,1.0,ILSVRC2012_val_00015365,"balance beam, beam",a woman is doing a trick on the balance beam,1,1,1,1
+square,0,25,1.0,inf,1.0,ILSVRC2012_val_00006947,Welsh springer spaniel,a woman petting a dog on the beach,1,1,1,1
+square,0,25,1.0,inf,1.0,ILSVRC2012_val_00006883,dung beetle,a black beetle on the ground,1,1,1,1
+square,0,25,0.9999999403953552,inf,1.0,ILSVRC2012_val_00010453,sombrero,a man wearing a hat,1,1,1,1
+square,0,25,0.9999998807907104,inf,1.0,ILSVRC2012_val_00011554,"sulphur-crested cockatoo, Kakatoe galerita, Cacatua galerita",two white birds sitting on a railing,1,1,1,1
+square,0,25,1.0,inf,1.0,ILSVRC2012_val_00027397,"sports car, sport car",a white car driving on a road,0,0,1,1
+square,0,25,1.0,inf,1.0,ILSVRC2012_val_00020459,"marimba, xylophone",a man playing a marimba with sticks,1,1,1,1
