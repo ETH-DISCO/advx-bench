@@ -80,6 +80,8 @@ eval loop
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
+print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
+
 for combination in random_combinations:
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
