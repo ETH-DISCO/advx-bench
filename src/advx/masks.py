@@ -213,6 +213,10 @@ def get_diamond_mask(
     return Image.frombuffer("RGBA", (width, height), surface.get_data(), "raw", "BGRA", 0, 1)
 
 
+"""
+example usage
+"""
+
 if __name__ == "__main__":
     img = get_diamond_mask()
     img.save("mask.png")

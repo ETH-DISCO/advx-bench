@@ -161,6 +161,11 @@ def get_random_background(
     return img
 
 
+"""
+example usage
+"""
+
+
 if __name__ == "__main__":
     img = get_perlin_background()
     # img = get_zigzag_background()

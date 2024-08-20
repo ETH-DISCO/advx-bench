@@ -1,18 +1,31 @@
 import time
+from typing import Callable
 
 import numpy as np
+import torch
 from scipy.linalg import sqrtm
 from sklearn.metrics.pairwise import polynomial_kernel
+from torchvision.models import inception_v3
+from torchvision.transforms import CenterCrop, Compose, Normalize, Resize
 
 
-def get_time_result(func: callable, *args):
+def get_time_result(func: Callable, *args):
     time_start = time.time()
     result = func(*args)
     time_elapsed = time.time() - time_start
     return time_elapsed, result
 
 
-def get_fid(real_features, fake_features):
+def get_inception_features(x: torch.Tensor) -> np.ndarray:
+    inception = inception_v3(pretrained=True, transform_input=False).eval()
+    inception_transform = Compose([Resize(299), CenterCrop(299), Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    with torch.no_grad():
+        feature = inception(inception_transform(x)).squeeze().cpu().numpy()
+    print(type(feature))
+    return feature
+
+
+def get_fid(real_features: np.ndarray, fake_features: np.ndarray) -> float:
     # fid = fréchet inception distance
     real_features = np.array(real_features)
     fake_features = np.array(fake_features)
@@ -20,13 +33,13 @@ def get_fid(real_features, fake_features):
     mu2, sigma2 = fake_features.mean(axis=0), np.cov(fake_features, rowvar=False)
     ssdiff = np.sum((mu1 - mu2) ** 2)
     covmean = sqrtm(sigma1.dot(sigma2))
-    if np.iscomplexobj(covmean):
-        covmean = covmean.real
-    fid = ssdiff + np.trace(sigma1 + sigma2 - 2 * covmean)
+    if np.iscomplexobj(covmean):  # type: ignore
+        covmean = covmean.real  # type: ignore
+    fid = ssdiff + np.trace(sigma1 + sigma2 - 2 * covmean)  # type: ignore
     return fid
 
 
-def get_kid(real_features, fake_features, subset_size=1000):
+def get_kid(real_features: np.ndarray, fake_features: np.ndarray, subset_size: int) -> float:
     # kid = kernel inception distance
     real_features = np.array(real_features)
     fake_features = np.array(fake_features)
@@ -39,7 +52,7 @@ def get_kid(real_features, fake_features, subset_size=1000):
         mmd -= polynomial_kernel(real_subset[i : i + 1], real_subset).mean()
         mmd += polynomial_kernel(fake_subset[i : i + 1], fake_subset).mean()
         mmds.append(mmd)
-    return np.mean(mmds)
+    return float(np.mean(mmds))
 
 
 def get_iou(box1: list[float], box2: list[float]) -> float:
@@ -52,3 +65,8 @@ def get_iou(box1: list[float], box2: list[float]) -> float:
     box1_area = (x2 - x1) * (y2 - y1)
     box2_area = (x2_ - x1_) * (y2_ - y1_)
     return intersection / (box1_area + box2_area - intersection)
+
+
+"""
+example
+"""

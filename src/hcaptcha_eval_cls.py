@@ -49,4 +49,4 @@ for file in tqdm(datafiles):
     with open(outputpath / f"{file.stem}.json", "w") as f:
         json.dump(out, f, indent=4)
 
-    # os.system(f"git add . && git commit -m 'autocommit' && git push")
+    os.system(f"git add . && git commit -m 'autocommit' && git push")

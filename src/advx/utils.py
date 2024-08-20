@@ -66,6 +66,11 @@ def get_rounded_corners(
     return img_with_transparency
 
 
+"""
+example usage
+"""
+
+
 if __name__ == "__main__":
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     img = Image.open(requests.get(url, stream=True).raw).convert("RGBA")

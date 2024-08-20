@@ -125,7 +125,7 @@ def get_imagenet_label(idx: int) -> str:
 
 
 """
-main
+example usage
 """
 
 
