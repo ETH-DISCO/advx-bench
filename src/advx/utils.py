@@ -34,6 +34,7 @@ def place_within(
 
 
 def add_overlay(background: Image.Image, overlay: Image.Image, opacity: int) -> Image.Image:
+    # opacity range: 0 (transparent) to 255 (opaque)
     overlay = overlay.resize(background.size)
     result = Image.new("RGBA", background.size)
     result.paste(background, (0, 0))

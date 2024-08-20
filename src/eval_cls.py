@@ -62,7 +62,7 @@ config
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
     "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv",
-    "subset_size": 100,
+    "subset_size": 25,
 }
 CONFIG["outpath"].unlink(missing_ok=True)
 CONFIG["fidkidpath"].unlink(missing_ok=True)
@@ -70,7 +70,7 @@ CONFIG["fidkidpath"].unlink(missing_ok=True)
 
 COMBINATIONS = {
     "mask": ["circle", "square", "diamond", "knit", "word"],
-    "opacity": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    "opacity": [0, 64, 128, 192, 255], # range from 0 (transparent) to 255 (opaque)
 }
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
@@ -82,6 +82,8 @@ eval loop
 
 
 for combination in random_combinations:
+    combination = dict(zip(COMBINATIONS.keys(), combination))
+
     dataset = get_imagenet_generator(size=CONFIG["subset_size"])
     labels = get_imagenet_labels()
 
@@ -115,10 +117,10 @@ for combination in random_combinations:
         x_acc5 = get_acc_boolmask(x_image)
         advx_acc5 = get_acc_boolmask(advx_image)
 
-
         results = {
+            # settings
+            **combination,
             "subset_size": CONFIG["subset_size"],
-            "combination": combination,
 
             # semantic similarity
             "cosine_sim": get_cosine_similarity(x, advx_x),
@@ -145,7 +147,7 @@ for combination in random_combinations:
 
     with open(CONFIG["fidkidpath"], mode="a") as f:
         metrics = {
-            "combination": combination,
+            **combination,
             "fid": get_fid(x_features, x_features),
             "kid": get_kid(advx_features, advx_features, CONFIG["subset_size"]),
         }

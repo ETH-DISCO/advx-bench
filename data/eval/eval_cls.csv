@@ -1,0 +1,7 @@
+mask,opacity,subset_size,cosine_sim,psnr,ssim,img_id,label,caption,x_acc1,advx_acc1,x_acc5,advx_acc5
+word,90,25,0.9999102354049683,14.8749361038208,0.8145483,ILSVRC2012_val_00047204,"golfcart, golf cart",a small car with a canopy on it,0,0,0,0
+word,90,25,0.9999367594718933,10.800684928894043,0.7762608,ILSVRC2012_val_00006601,shower cap,a little girl wearing a pink and white hat,0,1,1,1
+word,90,25,0.9998917579650879,14.054500579833984,0.71047324,ILSVRC2012_val_00044838,coffeepot,a coffee pot with a cartoon character on it,1,1,1,1
+word,90,25,0.9999889731407166,22.19147491455078,0.7797094,ILSVRC2012_val_00048869,"yellow lady's slipper, yellow lady-slipper, Cypripedium calceolus, Cypripedium parviflorum",a yellow flower with a brown center,1,1,1,1
+word,90,25,0.9998956322669983,14.576139450073242,0.7909846,ILSVRC2012_val_00006947,Welsh springer spaniel,a woman petting a dog on the beach,1,1,1,1
+word,90,25,0.99993497133255,16.2446346282959,0.78579015,ILSVRC2012_val_00043263,earthstar,a flower shaped object,1,1,1,1
