@@ -62,7 +62,7 @@ config
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
     "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv",
-    "subset_size": 25,
+    "subset_size": 5,
 }
 CONFIG["outpath"].unlink(missing_ok=True)
 CONFIG["fidkidpath"].unlink(missing_ok=True)
@@ -120,7 +120,7 @@ for combination in random_combinations:
         results = {
             # settings
             **combination,
-            "subset_size": CONFIG["subset_size"],
+            # "subset_size": CONFIG["subset_size"],
 
             # semantic similarity
             "cosine_sim": get_cosine_similarity(x, advx_x),
@@ -130,7 +130,7 @@ for combination in random_combinations:
             # accuracy
             "img_id": id,
             "label": get_imagenet_label(label_id),
-            "caption": caption.replace("\n", ""),
+            # "caption": caption.replace("\n", ""),
             "x_acc1": 1 if x_acc5[0] else 0,
             "advx_acc1": 1 if advx_acc5[0] else 0,
             "x_acc5": 1 if any(x_acc5) else 0,
