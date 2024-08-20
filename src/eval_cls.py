@@ -1,17 +1,12 @@
 import csv
-import io
 import json
-import random
 import time
-from abc import ABC, abstractmethod
 from pathlib import Path
 
 import numpy as np
-import timm
 import torch
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-from compressai.zoo import bmshj2018_factorized
 from datasets import load_dataset
 from scipy.linalg import sqrtm
 from skimage.metrics import structural_similarity
@@ -19,10 +14,11 @@ from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize
 from tqdm import tqdm
-from models.utils import get_device, set_seed
+
+from models.utils import set_seed
 
 
-def get_imagenet_generator(size, seed=41):
+def get_imagenet_generator(size: int, seed: int = 41):
     subset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(size).shuffle(seed=seed)
     for elem in subset:
         yield elem["image_id"], elem["image"].convert("RGB"), elem["label"], elem["caption_enriched"]

@@ -1,18 +1,13 @@
 import csv
-import io
 import json
-import random
 import time
-from abc import ABC, abstractmethod
 from pathlib import Path
 
 import numpy as np
 import torch
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-from compressai.zoo import bmshj2018_factorized
 from datasets import load_dataset
-from PIL import Image
 from scipy.linalg import sqrtm
 from skimage.metrics import structural_similarity
 from sklearn.metrics import average_precision_score
@@ -20,104 +15,14 @@ from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToPILImage
 from tqdm import tqdm
-from ultralytics import YOLO
 
-"""
-codecs
-"""
-
-class Bmshj2018Codec:
-    # .encode and .decode don't reduce the image size in bytes but translate the image to a latent space and back.
-    # .compress and .decompress are the ones that return the size reduced image in bytes.
-
-    def __init__(self, quality):
-        kwargs = {
-            "quality": quality,
-            "metric": "mse",  # important for psnr
-        }
-        self.model = bmshj2018_factorized(pretrained=True, progress=True, **kwargs).eval()
-
-    def encode(self, x):
-        with torch.no_grad():
-            y = self.model.g_a(x)
-            y_q, y_likelihoods = self.model.entropy_bottleneck(y)
-            num_pixels = x.size(2) * x.size(3)
-            bpp = torch.sum(torch.log2(y_likelihoods)) / (-num_pixels)
-        return {"latent": y_q, "likelihoods": y_likelihoods, "bpp": bpp.item()}
-
-    def decode(self, bneck_obj):
-        with torch.no_grad():
-            y_q = bneck_obj["latent"]
-            x_hat = self.model.g_s(y_q)
-        return {"x_hat": x_hat}
-
-    def compress(self, x):
-        encoded = self.encode(x)
-        compressed_latent = encoded["latent"]
-        buffer = io.BytesIO()
-        torch.save(compressed_latent, buffer)
-        compressed_bytes = buffer.getvalue()
-        return {"compressed": compressed_bytes, "bpp": encoded["bpp"]}
-
-    def decompress(self, compressed_data):
-        buffer = io.BytesIO(compressed_data["compressed"])
-        latent = torch.load(buffer, weights_only=True)
-        decoded = self.decode({"latent": latent})
-        x_hat = decoded["x_hat"]
-        return x_hat
+from models.utils import set_seed
 
 
-"""
-object detectors
-"""
-
-
-class YOLODetector:
-    def __init__(self):
-        self.model = YOLO("yolov8n.pt")
-
-    def detect(self, image: Image.Image):
-        results = self.model(image)
-        boxes, probs, labels = [], [], []
-        for result in results:
-            for box in result.boxes:
-                class_id = box.cls[0].item()
-                conf = box.conf[0].item()
-                label = self.model.names[int(class_id)]
-                boxes.append(box.xyxy[0].tolist())
-                probs.append(conf)
-                labels.append(label)
-        return boxes, probs, labels
-
-
-"""
-dataset
-"""
-
-
-class CocoDataset:
-    def __init__(self):
-        self.dataset = load_dataset("detection-datasets/coco", split="val", streaming=True)
-
-    def get_generator(self, size: int):
-        subset = self.dataset.take(size).shuffle(seed=41)
-        for elem in subset:
-            yield elem["image_id"], elem["image"].convert("RGB"), elem["objects"]["bbox"], elem["objects"]["category"]
-
-
-"""
-utils
-"""
-
-
-def set_seed(seed: int) -> None:
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
+def get_coco_generator(size: int, seed: int):
+    subset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(size).shuffle(seed=41)
+    for elem in subset:
+        yield elem["image_id"], elem["image"].convert("RGB"), elem["objects"]["bbox"], elem["objects"]["category"]
 
 
 def get_fid(real_features, fake_features):
