@@ -34,21 +34,9 @@ def get_advx(img: Image.Image, combination: dict) -> Image.Image:
         density = int(density / 10)  # 1 -> 10 (count per row)
         img = add_overlay(img, get_diamond_mask(), opacity=combination["opacity"])
 
-    elif combination["mask"] == "circle":
-        density = int(density / 10)  # 1 -> 10 (count per row)
-        img = add_overlay(img, get_circle_mask(), opacity=combination["opacity"])
-
     elif combination["mask"] == "square":
         density = int(density / 10)  # 1 -> 10 (count per row)
         img = add_overlay(img, get_square_mask(), opacity=combination["opacity"])
-
-    elif combination["mask"] == "knit":
-        density = int(density * 10)  # 10 -> 1000 (iterations)
-        img = add_overlay(img, get_knit_mask(), opacity=combination["opacity"])
-
-    elif combination["mask"] == "word":
-        density = int(density * 2)  # 2 -> 200 (words)
-        img = add_overlay(img, get_word_mask(words=get_imagenet_labels()), opacity=combination["opacity"])
 
     else:
         raise ValueError(f"Unknown mask: {combination['mask']}")
@@ -71,7 +59,7 @@ CONFIG["fidkidpath"].unlink(missing_ok=True)
 
 
 COMBINATIONS = {
-    "mask": ["circle", "square", "diamond", "knit", "word"],
+    "mask": ["square", "diamond"],
     "opacity": [0, 64, 128, 192, 255],  # range from 0 (transparent) to 255 (opaque)
     "density": [1, 25, 50, 75, 100],  # percentage of the image covered by the mask
 }
