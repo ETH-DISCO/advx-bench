@@ -4,6 +4,7 @@ diffusers
 matplotlib
 noise
 numpy
+openai
 opencv_python
 opencv_python_headless
 Pillow

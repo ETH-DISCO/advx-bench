@@ -13,7 +13,7 @@ init:
 
 	# get requirements.txt
 	pip install pip-tools
-	pip-compile requirements.in -o requirements.txt
+	pip-compile requirements.in -o requirements.txt -vvv
 	
 	# install everything in venv
 	rm -rf .venv

@@ -14,6 +14,10 @@ aiosignal==1.3.1
     # via aiohttp
 annotated-types==0.7.0
     # via pydantic
+anyio==4.4.0
+    # via
+    #   httpx
+    #   openai
 attrs==24.2.0
     # via aiohttp
 blis==0.7.11
@@ -24,7 +28,10 @@ catalogue==2.0.10
     #   srsly
     #   thinc
 certifi==2024.7.4
-    # via requests
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
@@ -54,6 +61,8 @@ dill==0.3.8
     # via
     #   datasets
     #   multiprocess
+distro==1.9.0
+    # via openai
 filelock==3.15.4
     # via
     #   datasets
@@ -72,6 +81,12 @@ fsspec[http]==2024.6.1
     #   datasets
     #   huggingface-hub
     #   torch
+h11==0.14.0
+    # via httpcore
+httpcore==1.0.5
+    # via httpx
+httpx==0.27.0
+    # via openai
 huggingface-hub==0.24.6
     # via
     #   datasets
@@ -80,6 +95,8 @@ huggingface-hub==0.24.6
     #   transformers
 idna==3.7
     # via
+    #   anyio
+    #   httpx
     #   requests
     #   yarl
 imageio==2.35.1
@@ -90,6 +107,8 @@ jinja2==3.1.4
     # via
     #   spacy
     #   torch
+jiter==0.5.0
+    # via openai
 joblib==1.4.2
     # via scikit-learn
 kiwisolver==1.4.5
@@ -150,6 +169,8 @@ numpy==1.26.4
     #   tifffile
     #   torchvision
     #   transformers
+openai==1.42.0
+    # via -r requirements.in
 opencv-python==4.10.0.84
     # via -r requirements.in
 opencv-python-headless==4.10.0.84
@@ -186,6 +207,7 @@ pycairo==1.26.1
 pydantic==2.8.2
     # via
     #   confection
+    #   openai
     #   spacy
     #   thinc
     #   weasel
@@ -230,7 +252,7 @@ scikit-image==0.24.0
     # via -r requirements.in
 scikit-learn==1.5.1
     # via -r requirements.in
-scipy==1.14.0
+scipy==1.14.1
     # via
     #   -r requirements.in
     #   scikit-image
@@ -241,6 +263,11 @@ six==1.16.0
     # via python-dateutil
 smart-open==7.0.4
     # via weasel
+sniffio==1.3.1
+    # via
+    #   anyio
+    #   httpx
+    #   openai
 spacy==3.7.6
     # via -r requirements.in
 spacy-legacy==3.0.12
@@ -274,6 +301,7 @@ tqdm==4.66.5
     #   -r requirements.in
     #   datasets
     #   huggingface-hub
+    #   openai
     #   spacy
     #   transformers
 transformers==4.44.1
@@ -285,6 +313,7 @@ typer==0.12.4
 typing-extensions==4.12.2
     # via
     #   huggingface-hub
+    #   openai
     #   pydantic
     #   pydantic-core
     #   torch
