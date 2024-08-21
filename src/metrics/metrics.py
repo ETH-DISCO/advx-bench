@@ -1,5 +1,5 @@
 import time
-from typing import Callable, Union
+from typing import Callable
 
 import numpy as np
 import requests
@@ -11,8 +11,6 @@ from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize
 from transformers import ViTFeatureExtractor, ViTModel
-
-from utils import get_device
 
 
 def get_time_result(func: Callable, *args):
@@ -82,16 +80,24 @@ def get_iou(box1: list[float], box2: list[float]) -> float:
 
 
 def get_cosine_similarity(x: Image.Image, y: Image.Image) -> float:
-    device = get_device()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model_name = "google/vit-base-patch16-224"
     feature_extractor = ViTFeatureExtractor.from_pretrained(model_name)
     model = ViTModel.from_pretrained(model_name).to(device)
 
-    inputs1 = {k: v.to(device) for k, v in feature_extractor(images=x, return_tensors="pt").items()}
-    inputs2 = {k: v.to(device) for k, v in feature_extractor(images=y, return_tensors="pt").items()}
+    x = x.convert("RGB")
+    y = y.convert("RGB")
+
+    inputs1 = feature_extractor(images=x, return_tensors="pt")
+    inputs2 = feature_extractor(images=y, return_tensors="pt")
+
+    inputs1 = {k: v.to(device) for k, v in inputs1.items()}
+    inputs2 = {k: v.to(device) for k, v in inputs2.items()}
+
     with torch.no_grad():
         outputs1 = model(**inputs1)
         outputs2 = model(**inputs2)
+
     latents1 = outputs1.last_hidden_state[:, 0, :]  # use CLS token as image representation
     latents2 = outputs2.last_hidden_state[:, 0, :]
 
