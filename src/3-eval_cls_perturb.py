@@ -4,16 +4,37 @@ import json
 import random
 from pathlib import Path
 
+import spacy
 import torch
 import torchvision.transforms as transforms
 from datasets import load_dataset
+from openai import OpenAI
 from PIL import Image
 from tqdm import tqdm
 
-from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
+from advx.masks import get_diamond_mask, get_square_mask
+from advx.perturb import get_fgsm_clipvit_imagenet
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
 from models.cls import classify_clip
+
+
+def get_advx_words(word: str) -> list[str]:
+    client = OpenAI()
+    completion = client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are a machine learning researcher. Respond with a space-separated list of words only."},
+            {"role": "user", "content": f"List unique words unrelated to '{word}' but in the same domain for generating adversarial examples. Provide only words, separated by spaces."},
+        ],
+    )
+
+    response = completion.choices[0].message.content
+    nlp = spacy.load("en_core_web_sm")
+    doc = nlp(response)
+    words = [token.text.lower() for token in doc if token.is_alpha]
+
+    return list(set(words))
 
 
 def get_imagenet_label(idx: int) -> str:
@@ -28,7 +49,7 @@ def get_imagenet_labels() -> list[str]:
     return list(data.values())
 
 
-def get_advx(img: Image.Image, combination: dict) -> Image.Image:
+def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
     density = combination["density"]
     if combination["mask"] == "diamond":
         density = int(density / 10)  # 1 -> 10 (count per row)
@@ -40,6 +61,10 @@ def get_advx(img: Image.Image, combination: dict) -> Image.Image:
 
     else:
         raise ValueError(f"Unknown mask: {combination['mask']}")
+
+    if not combination["perturb"]:
+        labels = [get_imagenet_label(label_id)] + get_advx_words(get_imagenet_label(label_id))
+        img = get_fgsm_clipvit_imagenet(image=img, target_idx=0, labels=labels, epsilon=combination["epsilon"], debug=False)
 
     return img
 
@@ -59,16 +84,19 @@ CONFIG["fidkidpath"].unlink(missing_ok=True)
 
 
 COMBINATIONS = {
+    # most effective from previous experiments
     "mask": ["square", "diamond"],
-    "opacity": [0, 64, 128, 192, 255],  # range from 0 (transparent) to 255 (opaque)
-    "density": [1, 25, 50, 75, 100],  # percentage of the image covered by the mask
+    "opacity": [64, 128, 192, 255],
+    "density": [1, 50, 75],
+    # perturbation and strength
+    "perturb": [True, False],
+    "epsilon": [0.01, 0.05, 0.1, 0.2, 0.4, 0.8],
 }
 
 
 """
 eval loop
 """
-
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
@@ -82,12 +110,13 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
     for id, x_image, label_id, caption in dataset:
-        advx_image = get_advx(x_image, combination)
+        advx_image = get_advx(x_image, label_id, combination)
 
         transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
         x: torch.Tensor = transform(x_image).unsqueeze(0)
         advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
+        # perf
         def get_acc_boolmask(img: Image.Image) -> list[bool]:
             preds = list(zip(range(len(labels)), classify_clip(img, labels)))
             preds.sort(key=lambda x: x[1], reverse=True)

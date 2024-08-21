@@ -1,5 +1,6 @@
 Usage:
 
+- Set your OpenAI API key through `export OPENAI_API_KEY="..."`.
 - Some models are gated by huggingface for harm prevention. Authenticate with `huggingface-cli login`.
 
 Thanks to:
