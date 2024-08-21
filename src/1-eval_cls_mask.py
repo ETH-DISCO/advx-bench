@@ -86,7 +86,7 @@ for i, combination in enumerate(random_combinations):
     print(f">>> iteration {i+1}/{len(random_combinations)}")
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
-    dataset = get_imagenet_generator(size=CONFIG["subset_size"]) # note: you shouldn't use different subsets for each combination
+    dataset = get_imagenet_generator(size=CONFIG["subset_size"])  # note: you shouldn't use different subsets for each combination
     labels = get_imagenet_labels()
 
     x_features = []

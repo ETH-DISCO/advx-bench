@@ -6,6 +6,7 @@ import requests
 import torch
 from PIL import Image
 from scipy.linalg import sqrtm
+from skimage.metrics import structural_similarity
 from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
@@ -35,8 +36,6 @@ def get_psnr(x: torch.Tensor, x_hat: torch.Tensor) -> float:
 
 
 def get_ssim(x: torch.Tensor, x_hat: torch.Tensor) -> float:
-    from skimage.metrics import structural_similarity
-
     return structural_similarity(np.array(x.squeeze().permute(1, 2, 0).cpu().numpy()), np.array(x_hat.squeeze().permute(1, 2, 0).cpu().numpy()), multichannel=True, channel_axis=2, data_range=1.0)
 
 
