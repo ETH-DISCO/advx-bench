@@ -126,8 +126,4 @@ if __name__ == "__main__":
     image1 = Image.open(requests.get(url1, stream=True).raw).convert("RGB")
     image2 = Image.open(requests.get(url2, stream=True).raw).convert("RGB")
 
-    image1_tensor = ToTensor()(image1).unsqueeze(0)
-    image2_tensor = ToTensor()(image2).unsqueeze(0)
-
-    print(f"Cosine similarity: {get_cosine_similarity(image1, image2)}")
-    print(f"Cosine similarity: {get_cosine_similarity(image1_tensor, image2_tensor)}")
+    print(f"cosine similarity: {get_cosine_similarity(image1, image2)}")

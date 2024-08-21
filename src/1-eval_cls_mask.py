@@ -86,7 +86,7 @@ for i, combination in enumerate(random_combinations):
     print(f">>> iteration {i+1}/{len(random_combinations)}")
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
-    dataset = get_imagenet_generator(size=CONFIG["subset_size"])  # note: you shouldn't use different subsets for each combination
+    dataset = get_imagenet_generator(size=CONFIG["subset_size"])  # ERROR: using uncomparable subsets
     labels = get_imagenet_labels()
 
     x_features = []
@@ -123,7 +123,7 @@ for i, combination in enumerate(random_combinations):
             **combination,
             # "subset_size": CONFIG["subset_size"],
             # semantic similarity
-            "cosine_sim": get_cosine_similarity(x, advx_x),
+            "cosine_sim": get_cosine_similarity(x, advx_x), # ERROR: this implementation was wrong
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
             # accuracy
