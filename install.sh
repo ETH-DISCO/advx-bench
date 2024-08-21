@@ -11,7 +11,6 @@ pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless
 export OPENAI_API_KEY="sk-xxxxxx"
 
 # run
-nohup $PWD/.venv/bin/python3 $PWD/src/XYZ.py > output.log 2>&1 &
 nohup $PWD/.venv/bin/python3 $PWD/src/3-eval_cls_perturb.py > output.log 2>&1 &
 
 # check progress
