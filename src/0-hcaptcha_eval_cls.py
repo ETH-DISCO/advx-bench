@@ -13,6 +13,7 @@ $ echo -e "scale=2; $(ls -al ./data/hcaptcha/cls/eval | wc -l) / $(ls -al ./data
 """
 
 import json
+import os
 import random
 from pathlib import Path
 

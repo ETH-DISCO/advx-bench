@@ -9,7 +9,7 @@ from scipy.linalg import sqrtm
 from skimage.metrics import structural_similarity
 from sklearn.metrics.pairwise import polynomial_kernel
 from torchvision.models import inception_v3
-from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
+from torchvision.transforms import CenterCrop, Compose, Normalize, Resize
 from transformers import ViTFeatureExtractor, ViTModel
 
 from utils import get_device

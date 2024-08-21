@@ -123,7 +123,7 @@ for i, combination in enumerate(random_combinations):
             **combination,
             # "subset_size": CONFIG["subset_size"],
             # semantic similarity
-            "cosine_sim": get_cosine_similarity(x, advx_x), # ERROR: this implementation was wrong
+            "cosine_sim": get_cosine_similarity(x, advx_x),  # ERROR: this implementation was wrong
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
             # accuracy
