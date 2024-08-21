@@ -114,7 +114,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             # settings
             **combination,
             # semantic similarity
-            "cosine_sim": get_cosine_similarity(x, advx_x),
+            "cosine_sim": get_cosine_similarity(x_image, advx_image),
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
             # accuracy

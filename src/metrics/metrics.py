@@ -81,32 +81,17 @@ def get_iou(box1: list[float], box2: list[float]) -> float:
     return intersection / (box1_area + box2_area - intersection)
 
 
-def get_cosine_similarity(x: Union[torch.Tensor, Image.Image], y: Union[torch.Tensor, Image.Image]) -> float:
+def get_cosine_similarity(x: Image.Image, y: Image.Image) -> float:
     device = get_device()
     model_name = "google/vit-base-patch16-224"
     feature_extractor = ViTFeatureExtractor.from_pretrained(model_name)
     model = ViTModel.from_pretrained(model_name).to(device)
 
-    def process_input(input_data):
-        if isinstance(input_data, Image.Image):
-            return feature_extractor(images=input_data, return_tensors="pt")
-        elif isinstance(input_data, torch.Tensor):
-            if input_data.dim() == 3:
-                input_data = input_data.unsqueeze(0)
-            return feature_extractor(images=input_data, return_tensors="pt")
-        else:
-            raise TypeError(f"input should be PIL Image or torch.Tensor. got {type(input_data)}")
-
-    inputs1 = process_input(x)
-    inputs2 = process_input(y)
-
-    inputs1 = {k: v.to(device) for k, v in inputs1.items()}
-    inputs2 = {k: v.to(device) for k, v in inputs2.items()}
-
+    inputs1 = {k: v.to(device) for k, v in feature_extractor(images=x, return_tensors="pt").items()}
+    inputs2 = {k: v.to(device) for k, v in feature_extractor(images=y, return_tensors="pt").items()}
     with torch.no_grad():
         outputs1 = model(**inputs1)
         outputs2 = model(**inputs2)
-
     latents1 = outputs1.last_hidden_state[:, 0, :]  # use CLS token as image representation
     latents2 = outputs2.last_hidden_state[:, 0, :]
 
