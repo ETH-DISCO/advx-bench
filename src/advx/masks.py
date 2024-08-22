@@ -224,6 +224,6 @@ example usage
 
 
 if __name__ == "__main__":
-    img = get_knit_mask()
+    img = get_diamond_mask(diamonds_per_row=10)
     # img.save("mask.png")
     img.show()
