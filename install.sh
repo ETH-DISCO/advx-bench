@@ -7,12 +7,11 @@ pip install open-clip-torch
 python -m spacy download en_core_web_sm
 pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless Pillow Requests spacy torch transformers accelerate
 
-# enter openai api key
 export OPENAI_API_KEY="sk-xxxxxx"
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
-# run
+
 nohup $PWD/.venv/bin/python3 $PWD/src/3-eval_cls_perturb.py > output.log 2>&1 &
 
-# check progress
-ps aux | grep advx-bench
+cat output.log
 htop
