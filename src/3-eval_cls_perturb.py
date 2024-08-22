@@ -50,6 +50,10 @@ def get_imagenet_labels() -> list[str]:
 
 
 def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
+    if not combination["perturb"]: # apply attack before mask
+        labels = [get_imagenet_label(label_id)] + get_advx_words(get_imagenet_label(label_id))
+        img = get_fgsm_clipvit_imagenet(image=img, target_idx=0, labels=labels, epsilon=combination["epsilon"], debug=False)
+
     density = combination["density"]
     if combination["mask"] == "diamond":
         density = int(density / 10)  # 1 -> 10 (count per row)
@@ -61,11 +65,6 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 
     else:
         raise ValueError(f"Unknown mask: {combination['mask']}")
-
-    if not combination["perturb"]:
-        labels = [get_imagenet_label(label_id)] + get_advx_words(get_imagenet_label(label_id))
-        img = get_fgsm_clipvit_imagenet(image=img, target_idx=0, labels=labels, epsilon=combination["epsilon"], debug=False)
-
     return img
 
 
