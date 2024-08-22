@@ -13,5 +13,5 @@ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 nohup $PWD/.venv/bin/python3 $PWD/src/3-eval_cls_perturb.py > output.log 2>&1 &
 
-cat output.log
+watch cat output.log
 htop
