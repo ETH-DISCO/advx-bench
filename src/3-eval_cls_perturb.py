@@ -33,7 +33,6 @@ def is_cached(path: Path, entry_id: dict) -> bool:
     with open(path, mode="r") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            # expensive but still cheaper than gpu cycles
             if all(row[key] == str(value) for key, value in entry_id.items()):
                 return True
     return False
@@ -111,9 +110,6 @@ COMBINATIONS = {
 eval loop
 """
 
-torch.cuda.reset_peak_memory_stats()
-torch.cuda.reset_accumulated_memory_stats()
-
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
@@ -122,6 +118,10 @@ dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
 labels = get_imagenet_labels()
 
+if get_device() == "cuda":
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    torch.cuda.reset_accumulated_memory_stats()
 
 for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
@@ -135,19 +135,35 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             print(f"skipping {entry_id}")
             continue
 
-        with torch.no_grad(), torch.amp.autocast(device_type=get_device(), enabled=True):
-            advx_image = get_advx(x_image, label_id, combination)
+        if get_device() == "cuda":
+            with torch.no_grad(), torch.amp.autocast(device_type=get_device(), enabled=True):
+                advx_image = get_advx(x_image, label_id, combination)
 
-            transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-            x: torch.Tensor = transform(x_image).unsqueeze(0)
-            advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+                transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+                x: torch.Tensor = transform(x_image).unsqueeze(0)
+                advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
-            def get_acc_boolmask(img: Image.Image) -> list[bool]:
-                preds = list(zip(range(len(labels)), classify_clip(img, labels)))
-                preds.sort(key=lambda x: x[1], reverse=True)
-                top5_keys, top5_vals = zip(*preds[:5])
-                top5_mask = [label_id == key for key in top5_keys]
-                return top5_mask
+                def get_acc_boolmask(img: Image.Image) -> list[bool]:
+                    preds = list(zip(range(len(labels)), classify_clip(img, labels)))
+                    preds.sort(key=lambda x: x[1], reverse=True)
+                    top5_keys, top5_vals = zip(*preds[:5])
+                    top5_mask = [label_id == key for key in top5_keys]
+                    return top5_mask
+
+        else:
+            with torch.no_grad():
+                advx_image = get_advx(x_image, label_id, combination)
+
+                transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+                x: torch.Tensor = transform(x_image).unsqueeze(0)
+                advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+
+                def get_acc_boolmask(img: Image.Image) -> list[bool]:
+                    preds = list(zip(range(len(labels)), classify_clip(img, labels)))
+                    preds.sort(key=lambda x: x[1], reverse=True)
+                    top5_keys, top5_vals = zip(*preds[:5])
+                    top5_mask = [label_id == key for key in top5_keys]
+                    return top5_mask
 
         x_acc5 = get_acc_boolmask(x_image)
         advx_acc5 = get_acc_boolmask(advx_image)
