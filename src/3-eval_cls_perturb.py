@@ -162,5 +162,4 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             if CONFIG["outpath"].stat().st_size == 0:
                 writer.writeheader()
             writer.writerow(results)
-
         torch.cuda.empty_cache()
