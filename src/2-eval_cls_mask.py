@@ -63,7 +63,6 @@ config
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-    "fidkidpath": Path.cwd() / "data" / "eval" / "eval_cls_fidkid.csv",
     "subset_size": 5,
 }
 CONFIG["outpath"].unlink(missing_ok=True)
