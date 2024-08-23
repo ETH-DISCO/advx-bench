@@ -1,4 +1,5 @@
 import csv
+import gc
 import itertools
 import json
 import os
@@ -18,7 +19,10 @@ from advx.perturb import get_fgsm_clipvit_imagenet
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
 from models.cls import classify_clip
+from utils import get_device
 
+torch.backends.cuda.matmul.allow_tf32 = True  # allow TF32 on matmul
+torch.backends.cudnn.allow_tf32 = True  # allow TF32 on cudnn
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 
@@ -107,6 +111,9 @@ COMBINATIONS = {
 eval loop
 """
 
+torch.cuda.reset_peak_memory_stats()
+torch.cuda.reset_accumulated_memory_stats()
+
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
@@ -114,6 +121,7 @@ print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} =
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(CONFIG["subset_size"]).shuffle(seed=random.randint(0, 1000))
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))  # same subset for all, for fair comparison
 labels = get_imagenet_labels()
+
 
 for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
@@ -127,18 +135,19 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             print(f"skipping {entry_id}")
             continue
 
-        advx_image = get_advx(x_image, label_id, combination)
+        with torch.no_grad(), torch.amp.autocast(device_type=get_device(), enabled=True):
+            advx_image = get_advx(x_image, label_id, combination)
 
-        transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-        x: torch.Tensor = transform(x_image).unsqueeze(0)
-        advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+            transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+            x: torch.Tensor = transform(x_image).unsqueeze(0)
+            advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
-        def get_acc_boolmask(img: Image.Image) -> list[bool]:
-            preds = list(zip(range(len(labels)), classify_clip(img, labels)))
-            preds.sort(key=lambda x: x[1], reverse=True)
-            top5_keys, top5_vals = zip(*preds[:5])
-            top5_mask = [label_id == key for key in top5_keys]
-            return top5_mask
+            def get_acc_boolmask(img: Image.Image) -> list[bool]:
+                preds = list(zip(range(len(labels)), classify_clip(img, labels)))
+                preds.sort(key=lambda x: x[1], reverse=True)
+                top5_keys, top5_vals = zip(*preds[:5])
+                top5_mask = [label_id == key for key in top5_keys]
+                return top5_mask
 
         x_acc5 = get_acc_boolmask(x_image)
         advx_acc5 = get_acc_boolmask(advx_image)
@@ -162,4 +171,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             if CONFIG["outpath"].stat().st_size == 0:
                 writer.writeheader()
             writer.writerow(results)
+
         torch.cuda.empty_cache()
+        gc.collect()

@@ -74,7 +74,12 @@ def get_fgsm_clipvit_imagenet(image: Image.Image, target_idx: int, labels: list,
     model, preprocess = clip.load("ViT-L/14@336px", device=device)
     model.eval()
 
+    # enable gradients for model parameters
+    for param in model.parameters():
+        param.requires_grad = True
+
     input_tensor = preprocess(image).unsqueeze(0).to(device)
+    input_tensor.requires_grad = True  # enable gradients for input tensor
     text_inputs = clip.tokenize(labels).to(device)
 
     def fgsm_attack(image, epsilon, data_grad):
@@ -83,17 +88,26 @@ def get_fgsm_clipvit_imagenet(image: Image.Image, target_idx: int, labels: list,
         perturbed_image = torch.clamp(perturbed_image, 0, 1)
         return perturbed_image
 
-    input_tensor.requires_grad = True
+    with torch.enable_grad():
+        model.zero_grad()
 
-    image_features = model.encode_image(input_tensor)
-    text_features = model.encode_text(text_inputs)
+        image_features = model.encode_image(input_tensor)
+        text_features = model.encode_text(text_inputs)
 
-    logits_per_image = image_features @ text_features.T
-    logits_per_text = logits_per_image.T
+        logits_per_image = image_features @ text_features.T
+        logits_per_text = logits_per_image.T
 
-    loss = -logits_per_image[0, target_idx]  # maximize the target class score
+        loss = -logits_per_image[0, target_idx]  # maximize the target class score
 
-    loss.backward()
+        try:
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        except RuntimeError as e:
+            print(f"Error during backward pass: {e}")
+            print(f"Loss requires grad: {loss.requires_grad}")
+            print(f"Input tensor requires grad: {input_tensor.requires_grad}")
+            raise
+
     data_grad = input_tensor.grad.data
 
     perturbed_data = fgsm_attack(input_tensor, epsilon, data_grad)
