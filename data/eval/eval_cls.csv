@@ -1,0 +1,2 @@
+opacity,density,perturb,epsilon,img_id,cosine_sim,psnr,ssim,label,x_acc1,advx_acc1,x_acc5,advx_acc5
+190,70,False,0.8,ILSVRC2012_val_00027555,0.04236387833952904,15.558642387390137,0.18440425,coucal,1,0,1,0
