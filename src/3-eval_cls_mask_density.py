@@ -51,7 +51,7 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
     density = combination["density"]
     if combination["mask"] == "diamond":
         density = int(density / 10)  # 1 -> 10 (count per row)
-        img = add_overlay(img, get_diamond_mask(step=density), opacity=combination["opacity"])
+        img = add_overlay(img, get_diamond_mask(diamonds_per_row=density), opacity=combination["opacity"])
 
     elif combination["mask"] == "circle":
         density = int(density / 10)  # 1 -> 10 (count per row)
@@ -62,11 +62,11 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
         img = add_overlay(img, get_square_mask(row_count=density), opacity=combination["opacity"])
 
     elif combination["mask"] == "knit":
-        density = int(density * 10)  # 10 -> 1000 (iterations)
+        density = int(density * 10)  # 100 -> 1000 (iterations)
         img = add_overlay(img, get_knit_mask(step=density), opacity=combination["opacity"])
 
     elif combination["mask"] == "word":
-        density = int(density * 2)  # 2 -> 200 (words)
+        density = int(density * 2)  # 20 -> 200 (words)
         img = add_overlay(img, get_word_mask(num_words=density, words=get_imagenet_labels(), avoid_center=False), opacity=combination["opacity"])
 
     return img
@@ -83,7 +83,7 @@ CONFIG = {
 COMBINATIONS = {
     "mask": ["circle", "square", "diamond", "knit", "word"],
     "opacity": [0, 64, 128, 192, 255],  # 0;255
-    "density": [1, 25, 50, 75, 100],  # 1;100
+    "density": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],  # 1;100
 }
 
 """
