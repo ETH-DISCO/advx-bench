@@ -174,6 +174,7 @@ def get_diamond_mask(
     diamond_count: int = 10,
     diamonds_per_row: int = 5,
 ):
+    diamond_count = int(diamond_count)
     diamond_size = width // diamonds_per_row
 
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
@@ -198,8 +199,8 @@ def get_diamond_mask(
             t = (i - 1) / (max_i - 1)  # blue -> red gradient
             return (0, 0.5 * (1 - t), 0, 1)
 
-    rows = height // (diamond_size // 2) + 2
-    cols = diamonds_per_row
+    rows = int(height // (diamond_size // 2) + 2)
+    cols = int(diamonds_per_row)
 
     for row in range(-1, rows):
         for col in range(-1, cols + 1):

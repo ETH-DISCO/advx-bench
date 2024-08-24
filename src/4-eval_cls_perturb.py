@@ -14,7 +14,7 @@ from openai import OpenAI
 from PIL import Image
 from tqdm import tqdm
 
-from advx.masks import get_diamond_mask, get_square_mask
+from advx.masks import get_diamond_mask
 from advx.perturb import get_fgsm_clipvit_imagenet
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
@@ -29,6 +29,10 @@ os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 def is_cached(path: Path, entry_id: dict) -> bool:
     if not path.exists():
         return False
+
+    # if perturb is False, then we can skip epsilon combinations
+    if not entry_id["perturb"]:
+        entry_id.pop("epsilon")
 
     with open(path, mode="r") as f:
         reader = csv.DictReader(f)
@@ -60,17 +64,16 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
         labels = [get_imagenet_label(label_id)] + get_advx_words(get_imagenet_label(label_id))
         img = get_fgsm_clipvit_imagenet(image=img, target_idx=0, labels=labels, epsilon=combination["epsilon"], debug=False)
 
-    density = combination["density"]
-    if combination["mask"] == "diamond":
-        density = int(density / 10)  # 1 -> 10 (count per row)
-        img = add_overlay(img, get_diamond_mask(), opacity=combination["opacity"])
-
-    elif combination["mask"] == "square":
-        density = int(density / 10)  # 1 -> 10 (count per row)
-        img = add_overlay(img, get_square_mask(), opacity=combination["opacity"])
-
-    else:
-        raise ValueError(f"Unknown mask: {combination['mask']}")
+    # diamond mask
+    density = int(combination["density"])
+    img = add_overlay(
+        img,
+        get_diamond_mask(
+            diamond_count=(density / 10 + 10),  # [10;100] -> [10;20]
+            diamonds_per_row=(density / 5),  # [10;100] -> [2;20]
+        ),
+        opacity=combination["opacity"],
+    )
     return img
 
 
@@ -97,9 +100,8 @@ CONFIG = {
 }
 COMBINATIONS = {
     # most effective from previous experiments
-    "mask": ["square", "diamond"],
-    "opacity": [64, 128, 192, 255],
-    "density": [1, 50, 75],
+    "opacity": [50, 70, 90, 110, 130, 150, 170, 190, 210],  # 50;200 is the best
+    "density": [50, 60, 70, 80, 90, 100],  # 1;100
     # perturbation and strength
     "perturb": [True, False],
     "epsilon": [0.01, 0.05, 0.1, 0.2, 0.4, 0.8],
@@ -135,38 +137,22 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             print(f"skipping {entry_id}")
             continue
 
-        if get_device() == "cuda":
-            with torch.no_grad(), torch.amp.autocast(device_type=get_device(), enabled=True):
-                advx_image = get_advx(x_image, label_id, combination)
+        with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
+            advx_image = get_advx(x_image, label_id, combination)
 
-                transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-                x: torch.Tensor = transform(x_image).unsqueeze(0)
-                advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+            transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+            x: torch.Tensor = transform(x_image).unsqueeze(0)
+            advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
-                def get_acc_boolmask(img: Image.Image) -> list[bool]:
-                    preds = list(zip(range(len(labels)), classify_clip(img, labels)))
-                    preds.sort(key=lambda x: x[1], reverse=True)
-                    top5_keys, top5_vals = zip(*preds[:5])
-                    top5_mask = [label_id == key for key in top5_keys]
-                    return top5_mask
+            def get_acc_boolmask(img: Image.Image) -> list[bool]:
+                preds = list(zip(range(len(labels)), classify_clip(img, labels)))
+                preds.sort(key=lambda x: x[1], reverse=True)
+                top5_keys, top5_vals = zip(*preds[:5])
+                top5_mask = [label_id == key for key in top5_keys]
+                return top5_mask
 
-        else:
-            with torch.no_grad():
-                advx_image = get_advx(x_image, label_id, combination)
-
-                transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-                x: torch.Tensor = transform(x_image).unsqueeze(0)
-                advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
-
-                def get_acc_boolmask(img: Image.Image) -> list[bool]:
-                    preds = list(zip(range(len(labels)), classify_clip(img, labels)))
-                    preds.sort(key=lambda x: x[1], reverse=True)
-                    top5_keys, top5_vals = zip(*preds[:5])
-                    top5_mask = [label_id == key for key in top5_keys]
-                    return top5_mask
-
-        x_acc5 = get_acc_boolmask(x_image)
-        advx_acc5 = get_acc_boolmask(advx_image)
+            x_acc5 = get_acc_boolmask(x_image)
+            advx_acc5 = get_acc_boolmask(advx_image)
 
         results = {
             **entry_id,

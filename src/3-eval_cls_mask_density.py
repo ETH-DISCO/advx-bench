@@ -115,38 +115,22 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             print(f"skipping {entry_id}")
             continue
 
-        if get_device() == "cuda":
-            with torch.no_grad(), torch.amp.autocast(device_type="cuda", enabled=True):
-                advx_image = get_advx(x_image, label_id, combination)
+        with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
+            advx_image = get_advx(x_image, label_id, combination)
 
-                transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-                x: torch.Tensor = transform(x_image).unsqueeze(0)
-                advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+            transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+            x: torch.Tensor = transform(x_image).unsqueeze(0)
+            advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
-                def get_acc_boolmask(img: Image.Image) -> list[bool]:
-                    preds = list(zip(range(len(labels)), classify_clip(img, labels)))
-                    preds.sort(key=lambda x: x[1], reverse=True)
-                    top5_keys, top5_vals = zip(*preds[:5])
-                    top5_mask = [label_id == key for key in top5_keys]
-                    return top5_mask
+            def get_acc_boolmask(img: Image.Image) -> list[bool]:
+                preds = list(zip(range(len(labels)), classify_clip(img, labels)))
+                preds.sort(key=lambda x: x[1], reverse=True)
+                top5_keys, top5_vals = zip(*preds[:5])
+                top5_mask = [label_id == key for key in top5_keys]
+                return top5_mask
 
-        else:
-            with torch.no_grad():
-                advx_image = get_advx(x_image, label_id, combination)
-
-                transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-                x: torch.Tensor = transform(x_image).unsqueeze(0)
-                advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
-
-                def get_acc_boolmask(img: Image.Image) -> list[bool]:
-                    preds = list(zip(range(len(labels)), classify_clip(img, labels)))
-                    preds.sort(key=lambda x: x[1], reverse=True)
-                    top5_keys, top5_vals = zip(*preds[:5])
-                    top5_mask = [label_id == key for key in top5_keys]
-                    return top5_mask
-
-        x_acc5 = get_acc_boolmask(x_image)
-        advx_acc5 = get_acc_boolmask(advx_image)
+            x_acc5 = get_acc_boolmask(x_image)
+            advx_acc5 = get_acc_boolmask(advx_image)
 
         results = {
             **entry_id,
