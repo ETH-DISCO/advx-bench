@@ -101,7 +101,7 @@ CONFIG = {
 COMBINATIONS = {
     # most effective from previous experiments
     "opacity": [50, 70, 90, 110, 130, 150, 170, 190, 210],  # 50;200 is the best
-    "density": [50, 60, 70, 80, 90, 100],  # 1;100
+    "density": [50, 60, 70, 80, 90, 100],  # 1;100 same as before
     # perturbation and strength
     "perturb": [True, False],
     "epsilon": [0.01, 0.05, 0.1, 0.2, 0.4, 0.8],
