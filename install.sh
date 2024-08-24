@@ -12,5 +12,7 @@ export OPENAI_API_KEY="sk-xxxxxx"
 
 nohup $PWD/.venv/bin/python3 $PWD/src/XYZ.py > output.log 2>&1 &
 
+nohup $PWD/.venv/bin/python3 $PWD/src/4-eval_cls_perturb.py > output.log 2>&1 &
+
 watch -n 0.1 "tail -n 100 output.log"
 watch -n 0.1 nvidia-smi
