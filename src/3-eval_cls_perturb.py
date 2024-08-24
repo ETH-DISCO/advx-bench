@@ -14,7 +14,7 @@ from openai import OpenAI
 from PIL import Image
 from tqdm import tqdm
 
-from advx.masks import get_diamond_mask, get_square_mask, get_circle_mask, get_word_mask, get_knit_mask
+from advx.masks import get_diamond_mask, get_square_mask
 from advx.perturb import get_fgsm_clipvit_imagenet
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
@@ -65,14 +65,12 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
         density = int(density / 10)  # 1 -> 10 (count per row)
         img = add_overlay(img, get_diamond_mask(), opacity=combination["opacity"])
 
-    elif combination["mask"] == "circle":
-        density = int(density / 10)  # 1 -> 10 (count per row)
-        img = add_overlay(img, get_circle_mask(), opacity=combination["opacity"])
-
     elif combination["mask"] == "square":
         density = int(density / 10)  # 1 -> 10 (count per row)
         img = add_overlay(img, get_square_mask(), opacity=combination["opacity"])
 
+    else:
+        raise ValueError(f"Unknown mask: {combination['mask']}")
     return img
 
 
