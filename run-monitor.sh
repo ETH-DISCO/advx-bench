@@ -9,7 +9,7 @@ $PWD/.venv/bin/python3 "$python_file" > run.log 2>&1 & echo $! > run.pid
 
 # restart after process dies
 while true; do
-    if ! ps -p $(cat "$pid_file") > /dev/null; then
+    if [ -f "run.pid" ] && ! ps -p $(cat "run.pid") > /dev/null 2>&1; then
         echo "process died, restarting..."
         $PWD/.venv/bin/python3 "$python_file" > run.log 2>&1 & echo $! > run.pid
     fi
