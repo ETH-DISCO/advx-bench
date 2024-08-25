@@ -10,12 +10,7 @@ pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless
 
 export OPENAI_API_KEY="sk-xxxxxx"
 
-nohup $PWD/.venv/bin/python3 $PWD/src/XYZ.py > output.log 2>&1 &
-
-nohup $PWD/.venv/bin/python3 $PWD/src/4-eval_cls_perturb.py > output.log 2>&1 &
-
-chmod +x ./alive.sh
-./alive.sh ./src/4-eval_cls_perturb.py
+python_file="./src/4-eval_cls_perturb.py"
+nohup $PWD/.venv/bin/python3 "$python_file" > output.log 2>&1 & echo $! > "$pid_file"
 
 watch -n 0.1 "tail -n 100 output.log"
-watch -n 0.1 nvidia-smi
