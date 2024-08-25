@@ -2,6 +2,9 @@
 
 # Usage: ./alive.sh <python_file>
 
+rm -f run-monitor.pid
+rm -f run-monitor.log
+
 python_file="$1"
 
 # start process
