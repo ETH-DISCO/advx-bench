@@ -1,3 +1,6 @@
+*.log
+*.pid
+
 venv/
 *.partial
 *.pth
