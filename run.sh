@@ -12,9 +12,11 @@ pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless
 
 # stay alive
 python_file="./src/4-eval_cls_perturb.py"
-chmod +x monitor.sh
-nohup ./monitor.sh "$python_file" > monitor.log 2>&1 & echo $! > "monitor.pid"
+chmod +x run-monitor.sh
+nohup ./run-monitor.sh "$python_file" > run-monitor.log 2>&1 & echo $! > "run-monitor.pid"
 
 # manual eval
-nohup $PWD/.venv/bin/python3 "$python_file" > run.log 2>&1 & echo $! > run.pid
+# nohup $PWD/.venv/bin/python3 "$python_file" > run.log 2>&1 & echo $! > run.pid
+
 watch -n 0.1 "tail -n 100 run.log"
+pgrep -f "4-eval"

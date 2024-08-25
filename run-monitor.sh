@@ -3,7 +3,6 @@
 # Usage: ./alive.sh <python_file>
 
 python_file="$1"
-pid_file="script.pid"
 
 # start process
 $PWD/.venv/bin/python3 "$python_file" > run.log 2>&1 & echo $! > run.pid
