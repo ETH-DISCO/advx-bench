@@ -12,7 +12,7 @@ pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless
 
 
 python_file="./src/4-eval_cls_perturb.py"
-pid_file="pid.txt"
+pid_file="eval.pid"
 
 # initial start
 nohup $PWD/.venv/bin/python3 "$python_file" > output.log 2>&1 & echo $! > "$pid_file"
