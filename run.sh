@@ -20,6 +20,5 @@ nohup ./run-monitor.sh "$python_file" > run-monitor.log 2>&1 & echo $! > "run-mo
 
 watch -n 0.1 "tail -n 100 run.log"
 pgrep -f "4-eval"
-
 nvtop
 htop
