@@ -27,6 +27,9 @@ os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 
 def is_cached(path: Path, entry_id: dict) -> bool:
+    # don't modify the original dict
+    entry_id = entry_id.copy()
+
     if not path.exists():
         return False
 
