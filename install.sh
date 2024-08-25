@@ -10,21 +10,12 @@ pip install open-clip-torch
 python -m spacy download en_core_web_sm
 pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless Pillow Requests spacy torch transformers accelerate
 
-
+# stay alive
 python_file="./src/4-eval_cls_perturb.py"
-pid_file="eval.pid"
+pid_file="monitor.pid"
+chmod +x monitor.sh
+nohup ./monitor.sh "$python_file" & echo $! > "$pid_file"
 
-# initial start
+# manual eval
 nohup $PWD/.venv/bin/python3 "$python_file" > output.log 2>&1 & echo $! > "$pid_file"
-
-# endless loop to monitor and restart the process
-while true; do
-    if ! ps -p $(cat "$pid_file") > /dev/null; then
-        echo "Process died, restarting..."
-        nohup $PWD/.venv/bin/python3 "$python_file" > output.log 2>&1 & echo $! > "$pid_file"
-    fi
-    sleep 5 # check every 5 seconds
-done
-
-
 watch -n 0.1 "tail -n 100 output.log"
