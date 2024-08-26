@@ -1,3 +1,4 @@
+from tqdm import tqdm
 import gc
 import json
 import os
@@ -40,9 +41,10 @@ set_seed(seed=seed)
 # config
 num_epochs = 10 # increase for better performance
 lr = 1e-5 # common for CLIP
+subset = 1000 # set to None for full dataset
 
 # data
-dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="train", streaming=True).shuffle(seed=seed)
+dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="train", streaming=True).take(subset)
 overlay = get_diamond_mask(diamond_count=15, diamonds_per_row=10)
 labels = get_imagenet_labels()
 
@@ -60,7 +62,7 @@ if get_device() == "cuda":
 
 
 for epoch in range(num_epochs):
-    for elem in dataset:
+    for elem in tqdm(dataset):
         image = preprocess(elem["image"].convert("RGB")).unsqueeze(0).to(get_device(), dtype=torch.float32)
         adv_img = preprocess(add_overlay(elem["image"].convert("RGB"), overlay=overlay, opacity=160)).unsqueeze(0).to(get_device(), dtype=torch.float32)
 
@@ -88,7 +90,7 @@ for epoch in range(num_epochs):
         total_loss.backward()
         optimizer.step()
 
-        print(f"Epoch {epoch+1}/{num_epochs}, Loss: {total_loss.item()}")
+        # print(f"Epoch {epoch+1}/{num_epochs}, Loss: {total_loss.item()}")
 
     torch.cuda.empty_cache()
     gc.collect()
