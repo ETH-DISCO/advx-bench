@@ -39,9 +39,9 @@ seed = 41
 set_seed(seed=seed)
 
 # config
-num_epochs = 10 # increase for better performance
-lr = 1e-5 # common for CLIP
-subset = 1000 # set to None for full dataset
+num_epochs = 10
+lr = 1e-5
+subset = 1000
 
 # data
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="train", streaming=True).take(subset)
@@ -90,7 +90,7 @@ for epoch in range(num_epochs):
         total_loss.backward()
         optimizer.step()
 
-        # print(f"Epoch {epoch+1}/{num_epochs}, Loss: {total_loss.item()}")
+        print(f"\tEpoch {epoch+1}/{num_epochs}, Loss: {total_loss.item()}")
 
     torch.cuda.empty_cache()
     gc.collect()
