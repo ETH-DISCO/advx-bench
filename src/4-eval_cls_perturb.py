@@ -63,12 +63,12 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 
         return list(set(words))
 
-    # perturbation
-    if not combination["perturb"]:  # apply attack before mask
+    # apply attack before mask
+    if combination["perturb"]:
         labels = [get_imagenet_label(label_id)] + get_advx_words(get_imagenet_label(label_id))
         img = get_fgsm_clipvit_imagenet(image=img, target_idx=0, labels=labels, epsilon=combination["epsilon"], debug=False)
     else:
-        combination["epsilon"] = 0
+        combination["epsilon"] = -1
 
     # diamond mask
     density = int(combination["density"])
