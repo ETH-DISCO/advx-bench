@@ -11,11 +11,11 @@ python -m spacy download en_core_web_sm
 pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless Pillow Requests spacy torch transformers accelerate
 
 # stay alive
-python_file="./src/5-eval_cls_best.py"
+python_file="./src/4-eval_cls_perturb.py"
 chmod +x run-monitor.sh
 nohup ./run-monitor.sh "$python_file" > run-monitor.log 2>&1 & echo $! > "run-monitor.pid"
 
 watch -n 0.1 "tail -n 100 run.log"
-pgrep -f "5-eval"
+pgrep -f "eval"
 nvtop
 htop

@@ -63,9 +63,12 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 
         return list(set(words))
 
+    # perturbation
     if not combination["perturb"]:  # apply attack before mask
         labels = [get_imagenet_label(label_id)] + get_advx_words(get_imagenet_label(label_id))
         img = get_fgsm_clipvit_imagenet(image=img, target_idx=0, labels=labels, epsilon=combination["epsilon"], debug=False)
+    else:
+        combination["epsilon"] = 0
 
     # diamond mask
     density = int(combination["density"])
@@ -103,13 +106,12 @@ CONFIG = {
 }
 COMBINATIONS = {
     # most effective from previous experiments
-    "opacity": [50, 70, 90, 110, 130, 150, 170, 190, 210],  # 50;200 is the best
-    "density": [50, 60, 70, 80, 90, 100],  # 1;100 same as before
+    "opacity": [50, 70, 90, 110, 130, 150, 170],  # 1;255
+    "density": [50, 60, 70, 80],  # 1;100
     # perturbation and strength
     "perturb": [True, False],
-    "epsilon": [0.01, 0.05, 0.1, 0.2, 0.4, 0.8],
+    "epsilon": [0.001, 0.005, 0.01, 0.05, 0.1, 0.15, 0.2],
 }
-
 
 """
 eval loop
