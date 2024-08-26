@@ -29,8 +29,6 @@ def get_imagenet_labels() -> list[str]:
     data = json.loads(datapath.read_text())
     return list(data.values())
 
-# decide whether to train or validate based on the presence of the model .pth file
-
 """
 training
 """
@@ -39,9 +37,9 @@ seed = 41
 set_seed(seed=seed)
 
 # config
-num_epochs = 10
+num_epochs = 10 # increase for better performance
 lr = 1e-5
-subset = 1000
+subset = 10_000
 
 # data
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="train", streaming=True).take(subset)
@@ -62,7 +60,7 @@ if get_device() == "cuda":
 
 
 for epoch in range(num_epochs):
-    for elem in tqdm(dataset):
+    for elem in tqdm(dataset, desc=f"Epoch {epoch+1}/{num_epochs}", total=subset):
         image = preprocess(elem["image"].convert("RGB")).unsqueeze(0).to(get_device(), dtype=torch.float32)
         adv_img = preprocess(add_overlay(elem["image"].convert("RGB"), overlay=overlay, opacity=160)).unsqueeze(0).to(get_device(), dtype=torch.float32)
 
@@ -90,8 +88,6 @@ for epoch in range(num_epochs):
         total_loss.backward()
         optimizer.step()
 
-        print(f"\tEpoch {epoch+1}/{num_epochs}, Loss: {total_loss.item()}")
-
     torch.cuda.empty_cache()
     gc.collect()
 
@@ -102,6 +98,8 @@ torch.save(model.state_dict(), "adversarially_trained_clip.pth")
 """
 validation
 """
+
+# decide whether to train or validate based on whether the .pth file exists
 
 outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).shuffle(seed=seed)
