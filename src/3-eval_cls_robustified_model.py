@@ -28,6 +28,7 @@ def get_imagenet_labels() -> list[str]:
     data = json.loads(datapath.read_text())
     return list(data.values())
 
+# decide whether to train or validate based on the presence of the model .pth file
 
 """
 training
@@ -37,8 +38,8 @@ seed = 41
 set_seed(seed=seed)
 
 # config
-num_epochs = 10
-lr = 1e-5
+num_epochs = 10 # increase for better performance
+lr = 1e-5 # common for CLIP
 
 # data
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="train", streaming=True).shuffle(seed=seed)
@@ -97,7 +98,8 @@ torch.save(model.state_dict(), "adversarially_trained_clip.pth")
 
 
 """
-evaluation
+validation
 """
 
 outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
+dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).shuffle(seed=seed)
