@@ -1,56 +1,67 @@
-import csv
-import json
-import time
-from pathlib import Path
 
-import numpy as np
-import torch
-import torch.nn.functional as F
-import torchvision.transforms as transforms
-from datasets import load_dataset
-from skimage.metrics import structural_similarity
-from sklearn.metrics import average_precision_score
-from torchvision.models import inception_v3
-from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToPILImage
-from tqdm import tqdm
+"""
+pipeline:
 
-from models.utils import set_seed
-
-import json
-from pathlib import Path
-
-from datasets import load_dataset
-
-import csv
-import gc
-import itertools
-import json
-import os
-import random
-from pathlib import Path
-
-import spacy
-import torch
-import torchvision.transforms as transforms
-from datasets import load_dataset
-from openai import OpenAI
-from PIL import Image
-from tqdm import tqdm
-
-from advx.masks import get_diamond_mask
-from advx.perturb import get_fgsm_clipvit_imagenet
-from advx.utils import add_overlay
-from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
-from models.cls import classify_clip
-from utils import get_device
-
-torch.backends.cuda.matmul.allow_tf32 = True  # allow TF32 on matmul
-torch.backends.cudnn.allow_tf32 = True  # allow TF32 on cudnn
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+- take images from coco dataset
+- apply diamond mask on all
+- generate random background
+- put x images on random background
+- check how many images are correctly detected
+"""
 
 
 
 
+# import csv
+# import json
+# import time
+# from pathlib import Path
+
+# import numpy as np
+# import torch
+# import torch.nn.functional as F
+# import torchvision.transforms as transforms
+# from datasets import load_dataset
+# from skimage.metrics import structural_similarity
+# from sklearn.metrics import average_precision_score
+# from torchvision.models import inception_v3
+# from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToPILImage
+# from tqdm import tqdm
+
+# from models.utils import set_seed
+
+# import json
+# from pathlib import Path
+
+# from datasets import load_dataset
+
+# import csv
+# import gc
+# import itertools
+# import json
+# import os
+# import random
+# from pathlib import Path
+
+# import spacy
+# import torch
+# import torchvision.transforms as transforms
+# from datasets import load_dataset
+# from openai import OpenAI
+# from PIL import Image
+# from tqdm import tqdm
+
+# from advx.background import get_perlin_background, get_gradient_background, get_random_background, get_zigzag_background
+# from advx.masks import get_diamond_mask
+# from advx.perturb import get_fgsm_clipvit_imagenet
+# from advx.utils import add_overlay
+# from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
+# from models.cls import classify_clip
+# from utils import get_device
+
+# torch.backends.cuda.matmul.allow_tf32 = True  # allow TF32 on matmul
+# torch.backends.cudnn.allow_tf32 = True  # allow TF32 on cudnn
+# os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 
 
@@ -60,9 +71,8 @@ os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 
 
-
-# def is_cached(path: Path, entry_id: dict) -> bool:
-#     entry_id = entry_id.copy()
+# def is_cached(path: Path, entry_ids: dict) -> bool:
+#     entry_ids = entry_ids.copy()
 
 #     if not path.exists():
 #         return False
@@ -70,68 +80,86 @@ os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 #     with open(path, mode="r") as f:
 #         reader = csv.DictReader(f)
 #         for row in reader:
-#             if all(row[key] == str(value) for key, value in entry_id.items()):
+#             if all(row[key] == str(value) for key, value in entry_ids.items()):
 #                 return True
 #     return False
 
 
-def get_coco_label(idx: int) -> str:
-    datapath = Path.cwd() / "data" / "coco_labels.json"
-    data = json.loads(datapath.read_text())
-    return data[str(idx)]
+# def get_coco_label(idx: int) -> str:
+#     datapath = Path.cwd() / "data" / "coco_labels.json"
+#     data = json.loads(datapath.read_text())
+#     return data[str(idx)]
 
 
-def get_coco_labels() -> list[str]:
-    datapath = Path.cwd() / "data" / "coco_labels.json"
-    data = json.loads(datapath.read_text())
-    return list(data.values())
+# def get_coco_labels() -> list[str]:
+#     datapath = Path.cwd() / "data" / "coco_labels.json"
+#     data = json.loads(datapath.read_text())
+#     return list(data.values())
 
 
 
 
-def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
-    combination = combination.copy()
+# def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
+#     combination = combination.copy()
+
     
-    get_diamond_overlay = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
-    img = get_diamond_overlay(img)
+#     # overlay image
+#     get_diamond_overlay = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
+#     img = get_diamond_overlay(img)
 
-    return img
+#     # get background
+#     width, height = img.size * 3
+#     background = None
+#     if combination["background"] == "perlin":
+#         background = get_perlin_background(width=width, height=height)
+#     elif combination["background"] == "zigzag":
+#         background = get_zigzag_background(width=width, height=height)
+#     elif combination["background"] == "gradient":
+#         background = get_gradient_background(width=width, height=height)
+#     elif combination["background"] == "random":
+#         background = get_random_background(width=width, height=height)
+#     else:
+#         raise ValueError(f"unknown background {combination['background']}")
+
+#     # place image(s) on background
+
+#     return img
 
 
 
-"""
-config
-"""
+# """
+# config
+# """
 
 
-CONFIG = {
-    "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-    "subset_size": 5,
-}
-COMBINATIONS = {
-    # most effective from previous experiments
-    # ...
-}
+# CONFIG = {
+#     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
+#     "subset_size": 5,
+# }
+# COMBINATIONS = {
+#     # most effective from previous experiments
+#     "background": ["perlin", "zigzag", "gradient", "random"],
+# }
 
-"""
-eval loop
-"""
+# """
+# eval loop
+# """
 
-random_combinations = list(itertools.product(*COMBINATIONS.values()))
-random.shuffle(random_combinations)
-print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
+# random_combinations = list(itertools.product(*COMBINATIONS.values()))
+# random.shuffle(random_combinations)
+# print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
-dataset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(CONFIG["subset_size"]).shuffle(seed=41)
-dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["objects"]["category"], x["objects"]["caption"]), dataset))
+# dataset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(CONFIG["subset_size"]).shuffle(seed=41)
+# dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["objects"]["category"], x["objects"]["caption"]), dataset))
 
-if get_device() == "cuda":
-    torch.cuda.empty_cache()
-    torch.cuda.reset_peak_memory_stats()
-    torch.cuda.reset_accumulated_memory_stats()
+# if get_device() == "cuda":
+#     torch.cuda.empty_cache()
+#     torch.cuda.reset_peak_memory_stats()
+#     torch.cuda.reset_accumulated_memory_stats()
 
-for elem in dataset:
-    print(elem)
-    break
+# for elem in dataset:
+#     print(elem)
+#     break
 
 # for combination in tqdm(random_combinations, total=len(random_combinations)):
 #     combination = dict(zip(COMBINATIONS.keys(), combination))
@@ -184,12 +212,6 @@ for elem in dataset:
 
 #         torch.cuda.empty_cache()
 #         gc.collect()
-
-
-
-
-
-
 
 
 
