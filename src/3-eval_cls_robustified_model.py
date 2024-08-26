@@ -37,7 +37,7 @@ seed = 41
 set_seed(seed=seed)
 
 # config
-num_epochs = 10 # increase for better performance
+num_epochs = 20
 lr = 1e-5
 subset = 10_000
 
