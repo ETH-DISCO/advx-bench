@@ -1,25 +1,17 @@
-import gc
 import json
 import os
 from pathlib import Path
 
 import torch
-import torchvision.transforms as transforms
 from datasets import load_dataset
-from PIL import Image
 
 from advx.masks import get_diamond_mask
 from advx.utils import add_overlay
-from utils import get_device, set_seed
+from utils import set_seed
 
 torch.backends.cuda.matmul.allow_tf32 = True
 torch.backends.cudnn.allow_tf32 = True
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
-
-
-
-
-
 
 
 def get_imagenet_label(idx: int) -> str:
@@ -61,7 +53,7 @@ for elem in dataset:
     elem["advx_image"].show()
     break
 
-outpath =  Path.cwd() / "data" / "eval" / "eval_cls.csv",
+outpath = (Path.cwd() / "data" / "eval" / "eval_cls.csv",)
 
 # if get_device() == "cuda":
 #     torch.cuda.empty_cache()
