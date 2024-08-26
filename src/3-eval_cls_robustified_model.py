@@ -1,13 +1,16 @@
+import gc
 import json
 import os
 from pathlib import Path
 
+import clip
 import torch
+import torch.nn.functional as F
 from datasets import load_dataset
 
 from advx.masks import get_diamond_mask
 from advx.utils import add_overlay
-from utils import set_seed
+from utils import get_device, set_seed
 
 torch.backends.cuda.matmul.allow_tf32 = True
 torch.backends.cudnn.allow_tf32 = True
@@ -27,44 +30,74 @@ def get_imagenet_labels() -> list[str]:
 
 
 """
-adversarial training
+training
 """
 
 seed = 41
 set_seed(seed=seed)
 
+# config
+num_epochs = 10
+lr = 1e-5
+
+# data
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="train", streaming=True).shuffle(seed=seed)
-
 overlay = get_diamond_mask(diamond_count=15, diamonds_per_row=10)
+labels = get_imagenet_labels()
 
-for elem in dataset:
-    elem = {
-        "image_id": elem["image_id"],
-        "image": elem["image"].convert("RGB"),
-        "advx_image": add_overlay(elem["image"].convert("RGB"), overlay=overlay, opacity=160),
-        "label": elem["label"],
-        "label_word": get_imagenet_label(elem["label"]),
-        "caption_enriched": elem["caption_enriched"],
-    }
-    print(elem)
+# model
+model, preprocess = clip.load("ViT-L/14@336px", device=get_device())
+model.train()
+for param in model.parameters():
+    param.requires_grad = True
+model = model.float()
+optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+if get_device() == "cuda":
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    torch.cuda.reset_accumulated_memory_stats()
 
-    elem["image"].show()
-    elem["advx_image"].show()
-    break
 
-outpath = (Path.cwd() / "data" / "eval" / "eval_cls.csv",)
+for epoch in range(num_epochs):
+    for elem in dataset:
+        image = preprocess(elem["image"].convert("RGB")).unsqueeze(0).to(get_device(), dtype=torch.float32)
+        adv_img = preprocess(add_overlay(elem["image"].convert("RGB"), overlay=overlay, opacity=160)).unsqueeze(0).to(get_device(), dtype=torch.float32)
 
-# if get_device() == "cuda":
-#     torch.cuda.empty_cache()
-#     torch.cuda.reset_peak_memory_stats()
-#     torch.cuda.reset_accumulated_memory_stats()
+        text = clip.tokenize([get_imagenet_label(elem["label"])]).to(get_device())
 
-# for id, x_image, label_id, caption in dataset:
-#     with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
+        with torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
+            image_features = model.encode_image(image)
+            text_features = model.encode_text(text)
 
-#         transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-#         x: torch.Tensor = transform(x_image).unsqueeze(0)
-#         advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+            # loss for original image
+            logits_per_image = image_features @ text_features.t()
+            original_loss = F.cross_entropy(logits_per_image, torch.arange(len(text), device=get_device(), dtype=torch.long))
 
-#     torch.cuda.empty_cache()
-#     gc.collect()
+            # loss for adversarial image
+            adv_image_features = model.encode_image(adv_img)
+            adv_logits_per_image = adv_image_features @ text_features.t()
+            adv_loss = F.cross_entropy(adv_logits_per_image, torch.arange(len(text), device=get_device(), dtype=torch.long))
+
+            # combine losses
+            similarity_loss = 1 - F.cosine_similarity(image_features, adv_image_features).mean()
+            total_loss = original_loss + adv_loss + similarity_loss
+
+        # backprop
+        optimizer.zero_grad()
+        total_loss.backward()
+        optimizer.step()
+
+        print(f"Epoch {epoch+1}/{num_epochs}, Loss: {total_loss.item()}")
+
+    torch.cuda.empty_cache()
+    gc.collect()
+
+
+torch.save(model.state_dict(), "adversarially_trained_clip.pth")
+
+
+"""
+evaluation
+"""
+
+outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
