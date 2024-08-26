@@ -8,9 +8,12 @@ python -m spacy download en_core_web_sm
 pip install clip diffusers matplotlib numpy opencv_python opencv_python_headless Pillow Requests spacy torch transformers accelerate
 
 # stay alive
-python_file="./src/4-eval_cls_perturb.py"
+python_file="./src/XYZ.py"
 chmod +x run-monitor.sh
 nohup ./run-monitor.sh "$python_file" > run-monitor.log 2>&1 & echo $! > "run-monitor.pid"
+
+# run once
+nohup python3 "./src/3-eval_cls_robustified_model.py" > run.log 2>&1 & echo $! > "run.pid"
 
 # monitor
 watch -n 0.1 "tail -n 100 run.log"
