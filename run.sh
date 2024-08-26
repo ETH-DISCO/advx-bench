@@ -19,6 +19,6 @@ nohup ./run-monitor.sh "$python_file" > run-monitor.log 2>&1 & echo $! > "run-mo
 # nohup $PWD/.venv/bin/python3 "$python_file" > run.log 2>&1 & echo $! > run.pid
 
 watch -n 0.1 "tail -n 100 run.log"
-pgrep -f "4-eval"
+pgrep -f "5-eval"
 nvtop
 htop
