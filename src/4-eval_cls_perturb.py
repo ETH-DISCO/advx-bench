@@ -27,15 +27,10 @@ os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 
 def is_cached(path: Path, entry_id: dict) -> bool:
-    # don't modify the original dict
     entry_id = entry_id.copy()
 
     if not path.exists():
         return False
-
-    # if perturb is False, then we can skip epsilon combinations
-    if not entry_id["perturb"]:
-        entry_id.pop("epsilon")
 
     with open(path, mode="r") as f:
         reader = csv.DictReader(f)
@@ -46,6 +41,8 @@ def is_cached(path: Path, entry_id: dict) -> bool:
 
 
 def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
+    combination = combination.copy()
+
     def get_advx_words(word: str) -> list[str]:
         client = OpenAI()
         completion = client.chat.completions.create(
@@ -55,22 +52,18 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
                 {"role": "user", "content": f"List unique words unrelated to '{word}' but in the same domain for generating adversarial examples. Provide only words, separated by spaces."},
             ],
         )
-
         response = completion.choices[0].message.content
         nlp = spacy.load("en_core_web_sm")
         doc = nlp(response)
         words = [token.text.lower() for token in doc if token.is_alpha]
-
         return list(set(words))
 
-    # apply attack before mask
+    # 1. perturb
     if combination["perturb"]:
         labels = [get_imagenet_label(label_id)] + get_advx_words(get_imagenet_label(label_id))
         img = get_fgsm_clipvit_imagenet(image=img, target_idx=0, labels=labels, epsilon=combination["epsilon"], debug=False)
-    else:
-        combination["epsilon"] = -1
 
-    # diamond mask
+    # 2. overlay diamond mask
     density = int(combination["density"])
     img = add_overlay(
         img,
@@ -106,8 +99,8 @@ CONFIG = {
 }
 COMBINATIONS = {
     # most effective from previous experiments
-    "opacity": [50, 70, 90, 110, 130, 150, 170],  # 1;255
-    "density": [50, 60, 70, 80],  # 1;100
+    "opacity": [50, 70, 90, 110, 130, 150, 170, 190, 210],  # 0;255
+    "density": [50, 60, 70, 80, 90, 100],  # 10;100
     # perturbation and strength
     "perturb": [True, False],
     "epsilon": [0.001, 0.005, 0.01, 0.05, 0.1, 0.15, 0.2],
@@ -132,6 +125,9 @@ if get_device() == "cuda":
 
 for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
+
+    if not combination["perturb"]:
+        combination["epsilon"] = 0  # don't run multiple epsilon values if perturb is False
 
     for id, x_image, label_id, caption in dataset:
         entry_id = {
