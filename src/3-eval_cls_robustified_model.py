@@ -33,7 +33,6 @@ adversarial training
 seed = 41
 set_seed(seed=seed)
 
-
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="train", streaming=True).shuffle(seed=seed)
 
 overlay = get_diamond_mask(diamond_count=15, diamonds_per_row=10)
