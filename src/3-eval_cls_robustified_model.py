@@ -12,17 +12,14 @@ from advx.masks import get_diamond_mask
 from advx.utils import add_overlay
 from utils import get_device, set_seed
 
-torch.backends.cuda.matmul.allow_tf32 = True  # allow TF32 on matmul
-torch.backends.cudnn.allow_tf32 = True  # allow TF32 on cudnn
+torch.backends.cuda.matmul.allow_tf32 = True
+torch.backends.cudnn.allow_tf32 = True
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 
-def get_advx(img: Image.Image) -> Image.Image:
-    # optimal settings: `diamond mask`, `perturb=False`, `density=50`, `opacity=150;170`
-    density = 50
-    opacity = (150 + 170) / 2
-    img = add_overlay(img, get_diamond_mask(diamond_count=(density / 10 + 10), diamonds_per_row=(density / 5)), opacity=opacity)
-    return img
+
+
+
 
 
 def get_imagenet_label(idx: int) -> str:
@@ -38,31 +35,45 @@ def get_imagenet_labels() -> list[str]:
 
 
 """
-run
+adversarial training
 """
-
-CONFIG = {
-    "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-}
 
 seed = 41
 set_seed(seed=seed)
-dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(CONFIG["subset_size"]).shuffle(seed=seed)
-dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
-labels = get_imagenet_labels()
 
-if get_device() == "cuda":
-    torch.cuda.empty_cache()
-    torch.cuda.reset_peak_memory_stats()
-    torch.cuda.reset_accumulated_memory_stats()
 
-for id, x_image, label_id, caption in dataset:
-    with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
-        advx_image = get_advx(x_image, label_id)
+dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="train", streaming=True).shuffle(seed=seed)
 
-        transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-        x: torch.Tensor = transform(x_image).unsqueeze(0)
-        advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+overlay = get_diamond_mask(diamond_count=15, diamonds_per_row=10)
 
-    torch.cuda.empty_cache()
-    gc.collect()
+for elem in dataset:
+    elem = {
+        "image_id": elem["image_id"],
+        "image": elem["image"].convert("RGB"),
+        "advx_image": add_overlay(elem["image"].convert("RGB"), overlay=overlay, opacity=160),
+        "label": elem["label"],
+        "label_word": get_imagenet_label(elem["label"]),
+        "caption_enriched": elem["caption_enriched"],
+    }
+    print(elem)
+
+    elem["image"].show()
+    elem["advx_image"].show()
+    break
+
+outpath =  Path.cwd() / "data" / "eval" / "eval_cls.csv",
+
+# if get_device() == "cuda":
+#     torch.cuda.empty_cache()
+#     torch.cuda.reset_peak_memory_stats()
+#     torch.cuda.reset_accumulated_memory_stats()
+
+# for id, x_image, label_id, caption in dataset:
+#     with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
+
+#         transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+#         x: torch.Tensor = transform(x_image).unsqueeze(0)
+#         advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+
+#     torch.cuda.empty_cache()
+#     gc.collect()
