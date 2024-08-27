@@ -1,0 +1,2 @@
+img_id,cosine_sim,psnr,ssim,label,original_acc1,robustified_acc1,original_acc5,robustified_acc5
+ILSVRC2012_val_00027555,0.038284383714199066,18.446746826171875,0.4989153,coucal,1,1,1,1
