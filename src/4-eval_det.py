@@ -1,11 +1,9 @@
 """
 pipeline:
 
-- take images from coco dataset
-- apply diamond mask on all
-- generate random background
-- put x images on random background
-- check how many images are correctly detected (using owlvit)
+- dataset: coco + diamond mask -> arbitrary number of them put on random background
+- model a) owlvit
+- model b) clip grid -> see: https://www.pinecone.io/learn/series/image-search/zero-shot-object-detection-clip/#Zero-Shot-CLIP
 """
 
 
