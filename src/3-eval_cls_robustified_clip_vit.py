@@ -1,3 +1,5 @@
+print("running robustified_clip_vit eval")
+
 from tqdm import tqdm
 import functools
 import csv
@@ -57,11 +59,12 @@ set_seed(seed=seed)
 device = get_device()
 
 # config
-subset = 50_000
+subset = 5
 
 # data
 outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
-dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(subset).shuffle(seed=seed)
+# dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(subset).shuffle(seed=seed)
+dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).take(subset).shuffle(seed=seed)
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
 overlay = get_diamond_mask(diamond_count=15, diamonds_per_row=10)
 labels = get_imagenet_labels()
