@@ -65,9 +65,9 @@ monitor-kill:
 
 .PHONY: fmt # format codebase
 fmt:
-	pip install isort
-	pip install ruff
-	pip install autoflake
+	# pip install isort
+	# pip install ruff
+	# pip install autoflake
 
 	isort .
 	autoflake --remove-all-unused-imports --recursive --in-place .

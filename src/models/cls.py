@@ -3,6 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import requests
 import torch
+from huggingface_hub import hf_hub_download
 from PIL import Image
 
 os.environ["TOKENIZERS_PARALLELISM"] = "true"
@@ -105,6 +106,37 @@ def classify_eva(img: Image.Image, labels: list[str]) -> list[float]:
         text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
     probs = text_probs[0].cpu().numpy().tolist()
+    assert all(isinstance(prob, float) for prob in probs)
+    return probs
+
+
+"""
+custom models
+"""
+
+
+def classify_robustified_clip(img: Image.Image, labels: list[str]) -> list[float]:
+    import clip
+
+    device = get_device()
+
+    model, preprocess = clip.load("ViT-L/14@336px", device=device)
+
+    path = hf_hub_download(repo_id="sueszli/robustified_clip_vit", filename="robustified_clip_vit.pth")
+    state_dict = torch.load(path, map_location=device, weights_only=True)
+
+    # load the state dictionary into the model
+    model.load_state_dict(state_dict)
+    model.eval()
+
+    text = clip.tokenize(labels).to(device)
+    image = preprocess(img).unsqueeze(0).to(device)
+
+    with torch.no_grad():
+        logits_per_image, logits_per_text = model(image, text)
+        probs = logits_per_image.softmax(dim=-1).cpu().numpy()
+
+    probs = probs[0].tolist()
     assert all(isinstance(prob, float) for prob in probs)
     return probs
 
