@@ -1,4 +1,3 @@
-from tqdm import tqdm
 import gc
 import json
 import os
@@ -8,6 +7,7 @@ import clip
 import torch
 import torch.nn.functional as F
 from datasets import load_dataset
+from tqdm import tqdm
 
 from advx.masks import get_diamond_mask
 from advx.utils import add_overlay
@@ -28,6 +28,7 @@ def get_imagenet_labels() -> list[str]:
     datapath = Path.cwd() / "data" / "imagenet_labels.json"
     data = json.loads(datapath.read_text())
     return list(data.values())
+
 
 """
 training
@@ -92,14 +93,4 @@ for epoch in range(num_epochs):
     gc.collect()
 
 
-torch.save(model.state_dict(), "adversarially_trained_clip.pth")
-
-
-"""
-validation
-"""
-
-# decide whether to train or validate based on whether the .pth file exists
-
-outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
-dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).shuffle(seed=seed)
+torch.save(model.state_dict(), "robustified_clip_vit.pth")

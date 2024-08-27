@@ -1,4 +1,3 @@
-
 """
 pipeline:
 
@@ -8,8 +7,6 @@ pipeline:
 - put x images on random background
 - check how many images are correctly detected
 """
-
-
 
 
 # import csv
@@ -64,13 +61,6 @@ pipeline:
 # os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 
-
-
-
-
-
-
-
 # def is_cached(path: Path, entry_ids: dict) -> bool:
 #     entry_ids = entry_ids.copy()
 
@@ -97,12 +87,10 @@ pipeline:
 #     return list(data.values())
 
 
-
-
 # def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 #     combination = combination.copy()
 
-    
+
 #     # overlay image
 #     get_diamond_overlay = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
 #     img = get_diamond_overlay(img)
@@ -124,7 +112,6 @@ pipeline:
 #     # place image(s) on background
 
 #     return img
-
 
 
 # """
@@ -212,9 +199,6 @@ pipeline:
 
 #         torch.cuda.empty_cache()
 #         gc.collect()
-
-
-
 
 
 # set_seed(41)
