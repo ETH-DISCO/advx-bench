@@ -25,6 +25,45 @@ lock:
 	@bash -c "source .venv/bin/activate && pip freeze > requirements.in"
 	pip-compile requirements.in -o requirements.txt
 
+# --------------------------------------------------------------- nohup
+
+.PHONY: monitor # create nohup with restart on failure
+monitor:
+	@if [ "$(filepath)" = "" ]; then echo "missing 'filepath' argument"; exit 1; fi
+	
+	# @runtime="./.venv/bin/python3";
+
+	@runtime="python3"; \
+	monitor() { \
+		while true; do \
+			if ! pgrep -f "$(filepath)" > /dev/null; then \
+				echo "$$(date): process died, restarting..." >> monitor.log; \
+				rm -rf "monitor-process.log"; \
+				rm -rf "monitor-process.pid"; \
+				$$runtime "$(filepath)" >> "monitor-process.log" 2>&1 & \
+				echo $$! > "monitor-process.pid"; \
+			fi; \
+			sleep 5; \
+		done; \
+	}; \
+	monitor >> "monitor.log" 2>&1 & \
+	echo $$! > "monitor.pid"; \
+	echo "$$(date): started" >> "monitor.log"
+
+.PHONY: monitor-tail # tail log of nohup process
+monitor-tail:
+	while true; do clear; tail -n 100 monitor-process.log; sleep 0.1; done
+	# watch -n 0.1 "tail -n 100 monitor-process.log"
+
+.PHONY: monitor-kill # kill nohup process
+monitor-kill:
+	-kill -9 $$(cat monitor.pid)
+	rm -rf monitor.pid
+	rm -rf monitor.log
+	-kill -9 $$(cat monitor-process.pid)
+	rm -rf monitor-process.pid
+	rm -rf monitor-process.log
+
 # --------------------------------------------------------------- utils
 
 .PHONY: fmt # format codebase
