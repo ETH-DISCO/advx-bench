@@ -1,11 +1,3 @@
-"""
-pipeline:
-
-- dataset: coco + diamond mask -> arbitrary number of them put on random background
-- model a) owlvit
-- model b) clip grid -> see: https://www.pinecone.io/learn/series/image-search/zero-shot-object-detection-clip/#Zero-Shot-CLIP
-"""
-
 import csv
 import gc
 import itertools
@@ -144,6 +136,8 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                     return [], [], []
                 return map(list, zip(*filtered))
 
+            # also consider: clip grid https://www.pinecone.io/learn/series/image-search/zero-shot-object-detection-clip/#Zero-Shot-CLIP
+            # this would allow us to use the robustified model from the previous step for detection as well
             x_boxes, x_probs, x_labels = detect_vit(image)
             adv_x_boxes, adv_x_probs, adv_x_labels = detect_vit(adv_image)
 
