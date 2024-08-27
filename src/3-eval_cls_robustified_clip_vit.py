@@ -56,11 +56,12 @@ seed = 41
 set_seed(seed=seed)
 device = get_device()
 
+# config
+subset = 5_000
+
 # data
 outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
-# subset = 5
-# dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).take(subset).shuffle(seed=seed)
-dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False)
+dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).shuffle(seed=seed).take(subset)
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
 overlay = get_diamond_mask(diamond_count=15, diamonds_per_row=10)
 labels = get_imagenet_labels()
