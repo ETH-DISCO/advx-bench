@@ -27,17 +27,18 @@ lock:
 
 .PHONY: monitor # create nohup with restart on failure
 monitor:
-	@if [ "$(filepath)" = "" ]; then echo "missing 'filepath' argument"; exit 1; fi
+	@if [ "$(path)" = "" ]; then echo "missing 'path' argument"; exit 1; fi
 
-	# @runtime="./.venv/bin/python3";
-	@runtime="python3"; \
+	# @runtime="python3";
+
+	@runtime="./.venv/bin/python3"; \
 	monitor() { \
 		while true; do \
-			if ! pgrep -f "$(filepath)" > /dev/null; then \
+			if ! pgrep -f "$(path)" > /dev/null; then \
 				echo "$$(date): process died, restarting..." >> monitor.log; \
 				rm -rf "monitor-process.log"; \
 				rm -rf "monitor-process.pid"; \
-				$$runtime "$(filepath)" >> "monitor-process.log" 2>&1 & \
+				$$runtime "$(path)" >> "monitor-process.log" 2>&1 & \
 				echo $$! > "monitor-process.pid"; \
 			fi; \
 			sleep 5; \
