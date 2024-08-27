@@ -1,7 +1,5 @@
 # --------------------------------------------------------------- venv
 
-# check out: https://github.com/astral-sh/uv
-
 .PHONY: init # initialize venv
 init:
 	# get requirements.in
@@ -30,9 +28,8 @@ lock:
 .PHONY: monitor # create nohup with restart on failure
 monitor:
 	@if [ "$(filepath)" = "" ]; then echo "missing 'filepath' argument"; exit 1; fi
-	
-	# @runtime="./.venv/bin/python3";
 
+	# @runtime="./.venv/bin/python3";
 	@runtime="python3"; \
 	monitor() { \
 		while true; do \
@@ -68,9 +65,9 @@ monitor-kill:
 
 .PHONY: fmt # format codebase
 fmt:
-	# pip install isort
-	# pip install ruff
-	# pip install autoflake
+	pip install isort
+	pip install ruff
+	pip install autoflake
 
 	isort .
 	autoflake --remove-all-unused-imports --recursive --in-place .
