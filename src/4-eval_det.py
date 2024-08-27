@@ -74,6 +74,7 @@ def get_advx(img: Image.Image, combination: dict) -> Image.Image:
 
     return img
 
+
 """
 environment
 """
@@ -87,7 +88,6 @@ if get_device() == "cuda":
     torch.cuda.empty_cache()
     torch.cuda.reset_peak_memory_stats()
     torch.cuda.reset_accumulated_memory_stats()
-
 
 
 """
