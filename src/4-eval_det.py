@@ -21,9 +21,15 @@ from models.det import detect_vit
 from models.utils import set_seed
 from utils import get_device
 
-torch.backends.cuda.matmul.allow_tf32 = True  # allow TF32 on matmul
-torch.backends.cudnn.allow_tf32 = True  # allow TF32 on cudnn
+seed = 41
+set_seed(seed=seed)
+torch.backends.cuda.matmul.allow_tf32 = True
+torch.backends.cudnn.allow_tf32 = True
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+if get_device() == "cuda":
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    torch.cuda.reset_accumulated_memory_stats()
 
 
 def is_cached(path: Path, entry_ids: dict) -> bool:
@@ -86,30 +92,26 @@ config
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
+    "subset_size": 5,  # number of detection tasks per background
 }
 COMBINATIONS = {
-    "images_per_background": 5,
+    "images_per_background": 3,  # number of images to place on a single background
     "background": ["perlin", "zigzag", "gradient", "random"],
 }
+
 
 """
 eval loop
 """
 
-seed = 41
-set_seed(seed=seed)
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
-print(f"total iterations: {len(random_combinations)} * {CONFIG['images_per_background']} = {len(random_combinations) * CONFIG['images_per_background']}")
+print(f"total iterations: {len(random_combinations) * CONFIG['subset_size']}")
 
+dataset_size = CONFIG["images_per_background"] * CONFIG["subset_size"]
 dataset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(CONFIG["images_per_background"]).shuffle(seed=seed)
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["objects"]["category"], x["objects"]["caption"]), dataset))
-
-if get_device() == "cuda":
-    torch.cuda.empty_cache()
-    torch.cuda.reset_peak_memory_stats()
-    torch.cuda.reset_accumulated_memory_stats()
 
 for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
@@ -125,6 +127,11 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
 
         with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
             adv_image = get_advx(image, combination)
+
+            # try to place multiple images on a single background
+            # show result
+
+            exit()
 
             transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
             x: torch.Tensor = transform(image).unsqueeze(0)
