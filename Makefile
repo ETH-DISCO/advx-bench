@@ -27,22 +27,44 @@ lock:
 
 .PHONY: monitor # create nohup with restart on failure
 monitor:
-	@if [ "$(path)" = "" ]; then echo "missing 'path' argument"; exit 1; fi
-	monitor() { \
-		while true; do \
-			if ! pgrep -f "$(path)" > /dev/null; then \
-				echo "$$(date): process died, restarting..." >> monitor.log; \
-				rm -rf "monitor-process.log"; \
-				rm -rf "monitor-process.pid"; \
-				./.venv/bin/python3 "$(path)" >> "monitor-process.log" 2>&1 & \
-				echo $$! > "monitor-process.pid"; \
-			fi; \
-			sleep 5; \
-		done; \
-	}; \
-	monitor >> "monitor.log" 2>&1 & \
-	echo $$! > "monitor.pid"; \
-	echo "$$(date): started" >> "monitor.log"
+	@if [ "$(filepath)" = "" ]; then echo "missing 'path' argument"; exit 1; fi
+	@bash -c '\
+		monitor() { \
+			while true; do \
+				if ! ps -p $$(cat "monitor-process.pid" 2>/dev/null) > /dev/null 2>&1; then \
+					echo "$$(date): process not running or died, (re)starting..." >> monitor.log; \
+					./.venv/bin/python3 "$(filepath)" > "monitor-process.log" 2>&1 & \
+					echo $$! > "monitor-process.pid"; \
+					echo "$$(date): started process with PID $$(cat monitor-process.pid)" >> monitor.log; \
+				else \
+					echo "$$(date): process is running" >> monitor.log; \
+				fi; \
+				sleep 5; \
+			done; \
+		}; \
+		monitor >> "monitor.log" 2>&1 & \
+		echo $$! > "monitor.pid"; \
+		echo "$$(date): monitor started" >> "monitor.log"; \
+	'
+
+# .PHONY: monitor # create nohup with restart on failure
+# monitor:
+# 	@if [ "$(path)" = "" ]; then echo "missing 'path' argument"; exit 1; fi
+# 	monitor() { \
+# 		while true; do \
+# 			if ! pgrep -f "$(path)" > /dev/null; then \
+# 				echo "$$(date): process died, restarting..." >> monitor.log; \
+# 				rm -rf "monitor-process.log"; \
+# 				rm -rf "monitor-process.pid"; \
+# 				./.venv/bin/python3 "$(path)" >> "monitor-process.log" 2>&1 & \
+# 				echo $$! > "monitor-process.pid"; \
+# 			fi; \
+# 			sleep 5; \
+# 		done; \
+# 	}; \
+# 	monitor >> "monitor.log" 2>&1 & \
+# 	echo $$! > "monitor.pid"; \
+# 	echo "$$(date): started" >> "monitor.log"
 
 .PHONY: monitor-tail # tail log of nohup process
 monitor-tail:

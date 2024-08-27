@@ -1,3 +1,4 @@
+from tqdm import tqdm
 import functools
 import csv
 import gc
@@ -70,7 +71,7 @@ if device == "cuda":
     torch.cuda.reset_peak_memory_stats()
     torch.cuda.reset_accumulated_memory_stats()
 
-for id, img, label_id, caption in dataset:
+for id, img, label_id, caption in tqdm(dataset):
     entry_id = {
         "img_id": id,
     }
