@@ -7,198 +7,188 @@ pipeline:
 """
 
 
-# import csv
-# import json
-# import time
-# from pathlib import Path
+import csv
+import json
+import time
+from pathlib import Path
 
-# import numpy as np
-# import torch
-# import torch.nn.functional as F
-# import torchvision.transforms as transforms
-# from datasets import load_dataset
-# from skimage.metrics import structural_similarity
-# from sklearn.metrics import average_precision_score
-# from torchvision.models import inception_v3
-# from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToPILImage
-# from tqdm import tqdm
+import numpy as np
+import torch
+import torch.nn.functional as F
+import torchvision.transforms as transforms
+from datasets import load_dataset
+from skimage.metrics import structural_similarity
+from sklearn.metrics import average_precision_score
+from torchvision.models import inception_v3
+from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToPILImage
+from tqdm import tqdm
 
-# from models.utils import set_seed
+from models.utils import set_seed
 
-# import json
-# from pathlib import Path
+import json
+from pathlib import Path
 
-# from datasets import load_dataset
+from datasets import load_dataset
 
-# import csv
-# import gc
-# import itertools
-# import json
-# import os
-# import random
-# from pathlib import Path
+import csv
+import gc
+import itertools
+import json
+import os
+import random
+from pathlib import Path
 
-# import spacy
-# import torch
-# import torchvision.transforms as transforms
-# from datasets import load_dataset
-# from openai import OpenAI
-# from PIL import Image
-# from tqdm import tqdm
+import spacy
+import torch
+import torchvision.transforms as transforms
+from datasets import load_dataset
+from openai import OpenAI
+from PIL import Image
+from tqdm import tqdm
 
-# from advx.background import get_perlin_background, get_gradient_background, get_random_background, get_zigzag_background
-# from advx.masks import get_diamond_mask
-# from advx.perturb import get_fgsm_clipvit_imagenet
-# from advx.utils import add_overlay
-# from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
-# from models.cls import classify_clip
-# from utils import get_device
+from advx.background import get_perlin_background, get_gradient_background, get_random_background, get_zigzag_background
+from advx.masks import get_diamond_mask
+from advx.perturb import get_fgsm_clipvit_imagenet
+from advx.utils import add_overlay
+from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
+from models.cls import classify_clip
+from utils import get_device
 
-# torch.backends.cuda.matmul.allow_tf32 = True  # allow TF32 on matmul
-# torch.backends.cudnn.allow_tf32 = True  # allow TF32 on cudnn
-# os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
-
-
-# def is_cached(path: Path, entry_ids: dict) -> bool:
-#     entry_ids = entry_ids.copy()
-
-#     if not path.exists():
-#         return False
-
-#     with open(path, mode="r") as f:
-#         reader = csv.DictReader(f)
-#         for row in reader:
-#             if all(row[key] == str(value) for key, value in entry_ids.items()):
-#                 return True
-#     return False
+torch.backends.cuda.matmul.allow_tf32 = True  # allow TF32 on matmul
+torch.backends.cudnn.allow_tf32 = True  # allow TF32 on cudnn
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 
-# def get_coco_label(idx: int) -> str:
-#     datapath = Path.cwd() / "data" / "coco_labels.json"
-#     data = json.loads(datapath.read_text())
-#     return data[str(idx)]
+def is_cached(path: Path, entry_ids: dict) -> bool:
+    entry_ids = entry_ids.copy()
+
+    if not path.exists():
+        return False
+
+    with open(path, mode="r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            if all(row[key] == str(value) for key, value in entry_ids.items()):
+                return True
+    return False
 
 
-# def get_coco_labels() -> list[str]:
-#     datapath = Path.cwd() / "data" / "coco_labels.json"
-#     data = json.loads(datapath.read_text())
-#     return list(data.values())
+def get_coco_label(idx: int) -> str:
+    datapath = Path.cwd() / "data" / "coco_labels.json"
+    data = json.loads(datapath.read_text())
+    return data[str(idx)]
 
 
-# def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
-#     combination = combination.copy()
+def get_coco_labels() -> list[str]:
+    datapath = Path.cwd() / "data" / "coco_labels.json"
+    data = json.loads(datapath.read_text())
+    return list(data.values())
 
 
-#     # overlay image
-#     get_diamond_overlay = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
-#     img = get_diamond_overlay(img)
-
-#     # get background
-#     width, height = img.size * 3
-#     background = None
-#     if combination["background"] == "perlin":
-#         background = get_perlin_background(width=width, height=height)
-#     elif combination["background"] == "zigzag":
-#         background = get_zigzag_background(width=width, height=height)
-#     elif combination["background"] == "gradient":
-#         background = get_gradient_background(width=width, height=height)
-#     elif combination["background"] == "random":
-#         background = get_random_background(width=width, height=height)
-#     else:
-#         raise ValueError(f"unknown background {combination['background']}")
-
-#     # place image(s) on background
-
-#     return img
+def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
+    combination = combination.copy()
 
 
-# """
-# config
-# """
+    # overlay image
+    get_diamond_overlay = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
+    img = get_diamond_overlay(img)
+
+    # get background
+    width, height = img.size * 3
+    background = None
+    if combination["background"] == "perlin":
+        background = get_perlin_background(width=width, height=height)
+    elif combination["background"] == "zigzag":
+        background = get_zigzag_background(width=width, height=height)
+    elif combination["background"] == "gradient":
+        background = get_gradient_background(width=width, height=height)
+    elif combination["background"] == "random":
+        background = get_random_background(width=width, height=height)
+    else:
+        raise ValueError(f"unknown background {combination['background']}")
+
+    # place image(s) on background
+    # ...
+
+    return img
 
 
-# CONFIG = {
-#     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-#     "subset_size": 5,
-# }
-# COMBINATIONS = {
-#     # most effective from previous experiments
-#     "background": ["perlin", "zigzag", "gradient", "random"],
-# }
+"""
+config
+"""
 
-# """
-# eval loop
-# """
 
-# random_combinations = list(itertools.product(*COMBINATIONS.values()))
-# random.shuffle(random_combinations)
-# print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
+CONFIG = {
+    "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
+    "subset_size": 5,
+}
+COMBINATIONS = {
+    # most effective from previous experiments
+    "background": ["perlin", "zigzag", "gradient", "random"],
+}
 
-# dataset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(CONFIG["subset_size"]).shuffle(seed=41)
-# dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["objects"]["category"], x["objects"]["caption"]), dataset))
+"""
+eval loop
+"""
 
-# if get_device() == "cuda":
-#     torch.cuda.empty_cache()
-#     torch.cuda.reset_peak_memory_stats()
-#     torch.cuda.reset_accumulated_memory_stats()
+seed=41
+set_seed(seed=seed)
 
-# for elem in dataset:
-#     print(elem)
-#     break
+random_combinations = list(itertools.product(*COMBINATIONS.values()))
+random.shuffle(random_combinations)
+print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
-# for combination in tqdm(random_combinations, total=len(random_combinations)):
-#     combination = dict(zip(COMBINATIONS.keys(), combination))
+dataset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(CONFIG["subset_size"]).shuffle(seed=seed)
+dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["objects"]["category"], x["objects"]["caption"]), dataset))
 
-#     for id, x_image, label_id, caption in dataset:
-#         entry_id = {
-#             **combination,
-#             "img_id": id,
-#         }
-#         if is_cached(CONFIG["outpath"], entry_id):
-#             print(f"skipping {entry_id}")
-#             continue
+if get_device() == "cuda":
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    torch.cuda.reset_accumulated_memory_stats()
 
-#         with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
-#             advx_image = get_advx(x_image, label_id, combination)
+for elem in dataset:
+    print(elem)
+    break
 
-#             transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
-#             x: torch.Tensor = transform(x_image).unsqueeze(0)
-#             advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+for combination in tqdm(random_combinations, total=len(random_combinations)):
+    combination = dict(zip(COMBINATIONS.keys(), combination))
 
-#             def get_acc_boolmask(img: Image.Image) -> list[bool]:
-#                 preds = list(zip(range(len(labels)), classify_clip(img, labels)))
-#                 preds.sort(key=lambda x: x[1], reverse=True)
-#                 top5_keys, top5_vals = zip(*preds[:5])
-#                 top5_mask = [label_id == key for key in top5_keys]
-#                 return top5_mask
+    for label_id, image, bboxes, captions in dataset:
+        ids = {
+            **combination,
+            "img_id": label_id,
+        }
+        if is_cached(CONFIG["outpath"], ids):
+            print(f"skipping {ids}")
+            continue
 
-#             x_acc5 = get_acc_boolmask(x_image)
-#             advx_acc5 = get_acc_boolmask(advx_image)
+        with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
+            adv_image = get_advx(image, id, combination)
 
-#         results = {
-#             **entry_id,
-#             # semantic similarity
-#             "cosine_sim": get_cosine_similarity(x_image, advx_image),
-#             "psnr": get_psnr(x, advx_x),
-#             "ssim": get_ssim(x, advx_x),
-#             # accuracy
-#             "label": get_imagenet_label(label_id),
-#             "x_acc1": 1 if x_acc5[0] else 0,
-#             "advx_acc1": 1 if advx_acc5[0] else 0,
-#             "x_acc5": 1 if any(x_acc5) else 0,
-#             "advx_acc5": 1 if any(advx_acc5) else 0,
-#         }
+            transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
+            x: torch.Tensor = transform(image).unsqueeze(0)
+            advx_x: torch.Tensor = transform(adv_image).unsqueeze(0)
 
-#         with open(CONFIG["outpath"], mode="a") as f:
-#             writer = csv.DictWriter(f, fieldnames=results.keys())
-#             if CONFIG["outpath"].stat().st_size == 0:
-#                 writer.writeheader()
-#             writer.writerow(results)
+        results = {
+            **ids,
+            # semantic similarity
+            "cosine_sim": get_cosine_similarity(image, adv_image),
+            "psnr": get_psnr(x, advx_x),
+            "ssim": get_ssim(x, advx_x),
+            # accuracy
+            # ...
+        }
 
-#         torch.cuda.empty_cache()
-#         gc.collect()
+        with open(CONFIG["outpath"], mode="a") as f:
+            writer = csv.DictWriter(f, fieldnames=results.keys())
+            if CONFIG["outpath"].stat().st_size == 0:
+                writer.writeheader()
+            writer.writerow(results)
 
-# set_seed(41)
+        torch.cuda.empty_cache()
+        gc.collect()
+
+
 
 # for quality in range(1, 9):
 #     codec = Bmshj2018Codec(quality=quality)
