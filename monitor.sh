@@ -1,4 +1,5 @@
-filepath="$PWD/src/3-eval_cls_robustified_clip_vit.py"
+filepath="$PWD/src/XYZ.py"
+# nohup .venv/bin/python3 "$filepath" >> "monitor-process.log" 2>&1 &
 
 monitor() {
     while true; do
