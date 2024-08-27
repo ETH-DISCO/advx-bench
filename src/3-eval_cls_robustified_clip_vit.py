@@ -92,11 +92,8 @@ for id, img, label_id, caption in tqdm(dataset):
         top5_mask = [label_id == key for key in top5_keys]
         return top5_mask
 
-    original_top5_boolmask = classify_clip(adv_img, labels)
-    robustified_top5_boolmask = classify_robustified_clip(adv_img, labels)
-
-    print(f"original: {original_top5_boolmask}")
-    print(f"robustified: {robustified_top5_boolmask}")
+    original_top5_boolmask = get_acc_boolmask(x, classify_clip)
+    robustified_top5_boolmask = get_acc_boolmask(advx_x, classify_robustified_clip)
 
     results = {
         **entry_id,
