@@ -21,16 +21,6 @@ from models.det import detect_vit
 from models.utils import set_seed
 from utils import get_device
 
-seed = 41
-set_seed(seed=seed)
-torch.backends.cuda.matmul.allow_tf32 = True
-torch.backends.cudnn.allow_tf32 = True
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
-if get_device() == "cuda":
-    torch.cuda.empty_cache()
-    torch.cuda.reset_peak_memory_stats()
-    torch.cuda.reset_accumulated_memory_stats()
-
 
 def is_cached(path: Path, entry_ids: dict) -> bool:
     entry_ids = entry_ids.copy()
@@ -83,6 +73,21 @@ def get_advx(img: Image.Image, combination: dict) -> Image.Image:
     # ...
 
     return img
+
+"""
+environment
+"""
+
+seed = 41
+set_seed(seed=seed)
+torch.backends.cuda.matmul.allow_tf32 = True
+torch.backends.cudnn.allow_tf32 = True
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+if get_device() == "cuda":
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    torch.cuda.reset_accumulated_memory_stats()
+
 
 
 """
