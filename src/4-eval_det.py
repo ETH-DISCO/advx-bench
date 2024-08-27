@@ -5,7 +5,7 @@ pipeline:
 - apply diamond mask on all
 - generate random background
 - put x images on random background
-- check how many images are correctly detected
+- check how many images are correctly detected (using owlvit)
 """
 
 
@@ -199,7 +199,6 @@ pipeline:
 
 #         torch.cuda.empty_cache()
 #         gc.collect()
-
 
 # set_seed(41)
  
