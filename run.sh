@@ -47,4 +47,4 @@ rm -f monitor.pid
 
 # ---
 
-make monitor filepath="./src/3-train_cls_robustified_clip_vit.py"
+make monitor filepath="./src/3-eval_cls_robustified_clip_vit.py"
