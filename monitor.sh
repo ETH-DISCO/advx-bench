@@ -6,7 +6,7 @@ monitor() {
             echo "$(date): process died, restarting..." >> monitor.log
             rm -rf "monitor-process.log"
             rm -rf "monitor-process.pid"
-            python3 "$filepath" >> "monitor-process.log" 2>&1 &
+            .venv/bin/python3 "$filepath" >> "monitor-process.log" 2>&1 &
             echo $! > "monitor-process.pid"
         fi
         sleep 5
