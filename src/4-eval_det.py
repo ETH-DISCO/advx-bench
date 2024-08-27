@@ -202,7 +202,7 @@ pipeline:
 
 
 # set_seed(41)
-
+ 
 # for quality in range(1, 9):
 #     codec = Bmshj2018Codec(quality=quality)
 #     subset_size = 25
@@ -224,17 +224,6 @@ pipeline:
 #         )
 #         x = transform(image).unsqueeze(0)
 
-#         time_start = time.time()
-#         compressed = codec.compress(x)
-#         time_compression = time.time() - time_start
-#         x_hat = codec.decompress(compressed)
-#         time_decompression = time.time() - time_start - time_compression
-#         with torch.no_grad():
-#             real_feature = inception(inception_transform(x)).squeeze().cpu().numpy()
-#             fake_feature = inception(inception_transform(x_hat)).squeeze().cpu().numpy()
-#             real_features.append(real_feature)
-#             fake_features.append(fake_feature)
-
 #         def filter_detections(probs, boxes, labels, min_prob=0.5, max_prob=0.95):
 #             filtered = [(prob, box, label) for prob, box, label in zip(probs, boxes, labels) if min_prob <= prob <= max_prob]
 #             if not filtered:
@@ -247,13 +236,6 @@ pipeline:
 #         x_hat_probs_50_95, x_hat_boxes_50_95, x_hat_labels_50_95 = filter_detections(x_hat_probs, x_hat_boxes, x_hat_labels)
 
 #         metrics = {
-#             # compression
-#             "quality": quality,
-#             "bpp": compressed["bpp"],
-#             "bitrate": torch.sum(torch.log2(codec.encode(x)["likelihoods"])).item() / (x.size(2) * x.size(3)),
-#             # time
-#             "time_compression": time_compression,
-#             "time_decompression": time_decompression,
 #             # semantic similarity
 #             "latent_cosine_similarity": F.cosine_similarity(codec.encode(x)["latent"].view(1, -1), codec.encode(x_hat)["latent"].view(1, -1)).item(),
 #             "psnr": (20 * torch.log10(1.0 / torch.sqrt(torch.mean((x - x_hat) ** 2)))).item(),
@@ -274,14 +256,3 @@ pipeline:
 #             if outpath.stat().st_size == 0:
 #                 writer.writeheader()
 #             writer.writerow(metrics)
-
-#     with open(fidkidpath, mode="a") as f:
-#         metrics = {
-#             "quality": quality,
-#             "fid": get_fid(real_features, fake_features),
-#             "kid": get_kid(real_features, fake_features),
-#         }
-#         writer = csv.DictWriter(f, fieldnames=metrics.keys())
-#         if fidkidpath.stat().st_size == 0:
-#             writer.writeheader()
-#         writer.writerow(metrics)
