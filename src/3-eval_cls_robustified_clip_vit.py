@@ -92,8 +92,8 @@ for id, img, label_id, caption in tqdm(dataset):
         top5_mask = [label_id == key for key in top5_keys]
         return top5_mask
 
-    original_top5_boolmask = get_acc_boolmask(x, classify_clip)
-    robustified_top5_boolmask = get_acc_boolmask(advx_x, classify_robustified_clip)
+    boolmask = get_acc_boolmask(adv_img, classify_clip)
+    adv_boolmask = get_acc_boolmask(advx_x, classify_robustified_clip)
 
     results = {
         **entry_id,
@@ -103,10 +103,10 @@ for id, img, label_id, caption in tqdm(dataset):
         "ssim": get_ssim(x, advx_x),
         # accuracy
         "label": get_imagenet_label(label_id),
-        "original_acc1": 1 if original_top5_boolmask[0] else 0,
-        "robustified_acc1": 1 if robustified_top5_boolmask[0] else 0,
-        "original_acc5": 1 if any(original_top5_boolmask) else 0,
-        "robustified_acc5": 1 if any(robustified_top5_boolmask) else 0,
+        "original_acc1": 1 if boolmask[0] else 0,
+        "robustified_acc1": 1 if adv_boolmask[0] else 0,
+        "original_acc5": 1 if any(boolmask) else 0,
+        "robustified_acc5": 1 if any(adv_boolmask) else 0,
     }
 
     with open(outpath, mode="a") as f:
