@@ -1,3 +1,4 @@
+import functools
 import csv
 import gc
 import json
@@ -55,8 +56,7 @@ set_seed(seed=seed)
 device = get_device()
 
 # config
-num_epochs = 20
-subset = 1
+subset = 50_000
 
 # data
 outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
