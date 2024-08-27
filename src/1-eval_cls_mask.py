@@ -70,6 +70,7 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 config
 """
 
+
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
     "subset_size": 5,
@@ -79,9 +80,11 @@ COMBINATIONS = {
     "opacity": [0, 64, 128, 192, 255],  # 0;255
 }
 
+
 """
 eval loop
 """
+
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)

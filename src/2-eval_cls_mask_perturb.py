@@ -106,9 +106,11 @@ COMBINATIONS = {
     "epsilon": [0.001, 0.005, 0.01, 0.05, 0.1, 0.15, 0.2],
 }
 
+
 """
 eval loop
 """
+
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
