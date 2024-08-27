@@ -1,17 +1,15 @@
-print("running robustified_clip_vit eval")
-
-from tqdm import tqdm
-import functools
 import csv
 import gc
 import json
 import os
 from pathlib import Path
+from typing import Callable
 
 import torch
 import torchvision.transforms as transforms
 from datasets import load_dataset
 from PIL import Image
+from tqdm import tqdm
 
 from advx.masks import get_diamond_mask
 from advx.utils import add_overlay
@@ -85,15 +83,15 @@ for id, img, label_id, caption in tqdm(dataset):
     x: torch.Tensor = transform(img).unsqueeze(0)
     advx_x: torch.Tensor = transform(adv_img).unsqueeze(0)
 
-    def get_acc_boolmask(img: Image.Image, model: torch.nn.Module) -> list[bool]:
+    def get_acc_boolmask(img: Image.Image, model: Callable) -> list[bool]:
         preds = list(zip(range(len(labels)), model(img, labels)))
         preds.sort(key=lambda x: x[1], reverse=True)
         top5_keys, top5_vals = zip(*preds[:5])
         top5_mask = [label_id == key for key in top5_keys]
         return top5_mask
 
-    boolmask = get_acc_boolmask(adv_img, classify_clip)
-    adv_boolmask = get_acc_boolmask(advx_x, classify_robustified_clip)
+    boolmask = get_acc_boolmask(img, classify_clip)
+    adv_boolmask = get_acc_boolmask(adv_img, classify_robustified_clip)
 
     results = {
         **entry_id,
