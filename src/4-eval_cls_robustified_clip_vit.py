@@ -13,7 +13,7 @@ os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 validation
 """
 
-# decide whether to train or validate based on whether the .pth file exists
+seed = 41
 
 outpath = Path.cwd() / "data" / "eval" / "eval_cls.csv"
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=True).shuffle(seed=seed)
