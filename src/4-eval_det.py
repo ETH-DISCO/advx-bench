@@ -6,30 +6,6 @@ pipeline:
 - model b) clip grid -> see: https://www.pinecone.io/learn/series/image-search/zero-shot-object-detection-clip/#Zero-Shot-CLIP
 """
 
-
-import csv
-import json
-import time
-from pathlib import Path
-
-import numpy as np
-import torch
-import torch.nn.functional as F
-import torchvision.transforms as transforms
-from datasets import load_dataset
-from skimage.metrics import structural_similarity
-from sklearn.metrics import average_precision_score
-from torchvision.models import inception_v3
-from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToPILImage
-from tqdm import tqdm
-
-from models.utils import set_seed
-
-import json
-from pathlib import Path
-
-from datasets import load_dataset
-
 import csv
 import gc
 import itertools
@@ -38,20 +14,19 @@ import os
 import random
 from pathlib import Path
 
-import spacy
 import torch
 import torchvision.transforms as transforms
 from datasets import load_dataset
-from openai import OpenAI
 from PIL import Image
+from sklearn.metrics import average_precision_score
 from tqdm import tqdm
 
-from advx.background import get_perlin_background, get_gradient_background, get_random_background, get_zigzag_background
+from advx.background import get_gradient_background, get_perlin_background, get_random_background, get_zigzag_background
 from advx.masks import get_diamond_mask
-from advx.perturb import get_fgsm_clipvit_imagenet
 from advx.utils import add_overlay
-from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
-from models.cls import classify_clip
+from metrics.metrics import get_cosine_similarity, get_iou, get_psnr, get_ssim
+from models.det import detect_vit
+from models.utils import set_seed
 from utils import get_device
 
 torch.backends.cuda.matmul.allow_tf32 = True  # allow TF32 on matmul
@@ -85,9 +60,8 @@ def get_coco_labels() -> list[str]:
     return list(data.values())
 
 
-def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
+def get_advx(img: Image.Image, combination: dict) -> Image.Image:
     combination = combination.copy()
-
 
     # overlay image
     get_diamond_overlay = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
@@ -120,10 +94,9 @@ config
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-    "subset_size": 5,
 }
 COMBINATIONS = {
-    # most effective from previous experiments
+    "images_per_background": 5,
     "background": ["perlin", "zigzag", "gradient", "random"],
 }
 
@@ -131,14 +104,14 @@ COMBINATIONS = {
 eval loop
 """
 
-seed=41
+seed = 41
 set_seed(seed=seed)
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
-print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
+print(f"total iterations: {len(random_combinations)} * {CONFIG['images_per_background']} = {len(random_combinations) * CONFIG['images_per_background']}")
 
-dataset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(CONFIG["subset_size"]).shuffle(seed=seed)
+dataset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(CONFIG["images_per_background"]).shuffle(seed=seed)
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["objects"]["category"], x["objects"]["caption"]), dataset))
 
 if get_device() == "cuda":
@@ -146,14 +119,10 @@ if get_device() == "cuda":
     torch.cuda.reset_peak_memory_stats()
     torch.cuda.reset_accumulated_memory_stats()
 
-for elem in dataset:
-    print(elem)
-    break
-
 for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
-    for label_id, image, bboxes, captions in dataset:
+    for label_id, image, boxes, labels in dataset:
         ids = {
             **combination,
             "img_id": label_id,
@@ -163,11 +132,23 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             continue
 
         with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
-            adv_image = get_advx(image, id, combination)
+            adv_image = get_advx(image, combination)
 
             transform = transforms.Compose([transforms.Resize((256, 256)), transforms.Grayscale(num_output_channels=3), transforms.ToTensor()])
             x: torch.Tensor = transform(image).unsqueeze(0)
             advx_x: torch.Tensor = transform(adv_image).unsqueeze(0)
+
+            def filter_detections(probs, boxes, labels, min_prob=0.5, max_prob=0.95):
+                filtered = [(prob, box, label) for prob, box, label in zip(probs, boxes, labels) if min_prob <= prob <= max_prob]
+                if not filtered:
+                    return [], [], []
+                return map(list, zip(*filtered))
+
+            x_boxes, x_probs, x_labels = detect_vit(image)
+            adv_x_boxes, adv_x_probs, adv_x_labels = detect_vit(adv_image)
+
+            x_probs_50_95, x_boxes_50_95, x_labels_50_95 = filter_detections(x_probs, x_boxes, x_labels)
+            adv_x_probs_50_95, adv_x_boxes_50_95, adv_x_labels_50_95 = filter_detections(adv_x_probs, adv_x_boxes, adv_x_labels)
 
         results = {
             **ids,
@@ -176,7 +157,14 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
             # accuracy
-            # ...
+            "ground_truth_labels": labels,  # compute based on where images are placed in background
+            "ground_truth_boxes": boxes,  # compute based on where images are placed in background
+            "ap_x": average_precision_score([1 if label in labels else 0 for label in x_labels], x_probs) if len(x_labels) > 0 else 0.0,
+            "ap_adv_x": average_precision_score([1 if label in labels else 0 for label in adv_x_labels], adv_x_probs) if len(adv_x_labels) > 0 else 0.0,
+            "ap_x_50_95": average_precision_score([1 if label in labels else 0 for label in x_labels_50_95], x_probs_50_95) if len(x_labels_50_95) > 0 else 0.0,
+            "ap_adv_x_50_95": average_precision_score([1 if label in labels else 0 for label in adv_x_labels_50_95], adv_x_probs_50_95) if len(adv_x_labels_50_95) > 0 else 0.0,
+            "iou_x": max([get_iou(box, box_) for box in boxes for box_ in x_boxes]) if len(x_boxes) > 0 else 0.0,
+            "iou_adv_x": max([get_iou(box, box_) for box in boxes for box_ in adv_x_boxes]) if len(adv_x_boxes) > 0 else 0.0,
         }
 
         with open(CONFIG["outpath"], mode="a") as f:
@@ -187,59 +175,3 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
 
         torch.cuda.empty_cache()
         gc.collect()
-
-
-
-# for quality in range(1, 9):
-#     codec = Bmshj2018Codec(quality=quality)
-#     subset_size = 25
-#     dataset = CocoDataset().get_generator(size=subset_size)
-#     det_model = YOLODetector()
-
-#     inception = inception_v3(pretrained=True, transform_input=False).eval()
-#     inception_transform = Compose([Resize(299), CenterCrop(299), Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-#     real_features = []
-#     fake_features = []
-
-#     for id, image, boxes, labels in tqdm(dataset, total=subset_size):
-#         transform = transforms.Compose(
-#             [
-#                 transforms.Resize((256, 256)),
-#                 transforms.Grayscale(num_output_channels=3),  # grayscale to rgb
-#                 transforms.ToTensor(),
-#             ]
-#         )
-#         x = transform(image).unsqueeze(0)
-
-#         def filter_detections(probs, boxes, labels, min_prob=0.5, max_prob=0.95):
-#             filtered = [(prob, box, label) for prob, box, label in zip(probs, boxes, labels) if min_prob <= prob <= max_prob]
-#             if not filtered:
-#                 return [], [], []
-#             return map(list, zip(*filtered))
-
-#         x_boxes, x_probs, x_labels = det_model.detect(ToPILImage()(x_hat.squeeze()))
-#         x_hat_boxes, x_hat_probs, x_hat_labels = det_model.detect(ToPILImage()(x.squeeze()))
-#         x_probs_50_95, x_boxes_50_95, x_labels_50_95 = filter_detections(x_probs, x_boxes, x_labels)
-#         x_hat_probs_50_95, x_hat_boxes_50_95, x_hat_labels_50_95 = filter_detections(x_hat_probs, x_hat_boxes, x_hat_labels)
-
-#         metrics = {
-#             # semantic similarity
-#             "latent_cosine_similarity": F.cosine_similarity(codec.encode(x)["latent"].view(1, -1), codec.encode(x_hat)["latent"].view(1, -1)).item(),
-#             "psnr": (20 * torch.log10(1.0 / torch.sqrt(torch.mean((x - x_hat) ** 2)))).item(),
-#             "ssim": structural_similarity(np.array(x.squeeze().permute(1, 2, 0).cpu().numpy()), np.array(x_hat.squeeze().permute(1, 2, 0).cpu().numpy()), multichannel=True, channel_axis=2, data_range=1.0),
-#             # accuracy
-#             "img_id": id,
-#             "ground_truth_labels": labels,
-#             "ground_truth_boxes": boxes,
-#             "ap_x": average_precision_score([1 if label in labels else 0 for label in x_labels], x_probs) if len(x_labels) > 0 else 0.0,
-#             "ap_x_hat": average_precision_score([1 if label in labels else 0 for label in x_hat_labels], x_hat_probs) if len(x_hat_labels) > 0 else 0.0,
-#             "ap_x_50_95": average_precision_score([1 if label in labels else 0 for label in x_labels_50_95], x_probs_50_95) if len(x_labels_50_95) > 0 else 0.0,
-#             "ap_x_hat_50_95": average_precision_score([1 if label in labels else 0 for label in x_hat_labels_50_95], x_hat_probs_50_95) if len(x_hat_labels_50_95) > 0 else 0.0,
-#             "iou_x": max([get_iou(box, box_) for box in boxes for box_ in x_boxes]) if len(x_boxes) > 0 else 0.0,
-#             "iou_x_hat": max([get_iou(box, box_) for box in boxes for box_ in x_hat_boxes]) if len(x_hat_boxes) > 0 else 0.0,
-#         }
-#         with open(outpath, mode="a") as f:
-#             writer = csv.DictWriter(f, fieldnames=metrics.keys())
-#             if outpath.stat().st_size == 0:
-#                 writer.writeheader()
-#             writer.writerow(metrics)
