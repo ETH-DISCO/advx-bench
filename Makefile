@@ -29,8 +29,6 @@ lock:
 monitor:
 	@if [ "$(path)" = "" ]; then echo "missing 'path' argument"; exit 1; fi
 
-	# @runtime="python3";
-
 	@runtime="./.venv/bin/python3"; \
 	monitor() { \
 		while true; do \
