@@ -4,7 +4,7 @@ filepath="$PWD/src/XYZ.py"
 monitor() {
     while true; do
         if ! pgrep -f "$filepath" > /dev/null; then
-            echo "$(date): process died, restarting..." >> monitor.log
+            echo "$(date): process died, restarting..." >> monitor.log 
             rm -rf "monitor-process.log"
             rm -rf "monitor-process.pid"
             .venv/bin/python3 "$filepath" >> "monitor-process.log" 2>&1 &

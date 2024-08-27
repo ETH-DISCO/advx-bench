@@ -33,7 +33,7 @@ monitor:
 			while true; do \
 				if ! ps -p $$(cat "monitor-process.pid" 2>/dev/null) > /dev/null 2>&1; then \
 					echo "$$(date): process not running or died, (re)starting..." >> monitor.log; \
-					./.venv/bin/python3 "$(filepath)" > "monitor-process.log" 2>&1 & \
+					nohup ./.venv/bin/python3 "$(filepath)" > "monitor-process.log" 2>&1 & \
 					echo $$! > "monitor-process.pid"; \
 					echo "$$(date): started process with PID $$(cat monitor-process.pid)" >> monitor.log; \
 				fi; \
