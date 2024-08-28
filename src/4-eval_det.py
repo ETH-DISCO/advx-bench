@@ -97,10 +97,10 @@ config
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-    "subset_size": 5,  # number of detection tasks per background
+    "sample_size": 5,  # runs per combination
+    "background_batch_size": 3,  # number of images to place on a single background
 }
 COMBINATIONS = {
-    "images_per_background": 3,  # number of images to place on a single background
     "background": ["perlin", "zigzag", "gradient", "random"],
 }
 
@@ -109,16 +109,16 @@ COMBINATIONS = {
 eval loop
 """
 
-
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
-print(f"total iterations: {len(random_combinations) * CONFIG['subset_size']}")
+total_iters = len(random_combinations) * CONFIG["sample_size"]
+print(f"total iterations: {total_iters}")
 
 dataset_size = CONFIG["images_per_background"] * CONFIG["subset_size"]
 dataset = load_dataset("detection-datasets/coco", split="val", streaming=True).take(CONFIG["images_per_background"]).shuffle(seed=seed)
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["objects"]["category"], x["objects"]["caption"]), dataset))
 
-for combination in tqdm(random_combinations, total=len(random_combinations)):
+for combination in tqdm(random_combinations, total=total_iters):
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
     for label_id, image, boxes, labels in dataset:
