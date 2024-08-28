@@ -84,7 +84,7 @@ def get_fgsm_clipvit_imagenet(image: Image.Image, target_idx: int, labels: list,
 
     def fgsm_attack(image, epsilon, data_grad):
         sign_data_grad = data_grad.sign()
-        perturbed_image = image + epsilon * sign_data_grad
+        perturbed_image = image + epsilon * sign_data_grad # <----------- 
         perturbed_image = torch.clamp(perturbed_image, 0, 1)
         return perturbed_image
 
@@ -103,9 +103,9 @@ def get_fgsm_clipvit_imagenet(image: Image.Image, target_idx: int, labels: list,
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         except RuntimeError as e:
-            print(f"Error during backward pass: {e}")
-            print(f"Loss requires grad: {loss.requires_grad}")
-            print(f"Input tensor requires grad: {input_tensor.requires_grad}")
+            print(f"error during backward pass: {e}")
+            print(f"loss requires grad: {loss.requires_grad}")
+            print(f"input tensor requires grad: {input_tensor.requires_grad}")
             raise
 
     data_grad = input_tensor.grad.data
