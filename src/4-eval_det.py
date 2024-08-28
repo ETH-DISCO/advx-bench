@@ -8,15 +8,12 @@ from pathlib import Path
 import torch
 import torchvision.transforms as transforms
 from datasets import load_dataset
-from PIL import Image
 from sklearn.metrics import average_precision_score
 from tqdm import tqdm
-from advx.utils import get_rounded_corners, place_within, add_overlay
-from advx.masks import get_diamond_mask, get_knit_mask
 
 from advx.background import get_gradient_background, get_perlin_background, get_random_background, get_zigzag_background
 from advx.masks import get_diamond_mask
-from advx.utils import add_overlay
+from advx.utils import add_overlay, get_rounded_corners, place_within
 from metrics.metrics import get_cosine_similarity, get_iou, get_psnr, get_ssim
 from models.det import detect_vit
 from utils import get_device, set_env
@@ -122,19 +119,16 @@ for combination in tqdm(random_combinations, total=total_iters):
         for label_id, image, boxes, labels in chunk:
             get_masked_img = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
             image = get_masked_img(image)
-            image = get_rounded_corners(image, fraction=combination["rounded_corner_opacity"])   
-                     
+            image = get_rounded_corners(image, fraction=combination["rounded_corner_opacity"])
+
             background = place_within(background, image, inner_position=(0, 0))
 
         background.show()
-
-
 
         exit()
 
         for label_id, image, boxes, labels in chunk:
             with torch.no_grad(), torch.amp.autocast(device_type=get_device(disable_mps=True), enabled="cuda" == get_device()):
-
                 # try to place multiple images on a single background
                 # show result
 

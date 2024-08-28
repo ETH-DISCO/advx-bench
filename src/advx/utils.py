@@ -29,10 +29,7 @@ def place_within(
 
     paste_position = (inner_position[0] if inner_position[0] >= 0 else (background.size[0] - new_width) // 2, inner_position[1] if inner_position[1] >= 0 else (background.size[1] - new_height) // 2)
 
-    paste_position = (
-        paste_position[0] - new_width // 2,
-        paste_position[1] - new_height // 2
-    )
+    paste_position = (paste_position[0] - new_width // 2, paste_position[1] - new_height // 2)
 
     result = background.copy()
     result.paste(inner_resized, paste_position, inner_resized)
@@ -51,7 +48,7 @@ def add_overlay(background: Image.Image, overlay: Image.Image, opacity: int) -> 
 
 def get_rounded_corners(
     img: Image.Image,
-    fraction: float = 0.49, # range: 0 ; 0.49
+    fraction: float = 0.49,  # range: 0 ; 0.49
 ) -> Image.Image:
     width, height = img.size
     center_radius = min(width, height) * fraction
@@ -73,14 +70,13 @@ def get_rounded_corners(
     return img_with_transparency
 
 
-def get_scaled(
-    img: Image.Image,
-    scale: float,
-):
+def get_downscaled(img: Image.Image, factor: float) -> Image.Image:
+    if factor >= 1:
+        return img  # no upscaling
     width, height = img.size
-    new_width = int(width * scale)
-    new_height = int(height * scale)
-    return img.resize((new_width, new_height), Image.LANCZOS)
+    new_width = max(1, int(width * factor))
+    new_height = max(1, int(height * factor))
+    return img.resize((new_width, new_height))
 
 
 """
@@ -97,7 +93,10 @@ if __name__ == "__main__":
     inner2 = get_rounded_corners(Image.new("RGBA", (100, 100), (0, 255, 0, 255)))
     inner3 = get_rounded_corners(img)
 
+    inner3 = get_downscaled(inner3, 0.1)
+
     result = place_within(background, inner1, inner_position=(0, 0))
     result = place_within(result, inner2, inner_position=(200, 300))
-    result = place_within(result, inner3, inner_position=(300, 0))
+    result = place_within(result, inner3, inner_position=(background.size[0] // 2, background.size[1] // 2))
+
     result.show()
