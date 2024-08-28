@@ -28,6 +28,12 @@ def place_within(
     inner_resized = inner.resize((new_width, new_height), Image.LANCZOS)
 
     paste_position = (inner_position[0] if inner_position[0] >= 0 else (background.size[0] - new_width) // 2, inner_position[1] if inner_position[1] >= 0 else (background.size[1] - new_height) // 2)
+
+    paste_position = (
+        paste_position[0] - new_width // 2,
+        paste_position[1] - new_height // 2
+    )
+
     result = background.copy()
     result.paste(inner_resized, paste_position, inner_resized)
     return result
@@ -65,6 +71,16 @@ def get_rounded_corners(
             img_with_transparency.putpixel((x, y), img.getpixel((x, y))[:-1] + (mask.getpixel((x, y)),))
 
     return img_with_transparency
+
+
+def get_scaled(
+    img: Image.Image,
+    scale: float,
+):
+    width, height = img.size
+    new_width = int(width * scale)
+    new_height = int(height * scale)
+    return img.resize((new_width, new_height), Image.LANCZOS)
 
 
 """

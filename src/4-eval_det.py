@@ -122,9 +122,8 @@ for combination in tqdm(random_combinations, total=total_iters):
         for label_id, image, boxes, labels in chunk:
             get_masked_img = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
             image = get_masked_img(image)
-            image = get_rounded_corners(image, fraction=combination["rounded_corner_opacity"])
-            image = place_within(image, background, padding_ratio=0.1)
-            
+            image = get_rounded_corners(image, fraction=combination["rounded_corner_opacity"])   
+                     
             background = place_within(background, image, inner_position=(0, 0))
 
         background.show()
