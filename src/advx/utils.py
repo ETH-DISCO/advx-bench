@@ -70,14 +70,17 @@ def get_rounded_corners(
     return img_with_transparency
 
 
-def get_downscaled(img: Image.Image, factor: float) -> Image.Image:
-    if factor >= 1:
+def downscale(img: Image.Image, scale: float) -> Image.Image:
+    if scale >= 1:
         return img  # no upscaling
     width, height = img.size
-    new_width = max(1, int(width * factor))
-    new_height = max(1, int(height * factor))
+    new_width = max(1, int(width * scale))
+    new_height = max(1, int(height * scale))
     return img.resize((new_width, new_height))
 
+
+def resize(img: Image.Image, scale: float) -> Image.Image:
+    pass
 
 """
 example usage
@@ -93,7 +96,8 @@ if __name__ == "__main__":
     inner2 = get_rounded_corners(Image.new("RGBA", (100, 100), (0, 255, 0, 255)))
     inner3 = get_rounded_corners(img)
 
-    inner3 = get_downscaled(inner3, 0.1)
+    # inner3 = downscale(inner3, 0.1)
+    # inner3 = resize(inner3, 0.2)
 
     result = place_within(background, inner1, inner_position=(0, 0))
     result = place_within(result, inner2, inner_position=(200, 300))
