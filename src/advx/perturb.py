@@ -84,7 +84,7 @@ def get_fgsm_clipvit_imagenet(image: Image.Image, target_idx: int, labels: list,
 
     def fgsm_attack(image, epsilon, data_grad):
         sign_data_grad = data_grad.sign()
-        perturbed_image = image + epsilon * sign_data_grad # <----------- 
+        perturbed_image = image + epsilon * sign_data_grad  # <-----------
         perturbed_image = torch.clamp(perturbed_image, 0, 1)
         return perturbed_image
 

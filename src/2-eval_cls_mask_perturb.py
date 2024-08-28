@@ -95,7 +95,7 @@ config
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-    "subset_size": 5, # number of samples per combination
+    "subset_size": 5,  # number of samples per combination
 }
 COMBINATIONS = {
     # most effective from previous experiments

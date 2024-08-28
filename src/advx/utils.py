@@ -82,6 +82,7 @@ def downscale(img: Image.Image, scale: float) -> Image.Image:
 def resize(img: Image.Image, scale: float) -> Image.Image:
     pass
 
+
 """
 example usage
 """
