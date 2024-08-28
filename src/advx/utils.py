@@ -45,7 +45,7 @@ def add_overlay(background: Image.Image, overlay: Image.Image, opacity: int) -> 
 
 def get_rounded_corners(
     img: Image.Image,
-    fraction: float = 0.3,
+    fraction: float = 0.49, # range: 0 ; 0.49
 ) -> Image.Image:
     width, height = img.size
     center_radius = min(width, height) * fraction

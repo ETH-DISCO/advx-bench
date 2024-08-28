@@ -11,6 +11,8 @@ from datasets import load_dataset
 from PIL import Image
 from sklearn.metrics import average_precision_score
 from tqdm import tqdm
+from advx.utils import get_rounded_corners, place_within, add_overlay
+from advx.masks import get_diamond_mask, get_knit_mask
 
 from advx.background import get_gradient_background, get_perlin_background, get_random_background, get_zigzag_background
 from advx.masks import get_diamond_mask
@@ -61,6 +63,7 @@ CONFIG = {
 COMBINATIONS = {
     "background": ["perlin", "zigzag", "gradient", "random"],
     "background_padding_ratio": [0.3],
+    "rounded_corner_opacity": [0.29, 0.49],
 }
 
 
@@ -102,7 +105,6 @@ for combination in tqdm(random_combinations, total=total_iters):
         # get background
         tmp_img = chunk[0][1]
         width, height = tmp_img.size
-        # increase based on padding ratio
         width = int(width * (1 + combination["background_padding_ratio"]))
         height = int(height * (1 + combination["background_padding_ratio"]))
         background = None
@@ -118,9 +120,12 @@ for combination in tqdm(random_combinations, total=total_iters):
 
         # place image chunk on background (without collision)
         for label_id, image, boxes, labels in chunk:
-            get_diamond_masked_img = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
-            image = get_diamond_masked_img(image)
-
+            get_masked_img = lambda img: add_overlay(img, overlay=get_diamond_mask(diamond_count=15, diamonds_per_row=10), opacity=160)
+            image = get_masked_img(image)
+            image = get_rounded_corners(image, fraction=combination["rounded_corner_opacity"])
+            image = place_within(image, background, padding_ratio=0.1)
+            
+            background = place_within(background, image, inner_position=(0, 0))
 
         background.show()
 
