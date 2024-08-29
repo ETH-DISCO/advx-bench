@@ -181,8 +181,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(448), transforms.CenterCrop(448), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
         assert model is not None and preprocess is not None and text is not None and transform is not None
         model = model.to(device)
-
-        print(f"evaluating {entry_ids} ...")
+        text = text.to(device)
 
         image = preprocess(image).unsqueeze(0).to(device)
         with torch.no_grad():
