@@ -2,7 +2,6 @@ import csv
 import gc
 import itertools
 import json
-import random
 from pathlib import Path
 
 import lpips
@@ -89,7 +88,7 @@ COMBINATIONS = {
 }
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
-random_combinations.sort(key=lambda x: x[0]) # sort list by model to reduce model loading
+random_combinations.sort(key=lambda x: x[0])  # sort list by model to reduce model loading
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
 
@@ -113,11 +112,11 @@ loss_fn_vgg = lpips.LPIPS(net="vgg")  # closer to "traditional" perceptual loss,
 def load_model(model_name, pretrained, device, labels):
     # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
     model, _, preprocess = open_clip.create_model_and_transforms(model_name, pretrained=pretrained, device="cpu")
-    model = model.to(device)
+    model = model.to("cpu")
     model.eval()
 
     tokenizer = open_clip.get_tokenizer(model_name)
-    text = tokenizer(labels).to(device)
+    text = tokenizer(labels).to("cpu")
 
     torch.cuda.empty_cache()
     gc.collect()
