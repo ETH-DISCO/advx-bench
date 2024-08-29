@@ -72,7 +72,7 @@ config
 """
 
 
-device = get_device(disable_mps=True)
+device = get_device(disable_mps=False)
 seed = 42
 set_env(seed=seed)
 
@@ -81,7 +81,7 @@ CONFIG = {
     "subset_size": 10_000,
 }
 COMBINATIONS = {
-    "model": ["vit", "eva02", "eva01", "convnext_xxlarge" "resnet"],
+    "model": ["vit", "eva02", "eva01", "convnext" "resnet"],
     "mask": ["circle", "square", "diamond", "knit", "word"],
     "opacity": [0, 64, 128, 192, 255],  # 0;255
     "density": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],  # 1;100
@@ -159,10 +159,13 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             model, preprocess, text = model_eva02, preprocess_eva02, text_eva02
         elif combination["model"] == "eva01":
             model, preprocess, text = model_eva01, preprocess_eva01, text_eva01
-        elif combination["model"] == "convnext_xxlarge":
+        elif combination["model"] == "convnext":
             model, preprocess, text = model_convnext, preprocess_convnext, text_convnext
         elif combination["model"] == "resnet":
             model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
+        print(f"Model: {combination['model']}")
+        print(f"model: {model}, preprocess: {preprocess}, text: {text}")
+        assert model is not None and preprocess is not None and text is not None
 
         advx_image = get_advx(image, label_id, combination)
         x: torch.Tensor = preprocess(image).unsqueeze(0)
