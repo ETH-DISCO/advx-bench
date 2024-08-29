@@ -1,4 +1,3 @@
-from torch.cuda.amp import autocast
 import csv
 import gc
 import itertools
@@ -169,6 +168,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             continue
 
         with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
+
             def get_boolmask(img: Image.Image) -> Image.Image:
                 img = img.convert("RGB")
                 img = preprocess(img).unsqueeze(0).to(device)
