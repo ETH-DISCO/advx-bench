@@ -229,6 +229,11 @@ random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random_combinations.sort(key=lambda x: x[0])  # sort list by model to reduce model loading
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
+
+"""
+main
+"""
+
 assert torch.cuda.is_available()
 devices = [f"cuda:{i}" for i in range(torch.cuda.device_count())]
 for device in devices:
