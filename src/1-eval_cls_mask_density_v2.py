@@ -1,3 +1,4 @@
+import argparse
 import csv
 import gc
 import itertools
@@ -10,11 +11,13 @@ import open_clip
 import torch
 import torchvision.transforms as transforms
 from datasets import load_dataset
+from filelock import FileLock
 from PIL import Image
 from tqdm import tqdm
 from transformers import ViTImageProcessor, ViTModel
 
-from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
+from advx.masks import (get_circle_mask, get_diamond_mask, get_knit_mask,
+                        get_square_mask, get_word_mask)
 from advx.utils import add_overlay
 from metrics.metrics import get_psnr, get_ssim
 from utils import get_device, set_env
@@ -73,8 +76,11 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 config
 """
 
+argparser = argparse.ArgumentParser()
+argparser.add_argument("--device", type=str, default="cuda:0")
+args = argparser.parse_args()
+device = get_device(args.device)
 
-device = get_device(disable_mps=False)
 seed = 42
 set_env(seed=seed)
 
@@ -228,11 +234,13 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 "advx_acc5": 1 if any(advx_acc5) else 0,
             }
 
-        with open(CONFIG["outpath"], mode="a") as f:
-            writer = csv.DictWriter(f, fieldnames=results.keys())
-            if CONFIG["outpath"].stat().st_size == 0:
-                writer.writeheader()
-            writer.writerow(results)
+        lock = FileLock(CONFIG["outpath"].with_suffix(".lock"), timeout=1)
+        with lock:
+            with open(CONFIG["outpath"], mode="a") as f:
+                writer = csv.DictWriter(f, fieldnames=results.keys())
+                if CONFIG["outpath"].stat().st_size == 0:
+                    writer.writeheader()
+                writer.writerow(results)
 
         torch.cuda.empty_cache()
         gc.collect()
