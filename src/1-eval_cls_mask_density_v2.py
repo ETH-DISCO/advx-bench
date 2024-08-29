@@ -166,7 +166,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         assert model is not None and preprocess is not None and text is not None
 
         advx_image = get_advx(image, label_id, combination)
-        transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize((224, 224)), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
         x: torch.Tensor = transform(image).unsqueeze(0)
         advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
