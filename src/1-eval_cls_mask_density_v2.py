@@ -1,10 +1,9 @@
-import random
 import argparse
 import csv
 import gc
 import itertools
 import json
-import os
+import random
 from pathlib import Path
 
 import lpips
@@ -17,8 +16,7 @@ from PIL import Image
 from tqdm import tqdm
 from transformers import ViTImageProcessor, ViTModel
 
-from advx.masks import (get_circle_mask, get_diamond_mask, get_knit_mask,
-                        get_square_mask, get_word_mask)
+from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
 from advx.utils import add_overlay
 from metrics.metrics import get_psnr, get_ssim
 from utils import get_device, set_env
@@ -97,10 +95,11 @@ print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} =
 eval loop
 """
 
-argparser = argparse.ArgumentParser()
-argparser.add_argument("--device", type=str, default="cuda:0")
-args = argparser.parse_args()
-device = get_device(args.device)
+# argparser = argparse.ArgumentParser()
+# argparser.add_argument("--device", type=str, default="cuda:0")
+# args = argparser.parse_args()
+# device = get_device(args.device)
+device = get_device(disable_mps=True)
 
 seed = 42
 set_env(seed=seed)
