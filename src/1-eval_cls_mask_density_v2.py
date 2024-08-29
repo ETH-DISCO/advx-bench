@@ -89,7 +89,7 @@ COMBINATIONS = {
 }
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
-random.shuffle(random_combinations)
+random_combinations.sort(key=lambda x: x[0]) # sort list by model to reduce model loading
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
 
@@ -108,6 +108,7 @@ print("loaded dataset: imagenet-1k-vl-enriched")
 loss_fn_alex = lpips.LPIPS(net="alex")  # best forward scores
 loss_fn_vgg = lpips.LPIPS(net="vgg")  # closer to "traditional" perceptual loss, when used for optimization
 
+
 # models
 def load_model(model_name, pretrained, device, labels):
     # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
@@ -122,6 +123,7 @@ def load_model(model_name, pretrained, device, labels):
     gc.collect()
     print(f"loaded model: {model_name}")
     return model, preprocess, text
+
 
 model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", device, labels)
 model_eva02, preprocess_eva02, text_eva02 = load_model("EVA02-E-14-plus", "laion2b_s9b_b144k", device, labels)

@@ -146,6 +146,7 @@ def load_model(model_name, pretrained, devices, labels):
     print(f"loaded model: {model_name}")
     return model, preprocess, text
 
+
 # models
 model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", devices, labels)
 model_eva02, preprocess_eva02, text_eva02 = load_model("EVA02-E-14-plus", "laion2b_s9b_b144k", devices, labels)
