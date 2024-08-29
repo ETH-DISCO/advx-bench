@@ -103,13 +103,14 @@ dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label
 labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
 
+
 # perceptual loss
-loss_fn_alex = lpips.LPIPS(net="alex")  # best forward scores
-loss_fn_vgg = lpips.LPIPS(net="vgg")  # closer to "traditional" perceptual loss, when used for optimization
+loss_fn_vgg = lpips.LPIPS(net="vgg")
 
 
 # models
 def load_model(model_name, pretrained, device, labels):
+    # load to cpu first to avoid cuda out of memory
     # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
     model, _, preprocess = open_clip.create_model_and_transforms(model_name, pretrained=pretrained, device="cpu")
     model = model.to("cpu")
