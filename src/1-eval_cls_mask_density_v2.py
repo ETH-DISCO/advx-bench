@@ -144,7 +144,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
     for img_id, image, label_id, caption in dataset:
-        # cache
         entry_ids = {
             **combination,
             "img_id": img_id,
@@ -152,9 +151,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         if is_cached(CONFIG["outpath"], entry_ids):
             print(f"skipping {entry_ids}")
             continue
-
-        # preprocess
-        advx_image = get_advx(image, label_id, combination)
 
         model, preprocess, text = None, None, None
         if combination["model"] == "vit":
@@ -168,6 +164,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         elif combination["model"] == "resnet":
             model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
 
+        advx_image = get_advx(image, label_id, combination)
         x: torch.Tensor = preprocess(image).unsqueeze(0)
         advx_x: torch.Tensor = preprocess(advx_image).unsqueeze(0)
 
