@@ -42,7 +42,6 @@ def get_imagenet_labels() -> list[str]:
     return list(data.values())
 
 
-@lru_cache(maxsize=1000)
 def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
     density = combination["density"]
     if combination["mask"] == "diamond":
