@@ -74,7 +74,7 @@ config
 """
 
 
-device = get_device(disable_mps=False)
+device = "cuda" if torch.cuda.is_available() else "cpu"
 seed = 42
 set_env(seed=seed)
 
