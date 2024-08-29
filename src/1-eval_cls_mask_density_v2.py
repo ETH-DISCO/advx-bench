@@ -78,7 +78,7 @@ set_env(seed=seed)
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-    "subset_size": 10_000,
+    "subset_size": 100,
 }
 COMBINATIONS = {
     "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
@@ -95,6 +95,7 @@ print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} =
 """
 eval loop
 """
+
 
 # data
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).take(CONFIG["subset_size"]).shuffle(seed=seed)
