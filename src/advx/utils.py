@@ -83,6 +83,10 @@ def resize(img: Image.Image, scale: float) -> Image.Image:
     raise NotImplementedError()
 
 
+def rotate(img: Image.Image, scale: float) -> Image.Image:
+    raise NotImplementedError()
+
+
 """
 example usage
 """
@@ -96,9 +100,6 @@ if __name__ == "__main__":
     inner1 = get_rounded_corners(Image.new("RGBA", (100, 100), (255, 0, 0, 255)))
     inner2 = get_rounded_corners(Image.new("RGBA", (100, 100), (0, 255, 0, 255)))
     inner3 = get_rounded_corners(img)
-
-    # inner3 = downscale(inner3, 0.1)
-    # inner3 = resize(inner3, 0.2)
 
     result = place_within(background, inner1, inner_position=(0, 0))
     result = place_within(result, inner2, inner_position=(200, 300))

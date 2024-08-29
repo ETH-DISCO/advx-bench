@@ -1,4 +1,3 @@
-import argparse
 import csv
 import gc
 import itertools
@@ -77,13 +76,13 @@ config
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-    "subset_size": 1_000,
+    "subset_size": 500,
 }
 COMBINATIONS = {
     "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
     "mask": ["circle", "square", "diamond", "knit", "word"],
-    "opacity": [0, 64, 128, 192, 255],  # 0;255
-    "density": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],  # 1;100
+    "opacity": [50, 80, 110, 140, 170],  # 0;255
+    "density": [70],  # 1;100
 }
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
@@ -190,7 +189,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 assert all(isinstance(prob, float) for prob in probs)
                 preds = list(zip(range(len(labels)), probs))
                 preds.sort(key=lambda x: x[1], reverse=True)
-                top5_keys, top5_vals = zip(*preds[:5])
+                top5_keys, top5_vals = zip(*preds)
                 boolmask = [label_id == key for key in top5_keys]
                 return boolmask
 
@@ -211,24 +210,24 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
 
             adv_image = get_advx(image, label_id, combination)
 
-            x_acc5 = get_boolmask(image)
-            advx_acc5 = get_boolmask(adv_image)
+            boolmask = get_boolmask(image)
+            acc_rank = boolmask.index(True) + 1 if True in boolmask else -1
+            adv_boolmask = get_boolmask(adv_image)
+            adv_acc_rank = adv_boolmask.index(True) + 1 if True in adv_boolmask else -1
 
             x: torch.Tensor = transform(image).unsqueeze(0)
-            advx_x: torch.Tensor = transform(adv_image).unsqueeze(0)
+            adv_x: torch.Tensor = transform(adv_image).unsqueeze(0)
 
             results = {
                 **entry_ids,
                 # perceptual quality
                 "cosine_sim": get_cosine_similarity(image, adv_image),
-                "psnr": get_psnr(x, advx_x),
-                "ssim": get_ssim(x, advx_x),
-                "lpips": lpips_model(x, advx_x).item(),
-                # adversarial accuracy disadvantage
-                "x_acc1": 1 if x_acc5[0] else 0,
-                "advx_acc1": 1 if advx_acc5[0] else 0,
-                "x_acc5": 1 if any(x_acc5) else 0,
-                "advx_acc5": 1 if any(advx_acc5) else 0,
+                "psnr": get_psnr(x, adv_x),
+                "ssim": get_ssim(x, adv_x),
+                "lpips": lpips_model(x, adv_x).item(),
+                # difference in prediction with vs. without mask
+                "acc_rank": acc_rank,
+                "adv_acc_rank": adv_acc_rank,
             }
 
         lock = FileLock(CONFIG["outpath"].with_suffix(".lock"), timeout=1)
