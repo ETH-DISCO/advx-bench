@@ -183,35 +183,26 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         model = model.to(device)
         text = text.to(device)
 
-        image = preprocess(image).unsqueeze(0).to(device)
-        with torch.no_grad():
-            image_features = model.encode_image(image)
-            text_features = model.encode_text(text)
-            image_features /= image_features.norm(dim=-1, keepdim=True)
-            text_features /= text_features.norm(dim=-1, keepdim=True)
-            text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
-        probs = text_probs[0].cpu().numpy().tolist()
-        assert all(isinstance(prob, float) for prob in probs)
-        preds = list(zip(range(len(labels)), probs))
-        preds.sort(key=lambda x: x[1], reverse=True)
-        top5_keys, top5_vals = zip(*preds[:5])
-        x_acc5 = [label_id == key for key in top5_keys]
-        
-        adv_image = get_advx(image, label_id, combination)
-        adv_image = preprocess(adv_image).unsqueeze(0).to(device)
-        with torch.no_grad():
-            image_features = model.encode_image(adv_image)
-            text_features = model.encode_text(text)
-            image_features /= image_features.norm(dim=-1, keepdim=True)
-            text_features /= text_features.norm(dim=-1, keepdim=True)
-            text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
-        probs = text_probs[0].cpu().numpy().tolist()
-        assert all(isinstance(prob, float) for prob in probs)
-        preds = list(zip(range(len(labels)), probs))
-        preds.sort(key=lambda x: x[1], reverse=True)
-        top5_keys, top5_vals = zip(*preds[:5])
-        advx_acc5 = [label_id == key for key in top5_keys]
+        def get_boolmask(img: Image.Image) -> Image.Image:
+            img = img.convert("RGB")
+            img = preprocess(img).unsqueeze(0).to(device)
+            with torch.no_grad():
+                image_features = model.encode_image(img)
+                text_features = model.encode_text(text)
+                image_features /= image_features.norm(dim=-1, keepdim=True)
+                text_features /= text_features.norm(dim=-1, keepdim=True)
+                text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
+            probs = text_probs[0].cpu().numpy().tolist()
+            assert all(isinstance(prob, float) for prob in probs)
+            preds = list(zip(range(len(labels)), probs))
+            preds.sort(key=lambda x: x[1], reverse=True)
+            top5_keys, top5_vals = zip(*preds[:5])
+            boolmask = [label_id == key for key in top5_keys]
+            return boolmask
 
+        adv_image = get_advx(image, label_id, combination)
+        x_acc5 = get_boolmask(image)
+        advx_acc5 = get_boolmask(adv_image)
         x: torch.Tensor = transform(image).unsqueeze(0)
         advx_x: torch.Tensor = transform(adv_image).unsqueeze(0)
         results = {
