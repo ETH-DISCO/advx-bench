@@ -3,11 +3,11 @@ import gc
 import itertools
 import json
 import random
-from functools import lru_cache
 from pathlib import Path
 
 import open_clip
 import torch
+import torchvision.transforms as transforms
 from datasets import load_dataset
 from PIL import Image
 from tqdm import tqdm
@@ -101,6 +101,11 @@ dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
 labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
+
+# imagenet transforms
+transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+dataset = list(map(lambda x: (x[0], transform(x[1]), x[2], x[3]), dataset))
+print("applied transforms")
 
 # models
 # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
