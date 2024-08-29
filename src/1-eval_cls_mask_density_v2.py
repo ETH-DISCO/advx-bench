@@ -131,6 +131,7 @@ model_eva01, preprocess_eva01, text_eva01 = load_model("EVA01-g-14-plus", "merge
 model_convnext, preprocess_convnext, text_convnext = load_model("convnext_xxlarge", "laion2b_s34b_b82k_augreg_soup", device, labels)
 model_resnet, preprocess_resnet, text_resnet = load_model("RN50x64", "openai", device, labels)
 
+
 for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
@@ -164,47 +165,47 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         if is_cached(CONFIG["outpath"], entry_ids):
             print(f"skipping {entry_ids}")
             continue
+        
+        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
+            def get_boolmask(img: Image.Image) -> Image.Image:
+                img = img.convert("RGB")
+                img = preprocess(img).unsqueeze(0).to(device)
 
-        def get_boolmask(img: Image.Image) -> Image.Image:
-            img = img.convert("RGB")
-            img = preprocess(img).unsqueeze(0).to(device)
-
-            with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
                 image_features = model.encode_image(img)
                 text_features = model.encode_text(text)
                 image_features /= image_features.norm(dim=-1, keepdim=True)
                 text_features /= text_features.norm(dim=-1, keepdim=True)
                 text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-            probs = text_probs[0].cpu().numpy().tolist()
-            assert all(isinstance(prob, float) for prob in probs)
-            preds = list(zip(range(len(labels)), probs))
-            preds.sort(key=lambda x: x[1], reverse=True)
-            top5_keys, top5_vals = zip(*preds[:5])
-            boolmask = [label_id == key for key in top5_keys]
-            return boolmask
+                probs = text_probs[0].cpu().numpy().tolist()
+                assert all(isinstance(prob, float) for prob in probs)
+                preds = list(zip(range(len(labels)), probs))
+                preds.sort(key=lambda x: x[1], reverse=True)
+                top5_keys, top5_vals = zip(*preds[:5])
+                boolmask = [label_id == key for key in top5_keys]
+                return boolmask
 
-        adv_image = get_advx(image, label_id, combination)
+            adv_image = get_advx(image, label_id, combination)
 
-        x_acc5 = get_boolmask(image)
-        advx_acc5 = get_boolmask(adv_image)
+            x_acc5 = get_boolmask(image)
+            advx_acc5 = get_boolmask(adv_image)
 
-        x: torch.Tensor = transform(image).unsqueeze(0)
-        advx_x: torch.Tensor = transform(adv_image).unsqueeze(0)
+            x: torch.Tensor = transform(image).unsqueeze(0)
+            advx_x: torch.Tensor = transform(adv_image).unsqueeze(0)
 
-        results = {
-            **entry_ids,
-            # perceptual quality
-            "cosine_sim": get_cosine_similarity(image, adv_image),
-            "psnr": get_psnr(x, advx_x),
-            "ssim": get_ssim(x, advx_x),
-            "lpips": loss_fn_vgg(x, advx_x).item(),
-            # adversarial accuracy disadvantage
-            "x_acc1": 1 if x_acc5[0] else 0,
-            "advx_acc1": 1 if advx_acc5[0] else 0,
-            "x_acc5": 1 if any(x_acc5) else 0,
-            "advx_acc5": 1 if any(advx_acc5) else 0,
-        }
+            results = {
+                **entry_ids,
+                # perceptual quality
+                "cosine_sim": get_cosine_similarity(image, adv_image),
+                "psnr": get_psnr(x, advx_x),
+                "ssim": get_ssim(x, advx_x),
+                "lpips": loss_fn_vgg(x, advx_x).item(),
+                # adversarial accuracy disadvantage
+                "x_acc1": 1 if x_acc5[0] else 0,
+                "advx_acc1": 1 if advx_acc5[0] else 0,
+                "x_acc5": 1 if any(x_acc5) else 0,
+                "advx_acc5": 1 if any(advx_acc5) else 0,
+            }
 
         with open(CONFIG["outpath"], mode="a") as f:
             writer = csv.DictWriter(f, fieldnames=results.keys())
