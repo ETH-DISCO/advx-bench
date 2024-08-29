@@ -80,7 +80,7 @@ CONFIG = {
 }
 COMBINATIONS = {
     "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
-    "mask": ["circle", "square", "diamond", "knit", "word"],
+    "mask": ["circle", "square", "diamond", "knit"],
     "opacity": [50, 80, 110, 140, 170],  # 0;255
     "density": [70],  # 1;100
 }
@@ -211,9 +211,9 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             adv_image = get_advx(image, label_id, combination)
 
             boolmask = get_boolmask(image)
-            acc_rank = boolmask.index(True) + 1 if True in boolmask else -1
+            acc_rank = boolmask.index(True) if True in boolmask else -1
             adv_boolmask = get_boolmask(adv_image)
-            adv_acc_rank = adv_boolmask.index(True) + 1 if True in adv_boolmask else -1
+            adv_acc_rank = adv_boolmask.index(True) if True in adv_boolmask else -1
 
             x: torch.Tensor = transform(image).unsqueeze(0)
             adv_x: torch.Tensor = transform(adv_image).unsqueeze(0)
@@ -238,5 +238,5 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                     writer.writeheader()
                 writer.writerow(results)
 
-        torch.cuda.empty_cache()
-        gc.collect()
+    torch.cuda.empty_cache()
+    gc.collect()
