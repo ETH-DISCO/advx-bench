@@ -163,8 +163,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             model, preprocess, text = model_convnext, preprocess_convnext, text_convnext
         elif combination["model"] == "resnet":
             model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
-        print(f"Model: {combination['model']}")
-        print(f"model: {model}, preprocess: {preprocess}, text: {text}")
         assert model is not None and preprocess is not None and text is not None
 
         advx_image = get_advx(image, label_id, combination)
