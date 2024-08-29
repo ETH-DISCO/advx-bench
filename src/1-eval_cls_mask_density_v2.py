@@ -11,7 +11,7 @@ import torchvision.transforms as transforms
 from datasets import load_dataset
 from PIL import Image
 from tqdm import tqdm
-
+import lpips
 from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
@@ -103,6 +103,10 @@ dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label
 labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
 
+# perceptual loss
+loss_fn_alex = lpips.LPIPS(net='alex') # best forward scores
+loss_fn_vgg = lpips.LPIPS(net='vgg') # closer to "traditional" perceptual loss, when used for optimization
+
 # models
 # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
 model_vit, _, preprocess_vit = open_clip.create_model_and_transforms("ViT-H-14-378-quickgelu", pretrained="dfn5b", device="cpu")
@@ -150,9 +154,29 @@ torch.cuda.empty_cache()
 gc.collect()
 print("loaded model: RN50x64")
 
-
 for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
+
+    model, preprocess, text, transform = None, None, None, None
+    if combination["model"] == "vit":
+        model, preprocess, text = model_vit, preprocess_vit, text_vit
+        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    elif combination["model"] == "eva02":
+        model, preprocess, text = model_eva02, preprocess_eva02, text_eva02
+        required_size = 224
+        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    elif combination["model"] == "eva01":
+        model, preprocess, text = model_eva01, preprocess_eva01, text_eva01
+        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    elif combination["model"] == "convnext":
+        model, preprocess, text = model_convnext, preprocess_convnext, text_convnext
+        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    elif combination["model"] == "resnet":
+        model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
+        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(448), transforms.CenterCrop(448), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    assert model is not None and preprocess is not None and text is not None and transform is not None
+    model = model.to(device)
+    text = text.to(device)
 
     for img_id, image, label_id, caption in dataset:
         entry_ids = {
@@ -162,27 +186,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         if is_cached(CONFIG["outpath"], entry_ids):
             print(f"skipping {entry_ids}")
             continue
-
-        model, preprocess, text, transform = None, None, None, None
-        if combination["model"] == "vit":
-            model, preprocess, text = model_vit, preprocess_vit, text_vit
-            transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-        elif combination["model"] == "eva02":
-            model, preprocess, text = model_eva02, preprocess_eva02, text_eva02
-            required_size = 224
-            transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-        elif combination["model"] == "eva01":
-            model, preprocess, text = model_eva01, preprocess_eva01, text_eva01
-            transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-        elif combination["model"] == "convnext":
-            model, preprocess, text = model_convnext, preprocess_convnext, text_convnext
-            transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-        elif combination["model"] == "resnet":
-            model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
-            transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(448), transforms.CenterCrop(448), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-        assert model is not None and preprocess is not None and text is not None and transform is not None
-        model = model.to(device)
-        text = text.to(device)
 
         def get_boolmask(img: Image.Image) -> Image.Image:
             img = img.convert("RGB")
@@ -202,18 +205,21 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             return boolmask
 
         adv_image = get_advx(image, label_id, combination)
+
         x_acc5 = get_boolmask(image)
         advx_acc5 = get_boolmask(adv_image)
+        
         x: torch.Tensor = transform(image).unsqueeze(0)
         advx_x: torch.Tensor = transform(adv_image).unsqueeze(0)
+
         results = {
             **entry_ids,
-            # semantic similarity
+            # perceptual quality
             "cosine_sim": get_cosine_similarity(image, adv_image),
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
-            # accuracy
-            "label": get_imagenet_label(label_id),
+            "lpips": loss_fn_vgg(x, advx_x).item(),
+            # adversarial accuracy disadvantage
             "x_acc1": 1 if x_acc5[0] else 0,
             "advx_acc1": 1 if advx_acc5[0] else 0,
             "x_acc5": 1 if any(x_acc5) else 0,
