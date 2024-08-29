@@ -101,6 +101,7 @@ eval loop
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).take(CONFIG["subset_size"]).shuffle(seed=seed)
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
 labels = get_imagenet_labels()
+print("loaded dataset: imagenet-1k-vl-enriched")
 
 # models
 # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
