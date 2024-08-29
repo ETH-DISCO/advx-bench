@@ -81,7 +81,7 @@ CONFIG = {
     "subset_size": 10_000,
 }
 COMBINATIONS = {
-    "model": ["vit", "eva02", "eva01", "convnext" "resnet"],
+    "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
     "mask": ["circle", "square", "diamond", "knit", "word"],
     "opacity": [0, 64, 128, 192, 255],  # 0;255
     "density": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],  # 1;100
