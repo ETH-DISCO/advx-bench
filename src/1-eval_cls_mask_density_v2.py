@@ -196,13 +196,13 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 inputs2 = feature_extractor(images=y, return_tensors="pt")
                 inputs1 = {k: v.to(device) for k, v in inputs1.items()}
                 inputs2 = {k: v.to(device) for k, v in inputs2.items()}
-                outputs1 = cosine_sim(**inputs1)
-                outputs2 = cosine_sim(**inputs2)
+                outputs1 = cosine_sim_model(**inputs1)  # Changed from cosine_sim to cosine_sim_model
+                outputs2 = cosine_sim_model(**inputs2)  # Changed from cosine_sim to cosine_sim_model
 
                 latents1 = outputs1.last_hidden_state[:, 0, :]
                 latents2 = outputs2.last_hidden_state[:, 0, :]
-                cosine_sim = torch.nn.functional.cosine_similarity(latents1, latents2).item()
-                return cosine_sim
+                similarity = torch.nn.functional.cosine_similarity(latents1, latents2).item()  # Changed variable name from cosine_sim to similarity
+                return similarity
 
             adv_image = get_advx(image, label_id, combination)
 
