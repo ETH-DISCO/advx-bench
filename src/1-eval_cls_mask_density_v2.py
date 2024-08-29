@@ -100,7 +100,7 @@ eval loop
 
 
 # data
-dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False, num_workers=os.cpu_count()).take(CONFIG["subset_size"]).shuffle(seed=seed)
+dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).take(CONFIG["subset_size"]).shuffle(seed=seed)
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
 labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
