@@ -11,10 +11,11 @@ import torchvision.transforms as transforms
 from datasets import load_dataset
 from PIL import Image
 from tqdm import tqdm
+from transformers import ViTFeatureExtractor, ViTModel
 
 from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
 from advx.utils import add_overlay
-from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
+from metrics.metrics import get_psnr, get_ssim
 from utils import get_device, set_env
 
 
@@ -104,10 +105,6 @@ labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
 
 
-# perceptual loss
-loss_fn_vgg = lpips.LPIPS(net="vgg")
-
-
 # models
 def load_model(model_name, pretrained, device, labels):
     # load to cpu first to avoid cuda out of memory
@@ -124,6 +121,11 @@ def load_model(model_name, pretrained, device, labels):
     print(f"loaded model: {model_name}")
     return model, preprocess, text
 
+
+lpips_model = lpips.LPIPS(net="vgg")
+
+feature_extractor = ViTFeatureExtractor.from_pretrained("google/vit-base-patch16-224")
+cosine_sim_model = ViTModel.from_pretrained("google/vit-base-patch16-224").to(device)
 
 model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", device, labels)
 model_eva02, preprocess_eva02, text_eva02 = load_model("EVA02-E-14-plus", "laion2b_s9b_b144k", device, labels)
@@ -165,8 +167,9 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         if is_cached(CONFIG["outpath"], entry_ids):
             print(f"skipping {entry_ids}")
             continue
-        
+
         with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
+
             def get_boolmask(img: Image.Image) -> Image.Image:
                 img = img.convert("RGB")
                 img = preprocess(img).unsqueeze(0).to(device)
@@ -185,6 +188,22 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 boolmask = [label_id == key for key in top5_keys]
                 return boolmask
 
+            def get_cosine_similarity(x: Image.Image, y: Image.Image) -> float:
+                x = x.convert("RGB")
+                y = y.convert("RGB")
+
+                inputs1 = feature_extractor(images=x, return_tensors="pt")
+                inputs2 = feature_extractor(images=y, return_tensors="pt")
+                inputs1 = {k: v.to(device) for k, v in inputs1.items()}
+                inputs2 = {k: v.to(device) for k, v in inputs2.items()}
+                outputs1 = cosine_sim(**inputs1)
+                outputs2 = cosine_sim(**inputs2)
+
+                latents1 = outputs1.last_hidden_state[:, 0, :]
+                latents2 = outputs2.last_hidden_state[:, 0, :]
+                cosine_sim = torch.nn.functional.cosine_similarity(latents1, latents2).item()
+                return cosine_sim
+
             adv_image = get_advx(image, label_id, combination)
 
             x_acc5 = get_boolmask(image)
@@ -199,7 +218,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 "cosine_sim": get_cosine_similarity(image, adv_image),
                 "psnr": get_psnr(x, advx_x),
                 "ssim": get_ssim(x, advx_x),
-                "lpips": loss_fn_vgg(x, advx_x).item(),
+                "lpips": lpips_model(x, advx_x).item(),
                 # adversarial accuracy disadvantage
                 "x_acc1": 1 if x_acc5[0] else 0,
                 "advx_acc1": 1 if advx_acc5[0] else 0,
