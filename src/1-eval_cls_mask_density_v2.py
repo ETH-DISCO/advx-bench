@@ -1,3 +1,4 @@
+from torch.cuda.amp import autocast
 import csv
 import gc
 import itertools
@@ -79,7 +80,7 @@ set_env(seed=seed)
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
-    "subset_size": 100,
+    "subset_size": 1_000,
 }
 COMBINATIONS = {
     "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
@@ -157,9 +158,8 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
     assert model is not None and preprocess is not None and text is not None and transform is not None
     model = model.to(device)
     text = text.to(device)
-    print(f"loaded model: {combination['model']}")
 
-    for img_id, image, label_id, caption in dataset:
+    for img_id, image, label_id, caption in tqdm(dataset, total=len(dataset)):
         entry_ids = {
             **combination,
             "img_id": img_id,
@@ -169,7 +169,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             continue
 
         with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
-
             def get_boolmask(img: Image.Image) -> Image.Image:
                 img = img.convert("RGB")
                 img = preprocess(img).unsqueeze(0).to(device)
@@ -191,7 +190,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             def get_cosine_similarity(x: Image.Image, y: Image.Image) -> float:
                 x = x.convert("RGB")
                 y = y.convert("RGB")
-
                 inputs1 = feature_extractor(images=x, return_tensors="pt")
                 inputs2 = feature_extractor(images=y, return_tensors="pt")
                 inputs1 = {k: v.to(device) for k, v in inputs1.items()}
