@@ -167,7 +167,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             model, preprocess, text = model_convnext, preprocess_convnext, text_convnext
         elif combination["model"] == "resnet":
             model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
-        assert model is not None and preprocess is not None and text is not None
 
         x: torch.Tensor = preprocess(image).unsqueeze(0)
         advx_x: torch.Tensor = preprocess(advx_image).unsqueeze(0)
