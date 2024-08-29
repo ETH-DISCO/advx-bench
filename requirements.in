@@ -43,3 +43,4 @@ tqdm
 transformers
 trove_classifiers
 urllib3_secure_extra
+filelock
