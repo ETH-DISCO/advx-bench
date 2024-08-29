@@ -113,7 +113,9 @@ def load_model(model_name, pretrained, device, labels):
     model, _, preprocess = open_clip.create_model_and_transforms(model_name, pretrained=pretrained, device="cpu")
     model = model.to("cpu")
     model.eval()
+
     model = torch.compile(model, mode="reduce-overhead")
+    model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
 
     tokenizer = open_clip.get_tokenizer(model_name)
     text = tokenizer(labels).to("cpu")
@@ -169,7 +171,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             print(f"skipping {entry_ids}")
             continue
 
-        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
+        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
 
             def get_boolmask(img: Image.Image) -> Image.Image:
                 img = img.convert("RGB")
