@@ -1,3 +1,4 @@
+import random
 import argparse
 import csv
 import gc
@@ -76,14 +77,6 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 config
 """
 
-argparser = argparse.ArgumentParser()
-argparser.add_argument("--device", type=str, default="cuda:0")
-args = argparser.parse_args()
-device = get_device(args.device)
-
-seed = 42
-set_env(seed=seed)
-
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
     "subset_size": 1_000,
@@ -96,7 +89,7 @@ COMBINATIONS = {
 }
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
-random_combinations.sort(key=lambda x: x[0])  # sort list by model to reduce model loading
+random.shuffle(random_combinations)
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
 
@@ -104,6 +97,13 @@ print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} =
 eval loop
 """
 
+argparser = argparse.ArgumentParser()
+argparser.add_argument("--device", type=str, default="cuda:0")
+args = argparser.parse_args()
+device = get_device(args.device)
+
+seed = 42
+set_env(seed=seed)
 
 # data
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).take(CONFIG["subset_size"]).shuffle(seed=seed)
