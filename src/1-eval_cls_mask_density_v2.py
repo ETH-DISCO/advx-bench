@@ -104,7 +104,7 @@ print("loaded dataset: imagenet-1k-vl-enriched")
 
 # models
 # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
-model_vit, _, preprocess_vit = open_clip.create_model_and_transforms("ViT-H-14-378-quickgelu", pretrained="dfn5b", device=device)
+model_vit, _, preprocess_vit = open_clip.create_model_and_transforms("ViT-H-14-378-quickgelu", pretrained="dfn5b", device="cpu")
 model_vit = torch.jit.script(model_vit)
 model_vit.eval()
 tokenizer_vit = open_clip.get_tokenizer("ViT-H-14-378-quickgelu")
@@ -113,7 +113,7 @@ torch.cuda.empty_cache()
 gc.collect()
 print("loaded model: ViT-H-14-378-quickgelu")
 
-model_eva02, _, preprocess_eva02 = open_clip.create_model_and_transforms("EVA02-E-14-plus", pretrained="laion2b_s9b_b144k", device=device)
+model_eva02, _, preprocess_eva02 = open_clip.create_model_and_transforms("EVA02-E-14-plus", pretrained="laion2b_s9b_b144k", device="cpu")
 model_eva02 = torch.jit.script(model_eva02)
 model_eva02.eval()
 tokenizer_eva02 = open_clip.get_tokenizer("EVA02-E-14-plus")
@@ -122,7 +122,7 @@ torch.cuda.empty_cache()
 gc.collect()
 print("loaded model: EVA02-E-14-plus")
 
-model_eva01, _, preprocess_eva01 = open_clip.create_model_and_transforms("EVA01-g-14-plus", pretrained="merged2b_s11b_b114k", device=device)
+model_eva01, _, preprocess_eva01 = open_clip.create_model_and_transforms("EVA01-g-14-plus", pretrained="merged2b_s11b_b114k", device="cpu")
 model_eva01 = torch.jit.script(model_eva01)
 model_eva01.eval()
 tokenizer_eva01 = open_clip.get_tokenizer("EVA01-g-14-plus")
@@ -131,7 +131,7 @@ torch.cuda.empty_cache()
 gc.collect()
 print("loaded model: EVA01-g-14-plus")
 
-model_convnext, _, preprocess_convnext = open_clip.create_model_and_transforms("convnext_xxlarge", pretrained="laion2b_s34b_b82k_augreg_soup", device=device)
+model_convnext, _, preprocess_convnext = open_clip.create_model_and_transforms("convnext_xxlarge", pretrained="laion2b_s34b_b82k_augreg_soup", device="cpu")
 model_convnext = torch.jit.script(model_convnext)
 model_convnext.eval()
 tokenizer_convnext = open_clip.get_tokenizer("convnext_xxlarge")
@@ -140,7 +140,7 @@ torch.cuda.empty_cache()
 gc.collect()
 print("loaded model: convnext_xxlarge")
 
-model_resnet, _, preprocess_resnet = open_clip.create_model_and_transforms("RN50x64", pretrained="openai", device=device)
+model_resnet, _, preprocess_resnet = open_clip.create_model_and_transforms("RN50x64", pretrained="openai", device="cpu")
 model_resnet = torch.jit.script(model_resnet)
 model_resnet.eval()
 tokenizer_resnet = open_clip.get_tokenizer("RN50x64")
@@ -180,6 +180,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
             transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(448), transforms.CenterCrop(448), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
         assert model is not None and preprocess is not None and text is not None and transform is not None
+        model = model.to(device)
 
         print(f"evaluating {entry_ids} ...")
 
