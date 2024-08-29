@@ -2,6 +2,7 @@ import csv
 import gc
 import itertools
 import json
+import os
 from pathlib import Path
 
 import lpips
@@ -11,7 +12,7 @@ import torchvision.transforms as transforms
 from datasets import load_dataset
 from PIL import Image
 from tqdm import tqdm
-from transformers import ViTFeatureExtractor, ViTModel
+from transformers import ViTImageProcessor, ViTModel
 
 from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
 from advx.utils import add_overlay
@@ -99,7 +100,7 @@ eval loop
 
 
 # data
-dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).take(CONFIG["subset_size"]).shuffle(seed=seed)
+dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False, pin_memory=True, num_workers=os.cpu_count()).take(CONFIG["subset_size"]).shuffle(seed=seed)
 dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label"], x["caption_enriched"]), dataset))
 labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
@@ -112,6 +113,7 @@ def load_model(model_name, pretrained, device, labels):
     model, _, preprocess = open_clip.create_model_and_transforms(model_name, pretrained=pretrained, device="cpu")
     model = model.to("cpu")
     model.eval()
+    model = torch.compile(model, mode="reduce-overhead")
 
     tokenizer = open_clip.get_tokenizer(model_name)
     text = tokenizer(labels).to("cpu")
@@ -124,7 +126,7 @@ def load_model(model_name, pretrained, device, labels):
 
 lpips_model = lpips.LPIPS(net="vgg")
 
-feature_extractor = ViTFeatureExtractor.from_pretrained("google/vit-base-patch16-224")
+feature_extractor = ViTImageProcessor.from_pretrained("google/vit-base-patch16-224")
 cosine_sim_model = ViTModel.from_pretrained("google/vit-base-patch16-224").to(device)
 
 model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", device, labels)
