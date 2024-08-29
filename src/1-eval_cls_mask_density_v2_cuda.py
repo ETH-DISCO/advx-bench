@@ -2,10 +2,12 @@ import csv
 import gc
 import itertools
 import json
+import os
 import random
 from pathlib import Path
 
 import lpips
+import numpy as np
 import open_clip
 import torch
 import torchvision.transforms as transforms
@@ -16,13 +18,11 @@ from tqdm import tqdm
 from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
 from advx.utils import add_overlay
 from metrics.metrics import get_cosine_similarity, get_psnr, get_ssim
-from utils import get_device, set_env
 
 
 def is_cached(path: Path, entry_id: dict) -> bool:
     if not path.exists():
         return False
-
     with open(path, mode="r") as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -69,13 +69,36 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 
 
 """
-config
+environment
 """
 
-
-device = get_device(disable_mps=False)
 seed = 42
-set_env(seed=seed)
+
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+torch.backends.cudnn.deterministic = True
+
+torch.backends.cudnn.benchmark = False
+torch.backends.cuda.matmul.allow_tf32 = True
+torch.backends.cudnn.allow_tf32 = True
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+torch.cuda.empty_cache()
+torch.cuda.reset_peak_memory_stats()
+torch.cuda.reset_accumulated_memory_stats()
+
+assert torch.cuda.is_available()
+assert torch.cuda.device_count() > 0
+devices = [f"cuda:{i}" for i in range(torch.cuda.device_count())]
+print(f"using devices: {devices}")
+
+
+"""
+config
+
+"""
 
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
@@ -105,29 +128,30 @@ labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
 
 # perceptual loss
-loss_fn_alex = lpips.LPIPS(net="alex")  # best forward scores
-loss_fn_vgg = lpips.LPIPS(net="vgg")  # closer to "traditional" perceptual loss, when used for optimization
+loss_fn_vgg = lpips.LPIPS(net="vgg").to(devices[0])
 
-# models
-def load_model(model_name, pretrained, device, labels):
+
+def load_model(model_name, pretrained, devices, labels):
     # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
     model, _, preprocess = open_clip.create_model_and_transforms(model_name, pretrained=pretrained, device="cpu")
-    model = model.to(device)
+    model = torch.nn.DataParallel(model, device_ids=range(len(devices)))
+    model = model.to(devices[0])
     model.eval()
 
     tokenizer = open_clip.get_tokenizer(model_name)
-    text = tokenizer(labels).to(device)
+    text = tokenizer(labels).to(devices[0])
 
     torch.cuda.empty_cache()
     gc.collect()
     print(f"loaded model: {model_name}")
     return model, preprocess, text
 
-model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", device, labels)
-model_eva02, preprocess_eva02, text_eva02 = load_model("EVA02-E-14-plus", "laion2b_s9b_b144k", device, labels)
-model_eva01, preprocess_eva01, text_eva01 = load_model("EVA01-g-14-plus", "merged2b_s11b_b114k", device, labels)
-model_convnext, preprocess_convnext, text_convnext = load_model("convnext_xxlarge", "laion2b_s34b_b82k_augreg_soup", device, labels)
-model_resnet, preprocess_resnet, text_resnet = load_model("RN50x64", "openai", device, labels)
+# models
+model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", devices, labels)
+model_eva02, preprocess_eva02, text_eva02 = load_model("EVA02-E-14-plus", "laion2b_s9b_b144k", devices, labels)
+model_eva01, preprocess_eva01, text_eva01 = load_model("EVA01-g-14-plus", "merged2b_s11b_b114k", devices, labels)
+model_convnext, preprocess_convnext, text_convnext = load_model("convnext_xxlarge", "laion2b_s34b_b82k_augreg_soup", devices, labels)
+model_resnet, preprocess_resnet, text_resnet = load_model("RN50x64", "openai", devices, labels)
 
 for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
@@ -150,8 +174,8 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
         transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(448), transforms.CenterCrop(448), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
     assert model is not None and preprocess is not None and text is not None and transform is not None
-    model = model.to(device)
-    text = text.to(device)
+    model = model.to(devices[0])
+    text = text.to(devices[0])
     print(f"loaded model: {combination['model']}")
 
     for img_id, image, label_id, caption in dataset:
@@ -165,9 +189,9 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
 
         def get_boolmask(img: Image.Image) -> Image.Image:
             img = img.convert("RGB")
-            img = preprocess(img).unsqueeze(0).to(device)
+            img = preprocess(img).unsqueeze(0).to(devices[0])
 
-            with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
+            with torch.no_grad(), torch.amp.autocast(device_type=devices[0], enabled="cuda" == devices[0]):
                 image_features = model.encode_image(img)
                 text_features = model.encode_text(text)
                 image_features /= image_features.norm(dim=-1, keepdim=True)
