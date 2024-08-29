@@ -10,7 +10,6 @@ import open_clip
 import torch
 import torchvision.transforms as transforms
 from datasets import load_dataset
-from filelock import FileLock
 from PIL import Image
 from tqdm import tqdm
 from transformers import ViTImageProcessor, ViTModel
@@ -174,7 +173,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             continue
 
         with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
-
             def get_boolmask(img: Image.Image) -> Image.Image:
                 img = img.convert("RGB")
                 img = preprocess(img).unsqueeze(0).to(device)
@@ -230,13 +228,11 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 "adv_acc_rank": adv_acc_rank,
             }
 
-        lock = FileLock(CONFIG["outpath"].with_suffix(".lock"), timeout=1)
-        with lock:
-            with open(CONFIG["outpath"], mode="a") as f:
-                writer = csv.DictWriter(f, fieldnames=results.keys())
-                if CONFIG["outpath"].stat().st_size == 0:
-                    writer.writeheader()
-                writer.writerow(results)
+        with open(CONFIG["outpath"], mode="a") as f:
+            writer = csv.DictWriter(f, fieldnames=results.keys())
+            if CONFIG["outpath"].stat().st_size == 0:
+                writer.writeheader()
+            writer.writerow(results)
 
     torch.cuda.empty_cache()
     gc.collect()
