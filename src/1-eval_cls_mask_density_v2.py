@@ -102,11 +102,6 @@ dataset = list(map(lambda x: (x["image_id"], x["image"].convert("RGB"), x["label
 labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
 
-# imagenet transforms
-transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-dataset = list(map(lambda x: (x[0], transform(x[1]), x[2], x[3]), dataset))
-print("applied transforms")
-
 # models
 # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
 model_vit, _, preprocess_vit = open_clip.create_model_and_transforms("ViT-H-14-378-quickgelu", pretrained="dfn5b")
@@ -171,10 +166,12 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
         assert model is not None and preprocess is not None and text is not None
 
         advx_image = get_advx(image, label_id, combination)
-        x: torch.Tensor = preprocess(image).unsqueeze(0)
-        advx_x: torch.Tensor = preprocess(advx_image).unsqueeze(0)
+        transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+        x: torch.Tensor = transform(image).unsqueeze(0)
+        advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
 
         def get_acc_boolmask(img: Image.Image) -> list[bool]:
+            img = transform(img).unsqueeze(0)
             with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
                 image_features = model.encode_image(img)
                 text_features = model.encode_text(text)
