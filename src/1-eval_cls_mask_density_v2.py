@@ -171,12 +171,23 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(448), transforms.CenterCrop(448), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
         assert model is not None and preprocess is not None and text is not None and transform is not None
 
-        advx_image = get_advx(image, label_id, combination)
+        print(f"evaluating {entry_ids} ...")
+
+        adv_iamge = get_advx(image, label_id, combination)
+
+        print("reached transform(image) ...")
+
         x: torch.Tensor = transform(image).unsqueeze(0)
-        advx_x: torch.Tensor = transform(advx_image).unsqueeze(0)
+
+        print("reached transform(adv_image) ...")
+
+        advx_x: torch.Tensor = transform(adv_iamge).unsqueeze(0)
 
         def get_acc_boolmask(img: Image.Image) -> list[bool]:
             img = transform(img).unsqueeze(0)
+
+            print("reached model.encode_image(img) ...")
+
             with torch.no_grad(), torch.amp.autocast(device_type=device, enabled="cuda" == device):
                 image_features = model.encode_image(img)
                 text_features = model.encode_text(text)
@@ -184,19 +195,25 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 text_features /= text_features.norm(dim=-1, keepdim=True)
 
                 text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
+            
+            print("reached text_probs ...")
+
             preds = list(zip(range(len(labels)), text_probs.squeeze().tolist()))
+
+            print("reached preds ...")
+
             preds.sort(key=lambda x: x[1], reverse=True)
             top5_keys, top5_vals = zip(*preds[:5])
             top5_mask = [label_id == key for key in top5_keys]
             return top5_mask
 
         x_acc5 = get_acc_boolmask(image)
-        advx_acc5 = get_acc_boolmask(advx_image)
+        advx_acc5 = get_acc_boolmask(adv_iamge)
 
         results = {
             **entry_ids,
             # semantic similarity
-            "cosine_sim": get_cosine_similarity(image, advx_image),
+            "cosine_sim": get_cosine_similarity(image, adv_iamge),
             "psnr": get_psnr(x, advx_x),
             "ssim": get_ssim(x, advx_x),
             # accuracy
