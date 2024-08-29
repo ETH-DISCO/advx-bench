@@ -119,9 +119,7 @@ def load_model(model_name, pretrained, device, labels):
     model, _, preprocess = open_clip.create_model_and_transforms(model_name, pretrained=pretrained, device="cpu")
     model = model.to("cpu")
     model.eval()
-
     model = torch.compile(model, mode="reduce-overhead")
-    model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
 
     tokenizer = open_clip.get_tokenizer(model_name)
     text = tokenizer(labels).to("cpu")
