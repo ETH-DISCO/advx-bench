@@ -73,6 +73,7 @@ def get_advx(img: Image.Image, label_id: int, combination: dict) -> Image.Image:
 config
 """
 
+
 CONFIG = {
     "outpath": Path.cwd() / "data" / "eval" / "eval_cls_generalizability.csv",
     "subset_size": 500,
@@ -87,17 +88,15 @@ COMBINATIONS = {
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
-
 if CONFIG["outpath"].exists():
     with open(CONFIG["outpath"], mode="r") as f:
         reader = csv.DictReader(f)
-        missing_combinations = set(random_combinations) - set(map(lambda x: tuple(x.values()), reader))
-    
-    print(f"missing: {len(missing_combinations)}")
-    for mc in missing_combinations:
-        print(mc)
-    random_combinations = list(missing_combinations)
-    random.shuffle(random_combinations)
+        missing_combinations = set(random_combinations)
+        existing_combinations = set(tuple(row.values())[:4] for row in reader)
+        missing_combinations -= existing_combinations
+        random_combinations = list(missing_combinations)
+        random.shuffle(random_combinations)
+print(f"remaining iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
 
 """
