@@ -2,10 +2,12 @@ import csv
 import gc
 import itertools
 import json
+import os
 import random
 from pathlib import Path
 
 import lpips
+import numpy as np
 import open_clip
 import torch
 import torchvision.transforms as transforms
@@ -17,7 +19,6 @@ from transformers import ViTImageProcessor, ViTModel
 from advx.masks import get_circle_mask, get_diamond_mask, get_knit_mask, get_square_mask, get_word_mask
 from advx.utils import add_overlay
 from metrics.metrics import get_psnr, get_ssim
-from utils import get_device, set_env
 
 
 def is_cached(path: Path, entry_id: dict) -> bool:
@@ -100,14 +101,33 @@ print(f"remaining iterations: {len(random_combinations)} * {CONFIG['subset_size'
 
 
 """
-eval loop
+environment
 """
 
-
-device = get_device(disable_mps=True)
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 seed = 42
-set_env(seed=seed)
+
+torch.backends.cuda.matmul.allow_tf32 = True
+torch.backends.cudnn.allow_tf32 = True
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:512"
+
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+if device == "cuda":
+    torch.cuda.empty_cache()
+    torch.cuda.reset_peak_memory_stats()
+    torch.cuda.reset_accumulated_memory_stats()
+
+"""
+eval loop
+"""
 
 # data
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).take(CONFIG["subset_size"]).shuffle(seed=seed)
