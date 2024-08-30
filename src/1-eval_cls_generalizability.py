@@ -204,14 +204,34 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             continue
 
 
-        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
+        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode(), torch.cuda.amp.autocast(enabled=True):
+
+            # def get_boolmask(img: Image.Image) -> Image.Image:
+            #     img = img.convert("RGB")
+            #     img = preprocess(img).unsqueeze(0)
+            
+            #     image_features = model.encode_image(img.to(device)).cpu()
+            #     text_features = model.encode_text(text.to(device)).cpu()
+
+            #     image_features /= image_features.norm(dim=-1, keepdim=True)
+            #     text_features /= text_features.norm(dim=-1, keepdim=True)
+            #     text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
+
+            #     probs = text_probs[0].numpy().tolist()
+            #     assert all(isinstance(prob, float) for prob in probs)
+            #     preds = list(zip(range(len(labels)), probs))
+            #     preds.sort(key=lambda x: x[1], reverse=True)
+            #     top5_keys, top5_vals = zip(*preds)
+            #     boolmask = [label_id == key for key in top5_keys]
+            #     return boolmask
 
             def get_boolmask(img: Image.Image) -> Image.Image:
                 img = img.convert("RGB")
                 img = preprocess(img).unsqueeze(0)
-            
-                image_features = model.encode_image(img.to(device)).cpu()
-                text_features = model.encode_text(text.to(device)).cpu()
+
+                with torch.no_grad():
+                    image_features = model.encode_image(img.to(device)).cpu()
+                    text_features = model.encode_text(text.to(device)).cpu()
 
                 image_features /= image_features.norm(dim=-1, keepdim=True)
                 text_features /= text_features.norm(dim=-1, keepdim=True)
@@ -223,6 +243,10 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 preds.sort(key=lambda x: x[1], reverse=True)
                 top5_keys, top5_vals = zip(*preds)
                 boolmask = [label_id == key for key in top5_keys]
+
+                del image_features, text_features, text_probs
+                torch.cuda.empty_cache()
+
                 return boolmask
 
             def get_cosine_similarity(x: Image.Image, y: Image.Image) -> float:
