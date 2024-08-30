@@ -81,7 +81,7 @@ CONFIG = {
 }
 COMBINATIONS = {
     # "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
-    "model": ["vit", "eva01", "convnext", "resnet"],
+    "model": ["eva02"],
     "mask": ["circle", "square", "diamond", "knit"],
     "opacity": [50, 80, 110, 140, 170],  # 0;255
     "density": [70],  # 1;100
@@ -175,22 +175,22 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
     combination = dict(zip(COMBINATIONS.keys(), combination))
 
     model, preprocess, text, transform = None, None, None, None
-    if combination["model"] == "vit":
-        model, preprocess, text = model_vit, preprocess_vit, text_vit
+    if combination["model"] == "eva02":
+        model, preprocess, text = model_eva02, preprocess_eva02, text_eva02
+        required_size = 224
         transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-    # elif combination["model"] == "eva02":
-    #     model, preprocess, text = model_eva02, preprocess_eva02, text_eva02
-    #     required_size = 224
+    # elif combination["model"] == "eva01":
+    #     model, preprocess, text = model_eva01, preprocess_eva01, text_eva01
     #     transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-    elif combination["model"] == "eva01":
-        model, preprocess, text = model_eva01, preprocess_eva01, text_eva01
-        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-    elif combination["model"] == "convnext":
-        model, preprocess, text = model_convnext, preprocess_convnext, text_convnext
-        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-    elif combination["model"] == "resnet":
-        model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
-        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(448), transforms.CenterCrop(448), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    # elif combination["model"] == "vit":
+    #     model, preprocess, text = model_vit, preprocess_vit, text_vit
+    #     transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    # elif combination["model"] == "convnext":
+    #     model, preprocess, text = model_convnext, preprocess_convnext, text_convnext
+    #     transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    # elif combination["model"] == "resnet":
+    #     model, preprocess, text = model_resnet, preprocess_resnet, text_resnet
+    #     transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(448), transforms.CenterCrop(448), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
     assert model is not None and preprocess is not None and text is not None and transform is not None
     model = model.to(device)
     text = text.to(device)
