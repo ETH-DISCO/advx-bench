@@ -265,5 +265,5 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 writer.writeheader()
             writer.writerow(results)
 
-    gc.collect()
-    torch.cuda.empty_cache()
+        gc.collect()
+        torch.cuda.empty_cache()
