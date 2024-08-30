@@ -87,18 +87,18 @@ COMBINATIONS = {
 }
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
-random.shuffle(random_combinations)
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
-if CONFIG["outpath"].exists():
-    with open(CONFIG["outpath"], mode="r") as f:
-        reader = csv.DictReader(f)
-        missing_combinations = set(random_combinations)
-        existing_combinations = set(tuple(row.values())[:4] for row in reader)
-        missing_combinations -= existing_combinations
-        random_combinations = list(missing_combinations)
-        random.shuffle(random_combinations)
-print(f"remaining iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
+if CONFIG["outpath"].exists():
+    filecontent = list(csv.DictReader(CONFIG["outpath"].open(mode="r")))
+    filecontent: list[dict] = [{k: v for k, v in entry.items() if k in list(COMBINATIONS.keys())} for entry in filecontent]  # remove cols
+    filecontent = [dict(t) for t in {tuple(d.items()) for d in filecontent}]  # remove duplicates
+    filecontent: list[tuple] = [tuple(entry.values()) for entry in filecontent]
+    for fc_entry in filecontent:
+        fc_entry = tuple(map(lambda x: int(x) if isinstance(x, str) and x.isdigit() else x, fc_entry))
+        random_combinations.remove(fc_entry)
+
+print(f"remaining iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
 """
 environment
@@ -112,7 +112,7 @@ seed = 42
 torch.backends.cuda.matmul.allow_tf32 = True
 torch.backends.cudnn.allow_tf32 = True
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:512"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
 
 random.seed(seed)
 np.random.seed(seed)
@@ -139,8 +139,7 @@ labels = get_imagenet_labels()
 print("loaded dataset: imagenet-1k-vl-enriched")
 
 
-# models
-def load_model(model_name, pretrained, device, labels):
+def load_model(model_name, pretrained, labels):
     # load to cpu first to avoid cuda out of memory
     # see: https://github.com/mlfoundations/open_clip/blob/main/docs/openclip_results.csv
     model, _, preprocess = open_clip.create_model_and_transforms(model_name, pretrained=pretrained, device="cpu")
@@ -157,16 +156,15 @@ def load_model(model_name, pretrained, device, labels):
     return model, preprocess, text
 
 
+# models
 lpips_model = lpips.LPIPS(net="vgg")
-
 feature_extractor = ViTImageProcessor.from_pretrained("google/vit-base-patch16-224")
 cosine_sim_model = ViTModel.from_pretrained("google/vit-base-patch16-224").to(device)
-
-model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", device, labels)
-model_eva02, preprocess_eva02, text_eva02 = load_model("EVA02-E-14-plus", "laion2b_s9b_b144k", device, labels)
-model_eva01, preprocess_eva01, text_eva01 = load_model("EVA01-g-14-plus", "merged2b_s11b_b114k", device, labels)
-model_convnext, preprocess_convnext, text_convnext = load_model("convnext_xxlarge", "laion2b_s34b_b82k_augreg_soup", device, labels)
-model_resnet, preprocess_resnet, text_resnet = load_model("RN50x64", "openai", device, labels)
+model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", labels)
+model_eva02, preprocess_eva02, text_eva02 = load_model("EVA02-E-14-plus", "laion2b_s9b_b144k", labels)
+model_eva01, preprocess_eva01, text_eva01 = load_model("EVA01-g-14-plus", "merged2b_s11b_b114k", labels)
+model_convnext, preprocess_convnext, text_convnext = load_model("convnext_xxlarge", "laion2b_s34b_b82k_augreg_soup", labels)
+model_resnet, preprocess_resnet, text_resnet = load_model("RN50x64", "openai", labels)
 
 
 for combination in tqdm(random_combinations, total=len(random_combinations)):
@@ -194,6 +192,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
     text = text.to(device)
 
     for img_id, image, label_id, caption in tqdm(dataset, total=len(dataset)):
+        print(f"processing {combination} - {img_id}")
         entry_ids = {
             **combination,
             "img_id": img_id,
@@ -202,25 +201,29 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             print(f"skipping {entry_ids}")
             continue
 
-        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
-
-            def get_boolmask(img: Image.Image) -> Image.Image:
-                img = img.convert("RGB")
-                img = preprocess(img).unsqueeze(0).to(device)
-
-                image_features = model.encode_image(img)
+        def get_boolmask(img: Image.Image) -> Image.Image:
+            img = img.convert("RGB")
+            img = preprocess(img).unsqueeze(0)
+            with torch.cuda.amp.autocast(enabled=False):
+                image_features = model.encode_image(img.to(device))
                 text_features = model.encode_text(text)
-                image_features /= image_features.norm(dim=-1, keepdim=True)
-                text_features /= text_features.norm(dim=-1, keepdim=True)
-                text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
 
-                probs = text_probs[0].cpu().numpy().tolist()
-                assert all(isinstance(prob, float) for prob in probs)
-                preds = list(zip(range(len(labels)), probs))
-                preds.sort(key=lambda x: x[1], reverse=True)
-                top5_keys, top5_vals = zip(*preds)
-                boolmask = [label_id == key for key in top5_keys]
-                return boolmask
+            image_features = image_features.cpu()
+            text_features = text_features.cpu()
+
+            image_features /= image_features.norm(dim=-1, keepdim=True)
+            text_features /= text_features.norm(dim=-1, keepdim=True)
+            text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
+
+            probs = text_probs[0].numpy().tolist()
+            assert all(isinstance(prob, float) for prob in probs)
+            preds = list(zip(range(len(labels)), probs))
+            preds.sort(key=lambda x: x[1], reverse=True)
+            top5_keys, top5_vals = zip(*preds)
+            boolmask = [label_id == key for key in top5_keys]
+            return boolmask
+
+        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
 
             def get_cosine_similarity(x: Image.Image, y: Image.Image) -> float:
                 x = x.convert("RGB")
