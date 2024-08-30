@@ -82,7 +82,7 @@ CONFIG = {
 COMBINATIONS = {
     # "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
     "model": ["eva02"],
-    "mask": ["circle", "square", "diamond", "knit"], # "word" is hard to interpret
+    "mask": ["circle", "square", "diamond", "knit"],  # "word" is hard to interpret
     "opacity": [50, 80, 110, 140, 170],  # 0;255 - best based on previous experiments
     "density": [70],  # 1;100 - best based on previous experiments
 }
@@ -205,12 +205,11 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             print(f"skipping {entry_ids}")
             continue
 
-
         with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
 
             def get_boolmask(img: Image.Image) -> Image.Image:
                 img = preprocess(img.convert("RGB")).unsqueeze(0)
-            
+
                 image_features = model.encode_image(img.to(device)).cpu()
                 text_features = model.encode_text(text.to(device)).cpu()
 
@@ -271,6 +270,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
 
         gc.collect()
         torch.cuda.empty_cache()
-    
+
     gc.collect()
     torch.cuda.empty_cache()
