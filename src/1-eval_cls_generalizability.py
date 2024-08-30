@@ -163,6 +163,7 @@ def load_model(model_name, pretrained, labels):
 lpips_model = lpips.LPIPS(net="vgg")
 feature_extractor = ViTImageProcessor.from_pretrained("google/vit-base-patch16-224")
 cosine_sim_model = ViTModel.from_pretrained("google/vit-base-patch16-224").to(device)
+
 model_eva02, preprocess_eva02, text_eva02 = load_model("EVA02-L-14", "merged2b_s4b_b131k", labels)
 model_eva01, preprocess_eva01, text_eva01 = load_model("EVA01-g-14-plus", "merged2b_s11b_b114k", labels)
 model_vit, preprocess_vit, text_vit = load_model("ViT-H-14-378-quickgelu", "dfn5b", labels)
