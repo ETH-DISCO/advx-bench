@@ -82,9 +82,9 @@ CONFIG = {
 COMBINATIONS = {
     # "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
     "model": ["eva02"],
-    "mask": ["circle", "square", "diamond", "knit"],
-    "opacity": [50, 80, 110, 140, 170],  # 0;255
-    "density": [70],  # 1;100
+    "mask": ["circle", "square", "diamond", "knit"], # "word" is hard to interpret
+    "opacity": [50, 80, 110, 140, 170],  # 0;255 - best based on previous experiments
+    "density": [70],  # 1;100 - best based on previous experiments
 }
 
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
