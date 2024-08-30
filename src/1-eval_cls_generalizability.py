@@ -147,6 +147,7 @@ def load_model(model_name, pretrained, labels):
     model = model.to("cpu")
     model.eval()
     model = torch.compile(model, mode="reduce-overhead")
+    model.gradient_checkpointing_enable()
 
     tokenizer = open_clip.get_tokenizer(model_name)
     text = tokenizer(labels).to("cpu")
@@ -202,29 +203,27 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             print(f"skipping {entry_ids}")
             continue
 
-        def get_boolmask(img: Image.Image) -> Image.Image:
-            img = img.convert("RGB")
-            img = preprocess(img).unsqueeze(0)
-            with torch.cuda.amp.autocast(enabled=False):
-                image_features = model.encode_image(img.to(device))
-                text_features = model.encode_text(text)
-
-            image_features = image_features.cpu()
-            text_features = text_features.cpu()
-
-            image_features /= image_features.norm(dim=-1, keepdim=True)
-            text_features /= text_features.norm(dim=-1, keepdim=True)
-            text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
-
-            probs = text_probs[0].numpy().tolist()
-            assert all(isinstance(prob, float) for prob in probs)
-            preds = list(zip(range(len(labels)), probs))
-            preds.sort(key=lambda x: x[1], reverse=True)
-            top5_keys, top5_vals = zip(*preds)
-            boolmask = [label_id == key for key in top5_keys]
-            return boolmask
 
         with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
+
+            def get_boolmask(img: Image.Image) -> Image.Image:
+                img = img.convert("RGB")
+                img = preprocess(img).unsqueeze(0)
+            
+                image_features = model.encode_image(img.to(device)).cpu()
+                text_features = model.encode_text(text.to(device)).cpu()
+
+                image_features /= image_features.norm(dim=-1, keepdim=True)
+                text_features /= text_features.norm(dim=-1, keepdim=True)
+                text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
+
+                probs = text_probs[0].numpy().tolist()
+                assert all(isinstance(prob, float) for prob in probs)
+                preds = list(zip(range(len(labels)), probs))
+                preds.sort(key=lambda x: x[1], reverse=True)
+                top5_keys, top5_vals = zip(*preds)
+                boolmask = [label_id == key for key in top5_keys]
+                return boolmask
 
             def get_cosine_similarity(x: Image.Image, y: Image.Image) -> float:
                 x = x.convert("RGB")
@@ -269,12 +268,10 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 writer.writeheader()
             writer.writerow(results)
 
-        del image
-        del adv_image
-        del x
-        del adv_x
-        del boolmask
-        del adv_boolmask
-        del results
+        del image, adv_image, x, adv_x, boolmask, adv_boolmask, results
         gc.collect()
         torch.cuda.empty_cache()
+    
+    del image, adv_image, x, adv_x, boolmask, adv_boolmask, results
+    gc.collect()
+    torch.cuda.empty_cache()
