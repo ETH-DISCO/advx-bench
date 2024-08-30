@@ -104,6 +104,7 @@ print(f"remaining iterations: {len(random_combinations)} * {CONFIG['subset_size'
 environment
 """
 
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 seed = 42
@@ -125,9 +126,11 @@ if device == "cuda":
     torch.cuda.reset_peak_memory_stats()
     torch.cuda.reset_accumulated_memory_stats()
 
+
 """
 eval loop
 """
+
 
 # data
 dataset = load_dataset("visual-layer/imagenet-1k-vl-enriched", split="validation", streaming=False).take(CONFIG["subset_size"]).shuffle(seed=seed)
