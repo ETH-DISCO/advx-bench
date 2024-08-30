@@ -89,14 +89,14 @@ COMBINATIONS = {
 random_combinations = list(itertools.product(*COMBINATIONS.values()))
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
-# if CONFIG["outpath"].exists():
-#     filecontent = list(csv.DictReader(CONFIG["outpath"].open(mode="r")))
-#     filecontent: list[dict] = [{k: v for k, v in entry.items() if k in list(COMBINATIONS.keys())} for entry in filecontent]  # remove cols
-#     filecontent = [dict(t) for t in {tuple(d.items()) for d in filecontent}]  # remove duplicates
-#     filecontent: list[tuple] = [tuple(entry.values()) for entry in filecontent]
-#     for fc_entry in filecontent:
-#         fc_entry = tuple(map(lambda x: int(x) if isinstance(x, str) and x.isdigit() else x, fc_entry))
-#         random_combinations.remove(fc_entry)
+if CONFIG["outpath"].exists():
+    filecontent = list(csv.DictReader(CONFIG["outpath"].open(mode="r")))
+    filecontent: list[dict] = [{k: v for k, v in entry.items() if k in list(COMBINATIONS.keys())} for entry in filecontent]  # remove cols
+    filecontent = [dict(t) for t in {tuple(d.items()) for d in filecontent}]  # remove duplicates
+    filecontent: list[tuple] = [tuple(entry.values()) for entry in filecontent]
+    for fc_entry in filecontent:
+        fc_entry = tuple(map(lambda x: int(x) if isinstance(x, str) and x.isdigit() else x, fc_entry))
+        random_combinations.remove(fc_entry)
 
 print(f"remaining iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 for rc in random_combinations:
