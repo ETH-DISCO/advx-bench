@@ -147,7 +147,6 @@ def load_model(model_name, pretrained, labels):
     model = model.to("cpu")
     model.eval()
     model = torch.compile(model, mode="reduce-overhead")
-    model.gradient_checkpointing_enable()
 
     tokenizer = open_clip.get_tokenizer(model_name)
     text = tokenizer(labels).to("cpu")
