@@ -265,5 +265,12 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 writer.writeheader()
             writer.writerow(results)
 
+        del image
+        del adv_image
+        del x
+        del adv_x
+        del boolmask
+        del adv_boolmask
+        del results
         gc.collect()
         torch.cuda.empty_cache()
