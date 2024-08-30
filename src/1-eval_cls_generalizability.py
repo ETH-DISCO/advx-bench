@@ -196,7 +196,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
     text = text.to(device)
 
     for img_id, image, label_id, caption in tqdm(dataset, total=len(dataset)):
-        print(f"processing {combination} - {img_id}")
+        print(f"processing {combination} - {img_id}\n")
         entry_ids = {
             **combination,
             "img_id": img_id,
