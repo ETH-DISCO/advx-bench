@@ -80,7 +80,8 @@ CONFIG = {
     "subset_size": 500,
 }
 COMBINATIONS = {
-    "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
+    # "model": ["vit", "eva02", "eva01", "convnext", "resnet"],
+    "model": ["vit", "eva01", "convnext", "resnet"],
     "mask": ["circle", "square", "diamond", "knit"],
     "opacity": [50, 80, 110, 140, 170],  # 0;255
     "density": [70],  # 1;100
@@ -99,6 +100,8 @@ if CONFIG["outpath"].exists():
         random_combinations.remove(fc_entry)
 
 print(f"remaining iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
+for rc in random_combinations:
+    print(rc)
 
 
 """
@@ -175,10 +178,10 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
     if combination["model"] == "vit":
         model, preprocess, text = model_vit, preprocess_vit, text_vit
         transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-    elif combination["model"] == "eva02":
-        model, preprocess, text = model_eva02, preprocess_eva02, text_eva02
-        required_size = 224
-        transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+    # elif combination["model"] == "eva02":
+    #     model, preprocess, text = model_eva02, preprocess_eva02, text_eva02
+    #     required_size = 224
+    #     transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
     elif combination["model"] == "eva01":
         model, preprocess, text = model_eva01, preprocess_eva01, text_eva01
         transform = transforms.Compose([transforms.Lambda(lambda x: x.convert("RGB")), transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
@@ -203,34 +206,13 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             continue
 
 
-        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode(), torch.cuda.amp.autocast(enabled=True):
-
-            # def get_boolmask(img: Image.Image) -> Image.Image:
-            #     img = img.convert("RGB")
-            #     img = preprocess(img).unsqueeze(0)
-            
-            #     image_features = model.encode_image(img.to(device)).cpu()
-            #     text_features = model.encode_text(text.to(device)).cpu()
-
-            #     image_features /= image_features.norm(dim=-1, keepdim=True)
-            #     text_features /= text_features.norm(dim=-1, keepdim=True)
-            #     text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
-
-            #     probs = text_probs[0].numpy().tolist()
-            #     assert all(isinstance(prob, float) for prob in probs)
-            #     preds = list(zip(range(len(labels)), probs))
-            #     preds.sort(key=lambda x: x[1], reverse=True)
-            #     top5_keys, top5_vals = zip(*preds)
-            #     boolmask = [label_id == key for key in top5_keys]
-            #     return boolmask
+        with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
 
             def get_boolmask(img: Image.Image) -> Image.Image:
-                img = img.convert("RGB")
-                img = preprocess(img).unsqueeze(0)
-
-                with torch.no_grad():
-                    image_features = model.encode_image(img.to(device)).cpu()
-                    text_features = model.encode_text(text.to(device)).cpu()
+                img = preprocess(img.convert("RGB")).unsqueeze(0)
+            
+                image_features = model.encode_image(img.to(device)).cpu()
+                text_features = model.encode_text(text.to(device)).cpu()
 
                 image_features /= image_features.norm(dim=-1, keepdim=True)
                 text_features /= text_features.norm(dim=-1, keepdim=True)
@@ -242,10 +224,6 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 preds.sort(key=lambda x: x[1], reverse=True)
                 top5_keys, top5_vals = zip(*preds)
                 boolmask = [label_id == key for key in top5_keys]
-
-                del image_features, text_features, text_probs
-                torch.cuda.empty_cache()
-
                 return boolmask
 
             def get_cosine_similarity(x: Image.Image, y: Image.Image) -> float:
