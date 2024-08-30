@@ -74,7 +74,7 @@ config
 """
 
 CONFIG = {
-    "outpath": Path.cwd() / "data" / "eval" / "eval_cls.csv",
+    "outpath": Path.cwd() / "data" / "eval" / "eval_cls_generalizability.csv",
     "subset_size": 500,
 }
 COMBINATIONS = {
@@ -88,15 +88,23 @@ random_combinations = list(itertools.product(*COMBINATIONS.values()))
 random.shuffle(random_combinations)
 print(f"total iterations: {len(random_combinations)} * {CONFIG['subset_size']} = {len(random_combinations) * CONFIG['subset_size']}")
 
+if CONFIG["outpath"].exists():
+    with open(CONFIG["outpath"], mode="r") as f:
+        reader = csv.DictReader(f)
+        missing_combinations = set(random_combinations) - set(map(lambda x: tuple(x.values()), reader))
+    
+    print(f"missing: {len(missing_combinations)}")
+    for mc in missing_combinations:
+        print(mc)
+    random_combinations = list(missing_combinations)
+    random.shuffle(random_combinations)
+
 
 """
 eval loop
 """
 
-# argparser = argparse.ArgumentParser()
-# argparser.add_argument("--device", type=str, default="cuda:0")
-# args = argparser.parse_args()
-# device = get_device(args.device)
+
 device = get_device(disable_mps=True)
 
 seed = 42
@@ -173,6 +181,7 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
             continue
 
         with torch.no_grad(), torch.amp.autocast(device_type=device, enabled=("cuda" in str(device))), torch.inference_mode():
+
             def get_boolmask(img: Image.Image) -> Image.Image:
                 img = img.convert("RGB")
                 img = preprocess(img).unsqueeze(0).to(device)
@@ -234,5 +243,5 @@ for combination in tqdm(random_combinations, total=len(random_combinations)):
                 writer.writeheader()
             writer.writerow(results)
 
-    torch.cuda.empty_cache()
     gc.collect()
+    torch.cuda.empty_cache()
