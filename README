@@ -7,9 +7,9 @@ File tree:
 - `/analysis`: vidual data analysis based on `data` directory, notes and other documents
 - `/data`: input and output files from `src` directory
 - `/src`: benchmarking code, see the `demo.ipynb` file for examples
-  - `/src/advx`: hCaptcha style masks
-  - `/src/metrics`: metrics used for benchmarking
-  - `/src/models`: classification, detection and segmentation models used for benchmarking
+    - `/src/advx`: hCaptcha style masks
+    - `/src/metrics`: metrics used for benchmarking
+    - `/src/models`: classification, detection and segmentation models used for benchmarking
 
 Thanks to:
 
