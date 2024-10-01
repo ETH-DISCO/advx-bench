@@ -2,16 +2,11 @@ Seeing Through the Mask: Rethinking Adversarial Examples for CAPTCHAs
 
 Official repository for: https://www.arxiv.org/abs/2409.05558
 
----
+The path `./src` contains benchmarking code, see the `demo.ipynb` file for examples:
 
-File tree:
-
-- `/analysis`: vidual data analysis based on `data` directory, notes and other documents
-- `/data`: input and output files from `src` directory
-- `/src`: benchmarking code, see the `demo.ipynb` file for examples
-    - `/src/advx`: hCaptcha style masks
-    - `/src/metrics`: metrics used for benchmarking
-    - `/src/models`: classification, detection and segmentation models used for benchmarking
+- `/src/advx`: hCaptcha style masks
+- `/src/metrics`: metrics used for benchmarking
+- `/src/models`: classification, detection and segmentation models used for benchmarking
 
 Thanks to:
 
