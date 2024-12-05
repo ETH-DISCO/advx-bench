@@ -11,5 +11,5 @@ File tree:
 
 Thanks to:
 
-- Turlan Kuzhagaliyev (@tkz10) for scraping the hCAPTCHA dataset.
-- Alireza Furutanpey (@rezafuru) and the DSG lab for providing compute.
+- Turlan Kuzhagaliyev (@tkz10) for scraping the hCAPTCHA dataset (not used in the paper)
+- The TU Wien DSG group for providing compute for the ResNet tuning experiment (not used in the paper)
