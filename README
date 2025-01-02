@@ -28,7 +28,7 @@ Seeing Through the Mask: Rethinking Adversarial Examples for CAPTCHAs. arXiv pre
 File tree:
 
 - `/src/demo.ipynb` example usage of modules
-- `/src/advx`: hCaptcha based geometric masks masks
+- `/src/advx`: hCaptcha based geometric masks
 - `/src/metrics`: metrics used for benchmarking
 - `/src/models`: classification, detection and segmentation models used for benchmarking
 
